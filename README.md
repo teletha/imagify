@@ -6,6 +6,60 @@
     <a href="https://teletha.github.io/imagify"><img src="https://img.shields.io/website.svg?down_color=red&down_message=CLOSE&label=Official%20Site&up_color=green&up_message=OPEN&url=https%3A%2F%2Fteletha.github.io%2Fimagify"></a>
 </p>
 
+## Summary
+# imagify
+
+AVIF encoding and decoding for Java, backed by libavif.
+
+## Loading
+
+The native `libavif` shared library is bundled for Windows, macOS
+and Linux on x64 and arm64. It is unpacked automatically on first
+use, so no installation is required.
+
+    -Dimagify.avif.bundled=false   # ignore the bundled library,
+                                    # use a system libavif instead
+
+## Dependencies
+
+- com.github.teletha:sinobu
+- com.github.teletha:psychopath
+- net.java.dev.jna:jna
+- dev.matrixlab.webp4j:webp4j-core
+
+## Decode
+
+    byte[] avif = Files.readAllBytes(Path.of("photo.avif"));
+    DecodedImage result = AvifCodec.decode(avif);
+    BufferedImage image = result.image();
+    AvifImageInfo info = result.info();
+
+## Encode
+
+    byte[] avif = AvifCodec.encode(image, 75, 4);
+    // quality 0 (smallest) to 100 (lossless)
+    // speed   0 (slowest) to 10 (fastest)
+    Files.write(Path.of("out.avif"), avif);
+
+## ImageIO
+
+    BufferedImage image = ImageIO.read(new File("photo.avif"));
+    ImageIO.write(image, "avif", new File("out.avif"));
+
+## Header-only read
+
+    AvifImageInfo info = AvifCodec.readHeader(avif);
+
+## Availability
+
+    if (!AvifCodec.isAvailable()) {
+        System.err.println(AvifCodec.getUnavailableReason());
+    }
+
+## Version
+
+Supported `libavif` versions: `1.0.0` to `1.4.x`.
+<p align="right"><a href="#top">back to top</a></p>
 
 
 
