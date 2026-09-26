@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="Q">
-		<header class="R" date="2026-09-26">
-			<h1 class="n"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="o"><a href="api/main.html" id="API"><svg class="package">
+	<body class="EB">
+		<header class="c" date="2026-09-26">
+			<h1 class="d"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="e"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="p"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="f"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="U"></nav>
-		<article class="S" id="Article">
-			<section class="c"><code class="W">imagify.avif.jna</code>
-				<h2 class="Class z"><code class="f">AvifImage</code></h2>
-				<div class="u">
+		<nav class="a"></nav>
+		<article class="l" id="Article">
+			<section class="Y"><code class="Q">imagify.avif.jna</code>
+				<h2 class="Class T"><code class="S">AvifImage</code></h2>
+				<div class="h">
 					<ul class="E G">
 						<li><code>com.sun.jna.Structure</code></li>
 					</ul>
@@ -57,130 +57,130 @@
  (<code>typedef enum { ... } avifPixelFormat;</code> and friends).
 </p>
 				</span></section>
-			<section class="c" id="width">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">width</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>Image width in pixels.</p></span></section>
-			<section class="c" id="height">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">height</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>Image height in pixels.</p></span></section>
-			<section class="c" id="depth">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">depth</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>Bits per channel; all planes share this depth.</p></span></section>
-			<section class="c" id="yuvFormat">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">yuvFormat</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_PIXEL_FORMAT_*</code> value.</p></span></section>
-			<section class="c" id="yuvRange">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">yuvRange</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_RANGE_*</code> value.</p></span></section>
-			<section class="c" id="yuvChromaSamplePosition">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">yuvChromaSamplePosition</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_CHROMA_SAMPLE_POSITION_*</code> value.</p></span></section>
-			<section class="c" id="yuvPlanes">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">yuvPlanes</code><i class="N"><code array="fix" class="return">com.sun.jna.Pointer</code></i></h2><span class="A"><p>The three YUV planes.</p></span></section>
-			<section class="c" id="yuvRowBytes">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">yuvRowBytes</code><i class="N"><code array="fix" class="return">int</code></i></h2><span class="A"><p>Row stride of each YUV plane in bytes.</p></span></section>
-			<section class="c" id="imageOwnsYUVPlanes">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">imageOwnsYUVPlanes</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code> telling whether <code><a aria-label="imagify.avif.jna.AvifImage" href="api/imagify.avif.jna.AvifImage.html#yuvPlanes">#yuvPlanes</a></code> has to be freed by us.</p></span></section>
-			<section class="c" id="alphaPlane">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">alphaPlane</code><i class="N"><code class="return">com.sun.jna.Pointer</code></i></h2><span class="A"><p>The alpha plane, or <code>null</code>.</p></span></section>
-			<section class="c" id="alphaRowBytes">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">alphaRowBytes</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>Row stride of the alpha plane in bytes.</p></span></section>
-			<section class="c" id="imageOwnsAlphaPlane">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">imageOwnsAlphaPlane</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code> telling whether <code><a aria-label="imagify.avif.jna.AvifImage" href="api/imagify.avif.jna.AvifImage.html#alphaPlane">#alphaPlane</a></code> has to be freed by us.</p></span></section>
-			<section class="c" id="alphaPremultiplied">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">alphaPremultiplied</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code> telling whether the alpha channel is already premultiplied.</p></span></section>
-			<section class="c" id="icc">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">icc</code><i class="N"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></h2><span class="A"><p>Embedded ICC profile, if any.</p></span></section>
-			<section class="c" id="colorPrimaries">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">colorPrimaries</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_COLOR_PRIMARIES_*</code> value.</p></span></section>
-			<section class="c" id="transferCharacteristics">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">transferCharacteristics</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_TRANSFER_CHARACTERISTICS_*</code> value.</p></span></section>
-			<section class="c" id="matrixCoefficients">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">matrixCoefficients</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_MATRIX_COEFFICIENTS_*</code> value.</p></span></section>
-			<section class="c" id="clli">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">clli</code><i class="N"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ContentLightLevelInformationBox" href="api/imagify.avif.jna.AvifImage.ContentLightLevelInformationBox.html">ContentLightLevelInformationBox</a></code></i></h2><span class="A"><p>Content light level information.</p></span></section>
-			<section class="c" id="transformFlags">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">transformFlags</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_TRANSFORM_*</code> bit set.</p></span></section>
-			<section class="c" id="pasp">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">pasp</code><i class="N"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.PixelAspectRatioBox" href="api/imagify.avif.jna.AvifImage.PixelAspectRatioBox.html">PixelAspectRatioBox</a></code></i></h2><span class="A"><p>Pixel aspect ratio.</p></span></section>
-			<section class="c" id="clap">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">clap</code><i class="N"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.CleanApertureBox" href="api/imagify.avif.jna.AvifImage.CleanApertureBox.html">CleanApertureBox</a></code></i></h2><span class="A"><p>Clean aperture (cropping) rectangle.</p></span></section>
-			<section class="c" id="irot">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">irot</code><i class="N"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ImageRotation" href="api/imagify.avif.jna.AvifImage.ImageRotation.html">ImageRotation</a></code></i></h2><span class="A"><p>Rotation transform.</p></span></section>
-			<section class="c" id="imir">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">imir</code><i class="N"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ImageMirror" href="api/imagify.avif.jna.AvifImage.ImageMirror.html">ImageMirror</a></code></i></h2><span class="A"><p>Mirror transform.</p></span></section>
-			<section class="c" id="exif">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">exif</code><i class="N"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></h2><span class="A"><p>Embedded Exif payload, if any.</p></span></section>
-			<section class="c" id="xmp">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">xmp</code><i class="N"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></h2><span class="A"><p>Embedded XMP payload, if any.</p></span></section>
-			<section class="c" id="AvifImage()">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">AvifImage</code><code class="EB">()</code></h2>
+			<section class="Y" id="width">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">width</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Image width in pixels.</p></span></section>
+			<section class="Y" id="height">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">height</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Image height in pixels.</p></span></section>
+			<section class="Y" id="depth">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">depth</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Bits per channel; all planes share this depth.</p></span></section>
+			<section class="Y" id="yuvFormat">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">yuvFormat</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_PIXEL_FORMAT_*</code> value.</p></span></section>
+			<section class="Y" id="yuvRange">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">yuvRange</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_RANGE_*</code> value.</p></span></section>
+			<section class="Y" id="yuvChromaSamplePosition">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">yuvChromaSamplePosition</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_CHROMA_SAMPLE_POSITION_*</code> value.</p></span></section>
+			<section class="Y" id="yuvPlanes">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">yuvPlanes</code><i class="x"><code array="fix" class="return">com.sun.jna.Pointer</code></i></h2><span class="A"><p>The three YUV planes.</p></span></section>
+			<section class="Y" id="yuvRowBytes">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">yuvRowBytes</code><i class="x"><code array="fix" class="return">int</code></i></h2><span class="A"><p>Row stride of each YUV plane in bytes.</p></span></section>
+			<section class="Y" id="imageOwnsYUVPlanes">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">imageOwnsYUVPlanes</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code> telling whether <code><a aria-label="imagify.avif.jna.AvifImage" href="api/imagify.avif.jna.AvifImage.html#yuvPlanes">#yuvPlanes</a></code> has to be freed by us.</p></span></section>
+			<section class="Y" id="alphaPlane">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">alphaPlane</code><i class="x"><code class="return">com.sun.jna.Pointer</code></i></h2><span class="A"><p>The alpha plane, or <code>null</code>.</p></span></section>
+			<section class="Y" id="alphaRowBytes">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">alphaRowBytes</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Row stride of the alpha plane in bytes.</p></span></section>
+			<section class="Y" id="imageOwnsAlphaPlane">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">imageOwnsAlphaPlane</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code> telling whether <code><a aria-label="imagify.avif.jna.AvifImage" href="api/imagify.avif.jna.AvifImage.html#alphaPlane">#alphaPlane</a></code> has to be freed by us.</p></span></section>
+			<section class="Y" id="alphaPremultiplied">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">alphaPremultiplied</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code> telling whether the alpha channel is already premultiplied.</p></span></section>
+			<section class="Y" id="icc">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">icc</code><i class="x"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></h2><span class="A"><p>Embedded ICC profile, if any.</p></span></section>
+			<section class="Y" id="colorPrimaries">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">colorPrimaries</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_COLOR_PRIMARIES_*</code> value.</p></span></section>
+			<section class="Y" id="transferCharacteristics">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">transferCharacteristics</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_TRANSFER_CHARACTERISTICS_*</code> value.</p></span></section>
+			<section class="Y" id="matrixCoefficients">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">matrixCoefficients</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_MATRIX_COEFFICIENTS_*</code> value.</p></span></section>
+			<section class="Y" id="clli">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">clli</code><i class="x"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ContentLightLevelInformationBox" href="api/imagify.avif.jna.AvifImage.ContentLightLevelInformationBox.html">ContentLightLevelInformationBox</a></code></i></h2><span class="A"><p>Content light level information.</p></span></section>
+			<section class="Y" id="transformFlags">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">transformFlags</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_TRANSFORM_*</code> bit set.</p></span></section>
+			<section class="Y" id="pasp">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">pasp</code><i class="x"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.PixelAspectRatioBox" href="api/imagify.avif.jna.AvifImage.PixelAspectRatioBox.html">PixelAspectRatioBox</a></code></i></h2><span class="A"><p>Pixel aspect ratio.</p></span></section>
+			<section class="Y" id="clap">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">clap</code><i class="x"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.CleanApertureBox" href="api/imagify.avif.jna.AvifImage.CleanApertureBox.html">CleanApertureBox</a></code></i></h2><span class="A"><p>Clean aperture (cropping) rectangle.</p></span></section>
+			<section class="Y" id="irot">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">irot</code><i class="x"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ImageRotation" href="api/imagify.avif.jna.AvifImage.ImageRotation.html">ImageRotation</a></code></i></h2><span class="A"><p>Rotation transform.</p></span></section>
+			<section class="Y" id="imir">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">imir</code><i class="x"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ImageMirror" href="api/imagify.avif.jna.AvifImage.ImageMirror.html">ImageMirror</a></code></i></h2><span class="A"><p>Mirror transform.</p></span></section>
+			<section class="Y" id="exif">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">exif</code><i class="x"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></h2><span class="A"><p>Embedded Exif payload, if any.</p></span></section>
+			<section class="Y" id="xmp">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">xmp</code><i class="x"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></h2><span class="A"><p>Embedded XMP payload, if any.</p></span></section>
+			<section class="Y" id="AvifImage()">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">AvifImage</code><code class="m">()</code></h2>
 			</section>
-			<section class="c" id="AvifImage(com.sun.jna.Pointer)">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">AvifImage</code><code class="EB">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></h2>
-				<table class="M">
-					<tr class="LB">
+			<section class="Y" id="AvifImage(com.sun.jna.Pointer)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">AvifImage</code><code class="m">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></h2>
+				<table class="LB">
+					<tr class="R">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">peer</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="c" id="getFieldOrder()">
-				<h2 class="i"><i class="OVERRIDE PROTECTED"></i><code class="f">getFieldOrder</code><code class="EB">()</code><i class="N"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-				<table class="M">
-					<tr class="O">
+			<section class="Y" id="getFieldOrder()">
+				<h2 class="p"><i class="OVERRIDE PROTECTED"></i><code class="S">getFieldOrder</code><code class="m">()</code><i class="x"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+				<table class="LB">
+					<tr class="GB">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="c" id="hasAlpha()">
-				<h2 class="i"><i class="PUBLIC"></i><code class="f">hasAlpha</code><code class="EB">()</code><i class="N"><code>boolean</code></i></h2>
-				<table class="M">
-					<tr class="O">
+			<section class="Y" id="hasAlpha()">
+				<h2 class="p"><i class="PUBLIC"></i><code class="S">hasAlpha</code><code class="m">()</code><i class="x"><code>boolean</code></i></h2>
+				<table class="LB">
+					<tr class="GB">
 						<td><code>boolean</code></td>
 						<td><span><code>true</code> when this image carries an alpha channel</span></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="V">
-			<div class="d">
-				<h5 class="s">Constructors</h5>
+		<aside class="y">
+			<div class="IB">
+				<h5 class="r">Constructors</h5>
 				<ul>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#AvifImage()">AvifImage</a></code><code class="EB">()</code></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#AvifImage(com.sun.jna.Pointer)">AvifImage</a></code><code class="EB">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#AvifImage()">AvifImage</a></code><code class="m">()</code></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#AvifImage(com.sun.jna.Pointer)">AvifImage</a></code><code class="m">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></li>
 				</ul>
-				<h5 class="s">Fields</h5>
+				<h5 class="r">Fields</h5>
 				<ul>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#width">width</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#height">height</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#depth">depth</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#yuvFormat">yuvFormat</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#yuvRange">yuvRange</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#yuvChromaSamplePosition">yuvChromaSamplePosition</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#yuvPlanes">yuvPlanes</a></code><i class="t"><code array="fix" class="return">com.sun.jna.Pointer</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#yuvRowBytes">yuvRowBytes</a></code><i class="t"><code array="fix" class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#imageOwnsYUVPlanes">imageOwnsYUVPlanes</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#alphaPlane">alphaPlane</a></code><i class="t"><code class="return">com.sun.jna.Pointer</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#alphaRowBytes">alphaRowBytes</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#imageOwnsAlphaPlane">imageOwnsAlphaPlane</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#alphaPremultiplied">alphaPremultiplied</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#icc">icc</a></code><i class="t"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#colorPrimaries">colorPrimaries</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#transferCharacteristics">transferCharacteristics</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#matrixCoefficients">matrixCoefficients</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#clli">clli</a></code><i class="t"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ContentLightLevelInformationBox" href="api/imagify.avif.jna.AvifImage.ContentLightLevelInformationBox.html">ContentLightLevelInformationBox</a></code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#transformFlags">transformFlags</a></code><i class="t"><code class="return">int</code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#pasp">pasp</a></code><i class="t"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.PixelAspectRatioBox" href="api/imagify.avif.jna.AvifImage.PixelAspectRatioBox.html">PixelAspectRatioBox</a></code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#clap">clap</a></code><i class="t"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.CleanApertureBox" href="api/imagify.avif.jna.AvifImage.CleanApertureBox.html">CleanApertureBox</a></code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#irot">irot</a></code><i class="t"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ImageRotation" href="api/imagify.avif.jna.AvifImage.ImageRotation.html">ImageRotation</a></code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#imir">imir</a></code><i class="t"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ImageMirror" href="api/imagify.avif.jna.AvifImage.ImageMirror.html">ImageMirror</a></code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#exif">exif</a></code><i class="t"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#xmp">xmp</a></code><i class="t"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#width">width</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#height">height</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#depth">depth</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#yuvFormat">yuvFormat</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#yuvRange">yuvRange</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#yuvChromaSamplePosition">yuvChromaSamplePosition</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#yuvPlanes">yuvPlanes</a></code><i class="i"><code array="fix" class="return">com.sun.jna.Pointer</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#yuvRowBytes">yuvRowBytes</a></code><i class="i"><code array="fix" class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#imageOwnsYUVPlanes">imageOwnsYUVPlanes</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#alphaPlane">alphaPlane</a></code><i class="i"><code class="return">com.sun.jna.Pointer</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#alphaRowBytes">alphaRowBytes</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#imageOwnsAlphaPlane">imageOwnsAlphaPlane</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#alphaPremultiplied">alphaPremultiplied</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#icc">icc</a></code><i class="i"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#colorPrimaries">colorPrimaries</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#transferCharacteristics">transferCharacteristics</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#matrixCoefficients">matrixCoefficients</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#clli">clli</a></code><i class="i"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ContentLightLevelInformationBox" href="api/imagify.avif.jna.AvifImage.ContentLightLevelInformationBox.html">ContentLightLevelInformationBox</a></code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#transformFlags">transformFlags</a></code><i class="i"><code class="return">int</code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#pasp">pasp</a></code><i class="i"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.PixelAspectRatioBox" href="api/imagify.avif.jna.AvifImage.PixelAspectRatioBox.html">PixelAspectRatioBox</a></code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#clap">clap</a></code><i class="i"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.CleanApertureBox" href="api/imagify.avif.jna.AvifImage.CleanApertureBox.html">CleanApertureBox</a></code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#irot">irot</a></code><i class="i"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ImageRotation" href="api/imagify.avif.jna.AvifImage.ImageRotation.html">ImageRotation</a></code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#imir">imir</a></code><i class="i"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ImageMirror" href="api/imagify.avif.jna.AvifImage.ImageMirror.html">ImageMirror</a></code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#exif">exif</a></code><i class="i"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#xmp">xmp</a></code><i class="i"><code class="return"><a aria-label="imagify.avif.jna.AvifRWData" href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></i></li>
 				</ul>
-				<h5 class="s">Methods</h5>
+				<h5 class="r">Methods</h5>
 				<ul>
-					<li class="m"><i class="OVERRIDE PROTECTED"></i><code><a href="api/imagify.avif.jna.AvifImage.html#getFieldOrder()">getFieldOrder</a></code><code class="EB">()</code><i class="t"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#hasAlpha()">hasAlpha</a></code><code class="EB">()</code><i class="t"><code>boolean</code></i></li>
+					<li class="BB"><i class="OVERRIDE PROTECTED"></i><code><a href="api/imagify.avif.jna.AvifImage.html#getFieldOrder()">getFieldOrder</a></code><code class="m">()</code><i class="i"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+					<li class="BB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.html#hasAlpha()">hasAlpha</a></code><code class="m">()</code><i class="i"><code>boolean</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="T">
+		<footer class="o">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
