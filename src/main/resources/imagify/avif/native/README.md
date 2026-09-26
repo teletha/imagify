@@ -38,10 +38,7 @@ cmake -S libavif -B build \
       -DAVIF_BUILD_TESTS=OFF \
       -DAVIF_LIBYUV=LOCAL \
       -DAVIF_LIBSHARPYUV=LOCAL \
-      -DAVIF_CODEC_AOM=LOCAL \
-      -DAVIF_CODEC_DAV1D=LOCAL \
-      -DAVIF_CODEC_RAV1E=LOCAL \
-      -DAVIF_CODEC_SVT=LOCAL
+      -DAVIF_CODEC_AOM=LOCAL
 cmake --build build --config Release --target avif
 ```
 
@@ -51,8 +48,22 @@ shared dependencies, which is what lets a single file per platform be shipped.
 
 `AVIF_LIBYUV` is not optional in the same way: it defaults to `SYSTEM`, and libavif aborts the
 configure outright when `pkg-config` cannot find it. `AVIF_LIBSHARPYUV` is optional but supplies
-the fast RGB to YUV conversion the encoder path uses. `dav1d` is a Meson project, so a local build
-of it additionally needs CMake, Ninja, Meson and a Rust toolchain (for `rav1e`).
+the fast RGB to YUV conversion the encoder path uses.
+
+### Why only libaom
+
+`libaom` encodes and decodes, and it is the codec libavif picks by default, so one is enough. The
+other three are left off deliberately, because each drags in a build tool that the CI runner
+images do not reliably provide:
+
+| codec | needs | how it failed |
+| --- | --- | --- |
+| `AVIF_CODEC_DAV1D` | Meson | built through Meson rather than CMake; on Windows runners Chocolatey installs Meson as an MSI, so the new `PATH` never reaches the configure step |
+| `AVIF_CODEC_RAV1E` | a Rust toolchain | the macOS arm64 image reinstalls `rust-std` while cargo is still running, and the link then fails on missing `.rlib` files |
+| `AVIF_CODEC_SVT` | NASM | hard failure at `enable_language(ASM_NASM)` on x86 when NASM is absent |
+
+Turning one back on means installing its tool on all three platforms first. `AVIF_CODEC_AOM` plus
+NASM is the whole set of requirements: CMake, Ninja and a C compiler.
 
 ## Why a self-contained library is required
 

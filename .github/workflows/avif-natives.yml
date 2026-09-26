@@ -47,30 +47,39 @@ jobs:
           ref: ${{ env.AVIF_VERSION }}
           path: libavif
 
-      - name: Install CMake, Ninja and Meson (Windows)
+      - name: Install CMake, Ninja and NASM (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          choco install --no-progress -y cmake ninja meson
+          choco install --no-progress -y cmake ninja nasm
           "C:\Program Files\CMake\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-      - name: Install Ninja and Meson (Linux)
+      - name: Install Ninja and NASM (Linux)
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y ninja-build meson
+          sudo apt-get install -y ninja-build nasm
 
-      - name: Install Ninja and Meson (macOS)
+      - name: Install Ninja and NASM (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install ninja meson
+          brew install ninja nasm
 
       - name: Configure
-        # Every dependency is fetched and built in tree. libyuv in particular is not optional:
-        # AVIF_LIBYUV defaults to SYSTEM and libavif aborts the configure when pkg-config cannot
-        # find it. SharpYUV is optional, but it provides the fast RGB to YUV path the encoder
-        # wants, and building it here keeps it out of the shared library's dependency list.
-        # dav1d is a Meson project, hence the Meson in the install steps above.
+        # Every dependency is fetched and built in tree, so the result links nothing the user's
+        # machine has to already provide. libyuv is not optional: AVIF_LIBYUV defaults to SYSTEM
+        # and libavif aborts the configure when pkg-config cannot find it. SharpYUV is optional but
+        # carries the fast RGB to YUV path the encoder wants.
+        #
+        # libaom alone covers both directions and is what libavif uses by default, so the other
+        # codecs stay off. Each one that stays on also brings a build tool the runner images do
+        # not reliably provide:
+        #   dav1d is driven through Meson, and Meson lands outside PATH on Windows runners
+        #          (Chocolatey installs it as an MSI, so the runner never sees the new PATH);
+        #   rav1e is Rust, and the macOS arm64 image reinstalls rust-std underneath an in-flight
+        #          cargo build, which breaks the link with missing .rlib files;
+        #   SVT-AV1 hard-fails at enable_language(ASM_NASM) on x86 when NASM is absent.
+        # Re-enabling one means installing the matching tool on all three platforms first.
         run: >
           cmake -S libavif -B build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
@@ -80,9 +89,6 @@ jobs:
           -DAVIF_LIBYUV=LOCAL
           -DAVIF_LIBSHARPYUV=LOCAL
           -DAVIF_CODEC_AOM=LOCAL
-          -DAVIF_CODEC_DAV1D=LOCAL
-          -DAVIF_CODEC_RAV1E=LOCAL
-          -DAVIF_CODEC_SVT=LOCAL
 
       - name: Build
         run: cmake --build build --target avif
