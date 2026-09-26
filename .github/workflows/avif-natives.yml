@@ -27,8 +27,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { target: windows-x64,  os: windows-2022,   ext: dll }
-          - { target: windows-arm64, os: windows-11-arm, ext: dll }
+          - { target: windows-x64,  os: windows-2022,   ext: dll, arch: x64 }
+          - { target: windows-arm64, os: windows-11-arm, ext: dll, arch: arm64 }
           - { target: linux-x64,    os: ubuntu-24.04,    ext: so }
           - { target: linux-arm64,  os: ubuntu-24.04-arm, ext: so }
           - { target: macos-x64,    os: macos-15-intel, ext: dylib }
@@ -83,6 +83,26 @@ jobs:
             Write-Host "-> $exe"
           }
 
+      - name: Set up the MSVC environment (Windows)
+        # Without a developer command prompt, CMake picks the MinGW GCC that ships in the runner
+        # image, and a MinGW DLL imports libwinpthread-1.dll, which is not part of Windows. MSVC
+        # with the static CRT below matches what webp4j ships: KERNEL32 plus the C runtime that
+        # Windows itself provides, and nothing else.
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.arch }}
+
+      - name: Pin cl as the compiler (Windows)
+        # msvc-dev-cmd puts cl on the PATH, but CMake would still prefer the cc or gcc it finds
+        # first, which is MinGW here. Naming the compiler is the only portable way to say so.
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          echo "CC=cl" >> "$GITHUB_ENV"
+          echo "CXX=cl" >> "$GITHUB_ENV"
+          cl 2>&1 | head -1
+
       - name: Install Ninja and NASM (Linux)
         if: runner.os == 'Linux'
         run: |
@@ -110,11 +130,10 @@ jobs:
         #   SVT-AV1 hard-fails at enable_language(ASM_NASM) on x86 when NASM is absent.
         # Re-enabling one means installing the matching tool on all three platforms first.
         #
-        # The runner images have no MSVC environment for Ninja, so CMake picks the MinGW GCC that
-        # ships in the image, and a MinGW DLL imports libwinpthread-1.dll. That file is not part of
-        # Windows, so a library depending on it would not load for a user who has never installed
-        # anything. The link flags below pull the POSIX threads library in statically, which leaves
-        # KERNEL32.dll and the api-ms-win-crt-* forwarders, both of which Windows itself provides.
+        # CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded is /MT rather than /MD. The default would leave
+        # the library importing VCRUNTIME140.dll and MSVCP140.dll, which come from the Visual C++
+        # redistributable rather than from Windows, so a user who has installed nothing would be
+        # missing them. CMake ignores the variable on the Unix targets.
         run: >
           cmake -S libavif -B build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
@@ -124,7 +143,7 @@ jobs:
           -DAVIF_LIBYUV=LOCAL
           -DAVIF_LIBSHARPYUV=LOCAL
           -DAVIF_CODEC_AOM=LOCAL
-          "-DCMAKE_SHARED_LINKER_FLAGS=-static-libgcc -static-libstdc++ -Wl,-Bstatic -lwinpthread -Wl,-Bdynamic"
+          -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 
       - name: Build
         run: cmake --build build --target avif

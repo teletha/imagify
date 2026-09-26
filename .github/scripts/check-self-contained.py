@@ -29,9 +29,9 @@ import sys
 # An unexpected name fails the build loudly on purpose: it is much better to break CI than to ship
 # a library that cannot be loaded.
 WINDOWS_ALLOWED = [
-    # Universal CRT and the MSVC runtime.
-    "api-ms-*", "ext-ms-*", "ucrtbase.dll", "ucrtbased.dll", "ucrt*.dll",
-    "vcruntime*.dll", "msvcp*.dll", "msvcrt*.dll",
+    # Universal CRT, which Windows 10 and later ship as api-ms-win-crt-* forwarders. This is what a
+    # /MT build imports once the static C runtime is linked in.
+    "api-ms-*", "ext-ms-*", "ucrtbase.dll", "ucrtbased.dll", "ucrt*.dll", "msvcrt*.dll",
     # The kernel and the handful of system libraries libavif and aom actually touch.
     "kernel32.dll", "kernelbase.dll", "ntdll.dll", "user32.dll", "gdi32.dll",
     "advapi32.dll", "ole32.dll", "oleaut32.dll", "shell32.dll", "shlwapi.dll",
@@ -40,6 +40,10 @@ WINDOWS_ALLOWED = [
     "iphlpapi.dll", "setupapi.dll", "cfgmgr32.dll", "powrprof.dll", "dbghelp.dll",
     "psapi.dll", "shcore.dll", "dxva2.dll", "dxgi.dll", "d3d11.dll", "version.dll",
 ]
+# VCRUNTIME140.dll and MSVCP140.dll are deliberately absent. They ship with the Visual C++
+# redistributable, not with Windows, so a library that imports them needs something installed that
+# this project does not install. The Windows job builds with /MT to avoid them, and webp4j's own
+# bundled DLL is in the same position, depending on nothing but KERNEL32 and msvcrt.
 
 LINUX_ALLOWED = [
     "libc.so.6", "libm.so.6", "libdl.so.2", "librt.so.1", "libpthread.so.0",

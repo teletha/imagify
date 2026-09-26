@@ -42,17 +42,26 @@ cmake -S libavif -B build \
 cmake --build build --config Release --target avif
 ```
 
-On Windows add the linker flags that keep the MinGW runtime out of the import table:
+On Windows, build with MSVC and the static C runtime:
 
 ```
-"-DCMAKE_SHARED_LINKER_FLAGS=-static-libgcc -static-libstdc++ -Wl,-Bstatic -lwinpthread -Wl,-Bdynamic"
+-DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl
+-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 ```
 
-The CI runner images have no MSVC environment for Ninja, so CMake picks the MinGW GCC that ships
-in the image, and a MinGW DLL imports `libwinpthread-1.dll`. That file is not part of Windows, so a
-library depending on it would not load on a machine where the user has installed nothing. Those
-flags leave only `KERNEL32.dll` and the `api-ms-win-crt-*` forwarders, which Windows itself
-provides. `check-self-contained.py` enforces exactly this.
+A developer command prompt has to be active first, otherwise CMake silently selects the MinGW GCC
+that ships in the runner image, and a MinGW DLL imports `libwinpthread-1.dll`. That file is not part
+of Windows, so a library depending on it would not load on a machine where the user has installed
+nothing.
+
+`MultiThreaded` is `/MT` rather than `/MD`. `/MD` would leave the library importing
+`VCRUNTIME140.dll` and `MSVCP140.dll`, which arrive with the Visual C++ redistributable rather than
+with Windows, so again a user who has installed nothing would be missing them.
+
+`check-self-contained.py` enforces the result: `VCRUNTIME140.dll` and `MSVCP140.dll` are not on its
+allow list, so a build that picks them up fails. For reference, the DLLs bundled in
+`webp4j-core` sit in the same position, importing nothing beyond `KERNEL32.dll` and the C runtime
+that Windows provides.
 
 `=LOCAL` makes libavif fetch and build each dependency in-tree instead of linking against whatever
 the build machine happens to ship. The result is a **self-contained** library with no further
