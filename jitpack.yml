@@ -4,6 +4,7 @@ jdk:
 before_install:
   - sdk install java 24-open
   - sdk use java 24-open
+  - export PATH="$HOME/.sdkman/candidates/java/24-open/bin:$PATH"
 
 install: |
   java -version
