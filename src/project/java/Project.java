@@ -12,7 +12,7 @@ import static bee.api.License.*;
 
 public class Project extends bee.api.Project {
     {
-        product("com.github.teletha", "imagify", "0.1");
+        product("com.github.teletha", "imagify", ref("version.txt"));
         license(MIT);
         versionControlSystem("https://github.com/teletha/imagify");
 
@@ -20,11 +20,11 @@ public class Project extends bee.api.Project {
         require("com.github.teletha", "psychopath");
         require("net.java.dev.jna", "jna");
         require("dev.matrixlab.webp4j", "webp4j-core");
+        require("com.twelvemonkeys.imageio", "imageio-webp");
+        require("com.twelvemonkeys.imageio", "common-image");
         require("com.github.teletha", "antibug").atTest();
 
         describe("""
-                # imagify
-
                 AVIF encoding and decoding for Java, backed by libavif.
 
                 ## Loading
@@ -35,13 +35,6 @@ public class Project extends bee.api.Project {
 
                     -Dimagify.avif.bundled=false   # ignore the bundled library,
                                                     # use a system libavif instead
-
-                ## Dependencies
-
-                - com.github.teletha:sinobu
-                - com.github.teletha:psychopath
-                - net.java.dev.jna:jna
-                - dev.matrixlab.webp4j:webp4j-core
 
                 ## Decode
 
