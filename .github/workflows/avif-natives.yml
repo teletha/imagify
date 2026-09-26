@@ -52,19 +52,35 @@ jobs:
         shell: pwsh
         run: |
           choco install --no-progress -y cmake ninja nasm
-          # Chocolatey installs CMake and NASM in ways that only update the machine PATH, and a
-          # runner hands every step the PATH the job started with. So both stay invisible to the
-          # configure step, which then fails with "Unable to find assembler" inside libaom. Re-read
-          # the machine PATH and publish the directories that hold the two tools. Hardcoding
-          # "C:\Program Files\..." would be simpler but would fail silently if the install layout
-          # ever changes, hence the lookup and the explicit throw.
+          # Chocolatey updates only the machine PATH, and a runner hands every step the PATH the
+          # job started with, so neither CMake nor NASM reaches the configure step. libaom then
+          # stops with "Unable to find assembler. Install 'yasm' or 'nasm.'". Re-reading the
+          # machine PATH is enough for CMake but not for NASM, which did not get there either, so
+          # probe the layouts it can land in. Publish each tool's directory and stop loudly when
+          # one is genuinely absent, rather than letting libaom report it much later.
           $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + $env:Path
-          foreach ($tool in 'cmake', 'nasm') {
-            $exe = Get-Command $tool -CommandType Application -ErrorAction SilentlyContinue |
+
+          function Get-ToolPath([string] $name, [string[]] $probeDirs, [string] $chocoLib) {
+            $cmd = Get-Command $name -CommandType Application -ErrorAction SilentlyContinue |
               Select-Object -First 1
-            if (-not $exe) { throw "$tool is not on the machine PATH after installing it" }
-            Split-Path $exe.Source | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-            Write-Host "$tool -> $($exe.Source)"
+            if ($cmd) { return $cmd.Source }
+            $leaf = "$name.exe"
+            $hit = $probeDirs | ForEach-Object { Join-Path $_ $leaf } |
+              Where-Object { Test-Path $_ } | Select-Object -First 1
+            if (-not $hit -and $chocoLib) {
+              $hit = Get-ChildItem $chocoLib -Filter $leaf -Recurse -ErrorAction SilentlyContinue |
+                Select-Object -First 1
+              if ($hit) { $hit = $hit.FullName }
+            }
+            if (-not $hit) { throw "$name is installed but no $leaf could be located" }
+            return $hit
+          }
+
+          $cmake = Get-ToolPath 'cmake' @() $null
+          $nasm = Get-ToolPath 'nasm' @('C:\Program Files\NASM', 'C:\Program Files (x86)\NASM') 'C:\ProgramData\chocolatey\lib\nasm'
+          foreach ($exe in $cmake, $nasm) {
+            Split-Path $exe | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+            Write-Host "-> $exe"
           }
 
       - name: Install Ninja and NASM (Linux)
