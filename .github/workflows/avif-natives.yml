@@ -48,13 +48,20 @@ jobs:
           path: libavif
 
       - name: Install CMake, Ninja and NASM (Windows)
+        # NASM is installed on x64 only, and its absence on arm64 is deliberate. libaom treats an
+        # assembler on the PATH as a go-ahead to build its x86 assembly sources, which on Windows
+        # arm64 then fail to compile: immintrin.h rejects the target with "This header is specific
+        # to X86, X64, ARM64, and ARM64EC targets". MSVC assembles the ARM64 sources itself, so
+        # arm64 needs nothing extra. On x64 the NASM path does get used, and without an assembler
+        # libaom stops at "Unable to find assembler. Install 'yasm' or 'nasm.'".
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          choco install --no-progress -y cmake ninja nasm
+          $x64 = '${{ matrix.arch }}' -eq 'x64'
+          $tools = if ($x64) { 'cmake', 'ninja', 'nasm' } else { 'cmake', 'ninja' }
+          choco install --no-progress -y @tools
           # Chocolatey updates only the machine PATH, and a runner hands every step the PATH the
-          # job started with, so neither CMake nor NASM reaches the configure step. libaom then
-          # stops with "Unable to find assembler. Install 'yasm' or 'nasm.'". Re-reading the
+          # job started with, so neither CMake nor NASM reaches the configure step. Re-reading the
           # machine PATH is enough for CMake but not for NASM, which did not get there either, so
           # probe the layouts it can land in. Publish each tool's directory and stop loudly when
           # one is genuinely absent, rather than letting libaom report it much later.
@@ -76,9 +83,11 @@ jobs:
             return $hit
           }
 
-          $cmake = Get-ToolPath 'cmake' @() $null
-          $nasm = Get-ToolPath 'nasm' @('C:\Program Files\NASM', 'C:\Program Files (x86)\NASM') 'C:\ProgramData\chocolatey\lib\nasm'
-          foreach ($exe in $cmake, $nasm) {
+          $found = @(Get-ToolPath 'cmake' @() $null)
+          if ($x64) {
+            $found += Get-ToolPath 'nasm' @('C:\Program Files\NASM', 'C:\Program Files (x86)\NASM') 'C:\ProgramData\chocolatey\lib\nasm'
+          }
+          foreach ($exe in $found) {
             Split-Path $exe | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
             Write-Host "-> $exe"
           }
