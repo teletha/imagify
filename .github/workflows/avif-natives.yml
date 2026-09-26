@@ -123,15 +123,16 @@ jobs:
         run: cmake --build build --target avif
 
       - name: Collect
+        # One name pattern for every platform. The library is libavif.so.16 on Linux,
+        # libavif.16.dylib on macOS, and libavif.dll on Windows, where CMake's lib prefix
+        # applies to DLLs too. -type f skips the libavif.so symlink and copies the real file.
         shell: bash
         run: |
           mkdir -p dist
-          case "${{ matrix.ext }}" in
-            dll)    src=$(find build -name avif.dll | head -1) ;;
-            so)     src=$(find build -name 'libavif.so.*' | head -1) ;;
-            dylib)  src=$(find build -name 'libavif*.dylib' | head -1) ;;
-          esac
-          test -n "$src" || { echo "::error::no libavif was built"; exit 1; }
+          src=$(find build -type f \( -name 'avif.dll' -o -name 'libavif.dll' \
+            -o -name 'libavif.so' -o -name 'libavif.so.*' \
+            -o -name 'avif*.dylib' -o -name 'libavif*.dylib' \) | head -1)
+          test -n "$src" || { echo "::error::no libavif shared library was produced under build/"; exit 1; }
           cp "$src" "dist/libavif-${{ matrix.target }}.${{ matrix.ext }}"
           ls -l dist
 
