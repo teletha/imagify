@@ -52,7 +52,20 @@ jobs:
         shell: pwsh
         run: |
           choco install --no-progress -y cmake ninja nasm
-          "C:\Program Files\CMake\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          # Chocolatey installs CMake and NASM in ways that only update the machine PATH, and a
+          # runner hands every step the PATH the job started with. So both stay invisible to the
+          # configure step, which then fails with "Unable to find assembler" inside libaom. Re-read
+          # the machine PATH and publish the directories that hold the two tools. Hardcoding
+          # "C:\Program Files\..." would be simpler but would fail silently if the install layout
+          # ever changes, hence the lookup and the explicit throw.
+          $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + $env:Path
+          foreach ($tool in 'cmake', 'nasm') {
+            $exe = Get-Command $tool -CommandType Application -ErrorAction SilentlyContinue |
+              Select-Object -First 1
+            if (-not $exe) { throw "$tool is not on the machine PATH after installing it" }
+            Split-Path $exe.Source | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+            Write-Host "$tool -> $($exe.Source)"
+          }
 
       - name: Install Ninja and NASM (Linux)
         if: runner.os == 'Linux'
