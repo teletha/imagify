@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<meta content="Explains how to use Imagify and its API. " name="description"/>
+		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<title>Imagify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="s">
+		<header class="t" date="2026-09-26">
+			<h1 class="R"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="FB"><a href="api/main.html" id="API"><svg class="package">
+						<use href="main.svg#package"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify/discussions" id="Community" target="_blank"><svg class="user">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify" id="Repository" target="_blank"><svg class="github">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="g"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<nav class="l"></nav>
+		<article class="u" id="Article">
+			<div class="U">
+				<section class="A">
+					<h2>Imagify API Overview</h2>
+					<p>This page provides a concise overview of the available APIs, including their purpose, key functionalities, and usage patterns. It serves as a starting point for developers to understand how to integrate and interact with the system effectively.</p>
+					<section class="A">
+						<h4>🛠️ Interface</h4>
+						<table>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></td>
+								<td>JNA binding for the subset of the libavif C API that is required to decode and encode
+AVIF images.</td>
+							</tr>
+						</table>
+					</section>
+					<section class="A">
+						<h4>🛠️ Class</h4>
+						<table>
+							<tr>
+								<td><code><a href="api/imagify.avif.AvifImageReaderSpi.html">AvifImageReaderSpi</a></code></td>
+								<td>Registers AvifImageReader with ImageIO.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.AvifImageWriterSpi.html">AvifImageWriterSpi</a></code></td>
+								<td>Registers AvifImageWriter with ImageIO.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.AvifImageWriter.html">AvifImageWriter</a></code></td>
+								<td>ImageWriter</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.AvifImageReader.html">AvifImageReader</a></code></td>
+								<td>ImageReader</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifIOStats.html">AvifIOStats</a></code></td>
+								<td>I/O statistics collected while decoding or encoding: avifIOStats.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifRGBImage.html">AvifRGBImage</a></code></td>
+								<td>A block of interleaved RGB(A) pixels handed to, or received from, libavif:
+avifRGBImage.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifEncoder.html">AvifEncoder</a></code></td>
+								<td>Encoder state: avifEncoder.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifEncoder.ScalingMode.html">AvifEncoder.ScalingMode</a></code></td>
+								<td>avifScalingMode</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifEncoder.Fraction.html">AvifEncoder.Fraction</a></code></td>
+								<td>avifFraction</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifDecoder.html">AvifDecoder</a></code></td>
+								<td>Decoder state: avifDecoder.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifDecoder.AvifIO.html">AvifDecoder.AvifIO</a></code></td>
+								<td>Opaque handle for avifIO; its layout is private to libavif.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifImageTiming.html">AvifImageTiming</a></code></td>
+								<td>Timing information of a single frame of an image sequence: avifImageTiming.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifRWData.html">AvifRWData</a></code></td>
+								<td>Writable byte buffer owned by libavif: avifRWData.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifCodec.html">AvifCodec</a></code></td>
+								<td>Entry point to the libavif based AVIF codec.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifImage.html">AvifImage</a></code></td>
+								<td>A decoded or to be encoded AVIF image: avifImage.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifImage.CleanApertureBox.html">AvifImage.CleanApertureBox</a></code></td>
+								<td>avifCleanApertureBox</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifImage.PixelAspectRatioBox.html">AvifImage.PixelAspectRatioBox</a></code></td>
+								<td>avifPixelAspectRatioBox</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifImage.ContentLightLevelInformationBox.html">AvifImage.ContentLightLevelInformationBox</a></code></td>
+								<td>avifContentLightLevelInformationBox</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifImage.ImageMirror.html">AvifImage.ImageMirror</a></code></td>
+								<td>avifImageMirror</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifImage.ImageRotation.html">AvifImage.ImageRotation</a></code></td>
+								<td>avifImageRotation</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifImage.ByReference.html">AvifImage.ByReference</a></code></td>
+								<td>View on an avifImage that is owned by somebody else, for example
+avifDecoder.image. JNA shares the parent&apos;s native memory, so the fields can be read
+and written directly once the parent structure has been read.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifROData.html">AvifROData</a></code></td>
+								<td>Read only view on a block of bytes: avifROData.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifDiagnostics.html">AvifDiagnostics</a></code></td>
+								<td>Error message buffer filled in by libavif: avifDiagnostics.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.Imagify.html">Imagify</a></code></td>
+								<td>no description</td>
+							</tr>
+						</table>
+					</section>
+					<section class="A">
+						<h4>🛠️ Enum</h4>
+						<table>
+							<tr>
+								<td><code><a href="api/imagify.ImageFormat.html">ImageFormat</a></code></td>
+								<td>no description</td>
+							</tr>
+						</table>
+					</section>
+					<section class="A">
+						<h4>🛠️ Record</h4>
+						<table>
+							<tr>
+								<td><code><a href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></td>
+								<td>Properties of the image contained in an AVIF file, as reported by the container headers.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">AvifCodec.DecodedImage</a></code></td>
+								<td>A decoded image together with the properties read from its container.</td>
+							</tr>
+						</table>
+					</section>
+				</section>
+			</div>
+		</article>
+		<aside class="k"></aside>
+		<footer class="i">
+			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
+		</footer>
+	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
+</html>

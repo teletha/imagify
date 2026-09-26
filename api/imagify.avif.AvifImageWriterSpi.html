@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<meta content="Explains how to use Imagify and its API. " name="description"/>
+		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<title>Imagify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="s">
+		<header class="t" date="2026-09-26">
+			<h1 class="R"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="FB"><a href="api/main.html" id="API"><svg class="package">
+						<use href="main.svg#package"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify/discussions" id="Community" target="_blank"><svg class="user">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify" id="Repository" target="_blank"><svg class="github">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="g"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<nav class="l"></nav>
+		<article class="u" id="Article">
+			<section class="U"><code class="K">imagify.avif</code>
+				<h2 class="Class BB"><code class="p">AvifImageWriterSpi</code></h2>
+				<div class="o">
+					<ul class="E G">
+						<li><code><a aria-label="javax.imageio.spi.ImageWriterSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageWriterSpi.html">ImageWriterSpi</a></code></li>
+						<li><code><a aria-label="javax.imageio.spi.ImageReaderWriterSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageReaderWriterSpi.html">ImageReaderWriterSpi</a></code></li>
+						<li><code><a aria-label="javax.imageio.spi.IIOServiceProvider 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/IIOServiceProvider.html">IIOServiceProvider</a></code></li>
+					</ul>
+					<ul class="E H">
+						<li><code><a aria-label="javax.imageio.spi.RegisterableService 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/RegisterableService.html">RegisterableService</a></code></li>
+					</ul>
+				</div><span class="A"><p>Registers <code><a aria-label="imagify.avif.AvifImageWriter" href="api/imagify.avif.AvifImageWriter.html">AvifImageWriter</a></code> with <code>ImageIO</code>.</p><p>Encoding needs the native <code>libavif</code> library. To keep <code>ImageIO</code> usable when that
+ library is absent, <code><a aria-label="imagify.avif.AvifImageWriterSpi" href="api/imagify.avif.AvifImageWriterSpi.html#canEncodeImage(java.awt.image.RenderedImage)">#canEncodeImage(RenderedImage)</a></code> answers <code>false</code> in that case, which
+ makes <code>ImageIO.write()</code> return <code>false</code> instead of failing hard.
+</p>
+				</span></section>
+			<section class="U" id="VERSION">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="p">VERSION</code><i class="Z"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Version of this service provider implementation.</p></span></section>
+			<section class="U" id="COMPRESSION_TYPE">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="p">COMPRESSION_TYPE</code><i class="Z"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>The one and only compression type this writer supports.</p></span></section>
+			<section class="U" id="MINIMUM_QUALITY">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="p">MINIMUM_QUALITY</code><i class="Z"><code class="return">float</code></i></h2><span class="A"><p>Lowest accepted <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">javax.imageio.ImageWriteParam</a></code> compression quality.</p></span></section>
+			<section class="U" id="MAXIMUM_QUALITY">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="p">MAXIMUM_QUALITY</code><i class="Z"><code class="return">float</code></i></h2><span class="A"><p>Highest accepted <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">javax.imageio.ImageWriteParam</a></code> compression quality.</p></span></section>
+			<section class="U" id="AvifImageWriterSpi()">
+				<h2 class="S"><i class="PUBLIC"></i><code class="p">AvifImageWriterSpi</code><code class="T">()</code></h2>
+			</section>
+			<section class="U" id="canEncodeImage(java.awt.image.RenderedImage)">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">canEncodeImage</code><code class="T">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">image</code>)</code><i class="Z"><code>boolean</code></i></h2>
+				<table class="b">
+					<tr class="Q">
+						<td><code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">image</code></td>
+						<td></td>
+					</tr>
+					<tr class="M">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="canEncodeImage(javax.imageio.ImageTypeSpecifier)">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">canEncodeImage</code><code class="T">(<code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code>)</code><i class="Z"><code>boolean</code></i></h2>
+				<table class="b">
+					<tr class="Q">
+						<td><code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code></td>
+						<td></td>
+					</tr>
+					<tr class="M">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="createWriterInstance(java.lang.Object)">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">createWriterInstance</code><code class="T">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="Z"><code><a aria-label="javax.imageio.ImageWriter 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriter.html">ImageWriter</a></code></i></h2>
+				<table class="b">
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code></td>
+						<td></td>
+					</tr>
+					<tr class="M">
+						<td><code><a aria-label="javax.imageio.ImageWriter 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriter.html">ImageWriter</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="getFormatNames()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">getFormatNames</code><code class="T">()</code><i class="Z"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="getFileSuffixes()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">getFileSuffixes</code><code class="T">()</code><i class="Z"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="getMIMETypes()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">getMIMETypes</code><code class="T">()</code><i class="Z"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="getPluginClassName()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">getPluginClassName</code><code class="T">()</code><i class="Z"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="getWriterClass()">
+				<h2 class="S"><i class="PUBLIC"></i><code class="p">getWriterClass</code><code class="T">()</code><i class="Z"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.avif.AvifImageWriter" href="api/imagify.avif.AvifImageWriter.html">AvifImageWriter</a></code></code></code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.avif.AvifImageWriter" href="api/imagify.avif.AvifImageWriter.html">AvifImageWriter</a></code></code></code></td>
+						<td><span><p>the writer this provider creates</p></span></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="isStandardStreamMetadataFormatSupported()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">isStandardStreamMetadataFormatSupported</code><code class="T">()</code><i class="Z"><code>boolean</code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="getNativeStreamMetadataFormatName()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">getNativeStreamMetadataFormatName</code><code class="T">()</code><i class="Z"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="isStandardImageMetadataFormatSupported()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">isStandardImageMetadataFormatSupported</code><code class="T">()</code><i class="Z"><code>boolean</code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="getNativeImageMetadataFormatName()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">getNativeImageMetadataFormatName</code><code class="T">()</code><i class="Z"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="getVendorName()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">getVendorName</code><code class="T">()</code><i class="Z"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="getVersion()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">getVersion</code><code class="T">()</code><i class="Z"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="getDescription(java.util.Locale)">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">getDescription</code><code class="T">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="Z"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="b">
+					<tr class="Q">
+						<td><code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code></td>
+						<td></td>
+					</tr>
+					<tr class="M">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="U" id="toString()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="p">toString</code><code class="T">()</code><i class="Z"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="b">
+					<tr class="M">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+		</article>
+		<aside class="k">
+			<div class="GB">
+				<h5 class="x">Constructors</h5>
+				<ul>
+					<li class="IB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#AvifImageWriterSpi()">AvifImageWriterSpi</a></code><code class="T">()</code></li>
+				</ul>
+				<h5 class="x">Static Fields</h5>
+				<ul>
+					<li class="IB"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#VERSION">VERSION</a></code><i class="P"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="IB"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#COMPRESSION_TYPE">COMPRESSION_TYPE</a></code><i class="P"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="IB"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#MINIMUM_QUALITY">MINIMUM_QUALITY</a></code><i class="P"><code class="return">float</code></i></li>
+					<li class="IB"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#MAXIMUM_QUALITY">MAXIMUM_QUALITY</a></code><i class="P"><code class="return">float</code></i></li>
+				</ul>
+				<h5 class="x">Methods</h5>
+				<ul>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#canEncodeImage(java.awt.image.RenderedImage)">canEncodeImage</a></code><code class="T">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">image</code>)</code><i class="P"><code>boolean</code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#canEncodeImage(javax.imageio.ImageTypeSpecifier)">canEncodeImage</a></code><code class="T">(<code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code>)</code><i class="P"><code>boolean</code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#createWriterInstance(java.lang.Object)">createWriterInstance</a></code><code class="T">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="P"><code><a aria-label="javax.imageio.ImageWriter 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriter.html">ImageWriter</a></code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#getFormatNames()">getFormatNames</a></code><code class="T">()</code><i class="P"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#getFileSuffixes()">getFileSuffixes</a></code><code class="T">()</code><i class="P"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#getMIMETypes()">getMIMETypes</a></code><code class="T">()</code><i class="P"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#getPluginClassName()">getPluginClassName</a></code><code class="T">()</code><i class="P"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="IB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#getWriterClass()">getWriterClass</a></code><code class="T">()</code><i class="P"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.avif.AvifImageWriter" href="api/imagify.avif.AvifImageWriter.html">AvifImageWriter</a></code></code></code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#isStandardStreamMetadataFormatSupported()">isStandardStreamMetadataFormatSupported</a></code><code class="T">()</code><i class="P"><code>boolean</code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#getNativeStreamMetadataFormatName()">getNativeStreamMetadataFormatName</a></code><code class="T">()</code><i class="P"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#isStandardImageMetadataFormatSupported()">isStandardImageMetadataFormatSupported</a></code><code class="T">()</code><i class="P"><code>boolean</code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#getNativeImageMetadataFormatName()">getNativeImageMetadataFormatName</a></code><code class="T">()</code><i class="P"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#getVendorName()">getVendorName</a></code><code class="T">()</code><i class="P"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#getVersion()">getVersion</a></code><code class="T">()</code><i class="P"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#getDescription(java.util.Locale)">getDescription</a></code><code class="T">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="P"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="IB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageWriterSpi.html#toString()">toString</a></code><code class="T">()</code><i class="P"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="i">
+			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
+		</footer>
+	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
+</html>
