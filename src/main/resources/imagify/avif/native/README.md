@@ -51,7 +51,8 @@ shared dependencies, which is what lets a single file per platform be shipped.
 
 `AVIF_LIBYUV` is not optional in the same way: it defaults to `SYSTEM`, and libavif aborts the
 configure outright when `pkg-config` cannot find it. `AVIF_LIBSHARPYUV` is optional but supplies
-the fast RGB to YUV conversion the encoder path uses.
+the fast RGB to YUV conversion the encoder path uses. `dav1d` is a Meson project, so a local build
+of it additionally needs CMake, Ninja, Meson and a Rust toolchain (for `rav1e`).
 
 ## Why a self-contained library is required
 

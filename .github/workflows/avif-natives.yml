@@ -47,24 +47,30 @@ jobs:
           ref: ${{ env.AVIF_VERSION }}
           path: libavif
 
-      - name: Install CMake and Ninja (Windows)
+      - name: Install CMake, Ninja and Meson (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          choco install --no-progress -y cmake ninja
+          choco install --no-progress -y cmake ninja meson
           "C:\Program Files\CMake\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-      - name: Install Ninja (Linux)
+      - name: Install Ninja and Meson (Linux)
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y ninja-build
+          sudo apt-get install -y ninja-build meson
+
+      - name: Install Ninja and Meson (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install ninja meson
 
       - name: Configure
         # Every dependency is fetched and built in tree. libyuv in particular is not optional:
         # AVIF_LIBYUV defaults to SYSTEM and libavif aborts the configure when pkg-config cannot
         # find it. SharpYUV is optional, but it provides the fast RGB to YUV path the encoder
         # wants, and building it here keeps it out of the shared library's dependency list.
+        # dav1d is a Meson project, hence the Meson in the install steps above.
         run: >
           cmake -S libavif -B build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
