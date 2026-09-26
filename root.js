@@ -4,7 +4,8 @@ const root = {
 	"packages": [
 		"imagify.avif",
 		"imagify.avif.jna",
-		"imagify"
+		"imagify",
+		"imagify.resize"
 	],
 	"types": [
 		{
@@ -145,6 +146,16 @@ const root = {
 		{
 			"name": "ImageFormat",
 			"packageName": "imagify",
+			"type": "Enum"
+		},
+		{
+			"name": "BufferedImageResize",
+			"packageName": "imagify.resize",
+			"type": "Class"
+		},
+		{
+			"name": "ResizeAlgorithm",
+			"packageName": "imagify.resize",
 			"type": "Enum"
 		},
 		{
