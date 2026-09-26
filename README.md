@@ -149,8 +149,6 @@ Imagify depends on the following products on runtime.
 * [imageio-metadata-3.15.2](https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-metadata/3.15.2)
 * [imageio-webp-3.15.2](https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-webp/3.15.2)
 * [jna-5.19.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.19.1)
-* [psychopath-2.2.1](https://mvnrepository.com/artifact/com.github.teletha/psychopath/2.2.1)
-* [sinobu-4.13.1](https://mvnrepository.com/artifact/com.github.teletha/sinobu/4.13.1)
 * [webp4j-core-2.5.0](https://mvnrepository.com/artifact/dev.matrixlab.webp4j/webp4j-core/2.5.0)
 <p align="right"><a href="#top">back to top</a></p>
 

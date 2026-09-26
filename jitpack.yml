@@ -2,6 +2,10 @@ jdk:
   - openjdk24
 
 install: |
+  java -version
+  which java
+  echo "$JAVA_HOME"
+  
   if [ -e "bee" ]; then
     source bee install maven --skip test
   else
