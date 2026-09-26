@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<meta content="Explains how to use Imagify and its API. " name="description"/>
+		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<title>Imagify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="f">
+		<header class="g" date="2026-09-26">
+			<h1 class="l"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
+						<use href="main.svg#package"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify/discussions" id="Community" target="_blank"><svg class="user">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify" id="Repository" target="_blank"><svg class="github">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="q"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<nav class="Q"></nav>
+		<article class="h" id="Article">
+			<section class="V"><code class="n">imagify</code>
+				<h2 class="Class M"><code class="x">ImageReader</code></h2>
+				<div class="J"></div><span class="A"><p>Reads <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code> from various sources with automatic format detection.</p><p>Supported sources: <code>byte[]</code>, <code>Path</code>, <code>InputStream</code>.</p><p>Format detection priority:
+ 
+						<ol>
+							<li>Explicit <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code> parameter</li>
+							<li>File extension</li>
+							<li>Magic byte header</li>
+						</ol>
+					</p><p>Usage:</p><pre><code>
+ BufferedImage img = ImageReader.read(path);
+ BufferedImage img = ImageReader.read(bytes, ImageFormat.PNG);
+ BufferedImage img = ImageReader.read(inputStream);
+ </code></pre></span></section>
+			<section class="V" id="read(byte[])">
+				<h2 class="FB"><i class="STATIC PUBLIC"></i><code class="x">read</code><code class="Z">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="s"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="JB">
+					<tr class="t">
+						<td><code array="fix">byte</code><code class="parameterName">data</code></td>
+						<td></td>
+					</tr>
+					<tr class="N">
+						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
+						<td></td>
+					</tr>
+					<tr class="R">
+						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="A"><p>Reads an image from a byte array with auto-detected format.</p></span></section>
+			<section class="V" id="read(byte[],imagify.ImageFormat)">
+				<h2 class="FB"><i class="STATIC PUBLIC"></i><code class="x">read</code><code class="Z">(<code array="fix">byte</code><code class="parameterName">data</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="s"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="JB">
+					<tr class="t">
+						<td><code array="fix">byte</code><code class="parameterName">data</code></td>
+						<td></td>
+					</tr>
+					<tr class="t">
+						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
+						<td></td>
+					</tr>
+					<tr class="N">
+						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
+						<td></td>
+					</tr>
+					<tr class="R">
+						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="A"><p>Reads an image from a byte array with explicit format.</p></span></section>
+			<section class="V" id="read(java.nio.file.Path)">
+				<h2 class="FB"><i class="STATIC PUBLIC"></i><code class="x">read</code><code class="Z">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="s"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="JB">
+					<tr class="t">
+						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
+						<td></td>
+					</tr>
+					<tr class="N">
+						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
+						<td></td>
+					</tr>
+					<tr class="R">
+						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="A"><p>Reads an image from a file path with auto-detected format.</p></span></section>
+			<section class="V" id="read(java.nio.file.Path,imagify.ImageFormat)">
+				<h2 class="FB"><i class="STATIC PUBLIC"></i><code class="x">read</code><code class="Z">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="s"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="JB">
+					<tr class="t">
+						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
+						<td></td>
+					</tr>
+					<tr class="t">
+						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
+						<td></td>
+					</tr>
+					<tr class="N">
+						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
+						<td></td>
+					</tr>
+					<tr class="R">
+						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="A"><p>Reads an image from a file path with explicit format.</p></span></section>
+			<section class="V" id="read(java.io.InputStream)">
+				<h2 class="FB"><i class="STATIC PUBLIC"></i><code class="x">read</code><code class="Z">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>)</code><i class="s"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="JB">
+					<tr class="t">
+						<td><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code></td>
+						<td></td>
+					</tr>
+					<tr class="N">
+						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
+						<td></td>
+					</tr>
+					<tr class="R">
+						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="A"><p>Reads an image from an InputStream with auto-detected format.</p></span></section>
+			<section class="V" id="read(java.io.InputStream,imagify.ImageFormat)">
+				<h2 class="FB"><i class="STATIC PUBLIC"></i><code class="x">read</code><code class="Z">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="s"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="JB">
+					<tr class="t">
+						<td><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code></td>
+						<td></td>
+					</tr>
+					<tr class="t">
+						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
+						<td></td>
+					</tr>
+					<tr class="N">
+						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
+						<td></td>
+					</tr>
+					<tr class="R">
+						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="A"><p>Reads an image from an InputStream with explicit format.</p></span></section>
+		</article>
+		<aside class="j">
+			<div class="EB">
+				<h5 class="z">Static Methods</h5>
+				<ul>
+					<li class="u"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(byte[])">read</a></code><code class="Z">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="w"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="u"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(byte[],imagify.ImageFormat)">read</a></code><code class="Z">(<code array="fix">byte</code><code class="parameterName">data</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="w"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="u"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(java.nio.file.Path)">read</a></code><code class="Z">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="w"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="u"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(java.nio.file.Path,imagify.ImageFormat)">read</a></code><code class="Z">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="w"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="u"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(java.io.InputStream)">read</a></code><code class="Z">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>)</code><i class="w"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="u"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(java.io.InputStream,imagify.ImageFormat)">read</a></code><code class="Z">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="w"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="i">
+			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
+		</footer>
+	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
+</html>

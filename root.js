@@ -4,8 +4,7 @@ const root = {
 	"packages": [
 		"imagify.avif",
 		"imagify.avif.jna",
-		"imagify",
-		"imagify.resize"
+		"imagify"
 	],
 	"types": [
 		{
@@ -144,22 +143,47 @@ const root = {
 			"type": "Exception"
 		},
 		{
+			"name": "ImageWriter",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
+			"name": "BufferedImageResize",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
+			"name": "SpriteSheet",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
 			"name": "ImageFormat",
 			"packageName": "imagify",
 			"type": "Enum"
 		},
 		{
-			"name": "BufferedImageResize",
-			"packageName": "imagify.resize",
+			"name": "ImageReader",
+			"packageName": "imagify",
 			"type": "Class"
 		},
 		{
 			"name": "ResizeAlgorithm",
-			"packageName": "imagify.resize",
+			"packageName": "imagify",
 			"type": "Enum"
 		},
 		{
 			"name": "Imagify",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
+			"name": "ImagePipeline",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
+			"name": "ImageResizer",
 			"packageName": "imagify",
 			"type": "Class"
 		}

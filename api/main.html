@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="t">
-		<header class="u" date="2026-09-26">
-			<h1 class="BB"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="h"><a href="api/main.html" id="API"><svg class="package">
+	<body class="f">
+		<header class="g" date="2026-09-26">
+			<h1 class="l"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,16 +35,16 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="i"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="q"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="w"></nav>
-		<article class="X" id="Article">
-			<div class="K">
+		<nav class="Q"></nav>
+		<article class="h" id="Article">
+			<div class="V">
 				<section class="A">
 					<h2>Imagify API Overview</h2>
 					<p>This page provides a concise overview of the available APIs, including their purpose, key functionalities, and usage patterns. It serves as a starting point for developers to understand how to integrate and interact with the system effectively.</p>
@@ -157,13 +157,33 @@ and written directly once the parent structure has been read.</td>
 								<td>Error message buffer filled in by libavif: avifDiagnostics.</td>
 							</tr>
 							<tr>
-								<td><code><a href="api/imagify.resize.BufferedImageResize.html">BufferedImageResize</a></code></td>
+								<td><code><a href="api/imagify.ImageWriter.html">ImageWriter</a></code></td>
+								<td>Writes BufferedImage to various destinations with format control.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.BufferedImageResize.html">BufferedImageResize</a></code></td>
 								<td>High-quality BufferedImage resizing utility.
 Supports resampling algorithms: BILINEAR, CATROM, MITCHELL, LANCZOS3, HQX (xBRZ).</td>
 							</tr>
 							<tr>
+								<td><code><a href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
+								<td>Creates sprite sheets from multiple image frames.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.ImageReader.html">ImageReader</a></code></td>
+								<td>Reads BufferedImage from various sources with automatic format detection.</td>
+							</tr>
+							<tr>
 								<td><code><a href="api/imagify.Imagify.html">Imagify</a></code></td>
 								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
+								<td>Fluent pipeline API for image processing.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.ImageResizer.html">ImageResizer</a></code></td>
+								<td>High-quality BufferedImage resizing utility.</td>
 							</tr>
 						</table>
 					</section>
@@ -172,11 +192,11 @@ Supports resampling algorithms: BILINEAR, CATROM, MITCHELL, LANCZOS3, HQX (xBRZ)
 						<table>
 							<tr>
 								<td><code><a href="api/imagify.ImageFormat.html">ImageFormat</a></code></td>
-								<td>no description</td>
+								<td>Supported image formats with auto-detection capabilities.</td>
 							</tr>
 							<tr>
-								<td><code><a href="api/imagify.resize.ResizeAlgorithm.html">ResizeAlgorithm</a></code></td>
-								<td>High-quality image resampling algorithms for java.awt.image.BufferedImage resizing.
+								<td><code><a href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></td>
+								<td>High-quality image resampling algorithms for resizing.
 Each algorithm provides a kernel function and a support radius.</td>
 							</tr>
 						</table>
@@ -197,8 +217,8 @@ Each algorithm provides a kernel function and a support radius.</td>
 				</section>
 			</div>
 		</article>
-		<aside class="q"></aside>
-		<footer class="v">
+		<aside class="j"></aside>
+		<footer class="i">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
