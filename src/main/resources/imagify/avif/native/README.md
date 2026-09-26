@@ -63,6 +63,19 @@ allow list, so a build that picks them up fails. For reference, the DLLs bundled
 `webp4j-core` sit in the same position, importing nothing beyond `KERNEL32.dll` and the C runtime
 that Windows provides.
 
+### Naming the target CPU
+
+Pass `AOM_TARGET_CPU` explicitly (`x86_64` or `arm64`) rather than letting libaom detect it. libaom
+derives the target from `CMAKE_SYSTEM_PROCESSOR`, which on Windows reflects the environment rather
+than the compiler. Build steps run under Git Bash, an x64 process even on the ARM64 image, so CMake
+reports `AMD64`, libaom announces `Detected CPU: x86_64`, and the build then either demands NASM
+that arm64 does not need or fails compiling `aom_dsp/x86` with `immintrin.h`. Naming the target
+also keeps the output from depending on which shell the build happened to run under.
+
+MSVC cannot read NASM syntax, so the x64 targets still need NASM installed, while the arm64 targets
+must not have it on the `PATH`: libaom treats any assembler it finds as permission to build its
+x86 sources.
+
 `=LOCAL` makes libavif fetch and build each dependency in-tree instead of linking against whatever
 the build machine happens to ship. The result is a **self-contained** library with no further
 shared dependencies, which is what lets a single file per platform be shipped.

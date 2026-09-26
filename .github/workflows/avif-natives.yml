@@ -27,12 +27,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { target: windows-x64,  os: windows-2022,   ext: dll, arch: x64 }
-          - { target: windows-arm64, os: windows-11-arm, ext: dll, arch: arm64 }
-          - { target: linux-x64,    os: ubuntu-24.04,    ext: so }
-          - { target: linux-arm64,  os: ubuntu-24.04-arm, ext: so }
-          - { target: macos-x64,    os: macos-15-intel, ext: dylib }
-          - { target: macos-arm64,  os: macos-14,        ext: dylib }
+          - { target: windows-x64,  os: windows-2022,      ext: dll,   arch: x64,   cpu: x86_64 }
+          - { target: windows-arm64, os: windows-11-arm,    ext: dll,   arch: arm64, cpu: arm64 }
+          - { target: linux-x64,    os: ubuntu-24.04,      ext: so,                 cpu: x86_64 }
+          - { target: linux-arm64,  os: ubuntu-24.04-arm,  ext: so,                 cpu: arm64 }
+          - { target: macos-x64,    os: macos-15-intel,    ext: dylib,              cpu: x86_64 }
+          - { target: macos-arm64,  os: macos-14,          ext: dylib,              cpu: arm64 }
     steps:
       - uses: actions/checkout@v4
 
@@ -143,6 +143,14 @@ jobs:
         # the library importing VCRUNTIME140.dll and MSVCP140.dll, which come from the Visual C++
         # redistributable rather than from Windows, so a user who has installed nothing would be
         # missing them. CMake ignores the variable on the Unix targets.
+        #
+        # AOM_TARGET_CPU is passed rather than left to libaom's own detection, which reads
+        # CMAKE_SYSTEM_PROCESSOR. On Windows that comes from the environment, and the steps here
+        # run under Git Bash, which is an x64 process even on the ARM64 image, so CMake reports
+        # AMD64 and libaom announces "Detected CPU: x86_64". It then either demands NASM that
+        # arm64 does not want, or compiles aom_dsp/x86 and fails in immintrin.h. Naming the target
+        # also keeps the result from depending on which runner shell happens to be in use.
+        # libavif sets this itself for macOS arm64, to the same value.
         run: >
           cmake -S libavif -B build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
@@ -153,6 +161,7 @@ jobs:
           -DAVIF_LIBSHARPYUV=LOCAL
           -DAVIF_CODEC_AOM=LOCAL
           -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+          -DAOM_TARGET_CPU=${{ matrix.cpu }}
 
       - name: Build
         run: cmake --build build --target avif
