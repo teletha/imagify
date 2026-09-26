@@ -19,8 +19,6 @@ public class Project extends bee.api.Project {
         versionControlSystem("https://github.com/teletha/imagify");
         require(SourceVersion.latest(), SourceVersion.RELEASE_24);
 
-        require("com.github.teletha", "sinobu");
-        require("com.github.teletha", "psychopath");
         require("net.java.dev.jna", "jna");
         require("dev.matrixlab.webp4j", "webp4j-core");
         require("com.twelvemonkeys.imageio", "imageio-webp");
