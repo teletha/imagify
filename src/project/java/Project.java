@@ -10,11 +10,14 @@
  */
 import static bee.api.License.*;
 
+import javax.lang.model.SourceVersion;
+
 public class Project extends bee.api.Project {
     {
         product("com.github.teletha", "imagify", ref("version.txt"));
         license(MIT);
         versionControlSystem("https://github.com/teletha/imagify");
+        require(SourceVersion.latest(), SourceVersion.RELEASE_24);
 
         require("com.github.teletha", "sinobu");
         require("com.github.teletha", "psychopath");
