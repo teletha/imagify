@@ -42,6 +42,18 @@ cmake -S libavif -B build \
 cmake --build build --config Release --target avif
 ```
 
+On Windows add the linker flags that keep the MinGW runtime out of the import table:
+
+```
+"-DCMAKE_SHARED_LINKER_FLAGS=-static-libgcc -static-libstdc++ -Wl,-Bstatic -lwinpthread -Wl,-Bdynamic"
+```
+
+The CI runner images have no MSVC environment for Ninja, so CMake picks the MinGW GCC that ships
+in the image, and a MinGW DLL imports `libwinpthread-1.dll`. That file is not part of Windows, so a
+library depending on it would not load on a machine where the user has installed nothing. Those
+flags leave only `KERNEL32.dll` and the `api-ms-win-crt-*` forwarders, which Windows itself
+provides. `check-self-contained.py` enforces exactly this.
+
 `=LOCAL` makes libavif fetch and build each dependency in-tree instead of linking against whatever
 the build machine happens to ship. The result is a **self-contained** library with no further
 shared dependencies, which is what lets a single file per platform be shipped.

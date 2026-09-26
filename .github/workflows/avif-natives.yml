@@ -109,6 +109,12 @@ jobs:
         #          cargo build, which breaks the link with missing .rlib files;
         #   SVT-AV1 hard-fails at enable_language(ASM_NASM) on x86 when NASM is absent.
         # Re-enabling one means installing the matching tool on all three platforms first.
+        #
+        # The runner images have no MSVC environment for Ninja, so CMake picks the MinGW GCC that
+        # ships in the image, and a MinGW DLL imports libwinpthread-1.dll. That file is not part of
+        # Windows, so a library depending on it would not load for a user who has never installed
+        # anything. The link flags below pull the POSIX threads library in statically, which leaves
+        # KERNEL32.dll and the api-ms-win-crt-* forwarders, both of which Windows itself provides.
         run: >
           cmake -S libavif -B build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
@@ -118,6 +124,7 @@ jobs:
           -DAVIF_LIBYUV=LOCAL
           -DAVIF_LIBSHARPYUV=LOCAL
           -DAVIF_CODEC_AOM=LOCAL
+          "-DCMAKE_SHARED_LINKER_FLAGS=-static-libgcc -static-libstdc++ -Wl,-Bstatic -lwinpthread -Wl,-Bdynamic"
 
       - name: Build
         run: cmake --build build --target avif
