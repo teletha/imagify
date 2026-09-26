@@ -36,6 +36,8 @@ cmake -S libavif -B build \
       -DBUILD_SHARED_LIBS=ON \
       -DAVIF_BUILD_APPS=OFF \
       -DAVIF_BUILD_TESTS=OFF \
+      -DAVIF_LIBYUV=LOCAL \
+      -DAVIF_LIBSHARPYUV=LOCAL \
       -DAVIF_CODEC_AOM=LOCAL \
       -DAVIF_CODEC_DAV1D=LOCAL \
       -DAVIF_CODEC_RAV1E=LOCAL \
@@ -43,9 +45,13 @@ cmake -S libavif -B build \
 cmake --build build --config Release --target avif
 ```
 
-`AVIF_CODEC_*=LOCAL` matters: it makes libavif fetch and build its codecs in-tree instead of linking
-against whatever the CI image happens to have. The result is a **self-contained** library with no
-further shared dependencies, which is what lets a single file per platform be shipped.
+`=LOCAL` makes libavif fetch and build each dependency in-tree instead of linking against whatever
+the build machine happens to ship. The result is a **self-contained** library with no further
+shared dependencies, which is what lets a single file per platform be shipped.
+
+`AVIF_LIBYUV` is not optional in the same way: it defaults to `SYSTEM`, and libavif aborts the
+configure outright when `pkg-config` cannot find it. `AVIF_LIBSHARPYUV` is optional but supplies
+the fast RGB to YUV conversion the encoder path uses.
 
 ## Why a self-contained library is required
 

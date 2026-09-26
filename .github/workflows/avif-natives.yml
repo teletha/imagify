@@ -61,15 +61,18 @@ jobs:
           sudo apt-get install -y ninja-build
 
       - name: Configure
-        # AVIF_CODEC_*=LOCAL makes libavif fetch and build its codecs in-tree instead of linking
-        # whatever the runner image happens to ship. The result is a self contained library, which is
-        # what makes a single file per platform shippable. See the README for why that matters.
+        # Every dependency is fetched and built in tree. libyuv in particular is not optional:
+        # AVIF_LIBYUV defaults to SYSTEM and libavif aborts the configure when pkg-config cannot
+        # find it. SharpYUV is optional, but it provides the fast RGB to YUV path the encoder
+        # wants, and building it here keeps it out of the shared library's dependency list.
         run: >
           cmake -S libavif -B build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DBUILD_SHARED_LIBS=ON
           -DAVIF_BUILD_APPS=OFF
           -DAVIF_BUILD_TESTS=OFF
+          -DAVIF_LIBYUV=LOCAL
+          -DAVIF_LIBSHARPYUV=LOCAL
           -DAVIF_CODEC_AOM=LOCAL
           -DAVIF_CODEC_DAV1D=LOCAL
           -DAVIF_CODEC_RAV1E=LOCAL
