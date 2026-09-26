@@ -7,33 +7,18 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package imagify.resize;
+package imagify;
 
 import java.awt.image.BufferedImage;
 
 /**
  * High-quality {@link BufferedImage} resizing utility.
  * Supports resampling algorithms: BILINEAR, CATROM, MITCHELL, LANCZOS3, HQX (xBRZ).
- *
- * <p>Usage example:
- * <pre>{@code
- * BufferedImage resized = BufferedImageResize.resize(original, 800, 600, ResizeAlgorithm.LANCZOS3);
- * }</pre>
  */
 public final class BufferedImageResize {
 
-    private BufferedImageResize() {
-    }
+    private BufferedImageResize() {}
 
-    /**
-     * Resizes the source image to the specified dimensions using the given algorithm.
-     *
-     * @param source the source image (any {@link BufferedImage} type)
-     * @param targetW target width (must be positive)
-     * @param targetH target height (must be positive)
-     * @param algorithm the resampling algorithm to use
-     * @return the resized image
-     */
     public static BufferedImage resize(BufferedImage source, int targetW, int targetH, ResizeAlgorithm algorithm) {
         if (targetW <= 0 || targetH <= 0) {
             throw new IllegalArgumentException("Target dimensions must be positive");
@@ -48,10 +33,6 @@ public final class BufferedImageResize {
             return resizeKernel(src, targetW, targetH, algorithm);
         }
     }
-
-    // ═══════════════════════════════════════════════════════════════
-    // BILINEAR interpolation
-    // ═══════════════════════════════════════════════════════════════════
 
     private static BufferedImage resizeBilinear(BufferedImage src, int targetW, int targetH) {
         int srcW = src.getWidth();
@@ -82,18 +63,17 @@ public final class BufferedImageResize {
                 int bl = srcPixels[y1 * srcW + x0];
                 int br = srcPixels[y1 * srcW + x1];
 
-                int r = blend(invDx * invDy, (tl >> 16) & 0xFF, invDx * dy, (tr >> 16) & 0xFF, dx * invDy, (bl >> 16) & 0xFF, dx * dy, (br >> 16) & 0xFF);
-                int g = blend(invDx * invDy, (tl >> 8) & 0xFF, invDx * dy, (tr >> 8) & 0xFF, dx * invDy, (bl >> 8) & 0xFF, dx * dy, (br >> 8) & 0xFF);
-                int b = blend(invDx * invDy, tl & 0xFF, invDx * dy, tr & 0xFF, dx * invDy, bl & 0xFF, dx * dy, br & 0xFF);
+                int r = blend(invDx * invDy, (tl >> 16) & 0xFF, invDx * dy, (tr >> 16) & 0xFF,
+                        dx * invDy, (bl >> 16) & 0xFF, dx * dy, (br >> 16) & 0xFF);
+                int g = blend(invDx * invDy, (tl >> 8) & 0xFF, invDx * dy, (tr >> 8) & 0xFF,
+                        dx * invDy, (bl >> 8) & 0xFF, dx * dy, (br >> 8) & 0xFF);
+                int b = blend(invDx * invDy, tl & 0xFF, invDx * dy, tr & 0xFF,
+                        dx * invDy, bl & 0xFF, dx * dy, br & 0xFF);
                 dstPixels[y * targetW + x] = (0xFF << 24) | (r << 16) | (g << 8) | b;
             }
         }
         return makeImage(dstPixels, targetW, targetH);
     }
-
-    // ═══════════════════════════════════════════════════════════════════
-    // Kernel-based resampling (CATROM, MITCHELL, LANCZOS3)
-    // ═══════════════════════════════════════════════════════════════════
 
     private static BufferedImage resizeKernel(BufferedImage src, int targetW, int targetH, ResizeAlgorithm algorithm) {
         int srcW = src.getWidth();
@@ -170,41 +150,23 @@ public final class BufferedImageResize {
                     tw += w;
                 }
                 if (tw > 0) {
-                    dstPixels[ty * targetW + tx] = (0xFF << 24) | (clamp((int) Math.round(r / tw)) << 16) | (clamp((int) Math
-                            .round(g / tw)) << 8) | clamp((int) Math.round(b / tw));
+                    dstPixels[ty * targetW + tx] = (0xFF << 24)
+                            | (clamp((int) Math.round(r / tw)) << 16)
+                            | (clamp((int) Math.round(g / tw)) << 8)
+                            | clamp((int) Math.round(b / tw));
                 }
             }
         }
         return makeImage(dstPixels, targetW, targetH);
     }
 
-    // ═══════════════════════════════════════════════════════════════════
-    // HQX / xBRZ upscaling (delegates to XbrzScale)
-    // ═══════════════════════════════════════════════════════════════════
-
-    private static BufferedImage resizeHQX(BufferedImage src, int targetW, int targetH) {
-        return XbrzScale.resize(src, targetW, targetH);
-    }
-
-    // ═══════════════════════════════════════════════════════════════════
-    // Helpers
-    // ═══════════════════════════════════════════════════════════════════
-
     private static int blend(double w0, int c0, double w1, int c1, double w2, int c2, double w3, int c3) {
         return clamp((int) ((w0 * c0 + w1 * c1 + w2 * c2 + w3 * c3) + 0.5));
     }
 
-    private static int clamp(double v, double min, double max) {
-        return (int) Math.max(min, Math.min(max, v));
-    }
-
-    private static int clamp(int v, int min, int max) {
-        return Math.max(min, Math.min(max, v));
-    }
-
-    private static int clamp(int v) {
-        return Math.max(0, Math.min(255, v));
-    }
+    private static int clamp(double v, double min, double max) { return (int) Math.max(min, Math.min(max, v)); }
+    private static int clamp(int v, int min, int max) { return Math.max(min, Math.min(max, v)); }
+    private static int clamp(int v) { return Math.max(0, Math.min(255, v)); }
 
     private static int[] getRGBArray(BufferedImage img) {
         int w = img.getWidth(), h = img.getHeight();

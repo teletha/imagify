@@ -2,8 +2,8 @@ package imagify;
 
 import java.awt.image.BufferedImage;
 
-import imagify.resize.BufferedImageResize;
-import imagify.resize.ResizeAlgorithm;
+import imagify.BufferedImageResize;
+import imagify.ResizeAlgorithm;
 
 public class ResizeTest {
     public static void main(String[] args) {

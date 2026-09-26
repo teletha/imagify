@@ -7,16 +7,13 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package imagify.resize;
+package imagify;
 
 import java.awt.image.BufferedImage;
 
 /**
  * xBRZ ("Scale by Rules") upscaling implementation based on Zenju's
  * algorithm and the <a href="https://github.com/stanio/xbrz-java">xbrz-java</a> port.
- *
- * <p>Provides edge-directed integer upscaling (2x-6x) that preserves
- * crisp pixel-art edges while reconstructing detail.</p>
  */
 final class XbrzScale {
 
@@ -48,10 +45,6 @@ final class XbrzScale {
         dst.setRGB(0, 0, targetW, targetH, dstPixels, 0, targetW);
         return dst;
     }
-
-    // ═══════════════════════════════════════════════════════════════
-    //  Core scaler
-    // ═══════════════════════════════════════════════════════════════════
 
     private static class XbrzScaler {
         final int scale, scaleM1, scaleM2, scaleM3, scaleD2, scaleD2P1, scaleD2P2;
@@ -91,7 +84,6 @@ final class XbrzScale {
             out = new OutputMatrix(scale, trg, srcW * scale);
             res = BlendResult.instance();
 
-            // Initialize preprocessing buffer for first row
             ker4.positionY(-1);
             preProcBuf[0] = BlendInfo.clearAddTopL(preProcessCorners(ker4, res));
 
@@ -219,9 +211,9 @@ final class XbrzScale {
         }
     }
 
-    // ═══════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════
     //  Types
-    // ═══════════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════
 
     static final class BlendType {
         static final byte BLEND_NONE = 0;
@@ -266,10 +258,6 @@ final class XbrzScale {
         RotationDegree(int id) { this.id = id; }
     }
 
-    // ═══════════════════════════════════════════════════════════════
-    //  Kernel 4x4
-    // ═══════════════════════════════════════════════════════════════════
-
     static final class Kernel4x4 {
         int a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p;
         private final int[] src;
@@ -277,7 +265,6 @@ final class XbrzScale {
         private int s_m1, s_0, s_p1, s_p2;
 
         Kernel4x4(int[] src, int srcW, int srcH) { this.src = src; this.srcW = srcW; this.srcH = srcH; }
-
         void positionY(int y) {
             s_m1 = srcW * clamp(y - 1, 0, srcH - 1);
             s_0  = srcW * clamp(y,     0, srcH - 1);
@@ -318,10 +305,6 @@ final class XbrzScale {
         }
     }
 
-    // ═══════════════════════════════════════════════════════════════
-    //  Kernel 3x3
-    // ═══════════════════════════════════════════════════════════════════
-
     static final class Kernel3x3 {
         private final Kernel4x4 ker4;
         private RotationDegree rotDeg;
@@ -338,10 +321,6 @@ final class XbrzScale {
         int c() { switch (rotDeg.id) { default: return ker4.c(); case 90: return ker4.a(); case 180: return ker4.i(); case 270: return ker4.k(); } }
         int i() { switch (rotDeg.id) { default: return ker4.k(); case 90: return ker4.c(); case 180: return ker4.a(); case 270: return ker4.i(); } }
     }
-
-    // ═══════════════════════════════════════════════════════════════
-    //  Output matrix
-    // ═══════════════════════════════════════════════════════════════════
 
     static final class OutputMatrix {
         private final int[] trg;
@@ -366,10 +345,6 @@ final class XbrzScale {
         }
         void rotDeg(RotationDegree deg) {}
     }
-
-    // ═══════════════════════════════════════════════════════════════
-    //  Scaler delegates
-    // ═══════════════════════════════════════════════════════════════════
 
     interface ScalerDelegate {
         void blendLineShallow(int col, OutputMatrix out);
@@ -573,10 +548,6 @@ final class XbrzScale {
             out.set(3, 5, colorGrad(6, 100, col));
         }
     }
-
-    // ═══════════════════════════════════════════════════════════════
-    //  Color helpers
-    // ═══════════════════════════════════════════════════════════════════
 
     static int colorGrad(int M, int N, int center) {
         int r = getRed(center), g = getGreen(center), b = getBlue(center);
