@@ -1,6 +1,10 @@
 jdk:
   - openjdk24
 
+before_install:
+  - sdk install java 24-open
+  - sdk use java 24-open
+
 install: |
   java -version
   which java
