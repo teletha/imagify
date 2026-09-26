@@ -31,7 +31,7 @@ jobs:
           - { target: windows-arm64, os: windows-11-arm, ext: dll }
           - { target: linux-x64,    os: ubuntu-24.04,    ext: so }
           - { target: linux-arm64,  os: ubuntu-24.04-arm, ext: so }
-          - { target: macos-x64,    os: macos-13,        ext: dylib }
+          - { target: macos-x64,    os: macos-15-intel, ext: dylib }
           - { target: macos-arm64,  os: macos-14,        ext: dylib }
     steps:
       - uses: actions/checkout@v4
