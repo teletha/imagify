@@ -34,7 +34,10 @@ final class AvifMetadata extends IIOMetadata {
     private final IIOMetadataNode standardRoot;
 
     AvifMetadata(AvifImageInfo info) {
-        super(true, NATIVE_FORMAT, null, new String[] { STANDARD_FORMAT }, null);
+        // The two extra format arrays go together: IIOMetadata rejects a non-null name array with a
+        // null class name array. The names are only informational, so a null entry names the
+        // default implementation, which is the right answer for the standard format here.
+        super(true, NATIVE_FORMAT, null, new String[] { STANDARD_FORMAT }, new String[] { null });
         this.nativeRoot = nativeNode(info);
         this.standardRoot = standardNode(info);
     }
