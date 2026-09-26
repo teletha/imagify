@@ -1,0 +1,21 @@
+jdk:
+  - openjdk24
+
+install: |
+  if [ -e "bee" ]; then
+    source bee install maven --skip test
+  else
+    BeeVersion=$(curl -SsL https://git.io/stable-bee)
+    curl -SsL -o bee-${BeeVersion}.jar https://jitpack.io/com/github/teletha/bee/${BeeVersion}/bee-${BeeVersion}.jar
+    java -cp bee-${BeeVersion}.jar bee.Bee install maven --skip test
+  fi
+
+  # To support SNAPSHOT and Commit ID version, read the VERSION in version.txt,
+  # not the VERSION in the environment variable.
+  ProductVersion=$(cat version.txt | xargs)
+
+  # Until the end of 2024, Jitpack would recognize it as an Artifact if I put the appropriate
+  # Jar files, etc. in the right place. However, since 2025, Jitpack no longer recognizes them.
+  # But, I found that I could build without any problem if I sent the following Maven log-like
+  # string to standard output. NO WAY!
+  echo "[INFO] Installing /home/jitpack/build/pom.xml to /home/jitpack/.m2/repository/${GROUP//./\/}/${ARTIFACT}/${ProductVersion}/${ARTIFACT}-${ProductVersion}.pom"

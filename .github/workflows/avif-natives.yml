@@ -1,0 +1,127 @@
+name: avif-natives
+
+# Builds the libavif shared libraries that ship inside the jar and attaches them to a rolling
+# release named "avif-natives". See src/main/resources/imagify/avif/native/README.md.
+#
+#   gh workflow run avif-natives.yml
+#
+# Then drop the downloaded files into src/main/resources/imagify/avif/native/ and commit them.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Rebuild monthly so the bundled libavif tracks upstream security fixes.
+    - cron: "37 5 1 * *"
+
+permissions:
+  contents: write
+
+env:
+  AVIF_VERSION: v1.4.2
+
+jobs:
+  build:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: windows-x64,  os: windows-2022,   ext: dll }
+          - { target: windows-arm64, os: windows-11-arm, ext: dll }
+          - { target: linux-x64,    os: ubuntu-24.04,    ext: so }
+          - { target: linux-arm64,  os: ubuntu-24.04-arm, ext: so }
+          - { target: macos-x64,    os: macos-13,        ext: dylib }
+          - { target: macos-arm64,  os: macos-14,        ext: dylib }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Check out libavif
+        uses: actions/checkout@v4
+        with:
+          repository: AOMediaCodec/libavif
+          ref: ${{ env.AVIF_VERSION }}
+          path: libavif
+
+      - name: Install CMake and Ninja (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install --no-progress -y cmake ninja
+          "C:\Program Files\CMake\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Install Ninja (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+
+      - name: Configure
+        # AVIF_CODEC_*=LOCAL makes libavif fetch and build its codecs in-tree instead of linking
+        # whatever the runner image happens to ship. The result is a self contained library, which is
+        # what makes a single file per platform shippable. See the README for why that matters.
+        run: >
+          cmake -S libavif -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DBUILD_SHARED_LIBS=ON
+          -DAVIF_BUILD_APPS=OFF
+          -DAVIF_BUILD_TESTS=OFF
+          -DAVIF_CODEC_AOM=LOCAL
+          -DAVIF_CODEC_DAV1D=LOCAL
+          -DAVIF_CODEC_RAV1E=LOCAL
+          -DAVIF_CODEC_SVT=LOCAL
+
+      - name: Build
+        run: cmake --build build --target avif
+
+      - name: Collect
+        shell: bash
+        run: |
+          mkdir -p dist
+          case "${{ matrix.ext }}" in
+            dll)    src=$(find build -name avif.dll | head -1) ;;
+            so)     src=$(find build -name 'libavif.so.*' | head -1) ;;
+            dylib)  src=$(find build -name 'libavif*.dylib' | head -1) ;;
+          esac
+          test -n "$src" || { echo "::error::no libavif was built"; exit 1; }
+          cp "$src" "dist/libavif-${{ matrix.target }}.${{ matrix.ext }}"
+          ls -l dist
+
+      - name: Reject a build with unfilled dependencies
+        # The script reads the PE, ELF and Mach-O containers directly, so the same check runs
+        # everywhere. objdump and otool are not present on the Windows runners and dumpbin needs an
+        # MSVC environment, which used to make this step pass without ever looking at the library.
+        run: python .github/scripts/check-self-contained.py "dist/libavif-${{ matrix.target }}.${{ matrix.ext }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: libavif-${{ matrix.target }}
+          path: dist/
+          if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Publish
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: avif-natives
+          name: avif-natives
+          body: |
+            Rolling build of the `libavif` shared libraries bundled in `imagify`, built from
+            `${{ env.AVIF_VERSION }}`.
+
+            Drop these files into `src/main/resources/imagify/avif/native/`.
+          files: dist/*
