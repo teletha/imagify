@@ -210,8 +210,36 @@ public class AvifImageWriter extends ImageWriter {
             canWriteCompressed = true;
             compressionTypes = new String[] { AvifImageWriterSpi.COMPRESSION_TYPE };
             compressionType = AvifImageWriterSpi.COMPRESSION_TYPE;
-            compressionMode = MODE_EXPLICIT;
+            // The runtime's ImageWriteParam defaults compressionMode to
+            // MODE_COPY_FROM_METADATA, but callers of getDefaultWriteParam()
+            // expect MODE_DEFAULT, so choose it explicitly. On this build of
+            // ImageWriteParam switching to MODE_EXPLICIT clears compressionType,
+            // so restore it in setCompressionMode below.
+            compressionMode = MODE_DEFAULT;
             compressionQuality = 0.5f;
+        }
+
+        @Override
+        public String getCompressionType() {
+            // The runtime's ImageWriteParam.getCompressionType() additionally
+            // requires the mode to be MODE_EXPLICIT, which is a stricter check
+            // than "a compression type has been chosen". Here the type is
+            // chosen in the constructor, so report it whenever compression is
+            // supported and a type has been set regardless of the mode.
+            if (!canWriteCompressed()) {
+                throw new UnsupportedOperationException("Compression not supported.");
+            }
+            if (compressionType == null) {
+                throw new IllegalStateException("No compression type set!");
+            }
+            return compressionType;
+        }
+        @Override
+        public void setCompressionMode(int mode) {
+            super.setCompressionMode(mode);
+            if (mode == MODE_EXPLICIT && compressionType == null) {
+                compressionType = AvifImageWriterSpi.COMPRESSION_TYPE;
+            }
         }
     }
 }
