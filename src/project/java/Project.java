@@ -21,8 +21,6 @@ public class Project extends bee.api.Project {
 
         require("net.java.dev.jna", "jna");
         require("dev.matrixlab.webp4j", "webp4j-core");
-        require("com.twelvemonkeys.imageio", "imageio-webp");
-        require("com.twelvemonkeys.imageio", "common-image");
         require("com.github.teletha", "antibug").atTest();
 
         describe("""
