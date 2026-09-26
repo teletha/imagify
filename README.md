@@ -7,8 +7,6 @@
 </p>
 
 ## Summary
-# imagify
-
 AVIF encoding and decoding for Java, backed by libavif.
 
 ## Loading
@@ -19,13 +17,6 @@ use, so no installation is required.
 
     -Dimagify.avif.bundled=false   # ignore the bundled library,
                                     # use a system libavif instead
-
-## Dependencies
-
-- com.github.teletha:sinobu
-- com.github.teletha:psychopath
-- net.java.dev.jna:jna
-- dev.matrixlab.webp4j:webp4j-core
 
 ## Decode
 
@@ -151,6 +142,12 @@ If you think something might be a bug, but you're not sure, ask on StackOverflow
 
 ## Dependency
 Imagify depends on the following products on runtime.
+* [common-image-3.15.2](https://mvnrepository.com/artifact/com.twelvemonkeys.common/common-image/3.15.2)
+* [common-io-3.15.2](https://mvnrepository.com/artifact/com.twelvemonkeys.common/common-io/3.15.2)
+* [common-lang-3.15.2](https://mvnrepository.com/artifact/com.twelvemonkeys.common/common-lang/3.15.2)
+* [imageio-core-3.15.2](https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-core/3.15.2)
+* [imageio-metadata-3.15.2](https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-metadata/3.15.2)
+* [imageio-webp-3.15.2](https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-webp/3.15.2)
 * [jna-5.19.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.19.1)
 * [psychopath-2.2.1](https://mvnrepository.com/artifact/com.github.teletha/psychopath/2.2.1)
 * [sinobu-4.13.1](https://mvnrepository.com/artifact/com.github.teletha/sinobu/4.13.1)
