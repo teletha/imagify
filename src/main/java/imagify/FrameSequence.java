@@ -87,4 +87,17 @@ public class FrameSequence {
     public BufferedImage toBufferedImage() {
         return frames.get(0);
     }
+
+    /**
+     * Returns a sequence holding only the first frame, dropping every other frame.
+     *
+     * <p>The delay and loop count of the first frame are kept. Returns this
+     * instance unchanged when it already holds a single frame.</p>
+     *
+     * @return a single frame sequence
+     */
+    public FrameSequence firstFrameOnly() {
+        if (frames.size() == 1) return this;
+        return new FrameSequence(List.of(frames.get(0)), new int[] {delaysMs[0]}, loopCount);
+    }
 }

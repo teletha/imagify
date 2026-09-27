@@ -33,19 +33,22 @@ import java.util.List;
  * <p>Usage:</p>
  * <pre>{@code
  * // Read → Resize → Write to file
- * ImagePipeline
+ * Imagify
  *     .read(path)
  *     .resize(800, 600, ResizeAlgorithm.LANCZOS3)
  *     .writeTo(path);
  *
  * // Read → Resize → Write to bytes
- * byte[] png = ImagePipeline
+ * byte[] png = Imagify
  *     .read(bytes)
  *     .resize(0.5)
  *     .writeToBytes(ImageFormat.PNG);
  *
+ * // Take the poster frame of an animation
+ * Imagify.read(gif).toStillImage().writeTo(poster);
+ *
  * // Get the first frame as a BufferedImage
- * BufferedImage img = ImagePipeline.read(path).toBufferedImage();
+ * BufferedImage img = Imagify.read(path).toBufferedImage();
  * }</pre>
  */
 public final class Imagify {
@@ -145,6 +148,26 @@ public final class Imagify {
         return resize((int) Math.round(frameSequence.toBufferedImage().getWidth() * scale),
                       (int) Math.round(frameSequence.toBufferedImage().getHeight() * scale),
                       algorithm);
+    }
+
+    /**
+     * Drops every frame except the first one, turning an animation into a still image.
+     *
+     * <p>Without this, writing an animation to a format that supports animation
+     * produces an animation even when only one frame is wanted. Chaining this
+     * first forces the result down to a single frame.</p>
+     *
+     * <p>Usage:</p>
+     * <pre>{@code
+     * // Take the poster frame of an animated GIF
+     * Imagify.read(path).toStillImage().writeTo(posterPath);
+     * }</pre>
+     *
+     * @return this pipeline for chaining
+     */
+    public Imagify toStillImage() {
+        this.frameSequence = this.frameSequence.firstFrameOnly();
+        return this;
     }
 
     // ═══════════════════════════════════════════════════

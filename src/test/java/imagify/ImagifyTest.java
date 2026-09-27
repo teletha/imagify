@@ -371,6 +371,85 @@ class ImagifyTest {
         assertEquals(1, Imagify.read(file).frameCount());
     }
 
+    // ------------------------------------------------------- toStillImage
+
+    @Test
+    @DisplayName("toStillImage drops every frame but the first")
+    void toStillImageDropsOtherFrames(@TempDir Path dir) throws IOException {
+        Path gif = Path.of("src/test/resources", "anime gif", "220354.gif");
+        assumeTrue(Files.isRegularFile(gif), "test GIF not found");
+
+        Imagify pipe = Imagify.read(gif);
+        assumeTrue(pipe.frameCount() > 1, "test GIF should be animated");
+
+        pipe.toStillImage();
+        assertEquals(1, pipe.frameCount());
+    }
+
+    @Test
+    @DisplayName("toStillImage keeps the first frame pixel-for-pixel")
+    void toStillImageKeepsFirstFrame(@TempDir Path dir) throws IOException {
+        Path gif = Path.of("src/test/resources", "anime gif", "220354.gif");
+        assumeTrue(Files.isRegularFile(gif), "test GIF not found");
+
+        BufferedImage first = Imagify.read(gif).toBufferedImage();
+        BufferedImage kept = Imagify.read(gif).toStillImage().toBufferedImage();
+
+        assertEquals(first.getWidth(), kept.getWidth());
+        assertEquals(first.getHeight(), kept.getHeight());
+        for (int y = 0; y < first.getHeight(); y++)
+            for (int x = 0; x < first.getWidth(); x++)
+                assertEquals(first.getRGB(x, y), kept.getRGB(x, y),
+                        "pixel differs at " + x + "," + y);
+    }
+
+    @Test
+    @DisplayName("toStillImage is a no-op on an already single frame image")
+    void toStillImageOnStillImage(@TempDir Path dir) throws IOException {
+        BufferedImage src = makeImage(20, 10);
+        Path file = dir.resolve("input.png");
+        Files.write(file, toBytes(src, ImageFormat.PNG));
+
+        Imagify pipe = Imagify.read(file);
+        assertSame(pipe, pipe.toStillImage());
+        assertEquals(1, pipe.frameCount());
+        assertEquals(20, pipe.toBufferedImage().getWidth());
+    }
+
+    @Test
+    @DisplayName("toStillImage then write produces a still image even for an animation format")
+    void toStillImageForcesStillOutput(@TempDir Path dir) throws IOException {
+        assumeTrue(WebpCodec.isAvailable(), "libwebp not available");
+
+        Path gif = Path.of("src/test/resources", "anime gif", "220354.gif");
+        assumeTrue(Files.isRegularFile(gif), "test GIF not found");
+
+        Path animated = dir.resolve("animated.webp");
+        Imagify.read(gif).writeTo(animated);
+        assumeTrue(ImageReader.read(animated).frameCount() > 1, "baseline should be animated");
+
+        Path still = dir.resolve("still.webp");
+        Imagify.read(gif).toStillImage().writeTo(still);
+
+        assertTrue(Files.exists(still));
+        assertEquals(1, ImageReader.read(still).frameCount(),
+                "toStillImage should have forced a single frame");
+    }
+
+    @Test
+    @DisplayName("toStillImage chains with resize")
+    void toStillImageChainsWithResize(@TempDir Path dir) throws IOException {
+        Path gif = Path.of("src/test/resources", "anime gif", "220354.gif");
+        assumeTrue(Files.isRegularFile(gif), "test GIF not found");
+
+        Path out = dir.resolve("poster.png");
+        Imagify.read(gif).resize(32, 32, ResizeAlgorithm.LANCZOS3).toStillImage().writeTo(out);
+
+        BufferedImage result = ImageReader.read(out).toBufferedImage();
+        assertEquals(32, result.getWidth());
+        assertEquals(32, result.getHeight());
+    }
+
     // --------------------------------------------------------- animation detection
 
     @Test
