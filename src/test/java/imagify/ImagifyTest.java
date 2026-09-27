@@ -12,12 +12,10 @@ package imagify;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
-import imagify.avif.jna.AvifCodec;
-import imagify.webp.WebpCodec;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -27,11 +25,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import imagify.avif.jna.AvifCodec;
+import imagify.webp.WebpCodec;
+
 /**
  * Tests the fluent {@link Imagify} API end-to-end.
  *
- * <p>Covers reading, resizing, and writing images through the pipeline,
- * including automatic animation detection.</p>
+ * <p>
+ * Covers reading, resizing, and writing images through the pipeline,
+ * including automatic animation detection.
+ * </p>
  */
 class ImagifyTest {
 
@@ -104,7 +107,7 @@ class ImagifyTest {
     @Test
     @DisplayName("read throws PipelineException for empty data")
     void readEmptyDataThrows() {
-        assertThrows(RuntimeException.class, () -> Imagify.read(new byte[0]));
+        assertThrows(IOError.class, () -> Imagify.read(new byte[0]));
     }
 
     // ------------------------------------------------------------------- resize
@@ -274,10 +277,7 @@ class ImagifyTest {
         Files.write(file, png);
 
         Path out = dir.resolve("output.png");
-        Imagify
-            .read(file)
-            .resize(16, 16, ResizeAlgorithm.LANCZOS3)
-            .writeTo(out);
+        Imagify.read(file).resize(16, 16, ResizeAlgorithm.LANCZOS3).writeTo(out);
 
         assertTrue(Files.exists(out));
         BufferedImage result = ImageReader.read(out).toBufferedImage();
@@ -293,10 +293,7 @@ class ImagifyTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        byte[] outBytes = Imagify
-            .read(file)
-            .resize(0.5)
-            .writeToBytes(ImageFormat.PNG);
+        byte[] outBytes = Imagify.read(file).resize(0.5).writeToBytes(ImageFormat.PNG);
 
         assertTrue(outBytes.length > 0);
     }
@@ -399,8 +396,7 @@ class ImagifyTest {
         assertEquals(first.getHeight(), kept.getHeight());
         for (int y = 0; y < first.getHeight(); y++)
             for (int x = 0; x < first.getWidth(); x++)
-                assertEquals(first.getRGB(x, y), kept.getRGB(x, y),
-                        "pixel differs at " + x + "," + y);
+                assertEquals(first.getRGB(x, y), kept.getRGB(x, y), "pixel differs at " + x + "," + y);
     }
 
     @Test
@@ -432,8 +428,7 @@ class ImagifyTest {
         Imagify.read(gif).toStillImage().writeTo(still);
 
         assertTrue(Files.exists(still));
-        assertEquals(1, ImageReader.read(still).frameCount(),
-                "toStillImage should have forced a single frame");
+        assertEquals(1, ImageReader.read(still).frameCount(), "toStillImage should have forced a single frame");
     }
 
     @Test
@@ -484,7 +479,8 @@ class ImagifyTest {
         assertTrue(Files.exists(out));
         assertTrue(Files.size(out) > 0);
 
-        // AVIF reader may not preserve animation metadata; just verify the file is valid and readable
+        // AVIF reader may not preserve animation metadata; just verify the file is valid and
+        // readable
         FrameSequence seq = ImageReader.read(out);
         assertTrue(seq.frameCount() >= 1);
         assertNotNull(seq.toBufferedImage());

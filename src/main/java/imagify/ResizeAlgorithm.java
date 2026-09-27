@@ -115,6 +115,9 @@ public enum ResizeAlgorithm {
         }
     };
 
+    /** The default algorithm. */
+    public static final ResizeAlgorithm DEFAULT = CATROM;
+
     private final int support;
 
     ResizeAlgorithm(int support) {
