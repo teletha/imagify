@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="P" date="2026-09-26">
-			<h1 class="p"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="J"><a href="api/main.html" id="API"><svg class="package">
+	<body class="BB">
+		<header class="h" date="2026-09-26">
+			<h1 class="i"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="j"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,121 +35,121 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="W"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="c"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="S"></nav>
-		<article class="Q" id="Article">
-			<section class="L"><code class="z">imagify.avif.jna</code>
-				<h2 class="Class n"><code class="c">AvifRGBImage</code></h2>
-				<div class="FB">
+		<nav class="l"></nav>
+		<article class="O" id="Article">
+			<section class="M"><code class="L">imagify.avif.jna</code>
+				<h2 class="Class b"><code class="IB">AvifRGBImage</code></h2>
+				<div class="n">
 					<ul class="E G">
 						<li><code>com.sun.jna.Structure</code></li>
 					</ul>
 				</div><span class="A"><p>A block of interleaved RGB(A) pixels handed to, or received from, <code>libavif</code>:
 <code>avifRGBImage</code>.</p></span></section>
-			<section class="L" id="width">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">width</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>Image width in pixels, must match the associated <code><a aria-label="imagify.avif.jna.AvifImage" href="api/imagify.avif.jna.AvifImage.html">AvifImage</a></code>.</p></span></section>
-			<section class="L" id="height">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">height</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>Image height in pixels, must match the associated <code><a aria-label="imagify.avif.jna.AvifImage" href="api/imagify.avif.jna.AvifImage.html">AvifImage</a></code>.</p></span></section>
-			<section class="L" id="depth">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">depth</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>Bits per channel; 8, 10, 12 or 16.</p></span></section>
-			<section class="L" id="format">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">format</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_RGB_FORMAT_*</code> value.</p></span></section>
-			<section class="L" id="chromaUpsampling">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">chromaUpsampling</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_CHROMA_UPSAMPLING_*</code> value.</p></span></section>
-			<section class="L" id="chromaDownsampling">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">chromaDownsampling</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_CHROMA_DOWNSAMPLING_*</code> value.</p></span></section>
-			<section class="L" id="avoidLibYUV">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">avoidLibYUV</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, libyuv is bypassed.</p></span></section>
-			<section class="L" id="ignoreAlpha">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">ignoreAlpha</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, alpha bearing formats are treated as opaque.</p></span></section>
-			<section class="L" id="alphaPremultiplied">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">alphaPremultiplied</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, the colours are already premultiplied.</p></span></section>
-			<section class="L" id="isFloat">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">isFloat</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, 16 bit samples are half floats.</p></span></section>
-			<section class="L" id="maxThreads">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">maxThreads</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>Number of threads used for YUV to RGB conversion; 0 or less means one.</p></span></section>
-			<section class="L" id="pixels">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">pixels</code><i class="l"><code class="return">com.sun.jna.Pointer</code></i></h2><span class="A"><p>The pixel buffer.</p></span></section>
-			<section class="L" id="rowBytes">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">rowBytes</code><i class="l"><code class="return">int</code></i></h2><span class="A"><p>Row stride in bytes.</p></span></section>
-			<section class="L" id="AvifRGBImage()">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">AvifRGBImage</code><code class="U">()</code></h2>
+			<section class="M" id="width">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">width</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>Image width in pixels, must match the associated <code><a aria-label="imagify.avif.jna.AvifImage" href="api/imagify.avif.jna.AvifImage.html">AvifImage</a></code>.</p></span></section>
+			<section class="M" id="height">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">height</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>Image height in pixels, must match the associated <code><a aria-label="imagify.avif.jna.AvifImage" href="api/imagify.avif.jna.AvifImage.html">AvifImage</a></code>.</p></span></section>
+			<section class="M" id="depth">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">depth</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>Bits per channel; 8, 10, 12 or 16.</p></span></section>
+			<section class="M" id="format">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">format</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_RGB_FORMAT_*</code> value.</p></span></section>
+			<section class="M" id="chromaUpsampling">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">chromaUpsampling</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_CHROMA_UPSAMPLING_*</code> value.</p></span></section>
+			<section class="M" id="chromaDownsampling">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">chromaDownsampling</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_CHROMA_DOWNSAMPLING_*</code> value.</p></span></section>
+			<section class="M" id="avoidLibYUV">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">avoidLibYUV</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, libyuv is bypassed.</p></span></section>
+			<section class="M" id="ignoreAlpha">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">ignoreAlpha</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, alpha bearing formats are treated as opaque.</p></span></section>
+			<section class="M" id="alphaPremultiplied">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">alphaPremultiplied</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, the colours are already premultiplied.</p></span></section>
+			<section class="M" id="isFloat">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">isFloat</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, 16 bit samples are half floats.</p></span></section>
+			<section class="M" id="maxThreads">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">maxThreads</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>Number of threads used for YUV to RGB conversion; 0 or less means one.</p></span></section>
+			<section class="M" id="pixels">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">pixels</code><i class="V"><code class="return">com.sun.jna.Pointer</code></i></h2><span class="A"><p>The pixel buffer.</p></span></section>
+			<section class="M" id="rowBytes">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">rowBytes</code><i class="V"><code class="return">int</code></i></h2><span class="A"><p>Row stride in bytes.</p></span></section>
+			<section class="M" id="AvifRGBImage()">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">AvifRGBImage</code><code class="u">()</code></h2>
 			</section>
-			<section class="L" id="AvifRGBImage(com.sun.jna.Pointer)">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">AvifRGBImage</code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></h2>
-				<table class="m">
-					<tr class="x">
+			<section class="M" id="AvifRGBImage(com.sun.jna.Pointer)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">AvifRGBImage</code><code class="u">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></h2>
+				<table class="y">
+					<tr class="R">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">peer</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="L" id="getFieldOrder()">
-				<h2 class="N"><i class="OVERRIDE PROTECTED"></i><code class="c">getFieldOrder</code><code class="U">()</code><i class="l"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-				<table class="m">
-					<tr class="r">
+			<section class="M" id="getFieldOrder()">
+				<h2 class="v"><i class="OVERRIDE PROTECTED"></i><code class="IB">getFieldOrder</code><code class="u">()</code><i class="V"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+				<table class="y">
+					<tr class="JB">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="L" id="bufferSize()">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">bufferSize</code><code class="U">()</code><i class="l"><code>int</code></i></h2>
-				<table class="m">
-					<tr class="r">
+			<section class="M" id="bufferSize()">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">bufferSize</code><code class="u">()</code><i class="V"><code>int</code></i></h2>
+				<table class="y">
+					<tr class="JB">
 						<td><code>int</code></td>
 						<td><span><p>the total number of bytes described by <code><a aria-label="imagify.avif.jna.AvifRGBImage" href="api/imagify.avif.jna.AvifRGBImage.html#rowBytes">#rowBytes</a></code> and <code><a aria-label="imagify.avif.jna.AvifRGBImage" href="api/imagify.avif.jna.AvifRGBImage.html#height">#height</a></code></p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="L" id="getPixels()">
-				<h2 class="N"><i class="PUBLIC"></i><code class="c">getPixels</code><code class="U">()</code><i class="l"><code array="fix">byte</code></i></h2>
-				<table class="m">
-					<tr class="r">
+			<section class="M" id="getPixels()">
+				<h2 class="v"><i class="PUBLIC"></i><code class="IB">getPixels</code><code class="u">()</code><i class="V"><code array="fix">byte</code></i></h2>
+				<table class="y">
+					<tr class="JB">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>a Java array holding a copy of the <code><a aria-label="imagify.avif.jna.AvifRGBImage" href="api/imagify.avif.jna.AvifRGBImage.html#bufferSize()">#bufferSize()</a></code> pixel bytes</p></span></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="T">
+		<aside class="P">
 			<div class="CB">
-				<h5 class="JB">Constructors</h5>
+				<h5 class="x">Constructors</h5>
 				<ul>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#AvifRGBImage()">AvifRGBImage</a></code><code class="U">()</code></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#AvifRGBImage(com.sun.jna.Pointer)">AvifRGBImage</a></code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#AvifRGBImage()">AvifRGBImage</a></code><code class="u">()</code></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#AvifRGBImage(com.sun.jna.Pointer)">AvifRGBImage</a></code><code class="u">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></li>
 				</ul>
-				<h5 class="JB">Fields</h5>
+				<h5 class="x">Fields</h5>
 				<ul>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#width">width</a></code><i class="s"><code class="return">int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#height">height</a></code><i class="s"><code class="return">int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#depth">depth</a></code><i class="s"><code class="return">int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#format">format</a></code><i class="s"><code class="return">int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#chromaUpsampling">chromaUpsampling</a></code><i class="s"><code class="return">int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#chromaDownsampling">chromaDownsampling</a></code><i class="s"><code class="return">int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#avoidLibYUV">avoidLibYUV</a></code><i class="s"><code class="return">int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#ignoreAlpha">ignoreAlpha</a></code><i class="s"><code class="return">int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#alphaPremultiplied">alphaPremultiplied</a></code><i class="s"><code class="return">int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#isFloat">isFloat</a></code><i class="s"><code class="return">int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#maxThreads">maxThreads</a></code><i class="s"><code class="return">int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#pixels">pixels</a></code><i class="s"><code class="return">com.sun.jna.Pointer</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#rowBytes">rowBytes</a></code><i class="s"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#width">width</a></code><i class="q"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#height">height</a></code><i class="q"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#depth">depth</a></code><i class="q"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#format">format</a></code><i class="q"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#chromaUpsampling">chromaUpsampling</a></code><i class="q"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#chromaDownsampling">chromaDownsampling</a></code><i class="q"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#avoidLibYUV">avoidLibYUV</a></code><i class="q"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#ignoreAlpha">ignoreAlpha</a></code><i class="q"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#alphaPremultiplied">alphaPremultiplied</a></code><i class="q"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#isFloat">isFloat</a></code><i class="q"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#maxThreads">maxThreads</a></code><i class="q"><code class="return">int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#pixels">pixels</a></code><i class="q"><code class="return">com.sun.jna.Pointer</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#rowBytes">rowBytes</a></code><i class="q"><code class="return">int</code></i></li>
 				</ul>
-				<h5 class="JB">Methods</h5>
+				<h5 class="x">Methods</h5>
 				<ul>
-					<li class="o"><i class="OVERRIDE PROTECTED"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#getFieldOrder()">getFieldOrder</a></code><code class="U">()</code><i class="s"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#bufferSize()">bufferSize</a></code><code class="U">()</code><i class="s"><code>int</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#getPixels()">getPixels</a></code><code class="U">()</code><i class="s"><code array="fix">byte</code></i></li>
+					<li class="KB"><i class="OVERRIDE PROTECTED"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#getFieldOrder()">getFieldOrder</a></code><code class="u">()</code><i class="q"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#bufferSize()">bufferSize</a></code><code class="u">()</code><i class="q"><code>int</code></i></li>
+					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifRGBImage.html#getPixels()">getPixels</a></code><code class="u">()</code><i class="q"><code array="fix">byte</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="R">
+		<footer class="m">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
