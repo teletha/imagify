@@ -256,11 +256,6 @@ const root = {
 			"type": "Class"
 		},
 		{
-			"name": "ImagePipeline",
-			"packageName": "imagify",
-			"type": "Class"
-		},
-		{
 			"name": "ImageResizer",
 			"packageName": "imagify",
 			"type": "Class"
