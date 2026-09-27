@@ -9,8 +9,9 @@
 ## Summary
 AVIF encoding and decoding for Java, backed by libavif.
 
-Also provides an `ImageIO` plug-in for ICO files and a read-only
-`ImageIO` plug-in that rasterises SVG through JSVG.
+Also provides an `ImageIO` plug-in for ICO files, one for WebP
+backed by libwebp, and a read-only `ImageIO` plug-in that
+rasterises SVG through JSVG.
 
 ## Loading
 
@@ -20,6 +21,9 @@ use, so no installation is required.
 
     -Dimagify.avif.bundled=false   # ignore the bundled library,
                                     # use a system libavif instead
+
+The native `libwebp` library is bundled the same way, inside
+`webp4j`.
 
 ## Decode
 
@@ -49,6 +53,21 @@ The writer stores a 32-bit BGRA bitmap with an AND mask derived
 from the alpha channel, so transparency is preserved. The reader
 decodes the entry closest to 256x256.
 
+## WebP
+
+    BufferedImage image = ImageIO.read(new File("photo.webp"));
+    ImageIO.write(image, "webp", new File("out.webp"));
+
+    byte[] webp = WebpCodec.encode(image, 80, false);
+    // quality 0 (smallest) to 100, ignored when lossless
+    List<BufferedImage> frames =
+        WebpCodec.decodeAnimation(animated);
+
+Lossless `VP8L` output is selected by choosing the
+`WebP Lossless` compression type of the write parameter, or by
+passing `true` to `WebpCodec.encode`. An animated file is read
+as one image per frame, each already composited onto the canvas.
+
 ## SVG
 
     BufferedImage image = ImageIO.read(new File("icon.svg"));
@@ -59,11 +78,15 @@ by the document, so resizing is a separate step.
 ## Header-only read
 
     AvifImageInfo info = AvifCodec.readHeader(avif);
+    WebpImageInfo info = WebpCodec.readHeader(webp);
 
 ## Availability
 
     if (!AvifCodec.isAvailable()) {
         System.err.println(AvifCodec.getUnavailableReason());
+    }
+    if (!WebpCodec.isAvailable()) {
+        System.err.println(WebpCodec.getUnavailableReason());
     }
 
 ## Version
