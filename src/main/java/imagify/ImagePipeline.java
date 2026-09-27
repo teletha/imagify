@@ -197,10 +197,34 @@ public final class ImagePipeline {
     }
 
     /**
+     * Writes the result to a file path with auto-detected format from extension and quality.
+     *
+     * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     */
+    public ImagePipeline writeTo(Path path, double quality) {
+        try {
+            ImageFormat fmt = ImageFormat.fromPath(path);
+            ImageWriter.toFile(image, fmt, quality, path);
+        } catch (IOException e) { throw new PipelineException("Failed to write image", e); }
+        return this;
+    }
+
+    /**
      * Writes the result to a file path with explicit format.
      */
     public ImagePipeline writeTo(Path path, ImageFormat format) {
         try { ImageWriter.toFile(image, format, path); }
+        catch (IOException e) { throw new PipelineException("Failed to write image", e); }
+        return this;
+    }
+
+    /**
+     * Writes the result to a file path with explicit format and quality.
+     *
+     * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     */
+    public ImagePipeline writeTo(Path path, ImageFormat format, double quality) {
+        try { ImageWriter.toFile(image, format, quality, path); }
         catch (IOException e) { throw new PipelineException("Failed to write image", e); }
         return this;
     }

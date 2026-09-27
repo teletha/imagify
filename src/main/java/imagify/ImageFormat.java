@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Supported image formats with auto-detection capabilities.
@@ -108,6 +109,18 @@ public enum ImageFormat {
     public byte[] getMagicBytes() { return magicBytes != null ? magicBytes.clone() : null; }
 
     /**
+     * Returns the name {@code ImageIO} registers readers and writers under.
+     *
+     * <p>Every constant is named after its format in lower case, which is exactly the name the
+     * {@code ImageIO} registry uses. {@link #GIF89A} is the one exception: GIF87a and GIF89a
+     * differ only in a version number in the header and share a single encoder, so both answer
+     * {@code "gif"} and writing one of them produces a plain GIF file.</p>
+     */
+    public String getFormatName() {
+        return this == GIF89A ? GIF.extension : name().toLowerCase(Locale.ROOT);
+    }
+
+    /**
      * Resolves the format from a file extension.
      *
      * @param extension the file extension (e.g., "png", ".jpg")
@@ -170,6 +183,18 @@ public enum ImageFormat {
         // Check BMP (BM)
         if (header.length >= 2 && header[0] == 'B' && header[1] == 'M')
             return BMP;
+
+        // Check AVIF. An ISO base media file opens with a big endian box size, so the "ftyp"
+        // signature sits at offset 4 rather than 0 and AVIF has no offset 0 signature, which is
+        // why it carries no magicBytes. The major brand that follows names the format: "avif" for
+        // a still image and "avis" for a sequence. Only the major brand is readable here, since
+        // the caller passes just a header; a file whose major brand is something else and that
+        // merely lists avif among its compatible brands is not detected here.
+        if (header.length >= 12 && header[4] == 'f' && header[5] == 't'
+                && header[6] == 'y' && header[7] == 'p'
+                && header[8] == 'a' && header[9] == 'v'
+                && header[10] == 'i' && (header[11] == 'f' || header[11] == 's'))
+            return AVIF;
 
         throw new IllegalArgumentException("Unknown file format header");
     }

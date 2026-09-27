@@ -123,12 +123,7 @@ public final class ImageReader {
     }
 
     private static BufferedImage readFromStream(ImageInputStream stream, ImageFormat format) throws IOException {
-        if (format == ImageFormat.AVIF) {
-            return readAvif(stream);
-        }
-
-        String fmtName = format == ImageFormat.JPEG ? "jpeg" : format.name().toLowerCase();
-        Iterator<javax.imageio.ImageReader> readers = ImageIO.getImageReadersByFormatName(fmtName);
+        Iterator<javax.imageio.ImageReader> readers = ImageIO.getImageReadersByFormatName(format.getFormatName());
         if (readers.hasNext()) {
             javax.imageio.ImageReader reader = readers.next();
             try {
@@ -141,16 +136,5 @@ public final class ImageReader {
 
         stream.reset();
         return ImageIO.read(stream);
-    }
-
-    private static BufferedImage readAvif(ImageInputStream stream) throws IOException {
-        try {
-            Class<?> clazz = Class.forName("imagify.avif.AvifImageReader");
-            Object reader = clazz.getDeclaredConstructor().newInstance();
-            java.lang.reflect.Method readMethod = clazz.getMethod("read", ImageInputStream.class);
-            return (BufferedImage) readMethod.invoke(reader, stream);
-        } catch (Exception e) {
-            throw new IOException("Failed to read AVIF: " + e.getMessage(), e.getCause());
-        }
     }
 }
