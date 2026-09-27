@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import imagify.ImageMetrics;
+import imagify.ImageResizer;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -95,6 +96,81 @@ class AnimatedGifToWebpTest {
                 "average PSNR should be > 20dB (lossy conversion): " + result.avgPsnr);
         assertTrue(result.avgSsim > 0.5,
                 "average SSIM should be > 0.5 (structural similarity): " + result.avgSsim);
+    }
+
+    @Test
+    @DisplayName("アニメGIFのフレームをリサイズしてアニメWebPに変換する")
+    void resizedAnimatedGifToWebp(@TempDir Path dir) throws Exception {
+        Assumptions.assumeTrue(WebpCodec.isAvailable(),
+                () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
+
+        Path gifDir = Paths.get(GIF_DIR);
+        Assumptions.assumeTrue(Files.isDirectory(gifDir));
+
+        List<Path> gifs = Files.walk(gifDir)
+                .filter(p -> p.toString().toLowerCase().endsWith(".gif"))
+                .sorted()
+                .toList();
+        Assumptions.assumeFalse(gifs.isEmpty());
+
+        // 最初のGIFで検証
+        Path gif = gifs.get(0);
+        List<BufferedImage> originalFrames = readAllGifFrames(gif);
+        int[] delaysMs = readGifFrameDelays(gif);
+        int targetW = Math.max(1, originalFrames.get(0).getWidth() / 2);
+        int targetH = Math.max(1, originalFrames.get(0).getHeight() / 2);
+
+        // リサイズしてWebPにエンコード
+        List<BufferedImage> resizedFrames = new java.util.ArrayList<>();
+        for (BufferedImage frame : originalFrames) {
+            resizedFrames.add(ImageResizer.resize(frame, targetW, targetH));
+        }
+
+        byte[] webpBytes = WebpCodec.encodeAnimation(
+                resizedFrames, delaysMs, 75, false, 0);
+        assertTrue(webpBytes.length > 0, "encoded WebP is empty");
+
+        // デコードして検証
+        WebpImageInfo info = WebpCodec.readHeader(webpBytes);
+        assertTrue(info.hasAnimation(), "output is not an animation");
+        assertEquals(resizedFrames.size(), info.frameCount(), "frame count mismatch");
+
+        List<BufferedImage> decodedFrames = WebpCodec.decodeAnimation(webpBytes);
+        assertEquals(resizedFrames.size(), decodedFrames.size(), "decoded frame count mismatch");
+
+        // 全デコードフレームの寸法がリサイズ後の寸法と一致すること
+        for (BufferedImage frame : decodedFrames) {
+            assertEquals(targetW, frame.getWidth(), "decoded frame width mismatch");
+            assertEquals(targetH, frame.getHeight(), "decoded frame height mismatch");
+        }
+
+        // ピクセルレベルの忠実度も検証（リサイズ前のフレームとの比較は不可能だが、
+        // デコードされたフレーム自体に画質劣化がないことを確認）
+        double avgPsnr = 0;
+        double avgSsim = 0;
+        int checked = 0;
+        for (int i = 0; i < Math.min(resizedFrames.size(), decodedFrames.size()); i++) {
+            int[] ref = ImageMetrics.argb(resizedFrames.get(i));
+            int[] act = ImageMetrics.argb(decodedFrames.get(i));
+            if (ref.length == act.length) {
+                avgPsnr += ImageMetrics.psnr(ref, act);
+                avgSsim += ImageMetrics.ssim(ref, act, targetW, targetH);
+                checked++;
+            }
+        }
+        if (checked > 0) {
+            avgPsnr /= checked;
+            avgSsim /= checked;
+        }
+        assertTrue(avgPsnr > 20,
+                "average PSNR should be > 20dB after resize+convert: " + avgPsnr);
+        assertTrue(avgSsim > 0.5,
+                "average SSIM should be > 0.5 after resize+convert: " + avgSsim);
+
+        System.out.printf("  Resized %d frames from %dx%d to %dx%d: %d bytes, PSNR=%.1f, SSIM=%.4f%n",
+                resizedFrames.size(),
+                originalFrames.get(0).getWidth(), originalFrames.get(0).getHeight(),
+                targetW, targetH, webpBytes.length, avgPsnr, avgSsim);
     }
 
     // ------------------------------------------------------------------ conversion
