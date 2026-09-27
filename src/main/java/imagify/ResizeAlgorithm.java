@@ -44,8 +44,8 @@ public enum ResizeAlgorithm {
         @Override
         protected double kernel(double x) {
             x = Math.abs(x);
-            if (x < 1.0) return (2.0/3.0) - x * x + 0.5 * x * x * x;
-            if (x < 2.0) return (4.0/3.0) - 2.0 * x + x * x - (1.0/6.0) * x * x * x;
+            if (x < 1.0) return (2.0 / 3.0) - x * x + 0.5 * x * x * x;
+            if (x < 2.0) return (4.0 / 3.0) - 2.0 * x + x * x - (1.0 / 6.0) * x * x * x;
             return 0.0;
         }
     },
