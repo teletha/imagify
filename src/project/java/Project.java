@@ -21,10 +21,14 @@ public class Project extends bee.api.Project {
 
         require("net.java.dev.jna", "jna");
         require("dev.matrixlab.webp4j", "webp4j-core");
+        require("com.github.weisj", "jsvg");
         require("com.github.teletha", "antibug").atTest();
 
         describe("""
                 AVIF encoding and decoding for Java, backed by libavif.
+
+                Also provides an `ImageIO` plug-in for ICO files and a read-only
+                `ImageIO` plug-in that rasterises SVG through JSVG.
 
                 ## Loading
 
@@ -53,6 +57,22 @@ public class Project extends bee.api.Project {
 
                     BufferedImage image = ImageIO.read(new File("photo.avif"));
                     ImageIO.write(image, "avif", new File("out.avif"));
+
+                ## ICO
+
+                    BufferedImage image = ImageIO.read(new File("app.ico"));
+                    ImageIO.write(image, "ico", new File("out.ico"));
+
+                The writer stores a 32-bit BGRA bitmap with an AND mask derived
+                from the alpha channel, so transparency is preserved. The reader
+                decodes the entry closest to 256x256.
+
+                ## SVG
+
+                    BufferedImage image = ImageIO.read(new File("icon.svg"));
+
+                SVG is read only. It is rasterised with JSVG at the size declared
+                by the document, so resizing is a separate step.
 
                 ## Header-only read
 
