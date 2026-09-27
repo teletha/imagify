@@ -19,6 +19,8 @@ import java.awt.image.RenderedImage;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -368,6 +370,159 @@ public final class AvifCodec {
             }
         } finally {
             lib.avifEncoderDestroy(encoder);
+        }
+    }
+
+    // ------------------------------------------------------------------------- encode
+
+    /**
+     * Encodes a sequence of frames as an animated AVIF file.
+     *
+     * @param frames       the frames, all of the same size, at least two
+     * @param durationsMs  how long each frame is shown, in milliseconds, one entry per frame
+     * @param quality      0 (smallest) to 100 (lossless)
+     * @param loopCount    how often the animation repeats, 0 meaning forever
+     * @return the complete animated AVIF file
+     * @throws AvifException when the library is unavailable or the frames cannot be encoded
+     */
+    public static byte[] encodeAnimation(List<BufferedImage> frames, int[] durationsMs,
+            int quality, int loopCount) throws AvifException {
+        AvifLibrary lib = requireLibrary();
+        if (frames == null || frames.size() < 2) {
+            throw new AvifException("an animation needs at least two frames, got "
+                    + (frames == null ? 0 : frames.size()));
+        }
+        if (durationsMs == null || durationsMs.length != frames.size()) {
+            throw new AvifException("expected one delay per frame: " + frames.size()
+                    + " frames but " + (durationsMs == null ? "no" : durationsMs.length + "") + " delays");
+        }
+        int width = frames.get(0).getWidth();
+        int height = frames.get(0).getHeight();
+        if (width <= 0 || height <= 0) {
+            throw new AvifException("cannot encode a " + width + "x" + height + " animation");
+        }
+        for (BufferedImage frame : frames) {
+            if (frame == null || frame.getWidth() != width || frame.getHeight() != height) {
+                throw new AvifException("every frame must be " + width + "x" + height);
+            }
+        }
+
+        AvifEncoder encoder = lib.avifEncoderCreate();
+        if (encoder == null) {
+            throw new AvifException("avifEncoderCreate() returned NULL");
+        }
+        try {
+            encoder.maxThreads = defaultThreads();
+            encoder.speed = AvifLibrary.DEFAULT_SPEED;
+            encoder.quality = quality;
+            encoder.qualityAlpha = AvifLibrary.AVIF_QUALITY_LOSSLESS;
+            encoder.timescale = 1000;
+            encoder.repetitionCount = loopCount;
+            encoder.write();
+
+            for (int i = 0; i < frames.size(); i++) {
+                BufferedImage frame = frames.get(i);
+                byte[] pixels = AbgrPixels.toAbgrBytes(frame, 0, 0, width, height, 1, 1);
+                AvifImage image = lib.avifImageCreate(width, height, 8, AvifLibrary.AVIF_PIXEL_FORMAT_YUV444);
+                try {
+                    image.read();
+                    toYuv(lib, image, pixels);
+                    long duration = Math.round((long) durationsMs[i] * encoder.timescale / 1000.0);
+                    check(lib, lib.avifEncoderAddImage(encoder, image, duration, AvifLibrary.AVIF_ADD_IMAGE_FLAG_NONE),
+                            "avifEncoderAddImage() at frame " + i);
+                } finally {
+                    lib.avifImageDestroy(image);
+                }
+            }
+
+            AvifRWData output = new AvifRWData();
+            try {
+                check(lib, lib.avifEncoderFinish(encoder, output), "avifEncoderFinish()");
+                byte[] encoded = output.toByteArray();
+                if (encoded == null) {
+                    throw new AvifException("avifEncoderFinish() did not produce any output");
+                }
+                return encoded;
+            } finally {
+                lib.avifRWDataFree(output);
+            }
+        } finally {
+            lib.avifEncoderDestroy(encoder);
+        }
+    }
+
+    /**
+     * Decodes all frames of an animated AVIF file.
+     *
+     * @param data the encoded AVIF bytes
+     * @return the list of decoded frames
+     * @throws AvifException when the data is not a valid AVIF or cannot be decoded
+     */
+    public static List<BufferedImage> decodeAnimation(byte[] data) throws AvifException {
+        AvifLibrary lib = requireLibrary();
+        if (data == null || data.length == 0) {
+            throw new AvifException("no input data");
+        }
+        if (!isAvif(data)) {
+            throw new AvifException("not an AVIF file");
+        }
+        if (!isAvailable()) {
+            throw new AvifException("libavif is not available");
+        }
+
+        Memory buffer = new Memory(Math.max(data.length, 1));
+        AvifDecoder decoder = null;
+        try {
+            buffer.write(0, data, 0, data.length);
+            decoder = lib.avifDecoderCreate();
+            if (decoder == null) {
+                throw new AvifException("avifDecoderCreate() returned NULL");
+            }
+            decoder.maxThreads = defaultThreads();
+            decoder.imageCountLimit = 0;
+            decoder.ignoreExif = AvifLibrary.AVIF_TRUE;
+            decoder.ignoreXMP = AvifLibrary.AVIF_TRUE;
+            decoder.write();
+            check(lib, lib.avifDecoderSetIOMemory(decoder, buffer, data.length), "avifDecoderSetIOMemory()");
+            check(lib, lib.avifDecoderParse(decoder), "avifDecoderParse()");
+
+            int frameCount = decoder.imageCount;
+            if (frameCount <= 0) {
+                throw new AvifException("no frames found in AVIF file");
+            }
+            List<BufferedImage> frames = new ArrayList<>(frameCount);
+            for (int i = 0; i < frameCount; i++) {
+                check(lib, lib.avifDecoderNextImage(decoder), "avifDecoderNextImage() at " + i);
+                decoder.read();
+                AvifImage image = decoder.image;
+                if (image == null || image.width <= 0 || image.height <= 0) {
+                    throw new AvifException("invalid frame at index " + i);
+                }
+                int w = image.width;
+                int h = image.height;
+                AvifRGBImage rgb = new AvifRGBImage();
+                lib.avifRGBImageSetDefaults(rgb, image);
+                rgb.format = AvifLibrary.AVIF_RGB_FORMAT_ABGR;
+                rgb.depth = 8;
+                rgb.rowBytes = w * lib.avifRGBImagePixelSize(rgb);
+                check(lib, lib.avifRGBImageAllocatePixels(rgb), "avifRGBImageAllocatePixels()");
+                try {
+                    check(lib, lib.avifImageYUVToRGB(image, rgb), "avifImageYUVToRGB()");
+                    byte[] pixels = rgb.getPixels();
+                    if (pixels == null) {
+                        throw new AvifException("avifImageYUVToRGB() did not produce pixels");
+                    }
+                    frames.add(AbgrPixels.toBufferedImage(pixels, w, h));
+                } finally {
+                    lib.avifRGBImageFreePixels(rgb);
+                }
+            }
+            return frames;
+        } finally {
+            if (decoder != null) {
+                lib.avifDecoderDestroy(decoder);
+            }
+            buffer.close();
         }
     }
 

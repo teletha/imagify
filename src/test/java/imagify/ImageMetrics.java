@@ -20,7 +20,8 @@ import java.awt.image.BufferedImage;
  */
 public final class ImageMetrics {
 
-    private ImageMetrics() {}
+    private ImageMetrics() {
+    }
 
     /** Reads an image into one packed ARGB int per pixel, which is layout independent. */
     public static int[] argb(BufferedImage image) {
@@ -46,8 +47,7 @@ public final class ImageMetrics {
     /** Peak signal to noise ratio over the colour channels, in decibels. */
     public static double psnr(int[] reference, int[] actual) {
         if (reference.length != actual.length) {
-            throw new IllegalArgumentException("cannot compare " + actual.length
-                    + " pixels against " + reference.length);
+            throw new IllegalArgumentException("cannot compare " + actual.length + " pixels against " + reference.length);
         }
         double squared = 0;
         for (int i = 0; i < reference.length; i++) {
@@ -66,8 +66,7 @@ public final class ImageMetrics {
     public static double ssim(int[] reference, int[] actual, int width, int height) {
         final int window = 8;
         if (reference.length != actual.length) {
-            throw new IllegalArgumentException("cannot compare " + actual.length
-                    + " pixels against " + reference.length);
+            throw new IllegalArgumentException("cannot compare " + actual.length + " pixels against " + reference.length);
         }
         if (width < window || height < window) {
             return 1;
@@ -111,8 +110,7 @@ public final class ImageMetrics {
                 varianceB /= n - 1;
                 covariance /= n - 1;
 
-                total += ((2 * meanA * meanB + c1) * (2 * covariance + c2))
-                        / ((meanA * meanA + meanB * meanB + c1) * (varianceA + varianceB + c2));
+                total += ((2 * meanA * meanB + c1) * (2 * covariance + c2)) / ((meanA * meanA + meanB * meanB + c1) * (varianceA + varianceB + c2));
                 windows++;
             }
         }
@@ -152,9 +150,7 @@ public final class ImageMetrics {
         double[] out = new double[pixels.length];
         for (int i = 0; i < pixels.length; i++) {
             int pixel = pixels[i];
-            out[i] = 0.299 * ((pixel >>> 16) & 0xFF)
-                    + 0.587 * ((pixel >>> 8) & 0xFF)
-                    + 0.114 * (pixel & 0xFF);
+            out[i] = 0.299 * ((pixel >>> 16) & 0xFF) + 0.587 * ((pixel >>> 8) & 0xFF) + 0.114 * (pixel & 0xFF);
         }
         return out;
     }
