@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="e">
-		<header class="f" date="2026-09-26">
-			<h1 class="a"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="W"><a href="api/main.html" id="API"><svg class="package">
+	<body class="l">
+		<header class="m" date="2026-09-26">
+			<h1 class="s"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="j"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="t"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="Z"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="h"></nav>
-		<article class="S" id="Article">
-			<section class="CB"><code class="HB">imagify.webp</code>
-				<h2 class="Class O"><code class="J">WebpCodec</code></h2>
-				<div class="Q"></div><span class="A"><p>WebP encoding and decoding, delegated to <code>libwebp</code> through <code>webp4j</code>.</p><p>This class is the single place that knows the third party API. Everything above it works in
+		<nav class="n"></nav>
+		<article class="e" id="Article">
+			<section class="y"><code class="HB">imagify.webp</code>
+				<h2 class="Class M"><code class="S">WebpCodec</code></h2>
+				<div class="i"></div><span class="A"><p>WebP encoding and decoding, delegated to <code>libwebp</code> through <code>webp4j</code>.</p><p>This class is the single place that knows the third party API. Everything above it works in
  terms of <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code> and <code>0..100</code> quality, and never in terms of the quirks of
  <code>webp4j</code>:
  
@@ -64,57 +64,57 @@
 </p>
 					</p>
 				</span></section>
-			<section class="CB" id="FORMAT_VP8">
-				<h2 class="b"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="J">FORMAT_VP8</code><i class="u"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossy <code>VP8</code> bitstream with this format code.</span></section>
-			<section class="CB" id="FORMAT_VP8L">
-				<h2 class="b"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="J">FORMAT_VP8L</code><i class="u"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossless <code>VP8L</code> bitstream with this format code.</span></section>
-			<section class="CB" id="FORMAT_VP8X">
-				<h2 class="b"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="J">FORMAT_VP8X</code><i class="u"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports the <code>VP8X</code> container, which is what an animation uses.</span></section>
-			<section class="CB" id="DEFAULT_QUALITY">
-				<h2 class="b"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="J">DEFAULT_QUALITY</code><i class="u"><code class="return">int</code></i></h2><span class="A"><p>Quality used when the caller does not ask for one: <code>75</code>, the <code>libwebp</code> default.</p></span></section>
-			<section class="CB" id="formatName(int)">
-				<h2 class="b"><i class="PUBLIC STATIC"></i><code class="J">formatName</code><code class="x">(<code>int</code><code class="parameterName">format</code>)</code><i class="u"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="s">
-					<tr class="GB">
+			<section class="y" id="FORMAT_VP8">
+				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="S">FORMAT_VP8</code><i class="EB"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossy <code>VP8</code> bitstream with this format code.</span></section>
+			<section class="y" id="FORMAT_VP8L">
+				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="S">FORMAT_VP8L</code><i class="EB"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossless <code>VP8L</code> bitstream with this format code.</span></section>
+			<section class="y" id="FORMAT_VP8X">
+				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="S">FORMAT_VP8X</code><i class="EB"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports the <code>VP8X</code> container, which is what an animation uses.</span></section>
+			<section class="y" id="DEFAULT_QUALITY">
+				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="S">DEFAULT_QUALITY</code><i class="EB"><code class="return">int</code></i></h2><span class="A"><p>Quality used when the caller does not ask for one: <code>75</code>, the <code>libwebp</code> default.</p></span></section>
+			<section class="y" id="formatName(int)">
+				<h2 class="r"><i class="STATIC PUBLIC"></i><code class="S">formatName</code><code class="f">(<code>int</code><code class="parameterName">format</code>)</code><i class="EB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="P">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">format</code></td>
 						<td><span><p>a format code reported by <code>libwebp</code></p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the name of the bitstream format</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="CB" id="isAvailable()">
-				<h2 class="b"><i class="PUBLIC STATIC"></i><code class="J">isAvailable</code><code class="x">()</code><i class="u"><code>boolean</code></i></h2>
-				<table class="s">
-					<tr class="v">
+			<section class="y" id="isAvailable()">
+				<h2 class="r"><i class="STATIC PUBLIC"></i><code class="S">isAvailable</code><code class="f">()</code><i class="EB"><code>boolean</code></i></h2>
+				<table class="P">
+					<tr class="Y">
 						<td><code>boolean</code></td>
 						<td><span><p>whether WebP encoding and decoding can be used in this JVM</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="CB" id="getUnavailableReason()">
-				<h2 class="b"><i class="PUBLIC STATIC"></i><code class="J">getUnavailableReason</code><code class="x">()</code><i class="u"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="s">
-					<tr class="v">
+			<section class="y" id="getUnavailableReason()">
+				<h2 class="r"><i class="STATIC PUBLIC"></i><code class="S">getUnavailableReason</code><code class="f">()</code><i class="EB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="P">
+					<tr class="Y">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>why the native library cannot be used, or <code>null</code> when everything is fine</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="CB" id="readHeader(byte[])">
-				<h2 class="b"><i class="PUBLIC STATIC"></i><code class="J">readHeader</code><code class="x">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="u"><code><a aria-label="imagify.webp.WebpImageInfo" href="api/imagify.webp.WebpImageInfo.html">WebpImageInfo</a></code></i></h2>
-				<table class="s">
-					<tr class="GB">
+			<section class="y" id="readHeader(byte[])">
+				<h2 class="r"><i class="STATIC PUBLIC"></i><code class="S">readHeader</code><code class="f">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="EB"><code><a aria-label="imagify.webp.WebpImageInfo" href="api/imagify.webp.WebpImageInfo.html">WebpImageInfo</a></code></i></h2>
+				<table class="P">
+					<tr class="k">
 						<td><code array="fix">byte</code><code class="parameterName">encoded</code></td>
 						<td><span><p>a complete WebP file</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="imagify.webp.WebpImageInfo" href="api/imagify.webp.WebpImageInfo.html">WebpImageInfo</a></code></td>
 						<td><span><p>the properties reported by the headers</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="CB">
 						<td><code><a aria-label="imagify.webp.WebpException" href="api/imagify.webp.WebpException.html">WebpException</a></code></td>
 						<td></td>
 					</tr>
@@ -123,96 +123,96 @@
  decoding an animation, so the <code>ImageIO</code> reader calls it once and caches the answer.
 </p>
 				</span></section>
-			<section class="CB" id="isWebP(byte[])">
-				<h2 class="b"><i class="PUBLIC STATIC"></i><code class="J">isWebP</code><code class="x">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="u"><code>boolean</code></i></h2>
-				<table class="s">
-					<tr class="GB">
+			<section class="y" id="isWebP(byte[])">
+				<h2 class="r"><i class="STATIC PUBLIC"></i><code class="S">isWebP</code><code class="f">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="EB"><code>boolean</code></i></h2>
+				<table class="P">
+					<tr class="k">
 						<td><code array="fix">byte</code><code class="parameterName">data</code></td>
 						<td><span><p>the leading bytes of a file</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>boolean</code></td>
 						<td><span><p>whether they start a <code>RIFF</code> container whose form type is <code>WEBP</code></p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="CB" id="headerLength()">
-				<h2 class="b"><i class="PUBLIC STATIC"></i><code class="J">headerLength</code><code class="x">()</code><i class="u"><code>int</code></i></h2>
-				<table class="s">
-					<tr class="v">
+			<section class="y" id="headerLength()">
+				<h2 class="r"><i class="STATIC PUBLIC"></i><code class="S">headerLength</code><code class="f">()</code><i class="EB"><code>int</code></i></h2>
+				<table class="P">
+					<tr class="Y">
 						<td><code>int</code></td>
 						<td><span><p>how many leading bytes <code><a aria-label="imagify.webp.WebpCodec" href="api/imagify.webp.WebpCodec.html#isWebP(byte[])">#isWebP(byte[])</a></code> needs to decide</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="CB" id="encode(java.awt.image.RenderedImage,int,boolean)">
-				<h2 class="b"><i class="PUBLIC STATIC"></i><code class="J">encode</code><code class="x">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>boolean</code><code class="parameterName">lossless</code>)</code><i class="u"><code array="fix">byte</code></i></h2>
-				<table class="s">
-					<tr class="GB">
+			<section class="y" id="encode(java.awt.image.RenderedImage,int,boolean)">
+				<h2 class="r"><i class="STATIC PUBLIC"></i><code class="S">encode</code><code class="f">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>boolean</code><code class="parameterName">lossless</code>)</code><i class="EB"><code array="fix">byte</code></i></h2>
+				<table class="P">
+					<tr class="k">
 						<td><code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the image to encode; any <code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code> is accepted</p></span></td>
 					</tr>
-					<tr class="GB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><p>0 (smallest) to 100, ignored when <code>lossless</code> is <code>true</code></p></span></td>
 					</tr>
-					<tr class="GB">
+					<tr class="k">
 						<td><code>boolean</code><code class="parameterName">lossless</code></td>
 						<td><span><p>whether to store the pixels without loss</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>the complete WebP file</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="CB">
 						<td><code><a aria-label="imagify.webp.WebpException" href="api/imagify.webp.WebpException.html">WebpException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Encodes a single image as a lossless or lossy WebP file.</p></span></section>
-			<section class="CB" id="encodeAnimation(java.util.List,int[],int,boolean,int)">
-				<h2 class="b"><i class="PUBLIC STATIC"></i><code class="J">encodeAnimation</code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">delaysMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>boolean</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>)</code><i class="u"><code array="fix">byte</code></i></h2>
-				<table class="s">
-					<tr class="GB">
+			<section class="y" id="encodeAnimation(java.util.List,int[],int,boolean,int)">
+				<h2 class="r"><i class="STATIC PUBLIC"></i><code class="S">encodeAnimation</code><code class="f">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">delaysMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>boolean</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>)</code><i class="EB"><code array="fix">byte</code></i></h2>
+				<table class="P">
+					<tr class="k">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code></td>
 						<td><span><p>the frames, all of the same size, at least two</p></span></td>
 					</tr>
-					<tr class="GB">
+					<tr class="k">
 						<td><code array="fix">int</code><code class="parameterName">delaysMs</code></td>
 						<td><span><p>how long each frame is shown, in milliseconds, one entry per frame</p></span></td>
 					</tr>
-					<tr class="GB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><p>0 (smallest) to 100, ignored when <code>lossless</code> is <code>true</code></p></span></td>
 					</tr>
-					<tr class="GB">
+					<tr class="k">
 						<td><code>boolean</code><code class="parameterName">lossless</code></td>
 						<td><span><p>whether to store the pixels without loss</p></span></td>
 					</tr>
-					<tr class="GB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">loopCount</code></td>
 						<td><span><p>how often the animation repeats, 0 meaning forever</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>the complete animated WebP file</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="CB">
 						<td><code><a aria-label="imagify.webp.WebpException" href="api/imagify.webp.WebpException.html">WebpException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Encodes a sequence of frames as an animated WebP file.</p></span></section>
-			<section class="CB" id="decode(byte[])">
-				<h2 class="b"><i class="PUBLIC STATIC"></i><code class="J">decode</code><code class="x">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="u"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="s">
-					<tr class="GB">
+			<section class="y" id="decode(byte[])">
+				<h2 class="r"><i class="STATIC PUBLIC"></i><code class="S">decode</code><code class="f">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="EB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="P">
+					<tr class="k">
 						<td><code array="fix">byte</code><code class="parameterName">encoded</code></td>
 						<td><span><p>a complete WebP file</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the pixels as a standard <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code> type</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="CB">
 						<td><code><a aria-label="imagify.webp.WebpException" href="api/imagify.webp.WebpException.html">WebpException</a></code></td>
 						<td></td>
 					</tr>
@@ -220,65 +220,65 @@
  because a single animated WebP has no single image to return.
 </p>
 				</span></section>
-			<section class="CB" id="decodeAnimation(byte[])">
-				<h2 class="b"><i class="PUBLIC STATIC"></i><code class="J">decodeAnimation</code><code class="x">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="u"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></h2>
-				<table class="s">
-					<tr class="GB">
+			<section class="y" id="decodeAnimation(byte[])">
+				<h2 class="r"><i class="STATIC PUBLIC"></i><code class="S">decodeAnimation</code><code class="f">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="EB"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></h2>
+				<table class="P">
+					<tr class="k">
 						<td><code array="fix">byte</code><code class="parameterName">encoded</code></td>
 						<td><span><p>a complete animated WebP file</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></td>
 						<td><span><p>the composited canvas sized frames in presentation order, never empty</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="CB">
 						<td><code><a aria-label="imagify.webp.WebpException" href="api/imagify.webp.WebpException.html">WebpException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Decodes every frame of an animation.</p></span></section>
-			<section class="CB" id="readAnimationTiming(byte[])">
-				<h2 class="b"><i class="PUBLIC STATIC"></i><code class="J">readAnimationTiming</code><code class="x">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="u"><code array="fix">int</code></i></h2>
-				<table class="s">
-					<tr class="GB">
+			<section class="y" id="readAnimationTiming(byte[])">
+				<h2 class="r"><i class="STATIC PUBLIC"></i><code class="S">readAnimationTiming</code><code class="f">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="EB"><code array="fix">int</code></i></h2>
+				<table class="P">
+					<tr class="k">
 						<td><code array="fix">byte</code><code class="parameterName">encoded</code></td>
 						<td><span><p>a complete animated WebP file</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code array="fix">int</code></td>
 						<td><span><p>the number of frames, the loop count and the per frame delay in milliseconds</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="CB">
 						<td><code><a aria-label="imagify.webp.WebpException" href="api/imagify.webp.WebpException.html">WebpException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Decodes the frame timings of an animation without keeping the pixels around.</p></span></section>
 		</article>
-		<aside class="i">
-			<div class="r">
-				<h5 class="R">Static Fields</h5>
+		<aside class="o">
+			<div class="w">
+				<h5 class="LB">Static Fields</h5>
 				<ul>
-					<li class="V"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.WebpCodec.html#FORMAT_VP8">FORMAT_VP8</a></code><i class="IB"><code class="return">int</code></i></li>
-					<li class="V"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.WebpCodec.html#FORMAT_VP8L">FORMAT_VP8L</a></code><i class="IB"><code class="return">int</code></i></li>
-					<li class="V"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.WebpCodec.html#FORMAT_VP8X">FORMAT_VP8X</a></code><i class="IB"><code class="return">int</code></i></li>
-					<li class="V"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.WebpCodec.html#DEFAULT_QUALITY">DEFAULT_QUALITY</a></code><i class="IB"><code class="return">int</code></i></li>
+					<li class="c"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.WebpCodec.html#FORMAT_VP8">FORMAT_VP8</a></code><i class="IB"><code class="return">int</code></i></li>
+					<li class="c"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.WebpCodec.html#FORMAT_VP8L">FORMAT_VP8L</a></code><i class="IB"><code class="return">int</code></i></li>
+					<li class="c"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.WebpCodec.html#FORMAT_VP8X">FORMAT_VP8X</a></code><i class="IB"><code class="return">int</code></i></li>
+					<li class="c"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.WebpCodec.html#DEFAULT_QUALITY">DEFAULT_QUALITY</a></code><i class="IB"><code class="return">int</code></i></li>
 				</ul>
-				<h5 class="R">Static Methods</h5>
+				<h5 class="LB">Static Methods</h5>
 				<ul>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.webp.WebpCodec.html#formatName(int)">formatName</a></code><code class="x">(<code>int</code><code class="parameterName">format</code>)</code><i class="IB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.webp.WebpCodec.html#isAvailable()">isAvailable</a></code><code class="x">()</code><i class="IB"><code>boolean</code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.webp.WebpCodec.html#getUnavailableReason()">getUnavailableReason</a></code><code class="x">()</code><i class="IB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.webp.WebpCodec.html#readHeader(byte[])">readHeader</a></code><code class="x">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="IB"><code><a aria-label="imagify.webp.WebpImageInfo" href="api/imagify.webp.WebpImageInfo.html">WebpImageInfo</a></code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.webp.WebpCodec.html#isWebP(byte[])">isWebP</a></code><code class="x">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="IB"><code>boolean</code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.webp.WebpCodec.html#headerLength()">headerLength</a></code><code class="x">()</code><i class="IB"><code>int</code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.webp.WebpCodec.html#encode(java.awt.image.RenderedImage,int,boolean)">encode</a></code><code class="x">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>boolean</code><code class="parameterName">lossless</code>)</code><i class="IB"><code array="fix">byte</code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.webp.WebpCodec.html#encodeAnimation(java.util.List,int[],int,boolean,int)">encodeAnimation</a></code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">delaysMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>boolean</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>)</code><i class="IB"><code array="fix">byte</code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.webp.WebpCodec.html#decode(byte[])">decode</a></code><code class="x">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="IB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.webp.WebpCodec.html#decodeAnimation(byte[])">decodeAnimation</a></code><code class="x">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="IB"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.webp.WebpCodec.html#readAnimationTiming(byte[])">readAnimationTiming</a></code><code class="x">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="IB"><code array="fix">int</code></i></li>
+					<li class="c"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.html#formatName(int)">formatName</a></code><code class="f">(<code>int</code><code class="parameterName">format</code>)</code><i class="IB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="c"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.html#isAvailable()">isAvailable</a></code><code class="f">()</code><i class="IB"><code>boolean</code></i></li>
+					<li class="c"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.html#getUnavailableReason()">getUnavailableReason</a></code><code class="f">()</code><i class="IB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="c"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.html#readHeader(byte[])">readHeader</a></code><code class="f">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="IB"><code><a aria-label="imagify.webp.WebpImageInfo" href="api/imagify.webp.WebpImageInfo.html">WebpImageInfo</a></code></i></li>
+					<li class="c"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.html#isWebP(byte[])">isWebP</a></code><code class="f">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="IB"><code>boolean</code></i></li>
+					<li class="c"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.html#headerLength()">headerLength</a></code><code class="f">()</code><i class="IB"><code>int</code></i></li>
+					<li class="c"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.html#encode(java.awt.image.RenderedImage,int,boolean)">encode</a></code><code class="f">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>boolean</code><code class="parameterName">lossless</code>)</code><i class="IB"><code array="fix">byte</code></i></li>
+					<li class="c"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.html#encodeAnimation(java.util.List,int[],int,boolean,int)">encodeAnimation</a></code><code class="f">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">delaysMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>boolean</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>)</code><i class="IB"><code array="fix">byte</code></i></li>
+					<li class="c"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.html#decode(byte[])">decode</a></code><code class="f">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="IB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="c"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.html#decodeAnimation(byte[])">decodeAnimation</a></code><code class="f">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="IB"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></li>
+					<li class="c"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.html#readAnimationTiming(byte[])">readAnimationTiming</a></code><code class="f">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="IB"><code array="fix">int</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="g">
+		<footer class="T">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
