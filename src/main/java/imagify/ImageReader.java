@@ -12,6 +12,7 @@ package imagify;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -52,7 +53,21 @@ public final class ImageReader {
      * Reads an image from a byte array with explicit format.
      */
     public static BufferedImage read(byte[] data, ImageFormat format) throws IOException {
-        ImageInputStream stream = ImageIO.createImageInputStream(data);
+        return readArray(data, format);
+    }
+
+    /**
+     * Reads an image that has already been held in memory.
+     *
+     * <p>ImageIO has no ImageInputStream provider for a byte array, so the array is wrapped in a
+     * stream here. Handing the array to {@code createImageInputStream} directly yields a null
+     * stream, and closing that is a NullPointerException rather than an image.
+     */
+    private static BufferedImage readArray(byte[] data, ImageFormat format) throws IOException {
+        ImageInputStream stream = ImageIO.createImageInputStream(new ByteArrayInputStream(data));
+        if (stream == null) {
+            throw new IOException("no ImageInputStream provider accepted the encoded data");
+        }
         try {
             return readFromStream(stream, format);
         } finally {
@@ -97,8 +112,7 @@ public final class ImageReader {
      * Reads an image from an InputStream with explicit format.
      */
     public static BufferedImage read(InputStream in, ImageFormat format) throws IOException {
-        byte[] data = in.readAllBytes();
-        return read(data, format);
+        return readArray(in.readAllBytes(), format);
     }
 
     private static ImageFormat detectFormat(byte[] data) {
