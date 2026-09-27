@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="CB">
-		<header class="b" date="2026-09-26">
-			<h1 class="J"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="c"><a href="api/main.html" id="API"><svg class="package">
+	<body class="w">
+		<header class="R" date="2026-09-26">
+			<h1 class="S"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="T"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="d"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="U"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="EB"></nav>
-		<article class="DB" id="Article">
-			<section class="X"><code class="L">imagify</code>
-				<h2 class="Class Y"><code class="T">ImagePipeline</code></h2>
-				<div class="w"></div><span class="A"><p>Fluent pipeline API for image processing.</p><p>Supports chaining: <code>read → resize → write</code>.</p><p>Usage:</p><pre><code>
+		<nav class="h"></nav>
+		<article class="t" id="Article">
+			<section class="V"><code class="j">imagify</code>
+				<h2 class="Class u"><code class="k">ImagePipeline</code></h2>
+				<div class="m"></div><span class="A"><p>Fluent pipeline API for image processing.</p><p>Supports chaining: <code>read → resize → write</code>.</p><p>Usage:</p><pre><code>
  // Read → Resize → Write to file
  ImagePipeline
      .read(path)
@@ -67,356 +67,356 @@ BufferedImage result = ImagePipeline
 .get();
 </p>
 						</code></pre></span></section>
-			<section class="X" id="read(byte[])">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">read</code><code class="O">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="read(byte[])">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">read</code><code class="b">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code array="fix">byte</code><code class="parameterName">data</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from a byte array.
 Format is auto-detected from magic bytes.</p></span></section>
-			<section class="X" id="read(byte[],imagify.ImageFormat)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">read</code><code class="O">(<code array="fix">byte</code><code class="parameterName">data</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="read(byte[],imagify.ImageFormat)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">read</code><code class="b">(<code array="fix">byte</code><code class="parameterName">data</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code array="fix">byte</code><code class="parameterName">data</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from a byte array with explicit format.</p></span></section>
-			<section class="X" id="read(java.nio.file.Path)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">read</code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="read(java.nio.file.Path)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">read</code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from a file path.
 Format is auto-detected from extension or header.</p></span></section>
-			<section class="X" id="read(java.nio.file.Path,imagify.ImageFormat)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">read</code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="read(java.nio.file.Path,imagify.ImageFormat)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">read</code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from a file path with explicit format.</p></span></section>
-			<section class="X" id="read(java.io.InputStream)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">read</code><code class="O">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="read(java.io.InputStream)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">read</code><code class="b">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from an InputStream.
 Format is auto-detected from magic bytes.</p></span></section>
-			<section class="X" id="read(java.io.InputStream,imagify.ImageFormat)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">read</code><code class="O">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="read(java.io.InputStream,imagify.ImageFormat)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">read</code><code class="b">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from an InputStream with explicit format.</p></span></section>
-			<section class="X" id="resize(int,int)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">resize</code><code class="O">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="resize(int,int)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">resize</code><code class="b">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Resizes to exact dimensions using the default algorithm (BILINEAR).</p></span></section>
-			<section class="X" id="resize(int,int,imagify.ResizeAlgorithm)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">resize</code><code class="O">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="resize(int,int,imagify.ResizeAlgorithm)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">resize</code><code class="b">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Resizes to exact dimensions with the specified algorithm.</p></span></section>
-			<section class="X" id="resize(double)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">resize</code><code class="O">(<code>double</code><code class="parameterName">scale</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="resize(double)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">resize</code><code class="b">(<code>double</code><code class="parameterName">scale</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code>double</code><code class="parameterName">scale</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Resizes by scale factor using BILINEAR.</p></span></section>
-			<section class="X" id="resize(double,imagify.ResizeAlgorithm)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">resize</code><code class="O">(<code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="resize(double,imagify.ResizeAlgorithm)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">resize</code><code class="b">(<code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code>double</code><code class="parameterName">scale</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Resizes by scale factor with the specified algorithm.</p></span></section>
-			<section class="X" id="resizeToFit(int)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">resizeToFit</code><code class="O">(<code>int</code><code class="parameterName">maxDimension</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="resizeToFit(int)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">resizeToFit</code><code class="b">(<code>int</code><code class="parameterName">maxDimension</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code>int</code><code class="parameterName">maxDimension</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Resizes so the longest edge fits within maxDimension, maintaining aspect ratio.</p></span></section>
-			<section class="X" id="resizeToFit(int,imagify.ResizeAlgorithm)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">resizeToFit</code><code class="O">(<code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="resizeToFit(int,imagify.ResizeAlgorithm)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">resizeToFit</code><code class="b">(<code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code>int</code><code class="parameterName">maxDimension</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Resizes so the longest edge fits within maxDimension with the specified algorithm.</p></span></section>
-			<section class="X" id="writeTo(java.nio.file.Path)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">writeTo</code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="writeTo(java.nio.file.Path)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">writeTo</code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes the result to a file path with auto-detected format from extension.</p></span></section>
-			<section class="X" id="writeTo(java.nio.file.Path,double)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">writeTo</code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="writeTo(java.nio.file.Path,double)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">writeTo</code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code>double</code><code class="parameterName">quality</code></td>
 						<td><span><code>0.0</code> (smallest) to <code>1.0</code> (largest)</span></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes the result to a file path with auto-detected format from extension and quality.</p></span></section>
-			<section class="X" id="writeTo(java.nio.file.Path,imagify.ImageFormat)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">writeTo</code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="writeTo(java.nio.file.Path,imagify.ImageFormat)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">writeTo</code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes the result to a file path with explicit format.</p></span></section>
-			<section class="X" id="writeTo(java.nio.file.Path,imagify.ImageFormat,double)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">writeTo</code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="writeTo(java.nio.file.Path,imagify.ImageFormat,double)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">writeTo</code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code>double</code><code class="parameterName">quality</code></td>
 						<td><span><code>0.0</code> (smallest) to <code>1.0</code> (largest)</span></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes the result to a file path with explicit format and quality.</p></span></section>
-			<section class="X" id="writeTo(java.io.OutputStream,imagify.ImageFormat)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">writeTo</code><code class="O">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="writeTo(java.io.OutputStream,imagify.ImageFormat)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">writeTo</code><code class="b">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes the result to an OutputStream with default quality.
 Format must be explicitly specified.</p></span></section>
-			<section class="X" id="writeTo(java.io.OutputStream,imagify.ImageFormat,double)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">writeTo</code><code class="O">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="Z"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="writeTo(java.io.OutputStream,imagify.ImageFormat,double)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">writeTo</code><code class="b">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="AB"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code>double</code><code class="parameterName">quality</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes the result to an OutputStream with quality control.</p></span></section>
-			<section class="X" id="writeToBytes(imagify.ImageFormat)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">writeToBytes</code><code class="O">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="Z"><code array="fix">byte</code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="writeToBytes(imagify.ImageFormat)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">writeToBytes</code><code class="b">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="AB"><code array="fix">byte</code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code array="fix">byte</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Returns the result as a byte array.</p></span></section>
-			<section class="X" id="writeToBytes(imagify.ImageFormat,double)">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">writeToBytes</code><code class="O">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="Z"><code array="fix">byte</code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="writeToBytes(imagify.ImageFormat,double)">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">writeToBytes</code><code class="b">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="AB"><code array="fix">byte</code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code>double</code><code class="parameterName">quality</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code array="fix">byte</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Returns the result as a byte array with quality control.</p></span></section>
-			<section class="X" id="get()">
-				<h2 class="a"><i class="PUBLIC"></i><code class="T">get</code><code class="O">()</code><i class="Z"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="FB">
-					<tr class="j">
+			<section class="V" id="get()">
+				<h2 class="p"><i class="PUBLIC"></i><code class="k">get</code><code class="b">()</code><i class="AB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="a">
+					<tr class="s">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Returns the intermediate <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code> result.
 Useful when further manual processing is needed after the pipeline.</p></span></section>
 		</article>
-		<aside class="h">
-			<div class="s">
-				<h5 class="o">Static Methods</h5>
+		<aside class="x">
+			<div class="LB">
+				<h5 class="W">Static Methods</h5>
 				<ul>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(byte[])">read</a></code><code class="O">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(byte[],imagify.ImageFormat)">read</a></code><code class="O">(<code array="fix">byte</code><code class="parameterName">data</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(java.nio.file.Path)">read</a></code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(java.nio.file.Path,imagify.ImageFormat)">read</a></code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(java.io.InputStream)">read</a></code><code class="O">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(java.io.InputStream,imagify.ImageFormat)">read</a></code><code class="O">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(byte[])">read</a></code><code class="b">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(byte[],imagify.ImageFormat)">read</a></code><code class="b">(<code array="fix">byte</code><code class="parameterName">data</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(java.nio.file.Path)">read</a></code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(java.nio.file.Path,imagify.ImageFormat)">read</a></code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(java.io.InputStream)">read</a></code><code class="b">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImagePipeline.html#read(java.io.InputStream,imagify.ImageFormat)">read</a></code><code class="b">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
 				</ul>
-				<h5 class="o">Methods</h5>
+				<h5 class="W">Methods</h5>
 				<ul>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resize(int,int)">resize</a></code><code class="O">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resize(int,int,imagify.ResizeAlgorithm)">resize</a></code><code class="O">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resize(double)">resize</a></code><code class="O">(<code>double</code><code class="parameterName">scale</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resize(double,imagify.ResizeAlgorithm)">resize</a></code><code class="O">(<code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resizeToFit(int)">resizeToFit</a></code><code class="O">(<code>int</code><code class="parameterName">maxDimension</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resizeToFit(int,imagify.ResizeAlgorithm)">resizeToFit</a></code><code class="O">(<code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.nio.file.Path)">writeTo</a></code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.nio.file.Path,double)">writeTo</a></code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.nio.file.Path,imagify.ImageFormat)">writeTo</a></code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.nio.file.Path,imagify.ImageFormat,double)">writeTo</a></code><code class="O">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.io.OutputStream,imagify.ImageFormat)">writeTo</a></code><code class="O">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.io.OutputStream,imagify.ImageFormat,double)">writeTo</a></code><code class="O">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="U"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeToBytes(imagify.ImageFormat)">writeToBytes</a></code><code class="O">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="U"><code array="fix">byte</code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeToBytes(imagify.ImageFormat,double)">writeToBytes</a></code><code class="O">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="U"><code array="fix">byte</code></i></li>
-					<li class="R"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#get()">get</a></code><code class="O">()</code><i class="U"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resize(int,int)">resize</a></code><code class="b">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resize(int,int,imagify.ResizeAlgorithm)">resize</a></code><code class="b">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resize(double)">resize</a></code><code class="b">(<code>double</code><code class="parameterName">scale</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resize(double,imagify.ResizeAlgorithm)">resize</a></code><code class="b">(<code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resizeToFit(int)">resizeToFit</a></code><code class="b">(<code>int</code><code class="parameterName">maxDimension</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#resizeToFit(int,imagify.ResizeAlgorithm)">resizeToFit</a></code><code class="b">(<code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.nio.file.Path)">writeTo</a></code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.nio.file.Path,double)">writeTo</a></code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.nio.file.Path,imagify.ImageFormat)">writeTo</a></code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.nio.file.Path,imagify.ImageFormat,double)">writeTo</a></code><code class="b">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.io.OutputStream,imagify.ImageFormat)">writeTo</a></code><code class="b">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeTo(java.io.OutputStream,imagify.ImageFormat,double)">writeTo</a></code><code class="b">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="v"><code><a aria-label="imagify.ImagePipeline" href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeToBytes(imagify.ImageFormat)">writeToBytes</a></code><code class="b">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="v"><code array="fix">byte</code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#writeToBytes(imagify.ImageFormat,double)">writeToBytes</a></code><code class="b">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="v"><code array="fix">byte</code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImagePipeline.html#get()">get</a></code><code class="b">()</code><i class="v"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="K">
+		<footer class="J">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

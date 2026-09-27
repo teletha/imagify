@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="CB">
-		<header class="b" date="2026-09-26">
-			<h1 class="J"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="c"><a href="api/main.html" id="API"><svg class="package">
+	<body class="w">
+		<header class="R" date="2026-09-26">
+			<h1 class="S"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="T"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="d"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="U"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="EB"></nav>
-		<article class="DB" id="Article">
-			<section class="X"><code class="L">imagify</code>
-				<h2 class="Class Y"><code class="T">ImageWriter</code></h2>
-				<div class="w"></div><span class="A"><p>Writes <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code> to various destinations with format control.</p><p>Supported destinations: <code>byte[]</code>, <code>Path</code>, <code>OutputStream</code>.</p><p>Format is determined by explicit <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code> parameter or
+		<nav class="h"></nav>
+		<article class="t" id="Article">
+			<section class="V"><code class="j">imagify</code>
+				<h2 class="Class u"><code class="k">ImageWriter</code></h2>
+				<div class="m"></div><span class="A"><p>Writes <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code> to various destinations with format control.</p><p>Supported destinations: <code>byte[]</code>, <code>Path</code>, <code>OutputStream</code>.</p><p>Format is determined by explicit <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code> parameter or
  inferred from the destination path extension.</p><p>Quality is a <code>0.0</code> to <code>1.0</code> value that is handed to the encoder through the
  compression quality of an <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code>, so a smaller number means a smaller file and
  more loss. Formats without a quality axis, such as GIF and BMP, ignore it.</p><p>Usage:</p><pre><code>
@@ -55,191 +55,191 @@
  ImageWriter.toFile(image, Path.of(&quot;out.png&quot;));
  ImageWriter.toStream(image, ImageFormat.JPEG, outputStream);
  </code></pre></span></section>
-			<section class="X" id="toBytes(java.awt.image.BufferedImage,imagify.ImageFormat)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">toBytes</code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="Z"><code array="fix">byte</code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="toBytes(java.awt.image.BufferedImage,imagify.ImageFormat)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">toBytes</code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="AB"><code array="fix">byte</code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code array="fix">byte</code></td>
 						<td></td>
 					</tr>
-					<tr class="GB">
+					<tr class="IB">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Encodes an image to a byte array in the specified format.</p></span></section>
-			<section class="X" id="toBytes(java.awt.image.BufferedImage,imagify.ImageFormat,double)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">toBytes</code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="Z"><code array="fix">byte</code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="toBytes(java.awt.image.BufferedImage,imagify.ImageFormat,double)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">toBytes</code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="AB"><code array="fix">byte</code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code>double</code><code class="parameterName">quality</code></td>
 						<td><span><code>0.0</code> (smallest) to <code>1.0</code> (largest)</span></td>
 					</tr>
-					<tr class="j">
+					<tr class="s">
 						<td><code array="fix">byte</code></td>
 						<td></td>
 					</tr>
-					<tr class="GB">
+					<tr class="IB">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Encodes an image to a byte array with quality control.</p></span></section>
-			<section class="X" id="toFile(java.awt.image.BufferedImage,java.nio.file.Path)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">toFile</code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="Z"><code>void</code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="toFile(java.awt.image.BufferedImage,java.nio.file.Path)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">toFile</code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="AB"><code>void</code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="GB">
+					<tr class="IB">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes an image to a file path. Format is inferred from extension.</p></span></section>
-			<section class="X" id="toFile(java.awt.image.BufferedImage,java.nio.file.Path,double)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">toFile</code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="Z"><code>void</code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="toFile(java.awt.image.BufferedImage,java.nio.file.Path,double)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">toFile</code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="AB"><code>void</code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code>double</code><code class="parameterName">quality</code></td>
 						<td><span><code>0.0</code> (smallest) to <code>1.0</code> (largest)</span></td>
 					</tr>
-					<tr class="GB">
+					<tr class="IB">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes an image to a file path. Format is inferred from extension.</p></span></section>
-			<section class="X" id="toFile(java.awt.image.BufferedImage,imagify.ImageFormat,java.nio.file.Path)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">toFile</code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="Z"><code>void</code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="toFile(java.awt.image.BufferedImage,imagify.ImageFormat,java.nio.file.Path)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">toFile</code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="AB"><code>void</code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="GB">
+					<tr class="IB">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes an image to a file path with explicit format.</p></span></section>
-			<section class="X" id="toFile(java.awt.image.BufferedImage,imagify.ImageFormat,double,java.nio.file.Path)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">toFile</code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="Z"><code>void</code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="toFile(java.awt.image.BufferedImage,imagify.ImageFormat,double,java.nio.file.Path)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">toFile</code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="AB"><code>void</code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code>double</code><code class="parameterName">quality</code></td>
 						<td><span><code>0.0</code> (smallest) to <code>1.0</code> (largest)</span></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="GB">
+					<tr class="IB">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes an image to a file path with explicit format and quality.</p></span></section>
-			<section class="X" id="toStream(java.awt.image.BufferedImage,imagify.ImageFormat,java.io.OutputStream)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">toStream</code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>)</code><i class="Z"><code>void</code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="toStream(java.awt.image.BufferedImage,imagify.ImageFormat,java.io.OutputStream)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">toStream</code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>)</code><i class="AB"><code>void</code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code></td>
 						<td></td>
 					</tr>
-					<tr class="GB">
+					<tr class="IB">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes an image to an OutputStream with default quality.</p></span></section>
-			<section class="X" id="toStream(java.awt.image.BufferedImage,imagify.ImageFormat,double,java.io.OutputStream)">
-				<h2 class="a"><i class="PUBLIC STATIC"></i><code class="T">toStream</code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>, <code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>)</code><i class="Z"><code>void</code></i></h2>
-				<table class="FB">
-					<tr class="i">
+			<section class="V" id="toStream(java.awt.image.BufferedImage,imagify.ImageFormat,double,java.io.OutputStream)">
+				<h2 class="p"><i class="PUBLIC STATIC"></i><code class="k">toStream</code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>, <code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>)</code><i class="AB"><code>void</code></i></h2>
+				<table class="a">
+					<tr class="JB">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code>double</code><code class="parameterName">quality</code></td>
 						<td><span><code>0.0</code> (smallest) to <code>1.0</code> (largest)</span></td>
 					</tr>
-					<tr class="i">
+					<tr class="JB">
 						<td><code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code></td>
 						<td></td>
 					</tr>
-					<tr class="GB">
+					<tr class="IB">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Writes an image to an OutputStream with quality control.</p></span></section>
 		</article>
-		<aside class="h">
-			<div class="s">
-				<h5 class="o">Static Methods</h5>
+		<aside class="x">
+			<div class="LB">
+				<h5 class="W">Static Methods</h5>
 				<ul>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toBytes(java.awt.image.BufferedImage,imagify.ImageFormat)">toBytes</a></code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="U"><code array="fix">byte</code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toBytes(java.awt.image.BufferedImage,imagify.ImageFormat,double)">toBytes</a></code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="U"><code array="fix">byte</code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toFile(java.awt.image.BufferedImage,java.nio.file.Path)">toFile</a></code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="U"><code>void</code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toFile(java.awt.image.BufferedImage,java.nio.file.Path,double)">toFile</a></code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="U"><code>void</code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toFile(java.awt.image.BufferedImage,imagify.ImageFormat,java.nio.file.Path)">toFile</a></code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="U"><code>void</code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toFile(java.awt.image.BufferedImage,imagify.ImageFormat,double,java.nio.file.Path)">toFile</a></code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="U"><code>void</code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toStream(java.awt.image.BufferedImage,imagify.ImageFormat,java.io.OutputStream)">toStream</a></code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>)</code><i class="U"><code>void</code></i></li>
-					<li class="R"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toStream(java.awt.image.BufferedImage,imagify.ImageFormat,double,java.io.OutputStream)">toStream</a></code><code class="O">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>, <code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>)</code><i class="U"><code>void</code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toBytes(java.awt.image.BufferedImage,imagify.ImageFormat)">toBytes</a></code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="v"><code array="fix">byte</code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toBytes(java.awt.image.BufferedImage,imagify.ImageFormat,double)">toBytes</a></code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="v"><code array="fix">byte</code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toFile(java.awt.image.BufferedImage,java.nio.file.Path)">toFile</a></code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="v"><code>void</code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toFile(java.awt.image.BufferedImage,java.nio.file.Path,double)">toFile</a></code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="v"><code>void</code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toFile(java.awt.image.BufferedImage,imagify.ImageFormat,java.nio.file.Path)">toFile</a></code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="v"><code>void</code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toFile(java.awt.image.BufferedImage,imagify.ImageFormat,double,java.nio.file.Path)">toFile</a></code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>, <code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="v"><code>void</code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toStream(java.awt.image.BufferedImage,imagify.ImageFormat,java.io.OutputStream)">toStream</a></code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>)</code><i class="v"><code>void</code></i></li>
+					<li class="l"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageWriter.html#toStream(java.awt.image.BufferedImage,imagify.ImageFormat,double,java.io.OutputStream)">toStream</a></code><code class="b">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>, <code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>)</code><i class="v"><code>void</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="K">
+		<footer class="J">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
