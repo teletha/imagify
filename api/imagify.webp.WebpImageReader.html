@@ -44,39 +44,44 @@
 		</header>
 		<nav class="S"></nav>
 		<article class="N" id="Article">
-			<section class="z"><code class="v">imagify.avif</code>
-				<h2 class="Class IB"><code class="d">AvifImageReader</code></h2>
+			<section class="z"><code class="v">imagify.webp</code>
+				<h2 class="Class IB"><code class="d">WebpImageReader</code></h2>
 				<div class="q">
 					<ul class="E G">
 						<li><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></li>
 					</ul>
-				</div><span class="A"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code> for AVIF images, backed by <code>libavif</code>.
+				</div><span class="A"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code> for WebP images, backed by <code>libwebp</code> through <code>webp4j</code>.
 
- <p>An AVIF file holds a single still image, so this reader always reports exactly one image. The
- pixels are decoded into a <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html#TYPE_4BYTE_ABGR">BufferedImage#TYPE_4BYTE_ABGR</a></code> image, whose banks are the very
- <code>A, B, G, R</code> layout <code>libavif</code> fills in for <code>AVIF_RGB_FORMAT_ABGR</code>, and are then
- converted to the requested type when the caller asked for something else.
+ <p>A still image is reported as one image. An animation is reported as one image per frame, with
+ every frame already composited onto the canvas, so frame <code>n</code> is a full size picture rather
+ than the sub rectangle the file actually stores. An animation therefore needs the whole file
+ decoded before its frame count is known, which is why the count is cached after the first call.
 
  
-						<p>Of the <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code> settings, the source region, the source sub sampling factors and
+						<p>The pixels are decoded into a standard <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code> type and then converted to the
+ requested one when the caller asked for something else.
+
+ 
+							<p>Of the <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code> settings, the source region, the source sub sampling factors and
  the destination are honoured. Band selection and the sub sampling offsets are not; the reader
  produces all four channels and starts every sub sampling block at its own top left corner.
 
  
-							<p>See <code><a aria-label="imagify.avif.jna.AvifCodec" href="api/imagify.avif.jna.AvifCodec.html">AvifCodec</a></code> for how the native library is located. When it is missing, this reader
- still accepts its input, but any request that needs <code>libavif</code> fails with an
+								<p>See <code><a aria-label="imagify.webp.WebpCodec" href="api/imagify.webp.WebpCodec.html">WebpCodec</a></code> for how the native library is reached. When it is missing, this reader
+ still accepts its input, but any request that needs <code>libwebp</code> fails with an
  <code><a aria-label="javax.imageio.IIOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOException.html">IIOException</a></code> that spells out what went wrong.
 
  
-								<p>Instances are stateful and, as mandated by <code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code>, not thread safe.</p>
+									<p>Instances are stateful and, as mandated by <code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code>, not thread safe.</p>
+								</p>
 							</p>
 						</p>
 					</p>
 				</span></section>
 			<section class="z" id="IMAGE_INDEX">
-				<h2 class="Y"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="d">IMAGE_INDEX</code><i class="KB"><code class="return">int</code></i></h2><span class="A"><p>The only image index an AVIF file provides.</p></span></section>
-			<section class="z" id="AvifImageReader(javax.imageio.spi.ImageReaderSpi)">
-				<h2 class="Y"><i class="PUBLIC"></i><code class="d">AvifImageReader</code><code class="p">(<code><a aria-label="javax.imageio.spi.ImageReaderSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageReaderSpi.html">ImageReaderSpi</a></code><code class="parameterName">originatingProvider</code>)</code></h2>
+				<h2 class="Y"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="d">IMAGE_INDEX</code><i class="KB"><code class="return">int</code></i></h2><span class="A"><p>The image index of the only frame a still image has.</p></span></section>
+			<section class="z" id="WebpImageReader(javax.imageio.spi.ImageReaderSpi)">
+				<h2 class="Y"><i class="PUBLIC"></i><code class="d">WebpImageReader</code><code class="p">(<code><a aria-label="javax.imageio.spi.ImageReaderSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageReaderSpi.html">ImageReaderSpi</a></code><code class="parameterName">originatingProvider</code>)</code></h2>
 				<table class="AB">
 					<tr class="JB">
 						<td><code><a aria-label="javax.imageio.spi.ImageReaderSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageReaderSpi.html">ImageReaderSpi</a></code><code class="parameterName">originatingProvider</code></td>
@@ -227,6 +232,18 @@
 					</tr>
 				</table>
 			</section>
+			<section class="z" id="getFrameDelays()">
+				<h2 class="Y"><i class="PUBLIC"></i><code class="d">getFrameDelays</code><code class="p">()</code><i class="KB"><code array="fix">int</code></i></h2>
+				<table class="AB">
+					<tr class="LB">
+						<td><code array="fix">int</code></td>
+						<td><span><p>how long each frame is shown in milliseconds, or <code>null</code> for a still image</p></span></td>
+					</tr>
+					<tr class="y">
+						<td><code><a aria-label="javax.imageio.IIOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOException.html">IIOException</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="A"><p>Reports the frame timings of an animation.</p></span></section>
 			<section class="z" id="canReadRaster()">
 				<h2 class="Y"><i class="OVERRIDE PUBLIC"></i><code class="d">canReadRaster</code><code class="p">()</code><i class="KB"><code>boolean</code></i></h2>
 				<table class="AB">
@@ -262,25 +279,26 @@
 			<div class="J">
 				<h5 class="x">Constructors</h5>
 				<ul>
-					<li class="Z"><i class="PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#AvifImageReader(javax.imageio.spi.ImageReaderSpi)">AvifImageReader</a></code><code class="p">(<code><a aria-label="javax.imageio.spi.ImageReaderSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageReaderSpi.html">ImageReaderSpi</a></code><code class="parameterName">originatingProvider</code>)</code></li>
+					<li class="Z"><i class="PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#WebpImageReader(javax.imageio.spi.ImageReaderSpi)">WebpImageReader</a></code><code class="p">(<code><a aria-label="javax.imageio.spi.ImageReaderSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageReaderSpi.html">ImageReaderSpi</a></code><code class="parameterName">originatingProvider</code>)</code></li>
 				</ul>
 				<h5 class="x">Static Fields</h5>
 				<ul>
-					<li class="Z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.avif.AvifImageReader.html#IMAGE_INDEX">IMAGE_INDEX</a></code><i class="l"><code class="return">int</code></i></li>
+					<li class="Z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.WebpImageReader.html#IMAGE_INDEX">IMAGE_INDEX</a></code><i class="l"><code class="return">int</code></i></li>
 				</ul>
 				<h5 class="x">Methods</h5>
 				<ul>
-					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#setInput(java.lang.Object,boolean,boolean)">setInput</a></code><code class="p">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">input</code>, <code>boolean</code><code class="parameterName">seekForwardOnly</code>, <code>boolean</code><code class="parameterName">ignoreMetadata</code>)</code><i class="l"><code>void</code></i></li>
-					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#reset()">reset</a></code><code class="p">()</code><i class="l"><code>void</code></i></li>
-					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#getNumImages(boolean)">getNumImages</a></code><code class="p">(<code>boolean</code><code class="parameterName">allowSearch</code>)</code><i class="l"><code>int</code></i></li>
-					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#getWidth(int)">getWidth</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>)</code><i class="l"><code>int</code></i></li>
-					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#getHeight(int)">getHeight</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>)</code><i class="l"><code>int</code></i></li>
-					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#getImageTypes(int)">getImageTypes</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>)</code><i class="l"><code><a aria-label="java.util.Iterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Iterator.html">Iterator</a><code class="parameters"><code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code></code></code></i></li>
-					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#getStreamMetadata()">getStreamMetadata</a></code><code class="p">()</code><i class="l"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
-					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#getImageMetadata(int)">getImageMetadata</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>)</code><i class="l"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
-					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#getImageMetadata(int,java.lang.String,java.util.Set)">getImageMetadata</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">metadataFormat</code>, <code><a aria-label="java.util.Set 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">extraMetadataFormats</code>)</code><i class="l"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
-					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#canReadRaster()">canReadRaster</a></code><code class="p">()</code><i class="l"><code>boolean</code></i></li>
-					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReader.html#read(int,javax.imageio.ImageReadParam)">read</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>, <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>)</code><i class="l"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#setInput(java.lang.Object,boolean,boolean)">setInput</a></code><code class="p">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">input</code>, <code>boolean</code><code class="parameterName">seekForwardOnly</code>, <code>boolean</code><code class="parameterName">ignoreMetadata</code>)</code><i class="l"><code>void</code></i></li>
+					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#reset()">reset</a></code><code class="p">()</code><i class="l"><code>void</code></i></li>
+					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#getNumImages(boolean)">getNumImages</a></code><code class="p">(<code>boolean</code><code class="parameterName">allowSearch</code>)</code><i class="l"><code>int</code></i></li>
+					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#getWidth(int)">getWidth</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>)</code><i class="l"><code>int</code></i></li>
+					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#getHeight(int)">getHeight</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>)</code><i class="l"><code>int</code></i></li>
+					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#getImageTypes(int)">getImageTypes</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>)</code><i class="l"><code><a aria-label="java.util.Iterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Iterator.html">Iterator</a><code class="parameters"><code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code></code></code></i></li>
+					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#getStreamMetadata()">getStreamMetadata</a></code><code class="p">()</code><i class="l"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
+					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#getImageMetadata(int)">getImageMetadata</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>)</code><i class="l"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
+					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#getImageMetadata(int,java.lang.String,java.util.Set)">getImageMetadata</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">metadataFormat</code>, <code><a aria-label="java.util.Set 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">extraMetadataFormats</code>)</code><i class="l"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
+					<li class="Z"><i class="PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#getFrameDelays()">getFrameDelays</a></code><code class="p">()</code><i class="l"><code array="fix">int</code></i></li>
+					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#canReadRaster()">canReadRaster</a></code><code class="p">()</code><i class="l"><code>boolean</code></i></li>
+					<li class="Z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReader.html#read(int,javax.imageio.ImageReadParam)">read</a></code><code class="p">(<code>int</code><code class="parameterName">imageIndex</code>, <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>)</code><i class="l"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
 				</ul>
 			</div>
 		</aside>

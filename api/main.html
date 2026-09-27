@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="V">
-		<header class="W" date="2026-09-26">
-			<h1 class="Q"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="s"><a href="api/main.html" id="API"><svg class="package">
+	<body class="P">
+		<header class="Q" date="2026-09-26">
+			<h1 class="j"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="t"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,16 +35,16 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="j"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="m"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="Y"></nav>
-		<article class="X" id="Article">
-			<div class="IB">
+		<nav class="S"></nav>
+		<article class="N" id="Article">
+			<div class="z">
 				<section class="A">
 					<h2>Imagify API Overview</h2>
 					<p>This page provides a concise overview of the available APIs, including their purpose, key functionalities, and usage patterns. It serves as a starting point for developers to understand how to integrate and interact with the system effectively.</p>
@@ -206,6 +206,26 @@ Supports resampling algorithms: BILINEAR, CATROM, MITCHELL, LANCZOS3, HQX (xBRZ)
 								<td>Registers IcoImageReader with ImageIO.</td>
 							</tr>
 							<tr>
+								<td><code><a href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code></td>
+								<td>ImageReader</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.webp.WebpCodec.html">WebpCodec</a></code></td>
+								<td>WebP encoding and decoding, delegated to libwebp through webp4j.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.webp.WebpImageReaderSpi.html">WebpImageReaderSpi</a></code></td>
+								<td>Registers WebpImageReader with ImageIO.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.webp.WebpImageWriterSpi.html">WebpImageWriterSpi</a></code></td>
+								<td>Registers WebpImageWriter with ImageIO.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.webp.WebpImageWriter.html">WebpImageWriter</a></code></td>
+								<td>ImageWriter</td>
+							</tr>
+							<tr>
 								<td><code><a href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 								<td>Fluent pipeline API for image processing.</td>
 							</tr>
@@ -240,13 +260,17 @@ Each algorithm provides a kernel function and a support radius.</td>
 								<td><code><a href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">AvifCodec.DecodedImage</a></code></td>
 								<td>A decoded image together with the properties read from its container.</td>
 							</tr>
+							<tr>
+								<td><code><a href="api/imagify.webp.WebpImageInfo.html">WebpImageInfo</a></code></td>
+								<td>Properties of the image contained in a WebP file, as reported by the container headers.</td>
+							</tr>
 						</table>
 					</section>
 				</section>
 			</div>
 		</article>
-		<aside class="K"></aside>
-		<footer class="O">
+		<aside class="T"></aside>
+		<footer class="R">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

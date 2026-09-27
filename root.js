@@ -6,7 +6,8 @@ const root = {
 		"imagify.avif.jna",
 		"imagify",
 		"imagify.svg",
-		"imagify.ico"
+		"imagify.ico",
+		"imagify.webp"
 	],
 	"types": [
 		{
@@ -212,6 +213,41 @@ const root = {
 		{
 			"name": "IcoImageReaderSpi",
 			"packageName": "imagify.ico",
+			"type": "Class"
+		},
+		{
+			"name": "WebpImageInfo",
+			"packageName": "imagify.webp",
+			"type": "Record"
+		},
+		{
+			"name": "WebpException",
+			"packageName": "imagify.webp",
+			"type": "Exception"
+		},
+		{
+			"name": "WebpImageReader",
+			"packageName": "imagify.webp",
+			"type": "Class"
+		},
+		{
+			"name": "WebpCodec",
+			"packageName": "imagify.webp",
+			"type": "Class"
+		},
+		{
+			"name": "WebpImageReaderSpi",
+			"packageName": "imagify.webp",
+			"type": "Class"
+		},
+		{
+			"name": "WebpImageWriterSpi",
+			"packageName": "imagify.webp",
+			"type": "Class"
+		},
+		{
+			"name": "WebpImageWriter",
+			"packageName": "imagify.webp",
 			"type": "Class"
 		},
 		{
