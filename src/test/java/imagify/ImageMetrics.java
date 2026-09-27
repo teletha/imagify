@@ -18,12 +18,12 @@ import java.awt.image.BufferedImage;
  * SSIM. A reader comparing a number in one report against the same number in the other should
  * not have to wonder whether it was computed differently.</p>
  */
-final class ImageMetrics {
+public final class ImageMetrics {
 
     private ImageMetrics() {}
 
     /** Reads an image into one packed ARGB int per pixel, which is layout independent. */
-    static int[] argb(BufferedImage image) {
+    public static int[] argb(BufferedImage image) {
         int[] pixels = new int[image.getWidth() * image.getHeight()];
         int i = 0;
         for (int y = 0; y < image.getHeight(); y++) {
@@ -34,7 +34,7 @@ final class ImageMetrics {
         return pixels;
     }
 
-    static boolean isOpaque(int[] pixels) {
+    public static boolean isOpaque(int[] pixels) {
         for (int pixel : pixels) {
             if ((pixel >>> 24) != 0xFF) {
                 return false;
@@ -44,7 +44,7 @@ final class ImageMetrics {
     }
 
     /** Peak signal to noise ratio over the colour channels, in decibels. */
-    static double psnr(int[] reference, int[] actual) {
+    public static double psnr(int[] reference, int[] actual) {
         if (reference.length != actual.length) {
             throw new IllegalArgumentException("cannot compare " + actual.length
                     + " pixels against " + reference.length);
@@ -63,7 +63,7 @@ final class ImageMetrics {
     }
 
     /** Mean structural similarity over luma, averaged over the usual 8x8 windows. */
-    static double ssim(int[] reference, int[] actual, int width, int height) {
+    public static double ssim(int[] reference, int[] actual, int width, int height) {
         final int window = 8;
         if (reference.length != actual.length) {
             throw new IllegalArgumentException("cannot compare " + actual.length
@@ -127,7 +127,7 @@ final class ImageMetrics {
      * faithful from one that is faithful <em>and</em> sharp: a blur and a ringing overshoot can
      * score alike on PSNR and not at all alike on this.</p>
      */
-    static double gradient(BufferedImage image) {
+    public static double gradient(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();
         if (width < 3 || height < 3) {

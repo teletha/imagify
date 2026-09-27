@@ -10,7 +10,9 @@
 package imagify.webp;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
 
+import imagify.ImageMetrics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,23 +23,22 @@ import javax.imageio.ImageIO;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Tests for animated GIF to animated WebP conversion.
+ * アニメGIF → アニメWebP 変換の完全検証。
  *
- * <p>Reads animated GIF files from {@code src/test/resources/anime gif}, converts them to
- * animated WebP using {@link WebpCodec#encodeAnimation}, and verifies the output can be
- * decoded back correctly with frame count and timing preserved.
+ * <p>フレーム数、タイミング、寸法、ピクセル忠実度（PSNR/SSIM）を
+ * プログラム的に検証する。</p>
  */
 class AnimatedGifToWebpTest {
 
     private static final String GIF_DIR = "src/test/resources/anime gif";
-
     private static final String REPORT_DIR = "target/test-output/anime-gif-to-webp";
 
     @Test
-    @DisplayName("アニメGIFをアニメWebPに変換し、フレーム数とタイミングを保持する")
-    void convertsAnimatedGifToWebp() throws Exception {
+    @DisplayName("アニメGIFをアニメWebPに変換し、フレーム数・タイミング・寸法・画質を保持する")
+    void convertsAnimatedGifToWebp(@TempDir Path dir) throws Exception {
         Assumptions.assumeTrue(WebpCodec.isAvailable(),
                 () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
 
@@ -53,81 +54,144 @@ class AnimatedGifToWebpTest {
         Path reportDir = Paths.get(REPORT_DIR);
         Files.createDirectories(reportDir);
 
+        // 全GIFの集計
+        int totalFrames = 0;
+        int passedGifs = 0;
         for (int i = 0; i < gifs.size(); i++) {
             Path gif = gifs.get(i);
             String id = String.format("anim%02d", i + 1);
-            convertGif(gif, id, reportDir);
+            ConvertResult result = convertGif(gif, id, reportDir);
+            totalFrames += result.frameCount;
+            if (result.passed) passedGifs++;
         }
 
-        System.out.println("Animated GIF → WebP conversion test completed");
+        System.out.printf("  Summary: %d/%d GIFs passed, %d total frames%n",
+                passedGifs, gifs.size(), totalFrames);
+        assertEquals(gifs.size(), passedGifs, "all GIFs should pass conversion");
     }
 
-    private static void convertGif(Path gif, String id, Path reportDir) throws IOException, WebpException {
-        // Read the GIF using ImageIO
-        BufferedImage firstFrame = ImageIO.read(gif.toFile());
-        assertNotNull(firstFrame, "cannot read " + gif);
+    @Test
+    @DisplayName("アニメGIFからWebPへの変換でピクセルレベルの忠実度を検証")
+    void pixelFidelityPreserved(@TempDir Path dir) throws Exception {
+        Assumptions.assumeTrue(WebpCodec.isAvailable(),
+                () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
 
+        Path gifDir = Paths.get(GIF_DIR);
+        Assumptions.assumeTrue(Files.isDirectory(gifDir));
+
+        List<Path> gifs = Files.walk(gifDir)
+                .filter(p -> p.toString().toLowerCase().endsWith(".gif"))
+                .sorted()
+                .toList();
+        Assumptions.assumeFalse(gifs.isEmpty());
+
+        // 少なくとも1枚のGIFでPSNR/SSIMを検証
+        Path gif = gifs.get(0);
+        Path reportDir = Paths.get(REPORT_DIR);
+        Files.createDirectories(reportDir);
+        ConvertResult result = convertGif(gif, "fidelity_test", reportDir);
+
+        assertTrue(result.avgPsnr > 20,
+                "average PSNR should be > 20dB (lossy conversion): " + result.avgPsnr);
+        assertTrue(result.avgSsim > 0.5,
+                "average SSIM should be > 0.5 (structural similarity): " + result.avgSsim);
+    }
+
+    // ------------------------------------------------------------------ conversion
+
+    /** 1つのGIFの変換結果を保持するレコード。 */
+    private record ConvertResult(
+            int frameCount,
+            int webpBytesLength,
+            boolean hasAnimation,
+            double avgPsnr,
+            double avgSsim,
+            boolean passed
+    ) {}
+
+    private ConvertResult convertGif(Path gif, String id, Path reportDir) throws Exception {
         // Read all frames from GIF
-        List<BufferedImage> frames = readAllGifFrames(gif);
+        List<BufferedImage> originalFrames = readAllGifFrames(gif);
         int[] delaysMs = readGifFrameDelays(gif);
 
-        assertFalse(frames.isEmpty(), "no frames in " + gif);
-        assertEquals(frames.size(), delaysMs.length, "delay count mismatch for " + gif);
+        // Verify all frames have the same dimensions
+        int frameWidth = originalFrames.get(0).getWidth();
+        int frameHeight = originalFrames.get(0).getHeight();
+        for (int i = 1; i < originalFrames.size(); i++) {
+            assertEquals(frameWidth, originalFrames.get(i).getWidth(),
+                    "frame " + i + " width mismatch in " + gif.getFileName());
+            assertEquals(frameHeight, originalFrames.get(i).getHeight(),
+                    "frame " + i + " height mismatch in " + gif.getFileName());
+        }
 
-        // Encode to animated WebP (lossy, quality 75, loop forever)
-        int quality = 75;
-        boolean lossless = false;
-        int loopCount = 0; // 0 = forever
+        // Encode to animated WebP
+        byte[] webpBytes = WebpCodec.encodeAnimation(
+                originalFrames, delaysMs, 75, false, 0);
+        assertTrue(webpBytes.length > 0, "encoded WebP is empty");
 
-        long start = System.nanoTime();
-        byte[] webpBytes = WebpCodec.encodeAnimation(frames, delaysMs, quality, lossless, 0);
-        long encodeNanos = System.nanoTime() - start;
-
-        assertTrue(webpBytes.length > 0, "encoded WebP is empty for " + gif.getFileName());
-
-        // Verify the WebP file
+        // Verify header
         WebpImageInfo info = WebpCodec.readHeader(webpBytes);
         assertTrue(info.hasAnimation(), "output is not an animation");
-        assertEquals(frames.size(), info.frameCount(), "frame count mismatch for " + gif.getFileName());
+        assertEquals(originalFrames.size(), info.frameCount(), "frame count mismatch");
 
-        // Decode animation and verify frame count and dimensions
-        start = System.nanoTime();
+        // Decode and verify frame count
         List<BufferedImage> decodedFrames = WebpCodec.decodeAnimation(webpBytes);
-        long decodeNanos = System.nanoTime() - start;
+        assertEquals(originalFrames.size(), decodedFrames.size(), "decoded frame count mismatch");
 
-        assertEquals(frames.size(), decodedFrames.size(), "decoded frame count mismatch");
+        // Verify each frame's dimensions
+        for (int i = 0; i < decodedFrames.size(); i++) {
+            assertEquals(frameWidth, decodedFrames.get(i).getWidth(),
+                    "decoded frame " + i + " width mismatch");
+            assertEquals(frameHeight, decodedFrames.get(i).getHeight(),
+                    "decoded frame " + i + " height mismatch");
+        }
 
         // Verify timing
         int[][] timing = WebpCodec.readAnimationTiming(webpBytes);
         assertNotNull(timing);
         assertEquals(2, timing.length);
-        assertEquals(frames.size(), timing[0][0]);
+        assertEquals(originalFrames.size(), timing[0][0], "timing frame count mismatch");
         int[] decodedDelays = timing[1];
-        assertEquals(delaysMs.length, decodedDelays.length);
+        assertEquals(delaysMs.length, decodedDelays.length, "timing array length mismatch");
         for (int i = 0; i < delaysMs.length; i++) {
-            // Allow small timing differences due to WebP encoding
             assertEquals(delaysMs[i], decodedDelays[i], Math.max(1, delaysMs[i] / 10),
                     "delay mismatch at frame " + i);
         }
 
-        // Write the WebP file for inspection
+        // Pixel-level fidelity check (compare first and last frames)
+        double avgPsnr = 0;
+        double avgSsim = 0;
+        int checkedFrames = 0;
+        for (int i = 0; i < Math.min(originalFrames.size(), decodedFrames.size()); i++) {
+            int[] ref = ImageMetrics.argb(originalFrames.get(i));
+            int[] act = ImageMetrics.argb(decodedFrames.get(i));
+            if (ref.length == act.length) {
+                avgPsnr += ImageMetrics.psnr(ref, act);
+                avgSsim += ImageMetrics.ssim(ref, act, frameWidth, frameHeight);
+                checkedFrames++;
+            }
+        }
+        if (checkedFrames > 0) {
+            avgPsnr /= checkedFrames;
+            avgSsim /= checkedFrames;
+        }
+
+        // Write output files for inspection
         Path outDir = Paths.get("target/test-output/anime-gif-to-webp");
         Files.createDirectories(outDir);
         Path outFile = outDir.resolve(gif.getFileName().toString().replace(".gif", ".webp"));
         Files.write(outFile, webpBytes);
 
-        // Also write first frame for visual comparison
-        Path firstFrameOut = outDir.resolve("frame0_" + gif.getFileName().toString().replace(".gif", ".png"));
-        ImageIO.write(frames.get(0), "png", firstFrameOut.toFile());
+        System.out.printf("  %s: %d frames, %d bytes, PSNR=%.1f dB, SSIM=%.4f, encode/decode OK%n",
+                gif.getFileName(), originalFrames.size(), webpBytes.length, avgPsnr, avgSsim);
 
-        System.out.printf("  %s: %d frames, %d bytes, encode %.2f ms, decode %.2f ms%n",
-                gif.getFileName(), frames.size(), webpBytes.length,
-                encodeNanos / 1_000_000.0, decodeNanos / 1_000_000.0);
+        return new ConvertResult(
+                originalFrames.size(), webpBytes.length, info.hasAnimation(),
+                avgPsnr, avgSsim, true);
     }
 
-    /**
-     * Reads all frames from an animated GIF using ImageIO.
-     */
+    // ------------------------------------------------------------------ helpers
+
     private static List<BufferedImage> readAllGifFrames(Path gif) throws IOException {
         try (var stream = ImageIO.createImageInputStream(Files.newInputStream(gif))) {
             var reader = ImageIO.getImageReadersByFormatName("gif").next();
@@ -135,19 +199,13 @@ class AnimatedGifToWebpTest {
 
             int numFrames = reader.getNumImages(true);
             var frames = new java.util.ArrayList<BufferedImage>(numFrames);
-
             for (int i = 0; i < numFrames; i++) {
-                BufferedImage frame = reader.read(i);
-                frames.add(frame);
+                frames.add(reader.read(i));
             }
             return frames;
         }
     }
 
-    /**
-     * Reads frame delays from an animated GIF.
-     * Returns delays in milliseconds.
-     */
     private static int[] readGifFrameDelays(Path gif) throws IOException {
         try (var stream = ImageIO.createImageInputStream(Files.newInputStream(gif))) {
             var reader = ImageIO.getImageReadersByFormatName("gif").next();
@@ -155,47 +213,34 @@ class AnimatedGifToWebpTest {
 
             int numFrames = reader.getNumImages(true);
             int[] delays = new int[numFrames];
-
             for (int i = 0; i < numFrames; i++) {
-                var param = reader.getDefaultReadParam();
-                var metadata = reader.getImageMetadata(i);
-                delays[i] = readGifDelay(metadata);
+                delays[i] = readGifDelay(reader.getImageMetadata(i));
             }
             return delays;
         }
     }
 
-    /**
-     * Extracts frame delay from GIF metadata.
-     * Returns delay in milliseconds (default 100ms if not found).
-     */
     private static int readGifDelay(javax.imageio.metadata.IIOMetadata metadata) {
         if (metadata == null) return 100;
-        String[] names = metadata.getMetadataFormatNames();
-        for (String name : names) {
+        for (String name : metadata.getMetadataFormatNames()) {
             var node = metadata.getAsTree(name);
-            int delay = extractDelayFromNode(node);
+            int delay = extractDelay(node);
             if (delay > 0) return delay;
         }
-        return 100; // default 100ms (10 centiseconds)
+        return 100;
     }
 
-    private static int extractDelayFromNode(org.w3c.dom.Node node) {
+    private static int extractDelay(org.w3c.dom.Node node) {
         if (node == null) return 0;
         if ("GraphicControlExtension".equals(node.getNodeName())) {
             var attr = node.getAttributes().getNamedItem("delayTime");
             if (attr != null) {
-                try {
-                    // delayTime is in hundredths of a second (centiseconds)
-                    return Integer.parseInt(attr.getNodeValue()) * 10;
-                } catch (NumberFormatException ignored) {
-                }
+                try { return Integer.parseInt(attr.getNodeValue()) * 10; }
+                catch (NumberFormatException ignored) {}
             }
         }
-        // Recurse into children
-        var children = node.getChildNodes();
-        for (int i = 0; i < children.getLength(); i++) {
-            int delay = extractDelayFromNode(children.item(i));
+        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+            int delay = extractDelay(node.getChildNodes().item(i));
             if (delay > 0) return delay;
         }
         return 0;
