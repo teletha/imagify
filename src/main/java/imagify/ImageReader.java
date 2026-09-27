@@ -201,6 +201,17 @@ public final class ImageReader {
                 }
             }
         }
+        // The standard metadata format has no notion of a frame being shown for a while, so a format
+        // whose reader has no GIF style control extension publishes the duration under this name
+        // instead. An animated AVIF is read this way.
+        var duration = node.getAttributes().getNamedItem("durationMs");
+        if (duration != null) {
+            try {
+                return Integer.parseInt(duration.getNodeValue());
+            } catch (NumberFormatException e) {
+                return 0;
+            }
+        }
         for (int i = 0; i < node.getChildNodes().getLength(); i++) {
             int delay = extractDelay(node.getChildNodes().item(i));
             if (delay > 0) return delay;
@@ -210,6 +221,10 @@ public final class ImageReader {
 
     private static int readLoopCount(ImageFormat format, IIOMetadata streamMetadata) {
         if (streamMetadata == null) return 0;
+        // A reader that reports the repetition count directly wins over digging it out of the GIF
+        // application extension below, which is the only place it is recorded for GIF itself.
+        int declared = readDeclaredAttribute(streamMetadata, "repetitionCount");
+        if (declared > 0) return declared;
         if (format != ImageFormat.GIF && format != ImageFormat.GIF89A) return 0;
         try {
             var node = streamMetadata.getAsTree(streamMetadata.getNativeMetadataFormatName());
@@ -233,6 +248,25 @@ public final class ImageReader {
                             }
                         }
                     }
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        return 0;
+    }
+
+    /**
+     * Reads an integer attribute off the root of whichever metadata format declares it, so that a
+     * reader can publish a property the standard format has no place for.
+     *
+     * @return the value, or 0 when no format carries the attribute
+     */
+    private static int readDeclaredAttribute(IIOMetadata metadata, String attribute) {
+        try {
+            for (String name : metadata.getMetadataFormatNames()) {
+                var attr = metadata.getAsTree(name).getAttributes().getNamedItem(attribute);
+                if (attr != null) {
+                    return Integer.parseInt(attr.getNodeValue());
                 }
             }
         } catch (Exception ignored) {

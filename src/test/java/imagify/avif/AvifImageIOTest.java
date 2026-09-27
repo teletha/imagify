@@ -219,7 +219,11 @@ class AvifImageIOTest {
         // The ftyp box is complete, so the parse fails inside libavif rather than in the sniffer.
         // Without libavif it fails on the missing library, with the same prefix.
         IIOException e = assertThrows(IIOException.class, () -> reader.getWidth(0));
-        assertTrue(e.getMessage().startsWith("cannot read the AVIF header"), e.getMessage());
+        assertTrue(e.getMessage().startsWith("cannot read the AVIF file"), e.getMessage());
+        // Nothing about the file can be answered, so every entry point says the same thing.
+        assertThrows(IIOException.class, () -> reader.getNumImages(true));
+        assertThrows(IIOException.class, () -> reader.getStreamMetadata());
+        assertThrows(IIOException.class, () -> reader.read(0));
     }
 
     @Test
@@ -234,16 +238,19 @@ class AvifImageIOTest {
     }
 
     @Test
-    @DisplayName("the reader rejects an image index other than zero")
+    @DisplayName("the reader rejects an image index the file does not have")
     void badIndex() throws IOException {
+        requireLibavif();
         AvifImageReader reader = reader();
-        reader.setInput(stream(ftyp("avif")));
+        reader.setInput(stream(encode(gradient(4, 4), null)));
+        // A still image is a sequence of one, so index zero is the only one that exists.
+        assertEquals(1, reader.getNumImages(true));
+        assertEquals(1, reader.getNumImages(false));
         assertThrows(IndexOutOfBoundsException.class, () -> reader.getWidth(1));
         assertThrows(IndexOutOfBoundsException.class, () -> reader.getWidth(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> reader.read(1));
-        // An AVIF file always holds exactly one image.
-        assertEquals(1, reader.getNumImages(true));
-        assertEquals(1, reader.getNumImages(false));
+        assertThrows(IndexOutOfBoundsException.class, () -> reader.getImageTypes(1));
+        assertThrows(IndexOutOfBoundsException.class, () -> reader.getImageMetadata(1));
     }
 
     @Test
@@ -262,12 +269,16 @@ class AvifImageIOTest {
     }
 
     @Test
-    @DisplayName("the reader has no stream metadata, because AVIF has none")
+    @DisplayName("the stream metadata reports how often the sequence repeats")
     void streamMetadata() throws IOException {
         requireLibavif();
         AvifImageReader reader = reader();
         reader.setInput(stream(encode(gradient(4, 4), null)));
-        assertNull(reader.getStreamMetadata());
+        // The loop count belongs to the file rather than to any one frame, so it is the one thing
+        // that the stream metadata is for. A still image never repeats, which is a count of 0.
+        IIOMetadata metadata = reader.getStreamMetadata();
+        assertEquals("0", nativeAttribute(metadata, "repetitionCount"));
+        assertNull(nativeAttribute(metadata, "durationMs"), "a still has no frame duration");
     }
 
     // ------------------------------------------------------------------ encode and decode, gated
@@ -615,6 +626,13 @@ class AvifImageIOTest {
 
     private static AvifImageWriter writer() {
         return new AvifImageWriter(new AvifImageWriterSpi());
+    }
+
+    /** @return the value of an attribute of the native metadata root, or {@code null} if it is absent */
+    private static String nativeAttribute(IIOMetadata metadata, String attribute) {
+        Node root = metadata.getAsTree(metadata.getNativeMetadataFormatName());
+        Node attributeNode = root.getAttributes().getNamedItem(attribute);
+        return attributeNode == null ? null : attributeNode.getNodeValue();
     }
 
     private static ImageOutputStream output() throws IOException {

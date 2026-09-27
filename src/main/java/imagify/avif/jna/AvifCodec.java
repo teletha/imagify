@@ -467,70 +467,12 @@ public final class AvifCodec {
      * @throws AvifException when the data is not a valid AVIF or cannot be decoded
      */
     public static List<BufferedImage> decodeAnimation(byte[] data) throws AvifException {
-        AvifLibrary lib = requireLibrary();
-        if (data == null || data.length == 0) {
-            throw new AvifException("no input data");
-        }
-        if (!isAvif(data)) {
-            throw new AvifException("not an AVIF file");
-        }
-        if (!isAvailable()) {
-            throw new AvifException("libavif is not available");
-        }
-
-        Memory buffer = new Memory(Math.max(data.length, 1));
-        AvifDecoder decoder = null;
-        try {
-            buffer.write(0, data, 0, data.length);
-            decoder = lib.avifDecoderCreate();
-            if (decoder == null) {
-                throw new AvifException("avifDecoderCreate() returned NULL");
-            }
-            decoder.maxThreads = defaultThreads();
-            decoder.imageCountLimit = 0;
-            decoder.ignoreExif = AvifLibrary.AVIF_TRUE;
-            decoder.ignoreXMP = AvifLibrary.AVIF_TRUE;
-            decoder.write();
-            check(lib, lib.avifDecoderSetIOMemory(decoder, buffer, data.length), "avifDecoderSetIOMemory()");
-            check(lib, lib.avifDecoderParse(decoder), "avifDecoderParse()");
-
-            int frameCount = decoder.imageCount;
-            if (frameCount <= 0) {
-                throw new AvifException("no frames found in AVIF file");
-            }
-            List<BufferedImage> frames = new ArrayList<>(frameCount);
-            for (int i = 0; i < frameCount; i++) {
-                check(lib, lib.avifDecoderNextImage(decoder), "avifDecoderNextImage() at " + i);
-                decoder.read();
-                AvifImage image = decoder.image;
-                if (image == null || image.width <= 0 || image.height <= 0) {
-                    throw new AvifException("invalid frame at index " + i);
-                }
-                int w = image.width;
-                int h = image.height;
-                AvifRGBImage rgb = new AvifRGBImage();
-                lib.avifRGBImageSetDefaults(rgb, image);
-                rgb.format = AvifLibrary.AVIF_RGB_FORMAT_ABGR;
-                rgb.depth = 8;
-                rgb.rowBytes = w * lib.avifRGBImagePixelSize(rgb);
-                check(lib, lib.avifRGBImageAllocatePixels(rgb), "avifRGBImageAllocatePixels()");
-                try {
-                    check(lib, lib.avifImageYUVToRGB(image, rgb), "avifImageYUVToRGB()");
-                    byte[] pixels = rgb.getPixels();
-                    if (pixels == null) {
-                        throw new AvifException("avifImageYUVToRGB() did not produce pixels");
-                    }
-                    frames.add(AbgrPixels.toBufferedImage(pixels, w, h));
-                } finally {
-                    lib.avifRGBImageFreePixels(rgb);
-                }
+        try (AvifAnimationDecoder decoder = AvifAnimationDecoder.open(data)) {
+            List<BufferedImage> frames = new ArrayList<>(decoder.frameCount());
+            for (int index = 0; index < decoder.frameCount(); index++) {
+                frames.add(decoder.frame(index));
             }
             return frames;
-        } finally {
-            if (decoder != null) {
-                lib.avifDecoderDestroy(decoder);
-            }
-            buffer.close();
         }
     }
 
@@ -552,7 +494,7 @@ public final class AvifCodec {
             this.encoded = encoded;
             this.decoder = decoder;
             this.image = image;
-            this.info = describe(image);
+            this.info = describeImage(image);
         }
 
         static Session open(byte[] encoded, int threads, boolean decodePixels) throws AvifException {
@@ -643,32 +585,39 @@ public final class AvifCodec {
             lib.avifDecoderDestroy(decoder);
             encoded.close();
         }
-
-        private static AvifImageInfo describe(AvifImage image) {
-            int rotation = 0;
-            if ((image.transformFlags & AvifLibrary.AVIF_TRANSFORM_IROT) != 0) {
-                rotation = Math.floorMod(image.irot.angle, 4) * 90;
-            }
-            return new AvifImageInfo(
-                    image.width,
-                    image.height,
-                    image.depth,
-                    image.yuvFormat,
-                    image.yuvRange,
-                    image.yuvChromaSamplePosition,
-                    image.colorPrimaries,
-                    image.transferCharacteristics,
-                    image.matrixCoefficients,
-                    image.alphaPlane != null,
-                    (int) image.icc.size,
-                    (int) image.exif.size,
-                    (int) image.xmp.size,
-                    rotation,
-                    (image.transformFlags & AvifLibrary.AVIF_TRANSFORM_IMIR) != 0);
-        }
     }
 
-    private static void check(AvifLibrary lib, int result, String operation) throws AvifException {
+    /**
+     * Reads the properties a native {@link AvifImage} carries, including the {@code irot} and
+     * {@code imir} container transforms.
+     *
+     * <p>Package private so {@link AvifAnimationDecoder} can describe a single frame the same way a
+     * whole file is described.
+     */
+    static AvifImageInfo describeImage(AvifImage image) {
+        int rotation = 0;
+        if ((image.transformFlags & AvifLibrary.AVIF_TRANSFORM_IROT) != 0) {
+            rotation = Math.floorMod(image.irot.angle, 4) * 90;
+        }
+        return new AvifImageInfo(
+                image.width,
+                image.height,
+                image.depth,
+                image.yuvFormat,
+                image.yuvRange,
+                image.yuvChromaSamplePosition,
+                image.colorPrimaries,
+                image.transferCharacteristics,
+                image.matrixCoefficients,
+                image.alphaPlane != null,
+                (int) image.icc.size,
+                (int) image.exif.size,
+                (int) image.xmp.size,
+                rotation,
+                (image.transformFlags & AvifLibrary.AVIF_TRANSFORM_IMIR) != 0);
+    }
+
+    static void check(AvifLibrary lib, int result, String operation) throws AvifException {
         if (result != AvifLibrary.AVIF_RESULT_OK) {
             String name;
             try {

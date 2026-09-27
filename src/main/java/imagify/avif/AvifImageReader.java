@@ -9,6 +9,7 @@
  */
 package imagify.avif;
 
+import imagify.avif.jna.AvifAnimationDecoder;
 import imagify.avif.jna.AvifCodec;
 
 import javax.imageio.IIOException;
@@ -32,10 +33,16 @@ import java.util.Set;
 /**
  * {@link ImageReader} for AVIF images, backed by {@code libavif}.
  *
- * <p>An AVIF file holds a single still image, so this reader always reports exactly one image. The
- * pixels are decoded into a {@link BufferedImage#TYPE_4BYTE_ABGR} image, whose banks are the very
- * {@code A, B, G, R} layout {@code libavif} fills in for {@code AVIF_RGB_FORMAT_ABGR}, and are then
- * converted to the requested type when the caller asked for something else.
+ * <p>An AVIF file holds either a single still image or an image sequence, and this reader reports
+ * whichever it finds: {@link #getNumImages(boolean)} answers 1 for a still and the frame count for an
+ * animation, and {@link #read(int, ImageReadParam)} decodes the frame asked for. The pixels arrive as
+ * a {@link BufferedImage#TYPE_4BYTE_ABGR} image, whose banks are the very {@code A, B, G, R} layout
+ * {@code libavif} fills in for {@code AVIF_RGB_FORMAT_ABGR}, and are then converted to the requested
+ * type when the caller asked for something else.
+ *
+ * <p>How long each frame is shown, and how often the sequence repeats, are reported through
+ * {@link #getImageMetadata(int)} and {@link #getStreamMetadata()} rather than through the standard
+ * metadata format, which has no notion of animation.
  *
  * <p>Of the {@link ImageReadParam} settings, the source region, the source sub sampling factors and
  * the destination are honoured. Band selection and the sub sampling offsets are not; the reader
@@ -49,7 +56,7 @@ import java.util.Set;
  */
 public class AvifImageReader extends ImageReader {
 
-    /** The only image index an AVIF file provides. */
+    /** The index of the first frame, which for a still image is the only one. */
     public static final int IMAGE_INDEX = 0;
 
     /** The image types this reader can produce, most useful first. */
@@ -63,7 +70,7 @@ public class AvifImageReader extends ImageReader {
     private ImageInputStream stream;
     private long start = -1;
     private byte[] encoded;
-    private AvifImageInfo info;
+    private AvifAnimationDecoder animation;
 
     /**
      * @param originatingProvider the provider that created this reader
@@ -75,35 +82,35 @@ public class AvifImageReader extends ImageReader {
     @Override
     public void setInput(Object input, boolean seekForwardOnly, boolean ignoreMetadata) {
         super.setInput(input, seekForwardOnly, ignoreMetadata);
+        closeAnimation();
         stream = (ImageInputStream) getInput();
         start = -1;
         encoded = null;
-        info = null;
     }
 
     @Override
     public void reset() {
         super.reset();
+        closeAnimation();
         stream = null;
         start = -1;
         encoded = null;
-        info = null;
     }
 
     @Override
     public int getNumImages(boolean allowSearch) throws IIOException {
         checkInput();
-        return 1;
+        return animation().frameCount();
     }
 
     @Override
     public int getWidth(int imageIndex) throws IIOException {
-        return checkIndex(imageIndex).width();
+        return size(imageIndex, true);
     }
 
     @Override
     public int getHeight(int imageIndex) throws IIOException {
-        return checkIndex(imageIndex).height();
+        return size(imageIndex, false);
     }
 
     @Override
@@ -115,18 +122,21 @@ public class AvifImageReader extends ImageReader {
     @Override
     public IIOMetadata getStreamMetadata() throws IIOException {
         checkInput();
-        return null;
+        // The loop count belongs to the file rather than to any one frame, and the frame timing that
+        // goes with it is not what a caller of stream metadata is after.
+        AvifAnimationDecoder decoder = animation();
+        return new AvifMetadata(decoder.info(), 0, decoder.loopCount());
     }
 
     @Override
     public IIOMetadata getImageMetadata(int imageIndex) throws IIOException {
-        return new AvifMetadata(checkIndex(imageIndex));
+        return metadataOf(imageIndex);
     }
 
     @Override
     public IIOMetadata getImageMetadata(int imageIndex, String metadataFormat, Set<String> extraMetadataFormats)
             throws IIOException {
-        AvifMetadata metadata = new AvifMetadata(checkIndex(imageIndex));
+        AvifMetadata metadata = (AvifMetadata) metadataOf(imageIndex);
         // Fail fast, with a useful message, on an unsupported format name.
         metadata.getAsTree(metadataFormat);
         return metadata;
@@ -140,16 +150,11 @@ public class AvifImageReader extends ImageReader {
 
     @Override
     public BufferedImage read(int imageIndex, ImageReadParam param) throws IIOException {
-        AvifImageInfo image = checkIndex(imageIndex);
+        checkIndex(imageIndex);
         checkBands(param);
-        Sample sample = sampleOf(image, param);
+        BufferedImage source = frame(imageIndex);
+        Sample sample = sampleOf(source.getWidth(), source.getHeight(), param);
         BufferedImage target = targetOf(param, sample);
-        BufferedImage source;
-        try {
-            source = AvifCodec.decode(encoded()).image();
-        } catch (AvifException e) {
-            throw new IIOException("cannot decode the AVIF image: " + e.getMessage(), e);
-        }
         transfer(source, sample, param, target);
         return target;
     }
@@ -174,9 +179,9 @@ public class AvifImageReader extends ImageReader {
         }
     }
 
-    private static Sample sampleOf(AvifImageInfo image, ImageReadParam param) throws IIOException {
+    private static Sample sampleOf(int width, int height, ImageReadParam param) throws IIOException {
         if (param == null) {
-            return new Sample(0, 0, image.width(), image.height(), 1, 1);
+            return new Sample(0, 0, width, height, 1, 1);
         }
         // The setters never let these drop below 1, but a hand written subclass might.
         int subX = Math.max(1, param.getSourceXSubsampling());
@@ -184,14 +189,14 @@ public class AvifImageReader extends ImageReader {
         Rectangle region = param.getSourceRegion();
         int x = region == null ? 0 : region.x;
         int y = region == null ? 0 : region.y;
-        int width = region == null ? image.width() : region.width;
-        int height = region == null ? image.height() : region.height;
-        if (x < 0 || y < 0 || width <= 0 || height <= 0
-                || x + width > image.width() || y + height > image.height()) {
+        int regionW = region == null ? width : region.width;
+        int regionH = region == null ? height : region.height;
+        if (x < 0 || y < 0 || regionW <= 0 || regionH <= 0
+                || x + regionW > width || y + regionH > height) {
             throw new IIOException("the source region " + region + " does not fit in the "
-                    + image.width() + "x" + image.height() + " image");
+                    + width + "x" + height + " image");
         }
-        return new Sample(x, y, divideUp(width, subX), divideUp(height, subY), subX, subY);
+        return new Sample(x, y, divideUp(regionW, subX), divideUp(regionH, subY), subX, subY);
     }
 
     private static BufferedImage targetOf(ImageReadParam param, Sample sample) throws IIOException {
@@ -308,20 +313,72 @@ public class AvifImageReader extends ImageReader {
         }
     }
 
-    private AvifImageInfo checkIndex(int imageIndex) throws IIOException {
-        checkInput();
-        if (imageIndex != IMAGE_INDEX) {
-            throw new IndexOutOfBoundsException(
-                    "image index " + imageIndex + " is out of bounds: an AVIF file holds exactly one image");
-        }
-        if (info == null) {
+    /**
+     * The decoder over the whole file, opened on first use and kept until the input is replaced.
+     */
+    private AvifAnimationDecoder animation() throws IIOException {
+        if (animation == null) {
             try {
-                info = AvifCodec.readHeader(encoded());
+                animation = AvifAnimationDecoder.open(encoded());
             } catch (AvifException e) {
-                throw new IIOException("cannot read the AVIF header: " + e.getMessage(), e);
+                throw new IIOException("cannot read the AVIF file: " + e.getMessage(), e);
             }
         }
-        return info;
+        return animation;
+    }
+
+    private void closeAnimation() {
+        if (animation != null) {
+            animation.close();
+            animation = null;
+        }
+    }
+
+    private BufferedImage frame(int imageIndex) throws IIOException {
+        try {
+            return animation().frame(imageIndex);
+        } catch (AvifException e) {
+            throw new IIOException("cannot decode frame " + imageIndex + " of the AVIF file: "
+                    + e.getMessage(), e);
+        }
+    }
+
+    private int size(int imageIndex, boolean width) throws IIOException {
+        checkIndex(imageIndex);
+        try {
+            AvifAnimationDecoder decoder = animation();
+            return width ? decoder.width(imageIndex) : decoder.height(imageIndex);
+        } catch (AvifException e) {
+            throw new IIOException("cannot read the size of frame " + imageIndex + ": "
+                    + e.getMessage(), e);
+        }
+    }
+
+    private IIOMetadata metadataOf(int imageIndex) throws IIOException {
+        checkIndex(imageIndex);
+        try {
+            AvifAnimationDecoder decoder = animation();
+            // A file with a single frame is a still image, not a one frame animation, so there is
+            // nothing to say about how long it is shown and no duration is published.
+            int durationMs = decoder.frameCount() > 1 ? decoder.durationMs(imageIndex) : 0;
+            return new AvifMetadata(decoder.info(), durationMs, decoder.loopCount());
+        } catch (AvifException e) {
+            throw new IIOException("cannot read the metadata of frame " + imageIndex + ": "
+                    + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * @param imageIndex the frame the caller asked for
+     * @throws IIOException when there is no input, or when the index names no frame of the file
+     */
+    private void checkIndex(int imageIndex) throws IIOException {
+        checkInput();
+        int frameCount = animation().frameCount();
+        if (imageIndex < 0 || imageIndex >= frameCount) {
+            throw new IndexOutOfBoundsException("image index " + imageIndex
+                    + " is out of bounds: the AVIF file holds " + frameCount + " frame(s)");
+        }
     }
 
     /**

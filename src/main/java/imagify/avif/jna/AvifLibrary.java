@@ -382,6 +382,19 @@ public interface AvifLibrary extends Library {
     int avifDecoderNextImage(AvifDecoder decoder);
 
     /**
+     * Decodes a frame of a sequence by index, without walking the ones before it.
+     *
+     * <p>This arrived in {@code libavif} 1.3.0, so calling it on an older library fails to link.
+     * {@link AvifAnimationDecoder} treats that as "not available" and walks forward instead, which is
+     * why nothing else in this binding may call it directly.</p>
+     *
+     * @param decoder    the decoder
+     * @param frameIndex the zero based frame to land on
+     * @return an {@code AVIF_RESULT_*} value
+     */
+    int avifDecoderNthImage(AvifDecoder decoder, int frameIndex);
+
+    /**
      * Rewinds a parsed decoder so that it can be used again.
      *
      * @param decoder the decoder
