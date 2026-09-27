@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="f">
-		<header class="g" date="2026-09-26">
-			<h1 class="l"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
+	<body class="V">
+		<header class="W" date="2026-09-26">
+			<h1 class="Q"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="s"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="q"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="j"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="Q"></nav>
-		<article class="h" id="Article">
-			<section class="V"><code class="n">imagify</code>
-				<h2 class="Class M"><code class="x">SpriteSheet</code></h2>
-				<div class="J"></div><span class="A"><p>Creates sprite sheets from multiple image frames.</p><p>A sprite sheet is a single <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code> containing
+		<nav class="Y"></nav>
+		<article class="X" id="Article">
+			<section class="IB"><code class="S">imagify</code>
+				<h2 class="Class LB"><code class="z">SpriteSheet</code></h2>
+				<div class="l"></div><span class="A"><p>Creates sprite sheets from multiple image frames.</p><p>A sprite sheet is a single <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code> containing
  multiple frames arranged in a grid pattern.</p><p>Usage:</p><pre><code>
  // From file paths
  BufferedImage sheet = SpriteSheet.of()
@@ -66,217 +66,217 @@ BufferedImage sheet = SpriteSheet.of()
 .toImage();
 </p>
 						</code></pre></span></section>
-			<section class="V" id="of()">
-				<h2 class="FB"><i class="STATIC PUBLIC"></i><code class="x">of</code><code class="Z">()</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="N">
+			<section class="IB" id="of()">
+				<h2 class="o"><i class="PUBLIC STATIC"></i><code class="z">of</code><code class="GB">()</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Creates a new builder instance.</p></span></section>
-			<section class="V" id="addFrames(java.util.List)">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">addFrames</code><code class="Z">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="t">
+			<section class="IB" id="addFrames(java.util.List)">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">addFrames</code><code class="GB">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="x">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Adds frames from a list of file paths. Auto-reads using ImageReader.</p></span></section>
-			<section class="V" id="addFrame(java.nio.file.Path)">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">addFrame</code><code class="Z">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="t">
+			<section class="IB" id="addFrame(java.nio.file.Path)">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">addFrame</code><code class="GB">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="x">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Adds a single frame from a file path.</p></span></section>
-			<section class="V" id="addImages(java.util.List)">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">addImages</code><code class="Z">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="t">
+			<section class="IB" id="addImages(java.util.List)">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">addImages</code><code class="GB">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="x">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Adds frames from BufferedImages.</p></span></section>
-			<section class="V" id="addFrame(java.awt.image.BufferedImage)">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">addFrame</code><code class="Z">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>)</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="t">
+			<section class="IB" id="addFrame(java.awt.image.BufferedImage)">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">addFrame</code><code class="GB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>)</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="x">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Adds a single BufferedImage frame.</p></span></section>
-			<section class="V" id="addFrameBytes(byte[]...)">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">addFrameBytes</code><code class="Z">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="t">
+			<section class="IB" id="addFrameBytes(byte[]...)">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">addFrameBytes</code><code class="GB">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="x">
 						<td><code array="var">byte</code><code class="parameterName">datas</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Adds frames from byte arrays (auto-detected format).</p></span></section>
-			<section class="V" id="columns(int)">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">columns</code><code class="Z">(<code>int</code><code class="parameterName">cols</code>)</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="t">
+			<section class="IB" id="columns(int)">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">columns</code><code class="GB">(<code>int</code><code class="parameterName">cols</code>)</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="x">
 						<td><code>int</code><code class="parameterName">cols</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Sets the number of columns in the sprite grid.
 Rows are auto-calculated from frame count.</p></span></section>
-			<section class="V" id="rows(int)">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">rows</code><code class="Z">(<code>int</code><code class="parameterName">rows</code>)</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="t">
+			<section class="IB" id="rows(int)">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">rows</code><code class="GB">(<code>int</code><code class="parameterName">rows</code>)</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="x">
 						<td><code>int</code><code class="parameterName">rows</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Sets the number of rows in the sprite grid.
 Columns are auto-calculated from frame count.</p></span></section>
-			<section class="V" id="grid(int,int)">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">grid</code><code class="Z">(<code>int</code><code class="parameterName">cols</code>, <code>int</code><code class="parameterName">rows</code>)</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="t">
+			<section class="IB" id="grid(int,int)">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">grid</code><code class="GB">(<code>int</code><code class="parameterName">cols</code>, <code>int</code><code class="parameterName">rows</code>)</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="x">
 						<td><code>int</code><code class="parameterName">cols</code></td>
 						<td></td>
 					</tr>
-					<tr class="t">
+					<tr class="x">
 						<td><code>int</code><code class="parameterName">rows</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Sets the grid dimensions directly.</p></span></section>
-			<section class="V" id="uniformSize(int,int)">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">uniformSize</code><code class="Z">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="t">
+			<section class="IB" id="uniformSize(int,int)">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">uniformSize</code><code class="GB">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="x">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td></td>
 					</tr>
-					<tr class="t">
+					<tr class="x">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Forces all frames to a uniform size by resizing.
 Required when frames have different sizes.</p></span></section>
-			<section class="V" id="padding(int)">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">padding</code><code class="Z">(<code>int</code><code class="parameterName">pixels</code>)</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="t">
+			<section class="IB" id="padding(int)">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">padding</code><code class="GB">(<code>int</code><code class="parameterName">pixels</code>)</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="x">
 						<td><code>int</code><code class="parameterName">pixels</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Sets padding around the entire sprite sheet.</p></span></section>
-			<section class="V" id="spacing(int)">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">spacing</code><code class="Z">(<code>int</code><code class="parameterName">pixels</code>)</code><i class="s"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
-				<table class="JB">
-					<tr class="t">
+			<section class="IB" id="spacing(int)">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">spacing</code><code class="GB">(<code>int</code><code class="parameterName">pixels</code>)</code><i class="L"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></h2>
+				<table class="KB">
+					<tr class="x">
 						<td><code>int</code><code class="parameterName">pixels</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="v">
 						<td><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Sets spacing between frames.</p></span></section>
-			<section class="V" id="toImage()">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">toImage</code><code class="Z">()</code><i class="s"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="JB">
-					<tr class="N">
+			<section class="IB" id="toImage()">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">toImage</code><code class="GB">()</code><i class="L"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="KB">
+					<tr class="v">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the sprite sheet image (TYPE_INT_ARGB)</p></span></td>
 					</tr>
 				</table><span class="A"><p>Builds the sprite sheet <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>.</p></span></section>
-			<section class="V" id="frameCount()">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">frameCount</code><code class="Z">()</code><i class="s"><code>int</code></i></h2>
-				<table class="JB">
-					<tr class="N">
+			<section class="IB" id="frameCount()">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">frameCount</code><code class="GB">()</code><i class="L"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="v">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Returns the number of frames in the sprite sheet.</p></span></section>
-			<section class="V" id="getFrameWidth()">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">getFrameWidth</code><code class="Z">()</code><i class="s"><code>int</code></i></h2>
-				<table class="JB">
-					<tr class="N">
+			<section class="IB" id="getFrameWidth()">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">getFrameWidth</code><code class="GB">()</code><i class="L"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="v">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Returns the calculated frame width.</p></span></section>
-			<section class="V" id="getFrameHeight()">
-				<h2 class="FB"><i class="PUBLIC"></i><code class="x">getFrameHeight</code><code class="Z">()</code><i class="s"><code>int</code></i></h2>
-				<table class="JB">
-					<tr class="N">
+			<section class="IB" id="getFrameHeight()">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">getFrameHeight</code><code class="GB">()</code><i class="L"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="v">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Returns the calculated frame height.</p></span></section>
 		</article>
-		<aside class="j">
-			<div class="EB">
-				<h5 class="z">Static Methods</h5>
+		<aside class="K">
+			<div class="M">
+				<h5 class="P">Static Methods</h5>
 				<ul>
-					<li class="u"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#of()">of</a></code><code class="Z">()</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.SpriteSheet.html#of()">of</a></code><code class="GB">()</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
 				</ul>
-				<h5 class="z">Methods</h5>
+				<h5 class="P">Methods</h5>
 				<ul>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#addFrames(java.util.List)">addFrames</a></code><code class="Z">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#addFrame(java.nio.file.Path)">addFrame</a></code><code class="Z">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#addImages(java.util.List)">addImages</a></code><code class="Z">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#addFrame(java.awt.image.BufferedImage)">addFrame</a></code><code class="Z">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>)</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#addFrameBytes(byte[]...)">addFrameBytes</a></code><code class="Z">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#columns(int)">columns</a></code><code class="Z">(<code>int</code><code class="parameterName">cols</code>)</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#rows(int)">rows</a></code><code class="Z">(<code>int</code><code class="parameterName">rows</code>)</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#grid(int,int)">grid</a></code><code class="Z">(<code>int</code><code class="parameterName">cols</code>, <code>int</code><code class="parameterName">rows</code>)</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#uniformSize(int,int)">uniformSize</a></code><code class="Z">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#padding(int)">padding</a></code><code class="Z">(<code>int</code><code class="parameterName">pixels</code>)</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#spacing(int)">spacing</a></code><code class="Z">(<code>int</code><code class="parameterName">pixels</code>)</code><i class="w"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#toImage()">toImage</a></code><code class="Z">()</code><i class="w"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#frameCount()">frameCount</a></code><code class="Z">()</code><i class="w"><code>int</code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#getFrameWidth()">getFrameWidth</a></code><code class="Z">()</code><i class="w"><code>int</code></i></li>
-					<li class="u"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#getFrameHeight()">getFrameHeight</a></code><code class="Z">()</code><i class="w"><code>int</code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#addFrames(java.util.List)">addFrames</a></code><code class="GB">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#addFrame(java.nio.file.Path)">addFrame</a></code><code class="GB">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#addImages(java.util.List)">addImages</a></code><code class="GB">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#addFrame(java.awt.image.BufferedImage)">addFrame</a></code><code class="GB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>)</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#addFrameBytes(byte[]...)">addFrameBytes</a></code><code class="GB">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#columns(int)">columns</a></code><code class="GB">(<code>int</code><code class="parameterName">cols</code>)</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#rows(int)">rows</a></code><code class="GB">(<code>int</code><code class="parameterName">rows</code>)</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#grid(int,int)">grid</a></code><code class="GB">(<code>int</code><code class="parameterName">cols</code>, <code>int</code><code class="parameterName">rows</code>)</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#uniformSize(int,int)">uniformSize</a></code><code class="GB">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#padding(int)">padding</a></code><code class="GB">(<code>int</code><code class="parameterName">pixels</code>)</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#spacing(int)">spacing</a></code><code class="GB">(<code>int</code><code class="parameterName">pixels</code>)</code><i class="t"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#toImage()">toImage</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#frameCount()">frameCount</a></code><code class="GB">()</code><i class="t"><code>int</code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#getFrameWidth()">getFrameWidth</a></code><code class="GB">()</code><i class="t"><code>int</code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.html#getFrameHeight()">getFrameHeight</a></code><code class="GB">()</code><i class="t"><code>int</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="i">
+		<footer class="O">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

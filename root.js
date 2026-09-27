@@ -4,7 +4,9 @@ const root = {
 	"packages": [
 		"imagify.avif",
 		"imagify.avif.jna",
-		"imagify"
+		"imagify",
+		"imagify.svg",
+		"imagify.ico"
 	],
 	"types": [
 		{
@@ -168,6 +170,16 @@ const root = {
 			"type": "Class"
 		},
 		{
+			"name": "SvgImageReader",
+			"packageName": "imagify.svg",
+			"type": "Class"
+		},
+		{
+			"name": "SvgImageReaderSpi",
+			"packageName": "imagify.svg",
+			"type": "Class"
+		},
+		{
 			"name": "ResizeAlgorithm",
 			"packageName": "imagify",
 			"type": "Enum"
@@ -175,6 +187,31 @@ const root = {
 		{
 			"name": "Imagify",
 			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
+			"name": "IcoWriteParam",
+			"packageName": "imagify.ico",
+			"type": "Class"
+		},
+		{
+			"name": "IcoImageReader",
+			"packageName": "imagify.ico",
+			"type": "Class"
+		},
+		{
+			"name": "IcoImageWriterSpi",
+			"packageName": "imagify.ico",
+			"type": "Class"
+		},
+		{
+			"name": "IcoImageWriter",
+			"packageName": "imagify.ico",
+			"type": "Class"
+		},
+		{
+			"name": "IcoImageReaderSpi",
+			"packageName": "imagify.ico",
 			"type": "Class"
 		},
 		{

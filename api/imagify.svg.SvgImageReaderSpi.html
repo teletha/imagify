@@ -44,8 +44,8 @@
 		</header>
 		<nav class="Y"></nav>
 		<article class="X" id="Article">
-			<section class="IB"><code class="S">imagify.avif</code>
-				<h2 class="Class LB"><code class="z">AvifImageReaderSpi</code></h2>
+			<section class="IB"><code class="S">imagify.svg</code>
+				<h2 class="Class LB"><code class="z">SvgImageReaderSpi</code></h2>
 				<div class="l">
 					<ul class="E G">
 						<li><code><a aria-label="javax.imageio.spi.ImageReaderSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageReaderSpi.html">ImageReaderSpi</a></code></li>
@@ -55,15 +55,17 @@
 					<ul class="E H">
 						<li><code><a aria-label="javax.imageio.spi.RegisterableService 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/RegisterableService.html">RegisterableService</a></code></li>
 					</ul>
-				</div><span class="A"><p>Registers <code><a aria-label="imagify.avif.AvifImageReader" href="api/imagify.avif.AvifImageReader.html">AvifImageReader</a></code> with <code>ImageIO</code>.</p><p>Decoding needs the native <code>libavif</code> library. To keep <code>ImageIO</code> usable when that
- library is absent, <code><a aria-label="imagify.avif.AvifImageReaderSpi" href="api/imagify.avif.AvifImageReaderSpi.html#canDecodeInput(java.lang.Object)">#canDecodeInput(Object)</a></code> answers <code>false</code> in that case, which makes
- <code>ImageIO.read()</code> fall through to the other providers instead of failing hard.
+				</div><span class="A"><p>Registers <code><a aria-label="imagify.svg.SvgImageReader" href="api/imagify.svg.SvgImageReader.html">SvgImageReader</a></code> with <code>ImageIO</code>.</p><p>Decoding needs the Apache Batik library on the classpath. To keep
+ <code>ImageIO</code> usable when that library is absent, <code><a aria-label="imagify.svg.SvgImageReaderSpi" href="api/imagify.svg.SvgImageReaderSpi.html#canDecodeInput(java.lang.Object)">#canDecodeInput(Object)</a></code>
+ answers <code>false</code> in that case, which makes <code>ImageIO.read()</code> fall through
+ to the other providers instead of failing hard.
 </p>
 				</span></section>
 			<section class="IB" id="VERSION">
-				<h2 class="o"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="z">VERSION</code><i class="L"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Version of this service provider implementation.</p></span></section>
-			<section class="IB" id="AvifImageReaderSpi()">
-				<h2 class="o"><i class="PUBLIC"></i><code class="z">AvifImageReaderSpi</code><code class="GB">()</code></h2>
+				<h2 class="o"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="z">VERSION</code><i class="L"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+			</section>
+			<section class="IB" id="SvgImageReaderSpi()">
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">SvgImageReaderSpi</code><code class="GB">()</code></h2>
 			</section>
 			<section class="IB" id="canDecodeInput(java.lang.Object)">
 				<h2 class="o"><i class="OVERRIDE PUBLIC"></i><code class="z">canDecodeInput</code><code class="GB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code>)</code><i class="L"><code>boolean</code></i></h2>
@@ -128,11 +130,11 @@
 				</table>
 			</section>
 			<section class="IB" id="getReaderClass()">
-				<h2 class="o"><i class="PUBLIC"></i><code class="z">getReaderClass</code><code class="GB">()</code><i class="L"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.avif.AvifImageReader" href="api/imagify.avif.AvifImageReader.html">AvifImageReader</a></code></code></code></i></h2>
+				<h2 class="o"><i class="PUBLIC"></i><code class="z">getReaderClass</code><code class="GB">()</code><i class="L"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.svg.SvgImageReader" href="api/imagify.svg.SvgImageReader.html">SvgImageReader</a></code></code></code></i></h2>
 				<table class="KB">
 					<tr class="v">
-						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.avif.AvifImageReader" href="api/imagify.avif.AvifImageReader.html">AvifImageReader</a></code></code></code></td>
-						<td><span><p>the reader this provider creates</p></span></td>
+						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.svg.SvgImageReader" href="api/imagify.svg.SvgImageReader.html">SvgImageReader</a></code></code></code></td>
+						<td></td>
 					</tr>
 				</table>
 			</section>
@@ -217,29 +219,29 @@
 			<div class="M">
 				<h5 class="P">Constructors</h5>
 				<ul>
-					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#AvifImageReaderSpi()">AvifImageReaderSpi</a></code><code class="GB">()</code></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#SvgImageReaderSpi()">SvgImageReaderSpi</a></code><code class="GB">()</code></li>
 				</ul>
 				<h5 class="P">Static Fields</h5>
 				<ul>
-					<li class="AB"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#VERSION">VERSION</a></code><i class="t"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="AB"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#VERSION">VERSION</a></code><i class="t"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
 				<h5 class="P">Methods</h5>
 				<ul>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#canDecodeInput(java.lang.Object)">canDecodeInput</a></code><code class="GB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code>)</code><i class="t"><code>boolean</code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#createReaderInstance(java.lang.Object)">createReaderInstance</a></code><code class="GB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="t"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#getFormatNames()">getFormatNames</a></code><code class="GB">()</code><i class="t"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#getFileSuffixes()">getFileSuffixes</a></code><code class="GB">()</code><i class="t"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#getMIMETypes()">getMIMETypes</a></code><code class="GB">()</code><i class="t"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#getPluginClassName()">getPluginClassName</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#getReaderClass()">getReaderClass</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.avif.AvifImageReader" href="api/imagify.avif.AvifImageReader.html">AvifImageReader</a></code></code></code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#isStandardStreamMetadataFormatSupported()">isStandardStreamMetadataFormatSupported</a></code><code class="GB">()</code><i class="t"><code>boolean</code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#getNativeStreamMetadataFormatName()">getNativeStreamMetadataFormatName</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#isStandardImageMetadataFormatSupported()">isStandardImageMetadataFormatSupported</a></code><code class="GB">()</code><i class="t"><code>boolean</code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#getNativeImageMetadataFormatName()">getNativeImageMetadataFormatName</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#getVendorName()">getVendorName</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#getVersion()">getVersion</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#getDescription(java.util.Locale)">getDescription</a></code><code class="GB">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.AvifImageReaderSpi.html#toString()">toString</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#canDecodeInput(java.lang.Object)">canDecodeInput</a></code><code class="GB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code>)</code><i class="t"><code>boolean</code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#createReaderInstance(java.lang.Object)">createReaderInstance</a></code><code class="GB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="t"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#getFormatNames()">getFormatNames</a></code><code class="GB">()</code><i class="t"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#getFileSuffixes()">getFileSuffixes</a></code><code class="GB">()</code><i class="t"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#getMIMETypes()">getMIMETypes</a></code><code class="GB">()</code><i class="t"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#getPluginClassName()">getPluginClassName</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="AB"><i class="PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#getReaderClass()">getReaderClass</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.svg.SvgImageReader" href="api/imagify.svg.SvgImageReader.html">SvgImageReader</a></code></code></code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#isStandardStreamMetadataFormatSupported()">isStandardStreamMetadataFormatSupported</a></code><code class="GB">()</code><i class="t"><code>boolean</code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#getNativeStreamMetadataFormatName()">getNativeStreamMetadataFormatName</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#isStandardImageMetadataFormatSupported()">isStandardImageMetadataFormatSupported</a></code><code class="GB">()</code><i class="t"><code>boolean</code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#getNativeImageMetadataFormatName()">getNativeImageMetadataFormatName</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#getVendorName()">getVendorName</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#getVersion()">getVersion</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#getDescription(java.util.Locale)">getDescription</a></code><code class="GB">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="AB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.svg.SvgImageReaderSpi.html#toString()">toString</a></code><code class="GB">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
