@@ -28,12 +28,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Tests the fluent {@link ImagePipeline} API end-to-end.
+ * Tests the fluent {@link Imagify} API end-to-end.
  *
  * <p>Covers reading, resizing, and writing images through the pipeline,
  * including automatic animation detection.</p>
  */
-class PipelineTest {
+class ImagifyTest {
 
     // ---------------------------------------------------------------- helpers
 
@@ -57,7 +57,7 @@ class PipelineTest {
         BufferedImage src = makeImage(20, 10);
         byte[] png = toBytes(src, ImageFormat.PNG);
 
-        ImagePipeline pipe = ImagePipeline.read(png);
+        Imagify pipe = Imagify.read(png);
         assertEquals(1, pipe.frameCount());
         assertEquals(20, pipe.toBufferedImage().getWidth());
         assertEquals(10, pipe.toBufferedImage().getHeight());
@@ -71,7 +71,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        ImagePipeline pipe = ImagePipeline.read(file);
+        Imagify pipe = Imagify.read(file);
         assertEquals(1, pipe.frameCount());
         assertEquals(20, pipe.toBufferedImage().getWidth());
     }
@@ -83,7 +83,7 @@ class PipelineTest {
         byte[] png = toBytes(src, ImageFormat.PNG);
         InputStream in = new ByteArrayInputStream(png);
 
-        ImagePipeline pipe = ImagePipeline.read(in);
+        Imagify pipe = Imagify.read(in);
         assertEquals(1, pipe.frameCount());
         assertEquals(20, pipe.toBufferedImage().getWidth());
     }
@@ -96,7 +96,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        FrameSequence seq = ImagePipeline.read(file).get();
+        FrameSequence seq = Imagify.read(file).get();
         assertEquals(1, seq.frameCount());
         assertEquals(20, seq.frames().get(0).getWidth());
     }
@@ -104,7 +104,7 @@ class PipelineTest {
     @Test
     @DisplayName("read throws PipelineException for empty data")
     void readEmptyDataThrows() {
-        assertThrows(RuntimeException.class, () -> ImagePipeline.read(new byte[0]));
+        assertThrows(RuntimeException.class, () -> Imagify.read(new byte[0]));
     }
 
     // ------------------------------------------------------------------- resize
@@ -117,7 +117,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        ImagePipeline pipe = ImagePipeline.read(file).resize(8, 8);
+        Imagify pipe = Imagify.read(file).resize(8, 8);
         assertEquals(8, pipe.toBufferedImage().getWidth());
         assertEquals(8, pipe.toBufferedImage().getHeight());
     }
@@ -130,7 +130,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        ImagePipeline pipe = ImagePipeline.read(file).resize(16, 16, ResizeAlgorithm.LANCZOS3);
+        Imagify pipe = Imagify.read(file).resize(16, 16, ResizeAlgorithm.LANCZOS3);
         assertEquals(16, pipe.toBufferedImage().getWidth());
         assertEquals(16, pipe.toBufferedImage().getHeight());
     }
@@ -143,7 +143,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        ImagePipeline pipe = ImagePipeline.read(file).resize(0.5);
+        Imagify pipe = Imagify.read(file).resize(0.5);
         assertEquals(16, pipe.toBufferedImage().getWidth());
         assertEquals(16, pipe.toBufferedImage().getHeight());
     }
@@ -156,7 +156,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        ImagePipeline pipe = ImagePipeline.read(file).resize(0.5, ResizeAlgorithm.CATROM);
+        Imagify pipe = Imagify.read(file).resize(0.5, ResizeAlgorithm.CATROM);
         assertEquals(16, pipe.toBufferedImage().getWidth());
         assertEquals(16, pipe.toBufferedImage().getHeight());
     }
@@ -170,7 +170,7 @@ class PipelineTest {
         assumeTrue(Files.isDirectory(Path.of("src/test/resources/anime gif")), "test GIF dir not found");
         assumeTrue(Files.exists(gif), "test GIF not found");
 
-        ImagePipeline pipe = ImagePipeline.read(gif).resize(16, 16);
+        Imagify pipe = Imagify.read(gif).resize(16, 16);
         assertTrue(pipe.frameCount() > 0, "should have frames after resize");
         assertEquals(16, pipe.toBufferedImage().getWidth());
         assertEquals(16, pipe.toBufferedImage().getHeight());
@@ -187,7 +187,7 @@ class PipelineTest {
         Files.write(file, png);
 
         Path out = dir.resolve("output.png");
-        ImagePipeline.read(file).writeTo(out);
+        Imagify.read(file).writeTo(out);
 
         assertTrue(Files.exists(out));
         assertTrue(Files.size(out) > 0);
@@ -206,7 +206,7 @@ class PipelineTest {
         Files.write(file, png);
 
         Path out = dir.resolve("output.jpg");
-        ImagePipeline.read(file).writeTo(out, ImageFormat.JPEG);
+        Imagify.read(file).writeTo(out, ImageFormat.JPEG);
 
         assertTrue(Files.exists(out));
         assertTrue(Files.size(out) > 0);
@@ -221,7 +221,7 @@ class PipelineTest {
         Files.write(file, png);
 
         Path out = dir.resolve("output.jpg");
-        ImagePipeline.read(file).writeTo(out, ImageFormat.JPEG, 0.5);
+        Imagify.read(file).writeTo(out, ImageFormat.JPEG, 0.5);
 
         assertTrue(Files.exists(out));
         assertTrue(Files.size(out) > 0);
@@ -235,7 +235,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        byte[] outBytes = ImagePipeline.read(file).writeToBytes(ImageFormat.PNG);
+        byte[] outBytes = Imagify.read(file).writeToBytes(ImageFormat.PNG);
         assertTrue(outBytes.length > 0);
     }
 
@@ -247,7 +247,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        byte[] outBytes = ImagePipeline.read(file).writeToBytes(ImageFormat.JPEG, 0.5);
+        byte[] outBytes = Imagify.read(file).writeToBytes(ImageFormat.JPEG, 0.5);
         assertTrue(outBytes.length > 0);
     }
 
@@ -260,7 +260,7 @@ class PipelineTest {
         Files.write(file, png);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImagePipeline.read(file).writeTo(baos, ImageFormat.PNG);
+        Imagify.read(file).writeTo(baos, ImageFormat.PNG);
 
         assertTrue(baos.size() > 0);
     }
@@ -274,7 +274,7 @@ class PipelineTest {
         Files.write(file, png);
 
         Path out = dir.resolve("output.png");
-        ImagePipeline
+        Imagify
             .read(file)
             .resize(16, 16, ResizeAlgorithm.LANCZOS3)
             .writeTo(out);
@@ -293,7 +293,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        byte[] outBytes = ImagePipeline
+        byte[] outBytes = Imagify
             .read(file)
             .resize(0.5)
             .writeToBytes(ImageFormat.PNG);
@@ -310,8 +310,8 @@ class PipelineTest {
         Files.write(file, png);
 
         Path outPath = dir.resolve("output.png");
-        ImagePipeline.read(file).resize(16, 16).writeTo(outPath, ImageFormat.PNG);
-        byte[] outBytes = ImagePipeline.read(file).resize(16, 16).writeToBytes(ImageFormat.PNG);
+        Imagify.read(file).resize(16, 16).writeTo(outPath, ImageFormat.PNG);
+        byte[] outBytes = Imagify.read(file).resize(16, 16).writeToBytes(ImageFormat.PNG);
 
         assertTrue(Files.size(outPath) > 0);
         assertTrue(outBytes.length > 0);
@@ -326,7 +326,7 @@ class PipelineTest {
         Files.write(file, png);
 
         Path out = dir.resolve("out.png");
-        ImagePipeline.read(file).resize(16, 16).writeTo(out, ImageFormat.PNG);
+        Imagify.read(file).resize(16, 16).writeTo(out, ImageFormat.PNG);
         assertTrue(Files.exists(out));
         assertTrue(Files.size(out) > 0);
 
@@ -343,7 +343,7 @@ class PipelineTest {
         BufferedImage src = makeImage(20, 10);
         byte[] png = toBytes(src, ImageFormat.PNG);
 
-        ImagePipeline pipe = ImagePipeline.read(png).resize(10, 5);
+        Imagify pipe = Imagify.read(png).resize(10, 5);
         assertSame(pipe, pipe.resize(10, 5));
     }
 
@@ -355,7 +355,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        BufferedImage img = ImagePipeline.read(file).toBufferedImage();
+        BufferedImage img = Imagify.read(file).toBufferedImage();
         assertNotNull(img);
         assertEquals(20, img.getWidth());
     }
@@ -368,7 +368,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        assertEquals(1, ImagePipeline.read(file).frameCount());
+        assertEquals(1, Imagify.read(file).frameCount());
     }
 
     // --------------------------------------------------------- animation detection
@@ -382,7 +382,7 @@ class PipelineTest {
         assumeTrue(Files.isRegularFile(gif), "test GIF not found");
 
         Path out = dir.resolve("output.webp");
-        ImagePipeline.read(gif).writeTo(out);
+        Imagify.read(gif).writeTo(out);
 
         assertTrue(Files.exists(out));
         assertTrue(Files.size(out) > 0);
@@ -400,7 +400,7 @@ class PipelineTest {
         assumeTrue(Files.isRegularFile(gif), "test GIF not found");
 
         Path out = dir.resolve("output.avif");
-        ImagePipeline.read(gif).writeTo(out);
+        Imagify.read(gif).writeTo(out);
 
         assertTrue(Files.exists(out));
         assertTrue(Files.size(out) > 0);
@@ -421,7 +421,7 @@ class PipelineTest {
 
         // Write PNG as PNG (no animation support in PNG via ImageIO in this project)
         Path out = dir.resolve("output.png");
-        ImagePipeline.read(file).writeTo(out);
+        Imagify.read(file).writeTo(out);
 
         assertTrue(Files.exists(out));
         BufferedImage result = ImageReader.read(out).toBufferedImage();
@@ -436,7 +436,7 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        byte[] avifBytes = ImagePipeline.read(file).writeToBytes(ImageFormat.AVIF);
+        byte[] avifBytes = Imagify.read(file).writeToBytes(ImageFormat.AVIF);
         assertTrue(avifBytes.length > 0);
     }
 
@@ -450,9 +450,9 @@ class PipelineTest {
         Path file = dir.resolve("input.png");
         Files.write(file, png);
 
-        byte[] outBytes = ImagePipeline.read(file).writeToBytes(ImageFormat.PNG);
+        byte[] outBytes = Imagify.read(file).writeToBytes(ImageFormat.PNG);
         InputStream in = new ByteArrayInputStream(outBytes);
-        ImagePipeline pipe2 = ImagePipeline.read(in);
+        Imagify pipe2 = Imagify.read(in);
 
         assertEquals(20, pipe2.toBufferedImage().getWidth());
         assertEquals(10, pipe2.toBufferedImage().getHeight());
@@ -465,7 +465,7 @@ class PipelineTest {
         byte[] png = toBytes(src, ImageFormat.PNG);
 
         Path out = dir.resolve("output.png");
-        ImagePipeline.read(png).writeTo(out);
+        Imagify.read(png).writeTo(out);
 
         BufferedImage result = ImageReader.read(out).toBufferedImage();
         assertEquals(20, result.getWidth());
@@ -482,7 +482,7 @@ class PipelineTest {
 
         // Extension determines format for PNG
         Path outPng = dir.resolve("out.png");
-        ImagePipeline.read(file).resize(10, 5).writeTo(outPng);
+        Imagify.read(file).resize(10, 5).writeTo(outPng);
         assertTrue(Files.exists(outPng));
         assertTrue(Files.size(outPng) > 0);
 
