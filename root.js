@@ -171,6 +171,11 @@ const root = {
 			"type": "Enum"
 		},
 		{
+			"name": "ImageOption",
+			"packageName": "imagify",
+			"type": "Functional"
+		},
+		{
 			"name": "ImageReader",
 			"packageName": "imagify",
 			"type": "Class"
