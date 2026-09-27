@@ -289,6 +289,60 @@ public final class WebpCodec {
     }
 
     /**
+     * A WebP file read in a single pass, holding its properties and its frames together.
+     *
+     * <p>The two belong in one result because they cannot be had apart cheaply. An animation's frame
+     * count and loop count live in the animation control chunk, which only the animation decoder
+     * reads, and that decoder hands back every frame at once. Asking for the headers and then
+     * decoding again therefore walks the same file twice, and asking for a frame on its own walks
+     * it once more. One pass gives all of it.
+     *
+     * @param info     the properties reported by the headers
+     * @param frames   the frames in presentation order, composited onto the canvas for an animation,
+     *                 and exactly one frame for a still image
+     * @param delaysMs how long each frame is shown in milliseconds, parallel to {@code frames}, or
+     *                 {@code null} for a still image, which has no timing of its own
+     */
+    public record DecodedWebp(WebpImageInfo info, List<BufferedImage> frames, int[] delaysMs) {
+
+        public DecodedWebp {
+            frames = List.copyOf(frames);
+            delaysMs = delaysMs == null ? null : delaysMs.clone();
+        }
+    }
+
+    /**
+     * Reads a WebP file and decodes its frames in one pass.
+     *
+     * <p>Prefer this over {@link #readHeader(byte[])} followed by a decode when the frames are
+     * wanted anyway, which is the case for every {@code ImageIO} read. {@link #readHeader(byte[])}
+     * stays the cheaper choice for a still image inspected for its size alone, because it decodes no
+     * pixels.
+     *
+     * @param encoded a complete WebP file, still or animated
+     * @return the properties and the frames, never empty
+     * @throws WebpException when the library is unavailable or the file cannot be decoded
+     */
+    public static DecodedWebp decodeFile(byte[] encoded) throws WebpException {
+        Objects.requireNonNull(encoded, "no data to decode");
+        WebPBitstreamFeatures features = features(encoded);
+        if (!features.isHasAnimation()) {
+            WebpImageInfo info = new WebpImageInfo(features.getWidth(), features.getHeight(),
+                    features.isHasAlpha(), false, features.getFormat(), 1, 0);
+            return new DecodedWebp(info, List.of(decode(encoded)), null);
+        }
+        AnimatedWebPData data = animationData(encoded);
+        List<BufferedImage> frames = framesOf(data);
+        if (frames.isEmpty()) {
+            throw new WebpException("the WebP animation holds no frames");
+        }
+        WebpImageInfo info = new WebpImageInfo(features.getWidth(), features.getHeight(),
+                features.isHasAlpha(), true, features.getFormat(),
+                frames.size(), data.getLoopCount());
+        return new DecodedWebp(info, frames, data.getDelays());
+    }
+
+    /**
      * Decodes every frame of an animation.
      *
      * @param encoded a complete animated WebP file

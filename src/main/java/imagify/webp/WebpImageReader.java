@@ -64,6 +64,7 @@ public class WebpImageReader extends ImageReader {
     private ImageInputStream stream;
     private long start = -1;
     private byte[] encoded;
+    private WebpCodec.DecodedWebp decoded;
     private WebpImageInfo info;
     private int[] delaysMs;
 
@@ -78,18 +79,21 @@ public class WebpImageReader extends ImageReader {
     public void setInput(Object input, boolean seekForwardOnly, boolean ignoreMetadata) {
         super.setInput(input, seekForwardOnly, ignoreMetadata);
         stream = (ImageInputStream) getInput();
-        start = -1;
-        encoded = null;
-        info = null;
-        delaysMs = null;
+        forget();
     }
 
     @Override
     public void reset() {
         super.reset();
         stream = null;
+        forget();
+    }
+
+    /** Drops what is remembered about the current input, so that a new one is read afresh. */
+    private void forget() {
         start = -1;
         encoded = null;
+        decoded = null;
         info = null;
         delaysMs = null;
     }
@@ -353,11 +357,16 @@ public class WebpImageReader extends ImageReader {
     private WebpImageInfo checkInfo() throws IIOException {
         checkInput();
         if (info == null) {
+            // One pass over the file, kept, because every frame, every duration and the loop count
+            // all come out of it. Decoding per frame instead would walk an animation once per frame,
+            // which for n frames is n walks rather than one.
             try {
-                info = WebpCodec.readHeader(encoded());
+                decoded = WebpCodec.decodeFile(encoded());
             } catch (WebpException e) {
-                throw new IIOException("cannot read the WebP header: " + e.getMessage(), e);
+                throw new IIOException("cannot read the WebP file: " + e.getMessage(), e);
             }
+            info = decoded.info();
+            delaysMs = decoded.delaysMs();
         }
         return info;
     }
@@ -446,29 +455,21 @@ public class WebpImageReader extends ImageReader {
     private BufferedImage decode(int imageIndex) throws IIOException {
         WebpImageInfo image = checkInfo();
         try {
-            if (!image.hasAnimation()) {
-                return WebpCodec.decode(encoded());
-            }
-            // The animation decoder composites every frame onto the canvas in one pass, so the
-            // frame the caller asked for is simply the one at that position.
-            return WebpCodec.decodeAnimation(encoded()).get(imageIndex);
-        } catch (WebpException e) {
-            throw new IIOException("cannot decode the WebP image: " + e.getMessage(), e);
+            // The frames were composited onto the canvas by the single pass in checkInfo(), so the
+            // one that was asked for is simply the one at that position.
+            return decoded.frames().get(imageIndex);
         } catch (IndexOutOfBoundsException e) {
             throw new IIOException("image index " + imageIndex + " is out of bounds: "
-                    + "the WebP animation holds " + image.frameCount() + " frames", e);
+                    + (image.hasAnimation()
+                            ? "the WebP animation holds " + image.frameCount() + " frames"
+                            : "a WebP still image holds exactly one image"), e);
         }
     }
 
     private int[] delays() throws IIOException {
-        if (delaysMs == null) {
-            try {
-                int[][] timing = WebpCodec.readAnimationTiming(encoded());
-                delaysMs = timing.length > 1 ? timing[1] : null;
-            } catch (WebpException e) {
-                throw new IIOException("cannot read the WebP animation timing: " + e.getMessage(), e);
-            }
-        }
-        return delaysMs;
+        // checkInfo() fills this in as a side effect of the one pass, so this is only reached when
+        // the timing is wanted without the properties, which cannot happen but is cheap to honour.
+        checkInfo();
+        return delaysMs == null ? new int[0] : delaysMs;
     }
 }
