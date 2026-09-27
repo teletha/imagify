@@ -50,7 +50,7 @@ class ImageFormatWebpTest {
         assertEquals("RIFF", new String(webp, 0, 4, "US-ASCII"), "a WebP file starts with RIFF");
         assertEquals("WEBP", new String(webp, 8, 4, "US-ASCII"), "the form type is WEBP");
 
-        BufferedImage back = ImageReader.read(webp, ImageFormat.WEBP);
+        BufferedImage back = ImageReader.read(webp, ImageFormat.WEBP).toBufferedImage();
         assertEquals(48, back.getWidth());
         assertEquals(32, back.getHeight());
         assertTrue(back.getColorModel().hasAlpha(), "the alpha channel should survive");
@@ -62,7 +62,7 @@ class ImageFormatWebpTest {
         byte[] webp = ImageWriter.toBytes(gradient(24, 24, false), ImageFormat.WEBP);
         assertEquals(ImageFormat.WEBP, ImageFormat.detect(webp));
 
-        BufferedImage back = ImageReader.read(webp);
+        BufferedImage back = ImageReader.read(webp).toBufferedImage();
         assertEquals(24, back.getWidth());
         assertEquals(24, back.getHeight());
     }
@@ -74,7 +74,7 @@ class ImageFormatWebpTest {
         ImageWriter.toFile(gradient(30, 20, false), file);
         assertTrue(Files.size(file) > 0, "nothing was written to the file");
 
-        BufferedImage back = ImageReader.read(file);
+        BufferedImage back = ImageReader.read(file).toBufferedImage();
         assertEquals(30, back.getWidth());
         assertEquals(20, back.getHeight());
     }
@@ -99,7 +99,7 @@ class ImageFormatWebpTest {
         g.dispose();
 
         BufferedImage back = ImageReader.read(ImageWriter.toBytes(source, ImageFormat.WEBP),
-                ImageFormat.WEBP);
+                ImageFormat.WEBP).toBufferedImage();
         int pixel = back.getRGB(4, 4);
         assertEquals(0x80, pixel >>> 24 & 0xFF, "alpha should still be 128");
         assertEquals(0xFF, pixel >>> 16 & 0xFF, "red should still be 255");

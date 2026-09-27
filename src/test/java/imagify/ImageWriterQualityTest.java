@@ -178,7 +178,7 @@ class ImageWriterQualityTest {
         byte[] avif = ImageWriter.toBytes(image, ImageFormat.AVIF, 0.8);
         assertTrue(AvifCodec.isAvif(avif), "the output is not an AVIF file");
 
-        BufferedImage back = ImageReader.read(avif, ImageFormat.AVIF);
+        BufferedImage back = ImageReader.read(avif, ImageFormat.AVIF).toBufferedImage();
         assertEquals(64, back.getWidth());
         assertEquals(48, back.getHeight());
     }
@@ -191,7 +191,7 @@ class ImageWriterQualityTest {
         byte[] avif = ImageWriter.toBytes(sample(40, 30), ImageFormat.AVIF, 0.8);
 
         assertEquals(ImageFormat.AVIF, ImageFormat.detect(avif));
-        assertEquals(40, ImageReader.read(avif).getWidth());
+        assertEquals(40, ImageReader.read(avif).toBufferedImage().getWidth());
     }
 
     @Test
@@ -217,7 +217,7 @@ class ImageWriterQualityTest {
         ImageWriter.toFile(sample(52, 26), file);
         assertTrue(Files.size(file) > 0, "nothing was written to the file");
 
-        BufferedImage back = ImageReader.read(file);
+        BufferedImage back = ImageReader.read(file).toBufferedImage();
         assertEquals(52, back.getWidth());
         assertEquals(26, back.getHeight());
     }
@@ -232,11 +232,11 @@ class ImageWriterQualityTest {
             byte[] encoded = ImageWriter.toBytes(image, format, 0.8);
             assertTrue(encoded.length > 0, format + ": nothing was written");
 
-            BufferedImage explicit = ImageReader.read(encoded, format);
+            BufferedImage explicit = ImageReader.read(encoded, format).toBufferedImage();
             assertEquals(64, explicit.getWidth(), format + ": wrong width with the format stated");
             assertEquals(48, explicit.getHeight(), format + ": wrong height with the format stated");
 
-            BufferedImage detected = ImageReader.read(encoded);
+            BufferedImage detected = ImageReader.read(encoded).toBufferedImage();
             assertEquals(64, detected.getWidth(), format + ": wrong width with the format detected");
             assertEquals(48, detected.getHeight(), format + ": wrong height with the format detected");
         }

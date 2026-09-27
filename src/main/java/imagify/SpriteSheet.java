@@ -83,7 +83,7 @@ public final class SpriteSheet {
     public SpriteSheet addFrames(List<Path> paths) {
         for (Path p : paths) {
             try {
-                frames.add(ImageReader.read(p));
+                frames.add(ImageReader.read(p).toBufferedImage());
             } catch (IOException e) {
                 throw new RuntimeException("Failed to read: " + p, e);
             }
@@ -96,7 +96,7 @@ public final class SpriteSheet {
      */
     public SpriteSheet addFrame(Path path) {
         try {
-            frames.add(ImageReader.read(path));
+            frames.add(ImageReader.read(path).toBufferedImage());
         } catch (IOException e) {
             throw new RuntimeException("Failed to read: " + path, e);
         }
@@ -125,7 +125,7 @@ public final class SpriteSheet {
     public SpriteSheet addFrameBytes(byte[]... datas) {
         for (byte[] data : datas) {
             try {
-                frames.add(ImageReader.read(data));
+                frames.add(ImageReader.read(data).toBufferedImage());
             } catch (IOException e) {
                 throw new RuntimeException("Failed to decode frame", e);
             }

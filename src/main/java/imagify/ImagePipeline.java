@@ -14,11 +14,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Fluent pipeline API for image processing.
  *
  * <p>Supports chaining: {@code read → resize → write}.</p>
+ *
+ * <p>{@link ImageReader#read} always returns a {@link FrameSequence}, which may
+ * contain a single frame (for JPEG, PNG, etc.) or multiple frames (for animated
+ * formats like GIF and animated WebP).</p>
+ *
+ * <p>Writing automatically detects whether the data is animated and the target
+ * format supports animation: if both conditions are met, the output is an
+ * animated image; otherwise the first frame is written as a still image.</p>
  *
  * <p>Usage:</p>
  * <pre>{@code
@@ -34,17 +44,8 @@ import java.nio.file.Path;
  *     .resize(0.5)
  *     .writeToBytes(ImageFormat.PNG);
  *
- * // Read → Resize → Write to stream
- * ImagePipeline
- *     .read(inputStream)
- *     .resize(1024, 768)
- *     .writeTo(outputStream, ImageFormat.JPEG);
- *
- * // Get intermediate result
- * BufferedImage result = ImagePipeline
- *     .read(path)
- *     .resize(50, 50, ResizeAlgorithm.CATROM)
- *     .get();
+ * // Get the first frame as a BufferedImage
+ * BufferedImage img = ImagePipeline.read(path).toBufferedImage();
  * }</pre>
  */
 public final class ImagePipeline {
@@ -53,8 +54,7 @@ public final class ImagePipeline {
         PipelineException(String message, Throwable cause) { super(message, cause); }
     }
 
-    private BufferedImage image;
-    private ImageFormat format;
+    private FrameSequence frameSequence;
 
     private ImagePipeline() {}
 
@@ -65,20 +65,13 @@ public final class ImagePipeline {
     /**
      * Starts a pipeline by reading from a byte array.
      * Format is auto-detected from magic bytes.
+     *
+     * @param data the encoded image data
+     * @return this pipeline for chaining
      */
     public static ImagePipeline read(byte[] data) {
         ImagePipeline pipe = new ImagePipeline();
-        try { pipe.image = ImageReader.read(data); }
-        catch (IOException e) { throw new PipelineException("Failed to read image", e); }
-        return pipe;
-    }
-
-    /**
-     * Starts a pipeline by reading from a byte array with explicit format.
-     */
-    public static ImagePipeline read(byte[] data, ImageFormat format) {
-        ImagePipeline pipe = new ImagePipeline();
-        try { pipe.image = ImageReader.read(data, format); pipe.format = format; }
+        try { pipe.frameSequence = ImageReader.read(data); }
         catch (IOException e) { throw new PipelineException("Failed to read image", e); }
         return pipe;
     }
@@ -86,20 +79,13 @@ public final class ImagePipeline {
     /**
      * Starts a pipeline by reading from a file path.
      * Format is auto-detected from extension or header.
+     *
+     * @param path the file path
+     * @return this pipeline for chaining
      */
     public static ImagePipeline read(Path path) {
         ImagePipeline pipe = new ImagePipeline();
-        try { pipe.image = ImageReader.read(path); }
-        catch (IOException e) { throw new PipelineException("Failed to read image", e); }
-        return pipe;
-    }
-
-    /**
-     * Starts a pipeline by reading from a file path with explicit format.
-     */
-    public static ImagePipeline read(Path path, ImageFormat format) {
-        ImagePipeline pipe = new ImagePipeline();
-        try { pipe.image = ImageReader.read(path, format); pipe.format = format; }
+        try { pipe.frameSequence = ImageReader.read(path); }
         catch (IOException e) { throw new PipelineException("Failed to read image", e); }
         return pipe;
     }
@@ -107,20 +93,13 @@ public final class ImagePipeline {
     /**
      * Starts a pipeline by reading from an InputStream.
      * Format is auto-detected from magic bytes.
+     *
+     * @param in the input stream
+     * @return this pipeline for chaining
      */
     public static ImagePipeline read(InputStream in) {
         ImagePipeline pipe = new ImagePipeline();
-        try { pipe.image = ImageReader.read(in); }
-        catch (IOException e) { throw new PipelineException("Failed to read image", e); }
-        return pipe;
-    }
-
-    /**
-     * Starts a pipeline by reading from an InputStream with explicit format.
-     */
-    public static ImagePipeline read(InputStream in, ImageFormat format) {
-        ImagePipeline pipe = new ImagePipeline();
-        try { pipe.image = ImageReader.read(in, format); pipe.format = format; }
+        try { pipe.frameSequence = ImageReader.read(in); }
         catch (IOException e) { throw new PipelineException("Failed to read image", e); }
         return pipe;
     }
@@ -130,55 +109,42 @@ public final class ImagePipeline {
     // ═══════════════════════════════════════════════════
 
     /**
-     * Resizes to exact dimensions using the default algorithm (BILINEAR).
+     * Resizes all frames to exact dimensions.
      */
     public ImagePipeline resize(int targetW, int targetH) {
         return resize(targetW, targetH, ResizeAlgorithm.BILINEAR);
     }
 
     /**
-     * Resizes to exact dimensions with the specified algorithm.
+     * Resizes all frames to exact dimensions using the specified algorithm.
      */
     public ImagePipeline resize(int targetW, int targetH, ResizeAlgorithm algorithm) {
-        this.image = BufferedImageResize.resize(image, targetW, targetH, algorithm);
+        this.frameSequence = resizeFrameSequence(this.frameSequence, targetW, targetH, algorithm);
         return this;
     }
 
+    private static FrameSequence resizeFrameSequence(FrameSequence seq, int targetW, int targetH, ResizeAlgorithm algorithm) {
+        var frames = new ArrayList<BufferedImage>(seq.frameCount());
+        for (BufferedImage frame : seq.frames()) {
+            frames.add(BufferedImageResize.resize(frame, targetW, targetH, algorithm));
+        }
+        return new FrameSequence(frames, seq.delaysMs(), seq.loopCount());
+    }
+
     /**
-     * Resizes by scale factor using BILINEAR.
+     * Resizes by scale factor.
      */
     public ImagePipeline resize(double scale) {
         return resize(scale, ResizeAlgorithm.BILINEAR);
     }
 
     /**
-     * Resizes by scale factor with the specified algorithm.
+     * Resizes by scale factor using the specified algorithm.
      */
     public ImagePipeline resize(double scale, ResizeAlgorithm algorithm) {
-        int targetW = (int) Math.round(image.getWidth() * scale);
-        int targetH = (int) Math.round(image.getHeight() * scale);
-        this.image = BufferedImageResize.resize(image, targetW, targetH, algorithm);
-        return this;
-    }
-
-    /**
-     * Resizes so the longest edge fits within maxDimension, maintaining aspect ratio.
-     */
-    public ImagePipeline resizeToFit(int maxDimension) {
-        return resizeToFit(maxDimension, ResizeAlgorithm.BILINEAR);
-    }
-
-    /**
-     * Resizes so the longest edge fits within maxDimension with the specified algorithm.
-     */
-    public ImagePipeline resizeToFit(int maxDimension, ResizeAlgorithm algorithm) {
-        int w = image.getWidth();
-        int h = image.getHeight();
-        double s = Math.min((double) maxDimension / w, (double) maxDimension / h);
-        int targetW = (int) Math.round(w * s);
-        int targetH = (int) Math.round(h * s);
-        this.image = BufferedImageResize.resize(image, targetW, targetH, algorithm);
-        return this;
+        return resize((int) Math.round(frameSequence.toBufferedImage().getWidth() * scale),
+                      (int) Math.round(frameSequence.toBufferedImage().getHeight() * scale),
+                      algorithm);
     }
 
     // ═══════════════════════════════════════════════════
@@ -187,33 +153,45 @@ public final class ImagePipeline {
 
     /**
      * Writes the result to a file path with auto-detected format from extension.
+     *
+     * <p>Automatic animation: if the data has multiple frames and the target
+     * format supports animation, it is written as an animated image;
+     * otherwise the first frame is written as a still image.</p>
      */
     public ImagePipeline writeTo(Path path) {
         try {
             ImageFormat fmt = ImageFormat.fromPath(path);
-            ImageWriter.toFile(image, fmt, path);
+            ImageWriter.toFile(frameSequence, fmt, path);
         } catch (IOException e) { throw new PipelineException("Failed to write image", e); }
         return this;
     }
 
     /**
-     * Writes the result to a file path with auto-detected format from extension and quality.
+     * Writes the result to a file path with auto-detected format and quality.
+     *
+     * <p>Automatic animation: if the data has multiple frames and the target
+     * format supports animation, it is written as an animated image;
+     * otherwise the first frame is written as a still image.</p>
      *
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
      */
     public ImagePipeline writeTo(Path path, double quality) {
         try {
             ImageFormat fmt = ImageFormat.fromPath(path);
-            ImageWriter.toFile(image, fmt, quality, path);
+            ImageWriter.toFile(frameSequence, fmt, quality, path);
         } catch (IOException e) { throw new PipelineException("Failed to write image", e); }
         return this;
     }
 
     /**
      * Writes the result to a file path with explicit format.
+     *
+     * <p>Automatic animation: if the data has multiple frames and the format
+     * supports animation, it is written as an animated image;
+     * otherwise the first frame is written as a still image.</p>
      */
     public ImagePipeline writeTo(Path path, ImageFormat format) {
-        try { ImageWriter.toFile(image, format, path); }
+        try { ImageWriter.toFile(frameSequence, format, path); }
         catch (IOException e) { throw new PipelineException("Failed to write image", e); }
         return this;
     }
@@ -221,54 +199,82 @@ public final class ImagePipeline {
     /**
      * Writes the result to a file path with explicit format and quality.
      *
+     * <p>Automatic animation: if the data has multiple frames and the format
+     * supports animation, it is written as an animated image;
+     * otherwise the first frame is written as a still image.</p>
+     *
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
      */
     public ImagePipeline writeTo(Path path, ImageFormat format, double quality) {
-        try { ImageWriter.toFile(image, format, quality, path); }
+        try { ImageWriter.toFile(frameSequence, format, quality, path); }
         catch (IOException e) { throw new PipelineException("Failed to write image", e); }
         return this;
     }
 
     /**
-     * Writes the result to an OutputStream with default quality.
-     * Format must be explicitly specified.
+     * Writes the result to an OutputStream with explicit format.
+     *
+     * <p>If the data has multiple frames and the format supports animation,
+     * the animation is encoded; otherwise the first frame is written as a still image.</p>
      */
     public ImagePipeline writeTo(OutputStream out, ImageFormat format) {
-        try { ImageWriter.toStream(image, format, out); }
-        catch (IOException e) { throw new PipelineException("Failed to write image", e); }
-        return this;
-    }
-
-    /**
-     * Writes the result to an OutputStream with quality control.
-     */
-    public ImagePipeline writeTo(OutputStream out, ImageFormat format, double quality) {
-        try { ImageWriter.toStream(image, format, quality, out); }
-        catch (IOException e) { throw new PipelineException("Failed to write image", e); }
+        try {
+            byte[] bytes = ImageWriter.toBytes(frameSequence, format);
+            out.write(bytes);
+        } catch (IOException e) { throw new PipelineException("Failed to write image", e); }
         return this;
     }
 
     /**
      * Returns the result as a byte array.
+     *
+     * <p>Automatic animation: if the data has multiple frames and the format
+     * supports animation, the animation bytes are returned; otherwise the
+     * first frame is returned as a still image.</p>
      */
     public byte[] writeToBytes(ImageFormat format) {
-        try { return ImageWriter.toBytes(image, format); }
+        try { return ImageWriter.toBytes(frameSequence, format); }
         catch (IOException e) { throw new PipelineException("Failed to encode image", e); }
     }
 
     /**
      * Returns the result as a byte array with quality control.
+     *
+     * <p>Automatic animation: if the data has multiple frames and the format
+     * supports animation, the animation bytes are returned; otherwise the
+     * first frame is returned as a still image.</p>
+     *
+     * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
      */
     public byte[] writeToBytes(ImageFormat format, double quality) {
-        try { return ImageWriter.toBytes(image, format, quality); }
+        try { return ImageWriter.toBytes(frameSequence, format, quality); }
         catch (IOException e) { throw new PipelineException("Failed to encode image", e); }
     }
 
+    // ----------------------------------------------------------------- helpers
+
     /**
-     * Returns the intermediate {@link BufferedImage} result.
-     * Useful when further manual processing is needed after the pipeline.
+     * Returns the first frame as a {@link BufferedImage}.
+     *
+     * @return the first frame
      */
-    public BufferedImage get() {
-        return image;
+    public BufferedImage toBufferedImage() {
+        return frameSequence.toBufferedImage();
+    }
+
+    /**
+     * Returns the underlying {@link FrameSequence}.
+     *
+     * @return the frame sequence
+     */
+    public FrameSequence get() {
+        return frameSequence;
+    }
+
+    /**
+     * @return the number of frames
+     */
+    public int frameCount() {
+        return frameSequence.frameCount();
     }
 }

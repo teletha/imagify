@@ -9,6 +9,11 @@
  */
 package imagify;
 
+import imagify.avif.AvifException;
+import imagify.avif.jna.AvifCodec;
+import imagify.webp.WebpCodec;
+import imagify.webp.WebpException;
+
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
@@ -17,11 +22,12 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
 
 /**
- * Writes {@link BufferedImage} to various destinations with format control.
+ * Writes images to various destinations with format control.
  *
  * <p>Supported destinations: {@code byte[]}, {@code Path}, {@code OutputStream}.</p>
  *
@@ -31,6 +37,10 @@ import java.util.Iterator;
  * <p>Quality is a {@code 0.0} to {@code 1.0} value that is handed to the encoder through the
  * compression quality of an {@link ImageWriteParam}, so a smaller number means a smaller file and
  * more loss. Formats without a quality axis, such as GIF and BMP, ignore it.</p>
+ *
+ * <p>{@link FrameSequence} handling: if the sequence has more than one frame and the target
+ * format supports animation, the frames are encoded as an animation. Otherwise the first
+ * frame is written as a still image.</p>
  *
  * <p>Usage:</p>
  * <pre>{@code
@@ -44,26 +54,115 @@ public final class ImageWriter {
 
     private ImageWriter() {}
 
-    /**
-     * Encodes an image to a byte array in the specified format.
-     */
-    public static byte[] toBytes(BufferedImage image, ImageFormat format) throws IOException {
-        return toBytes(image, format, format.getDefaultQuality());
-    }
+    // ---------------------------------------------------------------- FrameSequence
 
     /**
-     * Encodes an image to a byte array with quality control.
+     * Encodes a {@link FrameSequence} to a byte array in the specified format.
      *
-     * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * <p>If the sequence has multiple frames and the format supports animation,
+     * the frames are encoded as an animation. Otherwise the first frame is
+     * written as a still image.</p>
+     *
+     * @param frames   the frame sequence
+     * @param format   the output format
+     * @return the encoded bytes
+     * @throws IOException if the image cannot be encoded
      */
-    public static byte[] toBytes(BufferedImage image, ImageFormat format, double quality) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        toStream(image, format, quality, baos);
-        return baos.toByteArray();
+    public static byte[] toBytes(FrameSequence frames, ImageFormat format) throws IOException {
+        return toBytes(frames, format, format.getDefaultQuality());
     }
 
     /**
-     * Writes an image to a file path. Format is inferred from extension.
+     * Encodes a {@link FrameSequence} to a byte array.
+     *
+     * <p>If the sequence has multiple frames and the format supports animation,
+     * the frames are encoded as an animation. Otherwise the first frame is
+     * written as a still image.</p>
+     *
+     * @param frames   the frame sequence
+     * @param format   the output format
+     * @param quality  {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @return the encoded bytes
+     * @throws IOException if the image cannot be encoded
+     */
+    public static byte[] toBytes(FrameSequence frames, ImageFormat format, double quality) throws IOException {
+        if (frames.frameCount() > 1 && format.supportsAnimation()) {
+            return encodeAnimation(frames, format, quality);
+        }
+        return toBytes(frames.toBufferedImage(), format, quality);
+    }
+
+    /**
+     * Writes a {@link FrameSequence} to a file path with explicit format.
+     *
+     * <p>If the sequence has multiple frames and the format supports animation,
+     * the frames are encoded as an animation. Otherwise the first frame is
+     * written as a still image.</p>
+     *
+     * @param frames  the frame sequence
+     * @param format  the output format
+     * @param path    the output file path
+     * @throws IOException if the image cannot be encoded or written
+     */
+    public static void toFile(FrameSequence frames, ImageFormat format, Path path) throws IOException {
+        toFile(frames, format, 0.80, path);
+    }
+
+    /**
+     * Writes a {@link FrameSequence} to a file path with explicit format and quality.
+     *
+     * <p>If the sequence has multiple frames and the format supports animation,
+     * the frames are encoded as an animation. Otherwise the first frame is
+     * written as a still image.</p>
+     *
+     * @param frames  the frame sequence
+     * @param format  the output format
+     * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @param path    the output file path
+     * @throws IOException if the image cannot be encoded or written
+     */
+    public static void toFile(FrameSequence frames, ImageFormat format, double quality, Path path) throws IOException {
+        byte[] bytes = toBytes(frames, format, quality);
+        Files.write(path, bytes);
+    }
+
+    /**
+     * Writes a {@link FrameSequence} to a file path (extension determines format).
+     *
+     * <p>If the sequence has multiple frames and the format supports animation,
+     * the frames are encoded as an animation. Otherwise the first frame is
+     * written as a still image.</p>
+     *
+     * @param frames the frame sequence
+     * @param path   the output file path
+     * @throws IOException if the image cannot be encoded or written
+     */
+    public static void toFile(FrameSequence frames, Path path) throws IOException {
+        toFile(frames, path, 0.80);
+    }
+
+    /**
+     * Writes a {@link FrameSequence} to a file path with quality control
+     * (extension determines format).
+     *
+     * <p>If the sequence has multiple frames and the format supports animation,
+     * the frames are encoded as an animation. Otherwise the first frame is
+     * written as a still image.</p>
+     *
+     * @param frames  the frame sequence
+     * @param path    the output file path
+     * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @throws IOException if the image cannot be encoded or written
+     */
+    public static void toFile(FrameSequence frames, Path path, double quality) throws IOException {
+        ImageFormat format = ImageFormat.fromPath(path);
+        toFile(frames, format, quality, path);
+    }
+
+    // ------------------------------------------------------------------ single image
+
+    /**
+     * Writes a single image to a file path. Format is inferred from extension.
      */
     public static void toFile(BufferedImage image, Path path) throws IOException {
         ImageFormat format = ImageFormat.fromPath(path);
@@ -71,7 +170,7 @@ public final class ImageWriter {
     }
 
     /**
-     * Writes an image to a file path. Format is inferred from extension.
+     * Writes a single image to a file path. Format is inferred from extension.
      *
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
      */
@@ -81,14 +180,14 @@ public final class ImageWriter {
     }
 
     /**
-     * Writes an image to a file path with explicit format.
+     * Writes a single image to a file path with explicit format.
      */
     public static void toFile(BufferedImage image, ImageFormat format, Path path) throws IOException {
         toFile(image, format, format.getDefaultQuality(), path);
     }
 
     /**
-     * Writes an image to a file path with explicit format and quality.
+     * Writes a single image to a file path with explicit format and quality.
      *
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
      */
@@ -102,14 +201,32 @@ public final class ImageWriter {
     }
 
     /**
-     * Writes an image to an OutputStream with default quality.
+     * Encodes a single image to a byte array in the specified format.
+     */
+    public static byte[] toBytes(BufferedImage image, ImageFormat format) throws IOException {
+        return toBytes(image, format, format.getDefaultQuality());
+    }
+
+    /**
+     * Encodes a single image to a byte array with quality control.
+     *
+     * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     */
+    public static byte[] toBytes(BufferedImage image, ImageFormat format, double quality) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        toStream(image, format, quality, baos);
+        return baos.toByteArray();
+    }
+
+    /**
+     * Writes a single image to an OutputStream with default quality.
      */
     public static void toStream(BufferedImage image, ImageFormat format, OutputStream out) throws IOException {
         toStream(image, format, format.getDefaultQuality(), out);
     }
 
     /**
-     * Writes an image to an OutputStream with quality control.
+     * Writes a single image to an OutputStream with quality control.
      *
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
      */
@@ -121,6 +238,34 @@ public final class ImageWriter {
             try { stream.close(); } catch (IOException ignored) {}
         }
     }
+
+    // ----------------------------------------------------------------- animation
+
+    /**
+     * Encodes a {@link FrameSequence} as an animation for the specified format.
+     * Only called when the format supports animation and the sequence has multiple frames.
+     */
+    private static byte[] encodeAnimation(FrameSequence frames, ImageFormat format, double quality) throws IOException {
+        return switch (format) {
+            case AVIF -> {
+                try {
+                    yield AvifCodec.encodeAnimation(frames.frames(), frames.delaysMs(), (int) Math.round(quality * 100), frames.loopCount());
+                } catch (AvifException e) {
+                    throw new IOException("failed to encode AVIF animation", e);
+                }
+            }
+            case WEBP -> {
+                try {
+                    yield WebpCodec.encodeAnimation(frames.frames(), frames.delaysMs(), (int) Math.round(quality * 100), false, frames.loopCount());
+                } catch (WebpException e) {
+                    throw new IOException("failed to encode WebP animation", e);
+                }
+            }
+            default -> throw new IOException("animation encoding not supported for: " + format.name());
+        };
+    }
+
+    // ------------------------------------------------------------------ internal
 
     private static void writeToStream(BufferedImage image, ImageFormat format, double quality, ImageOutputStream stream) throws IOException {
         checkQuality(quality);
@@ -146,11 +291,6 @@ public final class ImageWriter {
         }
     }
 
-    /**
-     * Builds the write parameters that carry {@code quality} to the encoder.
-     *
-     * @return the parameters, or {@code null} when the writer has no quality axis
-     */
     private static ImageWriteParam writeParam(javax.imageio.ImageWriter writer, double quality) {
         ImageWriteParam param = writer.getDefaultWriteParam();
         if (param == null || !param.canWriteCompressed()) return null;
@@ -158,17 +298,12 @@ public final class ImageWriter {
             param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
             param.setCompressionQuality((float) quality);
         } catch (IllegalStateException | UnsupportedOperationException e) {
-            // The GIF and BMP writers of the JDK advertise compression types yet refuse
-            // MODE_EXPLICIT, and a writer without a quality axis has nothing to be told anyway.
-            // Both are written with their own defaults, which is what ImageIO.write would do.
             return null;
         }
         return param;
     }
 
     private static void checkQuality(double quality) {
-        // Written as a negated range test so that NaN, which compares false against everything,
-        // is rejected as well.
         if (!(quality >= 0.0 && quality <= 1.0)) {
             throw new IllegalArgumentException("the quality must be between 0.0 and 1.0, got " + quality);
         }

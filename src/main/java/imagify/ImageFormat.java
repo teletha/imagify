@@ -93,6 +93,18 @@ public enum ImageFormat {
     public String getMimeType() { return mimeType; }
 
     /**
+     * Returns whether this format supports animation.
+     *
+     * @return {@code true} for GIF, WebP, and AVIF
+     */
+    public boolean supportsAnimation() {
+        return switch (this) {
+            case GIF, GIF89A, WEBP, AVIF -> true;
+            default -> false;
+        };
+    }
+
+    /**
      * Returns whether this format supports alpha channels.
      */
     public boolean supportsAlpha() { return supportsAlpha; }

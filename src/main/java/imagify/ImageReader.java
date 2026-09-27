@@ -11,16 +11,20 @@ package imagify;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.metadata.IIOMetadataNode;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 /**
- * Reads {@link BufferedImage} from various sources with automatic format detection.
+ * Reads images from various sources with automatic format detection.
  *
  * <p>Supported sources: {@code byte[]}, {@code Path}, {@code InputStream}.</p>
  *
@@ -31,11 +35,20 @@ import java.util.Iterator;
  *   <li>Magic byte header</li>
  * </ol></p>
  *
+ * <p>Returns a {@link FrameSequence} which contains one or more frames.
+ * For single-image formats (JPEG, PNG, BMP), a single-frame sequence is returned.
+ * For animated formats (GIF, animated WebP), all frames and their delays are
+ * automatically extracted.</p>
+ *
+ * <p>GIF {@code delayTime} is automatically converted from centiseconds to
+ * milliseconds.</p>
+ *
  * <p>Usage:</p>
  * <pre>{@code
- * BufferedImage img = ImageReader.read(path);
- * BufferedImage img = ImageReader.read(bytes, ImageFormat.PNG);
- * BufferedImage img = ImageReader.read(inputStream);
+ * FrameSequence seq = ImageReader.read(path);
+ * BufferedImage firstFrame = seq.toBufferedImage();
+ * List<BufferedImage> allFrames = seq.frames();
+ * int[] delays = seq.delaysMs();
  * }</pre>
  */
 public final class ImageReader {
@@ -44,41 +57,35 @@ public final class ImageReader {
 
     /**
      * Reads an image from a byte array with auto-detected format.
+     *
+     * @param data the encoded image data
+     * @return a {@link FrameSequence} containing one or more frames
+     * @throws IOException if the data cannot be read
      */
-    public static BufferedImage read(byte[] data) throws IOException {
+    public static FrameSequence read(byte[] data) throws IOException {
         return read(data, detectFormat(data));
     }
 
     /**
      * Reads an image from a byte array with explicit format.
+     *
+     * @param data   the encoded image data
+     * @param format the format to use
+     * @return a {@link FrameSequence} containing one or more frames
+     * @throws IOException if the data cannot be read
      */
-    public static BufferedImage read(byte[] data, ImageFormat format) throws IOException {
+    public static FrameSequence read(byte[] data, ImageFormat format) throws IOException {
         return readArray(data, format);
     }
 
     /**
-     * Reads an image that has already been held in memory.
-     *
-     * <p>ImageIO has no ImageInputStream provider for a byte array, so the array is wrapped in a
-     * stream here. Handing the array to {@code createImageInputStream} directly yields a null
-     * stream, and closing that is a NullPointerException rather than an image.
-     */
-    private static BufferedImage readArray(byte[] data, ImageFormat format) throws IOException {
-        ImageInputStream stream = ImageIO.createImageInputStream(new ByteArrayInputStream(data));
-        if (stream == null) {
-            throw new IOException("no ImageInputStream provider accepted the encoded data");
-        }
-        try {
-            return readFromStream(stream, format);
-        } finally {
-            try { stream.close(); } catch (IOException ignored) {}
-        }
-    }
-
-    /**
      * Reads an image from a file path with auto-detected format.
+     *
+     * @param path the file path
+     * @return a {@link FrameSequence} containing one or more frames
+     * @throws IOException if the file cannot be read
      */
-    public static BufferedImage read(Path path) throws IOException {
+    public static FrameSequence read(Path path) throws IOException {
         ImageFormat format = ImageFormat.fromPath(path);
         ImageInputStream stream = ImageIO.createImageInputStream(path.toFile());
         try {
@@ -90,8 +97,13 @@ public final class ImageReader {
 
     /**
      * Reads an image from a file path with explicit format.
+     *
+     * @param path   the file path
+     * @param format the format to use
+     * @return a {@link FrameSequence} containing one or more frames
+     * @throws IOException if the file cannot be read
      */
-    public static BufferedImage read(Path path, ImageFormat format) throws IOException {
+    public static FrameSequence read(Path path, ImageFormat format) throws IOException {
         ImageInputStream stream = ImageIO.createImageInputStream(path.toFile());
         try {
             return readFromStream(stream, format);
@@ -102,17 +114,130 @@ public final class ImageReader {
 
     /**
      * Reads an image from an InputStream with auto-detected format.
+     *
+     * @param in the input stream
+     * @return a {@link FrameSequence} containing one or more frames
+     * @throws IOException if the data cannot be read
      */
-    public static BufferedImage read(InputStream in) throws IOException {
+    public static FrameSequence read(InputStream in) throws IOException {
         byte[] data = in.readAllBytes();
         return read(data);
     }
 
     /**
      * Reads an image from an InputStream with explicit format.
+     *
+     * @param in     the input stream
+     * @param format the format to use
+     * @return a {@link FrameSequence} containing one or more frames
+     * @throws IOException if the data cannot be read
      */
-    public static BufferedImage read(InputStream in, ImageFormat format) throws IOException {
+    public static FrameSequence read(InputStream in, ImageFormat format) throws IOException {
         return readArray(in.readAllBytes(), format);
+    }
+
+    private static FrameSequence readArray(byte[] data, ImageFormat format) throws IOException {
+        ImageInputStream stream = ImageIO.createImageInputStream(new ByteArrayInputStream(data));
+        if (stream == null) {
+            throw new IOException("no ImageInputStream provider accepted the encoded data");
+        }
+        try {
+            return readFromStream(stream, format);
+        } finally {
+            try { stream.close(); } catch (IOException ignored) {}
+        }
+    }
+
+    private static FrameSequence readFromStream(ImageInputStream stream, ImageFormat format)
+            throws IOException {
+        Iterator<javax.imageio.ImageReader> readers = ImageIO.getImageReadersByFormatName(format.getFormatName());
+        if (!readers.hasNext()) {
+            throw new IOException("no ImageReader for format: " + format.getFormatName());
+        }
+        javax.imageio.ImageReader reader = readers.next();
+        try {
+            reader.setInput(stream, false, true);
+            int numFrames;
+            try {
+                numFrames = reader.getNumImages(true);
+            } catch (Exception e) {
+                // Reader doesn't support multi-frame; treat as single image
+                BufferedImage frame = reader.read(0);
+                return new FrameSequence(List.of(frame), new int[]{1000}, 0);
+            }
+            var frames = new ArrayList<BufferedImage>(numFrames);
+            int[] delaysMs = new int[numFrames];
+            for (int i = 0; i < numFrames; i++) {
+                frames.add(reader.read(i));
+                delaysMs[i] = readFrameDelay(reader.getImageMetadata(i));
+            }
+            int loopCount = readLoopCount(format, reader.getStreamMetadata());
+            return new FrameSequence(frames, delaysMs, loopCount);
+        } finally {
+            reader.dispose();
+        }
+    }
+
+    private static int readFrameDelay(IIOMetadata metadata) {
+        if (metadata == null) return 1000;
+        for (String name : metadata.getMetadataFormatNames()) {
+            var node = metadata.getAsTree(name);
+            int delay = extractDelay(node);
+            if (delay > 0) return delay;
+        }
+        return 1000;
+    }
+
+    private static int extractDelay(org.w3c.dom.Node node) {
+        if (node == null) return 0;
+        if ("GraphicControlExtension".equals(node.getNodeName())) {
+            var attr = node.getAttributes().getNamedItem("delayTime");
+            if (attr != null) {
+                try {
+                    // GIF delayTime is in centiseconds (1/100 second); convert to ms
+                    return Integer.parseInt(attr.getNodeValue()) * 10;
+                } catch (NumberFormatException e) {
+                    return 0;
+                }
+            }
+        }
+        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+            int delay = extractDelay(node.getChildNodes().item(i));
+            if (delay > 0) return delay;
+        }
+        return 0;
+    }
+
+    private static int readLoopCount(ImageFormat format, IIOMetadata streamMetadata) {
+        if (streamMetadata == null) return 0;
+        if (format != ImageFormat.GIF && format != ImageFormat.GIF89A) return 0;
+        try {
+            var node = streamMetadata.getAsTree(streamMetadata.getNativeMetadataFormatName());
+            var nodeList = node.getChildNodes();
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                var child = nodeList.item(i);
+                if ("ApplicationExtensions".equals(child.getNodeName())) {
+                    var children = child.getChildNodes();
+                    for (int j = 0; j < children.getLength(); j++) {
+                        var appExt = children.item(j);
+                        if ("ApplicationExtension".equals(appExt.getNodeName())) {
+                            var attrs = appExt.getAttributes();
+                            var appId = attrs.getNamedItem("applicationID");
+                            var authCode = attrs.getNamedItem("authenticationCode");
+                            if (appId != null && "NETSCAPE".equals(appId.getNodeValue())
+                                    && authCode != null && "2.0".equals(authCode.getNodeValue())) {
+                                var userData = ((IIOMetadataNode) appExt).getUserObject();
+                                if (userData instanceof byte[] bytes && bytes.length >= 3 && bytes[0] == 1) {
+                                    return (bytes[1] & 0xFF) | ((bytes[2] & 0xFF) << 8);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        return 0;
     }
 
     private static ImageFormat detectFormat(byte[] data) {
@@ -120,21 +245,5 @@ public final class ImageReader {
         ImageFormat format = ImageFormat.detect(Arrays.copyOf(data, headerLen));
         if (format != null) return format;
         return ImageFormat.PNG;
-    }
-
-    private static BufferedImage readFromStream(ImageInputStream stream, ImageFormat format) throws IOException {
-        Iterator<javax.imageio.ImageReader> readers = ImageIO.getImageReadersByFormatName(format.getFormatName());
-        if (readers.hasNext()) {
-            javax.imageio.ImageReader reader = readers.next();
-            try {
-                reader.setInput(stream);
-                return reader.read(0);
-            } finally {
-                reader.dispose();
-            }
-        }
-
-        stream.reset();
-        return ImageIO.read(stream);
     }
 }

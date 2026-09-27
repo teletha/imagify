@@ -240,13 +240,13 @@ class AnimatedGifToAvifTest {
     }
 
     private static int readGifDelay(IIOMetadata metadata) {
-        if (metadata == null) return 100;
+        if (metadata == null) return 1000;
         for (String name : metadata.getMetadataFormatNames()) {
             var node = metadata.getAsTree(name);
             int delay = extractDelay(node);
-            if (delay > 0) return delay;
+            if (delay > 0) return delay * 10;  // GIF delayTime is centiseconds → milliseconds
         }
-        return 100;
+        return 1000;
     }
 
     private static int extractDelay(org.w3c.dom.Node node) {
@@ -254,7 +254,7 @@ class AnimatedGifToAvifTest {
         if ("GraphicControlExtension".equals(node.getNodeName())) {
             var attr = node.getAttributes().getNamedItem("delayTime");
             if (attr != null) {
-                return Integer.parseInt(attr.getNodeValue());
+                return Integer.parseInt(attr.getNodeValue());  // centiseconds
             }
         }
         for (int i = 0; i < node.getChildNodes().getLength(); i++) {

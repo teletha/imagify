@@ -34,7 +34,7 @@ class ImageReaderTest {
     @DisplayName("a byte array is read back through the explicit format overload")
     void readsFromByteArray() throws IOException {
         byte[] png = write(sample(), ImageFormat.PNG);
-        BufferedImage back = ImageReader.read(png, ImageFormat.PNG);
+        BufferedImage back = ImageReader.read(png, ImageFormat.PNG).toBufferedImage();
         assertEquals(20, back.getWidth());
         assertEquals(10, back.getHeight());
     }
@@ -43,15 +43,15 @@ class ImageReaderTest {
     @DisplayName("a byte array is read back with the format detected from the header")
     void detectsFromByteArray() throws IOException {
         byte[] png = write(sample(), ImageFormat.PNG);
-        assertEquals(20, ImageReader.read(png).getWidth());
+        assertEquals(20, ImageReader.read(png).toBufferedImage().getWidth());
     }
 
     @Test
     @DisplayName("an InputStream reaches the same result as the equivalent byte array")
     void readsFromInputStream() throws IOException {
         byte[] png = write(sample(), ImageFormat.PNG);
-        assertEquals(20, ImageReader.read(new ByteArrayInputStream(png), ImageFormat.PNG).getWidth());
-        assertEquals(20, ImageReader.read(new ByteArrayInputStream(png)).getWidth());
+        assertEquals(20, ImageReader.read(new ByteArrayInputStream(png), ImageFormat.PNG).toBufferedImage().getWidth());
+        assertEquals(20, ImageReader.read(new ByteArrayInputStream(png)).toBufferedImage().getWidth());
     }
 
     @Test

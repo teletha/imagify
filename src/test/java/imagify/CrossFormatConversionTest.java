@@ -72,7 +72,7 @@ class CrossFormatConversionTest {
 
             BufferedImage decoded;
             try {
-                decoded = ImageReader.read(encoded, input);
+                decoded = ImageReader.read(encoded, input).toBufferedImage();
             } catch (Exception e) {
                 continue; // デコードできない場合はスキップ
             }
@@ -91,7 +91,7 @@ class CrossFormatConversionTest {
                     assertNotEquals(0, reEncoded.length, msg + ": 出力が空");
 
                     // 再度読み込んでサイズ確認
-                    BufferedImage finalImage = ImageReader.read(reEncoded, output);
+                    BufferedImage finalImage = ImageReader.read(reEncoded, output).toBufferedImage();
                     assertEquals(decoded.getWidth(), finalImage.getWidth(), msg + ": 幅");
                     assertEquals(decoded.getHeight(), finalImage.getHeight(), msg + ": 高さ");
                 } catch (Exception e) {
@@ -131,7 +131,7 @@ class CrossFormatConversionTest {
             // ヘッダーから自動判別で読み込み
             BufferedImage decoded;
             try {
-                decoded = ImageReader.read(encoded);
+                decoded = ImageReader.read(encoded).toBufferedImage();
             } catch (Exception e) {
                 continue;
             }
@@ -146,7 +146,7 @@ class CrossFormatConversionTest {
                     BufferedImage outputSource = output.supportsAlpha() ? decoded : stripAlpha(decoded);
                     byte[] outBytes = ImageWriter.toBytes(outputSource, output, 0.8);
                     assertNotEquals(0, outBytes.length, msg + ": 出力が空");
-                    BufferedImage finalImage = ImageReader.read(outBytes);
+                    BufferedImage finalImage = ImageReader.read(outBytes).toBufferedImage();
                     assertEquals(decoded.getWidth(), finalImage.getWidth(), msg + ": 幅");
                     assertEquals(decoded.getHeight(), finalImage.getHeight(), msg + ": 高さ");
                 } catch (Exception e) {
