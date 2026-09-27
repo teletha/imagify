@@ -86,11 +86,12 @@ class AnimatedGifToWebpTest {
                 .toList();
         Assumptions.assumeFalse(gifs.isEmpty());
 
-        // 少なくとも1枚のGIFでPSNR/SSIMを検証
+        // 少なくとも1枚のGIFでPSNR/SSIMを検証（convertsAnimatedGifToWebpと被らないようにサブディレクトリ）
         Path gif = gifs.get(0);
         Path reportDir = Paths.get(REPORT_DIR);
-        Files.createDirectories(reportDir);
-        ConvertResult result = convertGif(gif, "fidelity_test", reportDir);
+        Path fidelityDir = reportDir.resolve("fidelity");
+        Files.createDirectories(fidelityDir);
+        ConvertResult result = convertGif(gif, "fidelity_test", fidelityDir);
 
         assertTrue(result.avgPsnr > 20,
                 "average PSNR should be > 20dB (lossy conversion): " + result.avgPsnr);
@@ -166,6 +167,12 @@ class AnimatedGifToWebpTest {
                 "average PSNR should be > 20dB after resize+convert: " + avgPsnr);
         assertTrue(avgSsim > 0.5,
                 "average SSIM should be > 0.5 after resize+convert: " + avgSsim);
+
+        // Write output files for inspection (separate directory to avoid collision)
+        Path resizedDir = Paths.get("target/test-output/anime-gif-resized-to-webp");
+        Files.createDirectories(resizedDir);
+        Path outFile = resizedDir.resolve(gif.getFileName().toString().replace(".gif", "_resized.webp"));
+        Files.write(outFile, webpBytes);
 
         System.out.printf("  Resized %d frames from %dx%d to %dx%d: %d bytes, PSNR=%.1f, SSIM=%.4f%n",
                 resizedFrames.size(),
@@ -253,7 +260,7 @@ class AnimatedGifToWebpTest {
         }
 
         // Write output files for inspection
-        Path outDir = Paths.get("target/test-output/anime-gif-to-webp");
+        Path outDir = reportDir;
         Files.createDirectories(outDir);
         Path outFile = outDir.resolve(gif.getFileName().toString().replace(".gif", ".webp"));
         Files.write(outFile, webpBytes);
