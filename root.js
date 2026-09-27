@@ -76,6 +76,11 @@ const root = {
 			"type": "Class"
 		},
 		{
+			"name": "AvifAnimationDecoder",
+			"packageName": "imagify.avif.jna",
+			"type": "Class"
+		},
+		{
 			"name": "AvifRWData",
 			"packageName": "imagify.avif.jna",
 			"type": "Class"
@@ -257,6 +262,11 @@ const root = {
 		},
 		{
 			"name": "ImageResizer",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
+			"name": "BufferedImageTransform",
 			"packageName": "imagify",
 			"type": "Class"
 		}
