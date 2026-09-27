@@ -69,21 +69,18 @@ class ResizeComparisonTest {
     private static final String REPORT_DIR = "target/test-output/resize-report";
 
     /**
-     * Target widths in pixels. The source images are roughly 100 px wide, so these are
-     * moderate downscales.
+     * Target scale factors as percentages of original dimensions.
      *
-     * <p>xBRZ (HQX) only accepts exact integer multiples, and none of these widths are
-     * multiples of the source dimensions (105 / 107 / 106), so it will report
-     * unsupported for every row. That is itself informative: it means xBRZ cannot be
-     * used for arbitrary pixel-art downscales in this library.</p>
+     * <p>xBRZ (HQX) only accepts exact integer multiples, so it will only work for
+     * scales that happen to produce integer multiples (unlikely for percentage scales).</p>
      */
-    private static final int[] TARGET_SIZES = {80, 70, 60, 50, 40};
+    private static final double[] TARGET_SCALES = {0.8, 0.7, 0.6, 0.5, 0.4};
 
     /** The pass that puts a result back to the source size, for every algorithm alike. */
     private static final ResizeAlgorithm REFERENCE = ResizeAlgorithm.LANCZOS3;
 
     /** A resize of one image by one algorithm, with the measurements that describe it. */
-    private record Variant(ResizeAlgorithm algorithm, int targetSize, int width, int height,
+    private record Variant(ResizeAlgorithm algorithm, double targetScale, int width, int height,
                             long nanos, double psnr, double ssim, double sharpness,
                             Path resized, long size, String failure) {
 
@@ -100,9 +97,9 @@ class ResizeComparisonTest {
     private record Sample(String id, String name, int width, int height, boolean opaque,
                            Path original, List<Variant> variants) {
 
-        Variant variant(ResizeAlgorithm algorithm, int targetSize) {
+        Variant variant(ResizeAlgorithm algorithm, double targetScale) {
             for (Variant variant : variants) {
-                if (variant.algorithm() == algorithm && variant.targetSize() == targetSize) {
+                if (variant.algorithm() == algorithm && variant.targetScale() == targetScale) {
                     return variant;
                 }
             }
@@ -110,10 +107,10 @@ class ResizeComparisonTest {
         }
 
         /** @return the variant that kept the most information, or null if none of them ran */
-        Variant bestAt(int targetSize) {
+        Variant bestAt(double targetScale) {
             Variant best = null;
             for (Variant variant : variants) {
-                if (variant.targetSize() == targetSize && variant.ok()
+                if (variant.targetScale() == targetScale && variant.ok()
                         && (best == null || variant.psnr() > best.psnr())) {
                     best = variant;
                 }
@@ -145,9 +142,9 @@ class ResizeComparisonTest {
 
         assertTrue(Files.size(html) > 2048, "the report looks truncated");
         for (Sample sample : samples) {
-            assertEquals(ResizeAlgorithm.values().length * TARGET_SIZES.length,
+            assertEquals(ResizeAlgorithm.values().length * TARGET_SCALES.length,
                     sample.variants().size(),
-                    sample.name() + " should carry one variant per algorithm and target size");
+                    sample.name() + " should carry one variant per algorithm and target scale");
             for (Variant variant : sample.variants()) {
                 if (!variant.ok()) {
                     continue;
@@ -164,11 +161,11 @@ class ResizeComparisonTest {
         // xBRZ takes exact integer multiples only, and none of 40-80 are multiples of
         // the source dimensions (105 / 107 / 106), so it should fail for every size.
         Sample first = samples.get(0);
-        for (int targetSize : TARGET_SIZES) {
-            Variant v = first.variant(ResizeAlgorithm.HQX, targetSize);
-            assertNotNull(v, "should have an HQX entry for " + targetSize + "px");
+        for (double targetScale : TARGET_SCALES) {
+            Variant v = first.variant(ResizeAlgorithm.HQX, targetScale);
+            assertNotNull(v, "should have an HQX entry for " + sizeLabel(targetScale));
             assertFalse(v.ok(),
-                    "xBRZ cannot produce " + targetSize + "px from " + first.width()
+                    "xBRZ cannot produce " + sizeLabel(targetScale) + " from " + first.width()
                             + "px, so it should report failure");
         }
 
@@ -198,9 +195,9 @@ class ResizeComparisonTest {
         ImageIO.write(source, "png", original.toFile());
 
         List<Variant> variants = new ArrayList<>();
-        for (int targetSize : TARGET_SIZES) {
+        for (double targetScale : TARGET_SCALES) {
             for (ResizeAlgorithm algorithm : ResizeAlgorithm.values()) {
-                variants.add(resize(source, dir, algorithm, targetSize,
+                variants.add(resize(source, dir, algorithm, targetScale,
                         reference, sourceGradient));
             }
         }
@@ -210,14 +207,13 @@ class ResizeComparisonTest {
     }
 
     private static Variant resize(BufferedImage source, Path dir, ResizeAlgorithm algorithm,
-                                    int targetSize, int[] reference, double sourceGradient)
+                                    double targetScale, int[] reference, double sourceGradient)
                                     throws IOException {
         int width = source.getWidth();
         int height = source.getHeight();
-        double factor = (double) targetSize / width;
-        int targetW = targetSize;
-        int targetH = Math.max(1, (int) Math.round(height * factor));
-        String stem = algorithm.name().toLowerCase() + "." + targetSize + "px";
+        int targetW = Math.max(1, (int) Math.round(width * targetScale));
+        int targetH = Math.max(1, (int) Math.round(height * targetScale));
+        String stem = algorithm.name().toLowerCase() + "." + sizeLabel(targetScale);
 
         long start = System.nanoTime();
         BufferedImage result;
@@ -226,7 +222,7 @@ class ResizeComparisonTest {
         } catch (RuntimeException e) {
             // xBRZ refuses anything that is not an exact integer multiple, and says why.
             // That is an answer worth showing rather than an error worth hiding.
-            return new Variant(algorithm, targetSize, targetW, targetH, 0, 0, 0, 0,
+            return new Variant(algorithm, targetScale, targetW, targetH, 0, 0, 0, 0,
                     null, 0, e.getMessage());
         }
         long nanos = System.nanoTime() - start;
@@ -243,11 +239,11 @@ class ResizeComparisonTest {
         // A linear resize of the same factor would leave this much edge behind. Anything
         // else is the algorithm's own doing: blur takes it away, ringing adds edges that
         // were not there.
-        double expected = factor < 1 ? factor : 1.0;
+        double expected = targetScale < 1 ? targetScale : 1.0;
         double sharpness = (ImageMetrics.gradient(result) / sourceGradient) / expected;
 
         long size = Files.size(resized);
-        return new Variant(algorithm, targetSize, result.getWidth(), result.getHeight(), nanos,
+        return new Variant(algorithm, targetScale, result.getWidth(), result.getHeight(), nanos,
                 ImageMetrics.psnr(reference, actual),
                 ImageMetrics.ssim(reference, actual, width, height),
                 sharpness, resized, size, null);
@@ -255,19 +251,19 @@ class ResizeComparisonTest {
 
     // ------------------------------------------------------------------ aggregation
 
-    /** One row per target size and algorithm, averaged over every source image. */
+    /** One row per target scale and algorithm, averaged over every source image. */
     private static List<String[]> summaryRows(List<Sample> samples) {
         List<String[]> rows = new ArrayList<>();
-        for (int targetSize : TARGET_SIZES) {
+        for (double targetScale : TARGET_SCALES) {
             for (ResizeAlgorithm algorithm : ResizeAlgorithm.values()) {
-                rows.add(aggregate(samples, algorithm, targetSize));
+                rows.add(aggregate(samples, algorithm, targetScale));
             }
         }
         return rows;
     }
 
     private static String[] aggregate(List<Sample> samples, ResizeAlgorithm algorithm,
-                                            int targetSize) {
+                                            double targetScale) {
         long nanos = 0;
         double psnrSum = 0;
         double ssimSum = 0;
@@ -275,7 +271,7 @@ class ResizeComparisonTest {
         long sizeSum = 0;
         int count = 0;
         for (Sample sample : samples) {
-            Variant variant = sample.variant(algorithm, targetSize);
+            Variant variant = sample.variant(algorithm, targetScale);
             if (variant == null || !variant.ok()) {
                 continue;
             }
@@ -287,11 +283,11 @@ class ResizeComparisonTest {
             count++;
         }
         if (count == 0) {
-            return new String[] {sizeLabel(targetSize), algorithm.name().toLowerCase(),
+            return new String[] {sizeLabel(targetScale), algorithm.name().toLowerCase(),
                     "-", "-", "-", "-", "-"};
         }
         return new String[] {
-                sizeLabel(targetSize),
+                sizeLabel(targetScale),
                 algorithm.name().toLowerCase(),
                 String.format("%.2f ms", nanos / count / 1_000_000.0),
                 String.format("%.1f", psnrSum / count),
@@ -311,9 +307,9 @@ class ResizeComparisonTest {
         return bytes + " B";
     }
 
-    /** @return the label a reader sees, such as {@code 80px} */
-    static String sizeLabel(int targetSize) {
-        return targetSize + "px";
+    /** @return the label a reader sees, such as {@code 80%} */
+    static String sizeLabel(double targetScale) {
+        return (int)(targetScale * 100) + "%";
     }
 
     // ------------------------------------------------------------------ report
@@ -331,7 +327,7 @@ class ResizeComparisonTest {
         html.append("<h1>リサイズアルゴリズムの比較</h1>\n")
                 .append("<p class=\"lead\">").append(samples.size())
                 .append(" 枚の PNG を ").append(ResizeAlgorithm.values().length)
-                .append(" 種類のアルゴリズムで ").append(TARGET_SIZES.length)
+                .append(" 種類のアルゴリズムで ").append(TARGET_SCALES.length)
                 .append(" 段階のサイズにリサイズし、所要時間と画質指標を比べたもの。</p>\n");
 
         appendNotes(html);
@@ -394,9 +390,9 @@ class ResizeComparisonTest {
                 .append("<p class=\"note\">画像ごとの値。括弧内は処理時間と鮮鋭度。"
                         + "サイズごとに PSNR 最高のセルを強調している。</p>\n")
                 .append("<table>\n<thead><tr><th>画像</th><th>サイズ</th>");
-        for (int targetSize : TARGET_SIZES) {
+        for (double targetScale : TARGET_SCALES) {
             for (ResizeAlgorithm algorithm : ResizeAlgorithm.values()) {
-                html.append("<th>").append(sizeLabel(targetSize)).append(' ')
+                html.append("<th>").append(sizeLabel(targetScale)).append(' ')
                         .append(algorithm.name().toLowerCase()).append("</th>");
             }
         }
@@ -408,9 +404,9 @@ class ResizeComparisonTest {
                     .append(sample.opaque() ? "" : " <span class=\"tag\">透過あり</span>")
                     .append("</td><td class=\"num\">").append(sample.width()).append("×")
                     .append(sample.height()).append("</td>");
-            for (int targetSize : TARGET_SIZES) {
+            for (double targetScale : TARGET_SCALES) {
                 for (ResizeAlgorithm algorithm : ResizeAlgorithm.values()) {
-                    html.append(cell(sample, algorithm, targetSize));
+                    html.append(cell(sample, algorithm, targetScale));
                 }
             }
             html.append("</tr>\n");
@@ -418,15 +414,15 @@ class ResizeComparisonTest {
         html.append("</tbody>\n</table>\n");
     }
 
-    private static String cell(Sample sample, ResizeAlgorithm algorithm, int targetSize) {
-        Variant variant = sample.variant(algorithm, targetSize);
+    private static String cell(Sample sample, ResizeAlgorithm algorithm, double targetScale) {
+        Variant variant = sample.variant(algorithm, targetScale);
         if (variant == null) {
             return "<td class=\"num\">-</td>";
         }
         if (!variant.ok()) {
             return "<td class=\"num na\" title=\"" + escape(variant.failure()) + "\">n/a</td>";
         }
-        boolean best = sample.bestAt(targetSize) == variant;
+        boolean best = sample.bestAt(targetScale) == variant;
         return "<td class=\"num" + (best ? " best" : "") + "\">"
                 + String.format("%.1f", variant.psnr())
                 + "<small>" + String.format("%.2f ms", variant.nanos() / 1_000_000.0)
@@ -436,7 +432,7 @@ class ResizeComparisonTest {
 
     private static void appendComparisons(StringBuilder html, List<Sample> samples) {
         html.append("<h2>4. 画像比較</h2>\n")
-                .append("<p class=\"note\">各画像と各サイズのリサイズ結果を示す。</p>\n");
+                .append("<p class=\"note\">各画像と各スケールのリサイズ結果を示す。</p>\n");
 
         for (Sample sample : samples) {
             html.append("<div class=\"sample\" id=\"").append(sample.id()).append("\">\n<h3>")
@@ -451,14 +447,14 @@ class ResizeComparisonTest {
                             "元画像 · " + sample.width() + "×" + sample.height()))
                     .append("</div>\n");
 
-            // Per target size, one figure per algorithm.
-            for (int targetSize : TARGET_SIZES) {
-                html.append("<h4>").append(sizeLabel(targetSize)).append("</h4>\n")
+            // Per target scale, one figure per algorithm.
+            for (double targetScale : TARGET_SCALES) {
+                html.append("<h4>").append(sizeLabel(targetScale)).append("</h4>\n")
                         .append("<div class=\"grid\">\n");
                 for (ResizeAlgorithm algorithm : ResizeAlgorithm.values()) {
-                    Variant variant = sample.variant(algorithm, targetSize);
+                    Variant variant = sample.variant(algorithm, targetScale);
                     if (variant == null || !variant.ok()) {
-                        html.append(unsupported(sample, algorithm, targetSize, variant));
+                        html.append(unsupported(sample, algorithm, targetScale, variant));
                         continue;
                     }
                     String caption = variant.label() + " · " + variant.width() + "×"
@@ -486,15 +482,15 @@ class ResizeComparisonTest {
     }
 
     private static String unsupported(Sample sample, ResizeAlgorithm algorithm,
-                                             int targetSize, Variant variant) {
+                                             double targetScale, Variant variant) {
         String reason = variant == null ? "" : variant.failure();
-        double factor = (double) targetSize / sample.width();
-        int targetH = Math.max(1, (int) Math.round(sample.height() * factor));
-        String size = "--w:" + targetSize + "px;--ar:" + targetSize + "/" + targetH;
+        int targetW = Math.max(1, (int) Math.round(sample.width() * targetScale));
+        int targetH = Math.max(1, (int) Math.round(sample.height() * targetScale));
+        String size = "--w:" + targetW + "px;--ar:" + targetW + "/" + targetH;
         return "<figure class=\"cmp\" style=\"" + size + "\">"
                 + "<div class=\"na-box\">" + escape(algorithm.name().toLowerCase())
                 + "<br>非対応</div>"
-                + "<figcaption>" + sizeLabel(targetSize) + ' '
+                + "<figcaption>" + sizeLabel(targetScale) + ' '
                 + escape(algorithm.name().toLowerCase()) + " · 非対応"
                 + (reason.isEmpty() ? "" : "<small>" + escape(reason) + "</small>")
                 + "</figcaption></figure>\n";

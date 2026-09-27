@@ -88,12 +88,13 @@ public final class BufferedImageResize {
                 x0 = Math.max(0, Math.min(srcW - 1, x0));
                 x1 = Math.max(0, Math.min(srcW, x1));
 
-                long r = 0, g = 0, b = 0;
+                long a = 0, r = 0, g = 0, b = 0;
                 int count = 0;
                 for (int sy = y0; sy < y1; sy++) {
                     int rowOff = sy * srcW;
                     for (int sx = x0; sx < x1; sx++) {
                         int px = srcPixels[rowOff + sx];
+                        a += (px >>> 24) & 0xFF;
                         r += (px >> 16) & 0xFF;
                         g += (px >> 8) & 0xFF;
                         b += px & 0xFF;
@@ -101,7 +102,7 @@ public final class BufferedImageResize {
                     }
                 }
                 if (count > 0) {
-                    dstPixels[y * targetW + x] = (0xFF << 24)
+                    dstPixels[y * targetW + x] = (clamp((int) Math.round(a / (double) count)) << 24)
                             | (clamp((int) Math.round(r / (double) count)) << 16)
                             | (clamp((int) Math.round(g / (double) count)) << 8)
                             | clamp((int) Math.round(b / (double) count));
@@ -140,13 +141,15 @@ public final class BufferedImageResize {
                 int bl = srcPixels[y1 * srcW + x0];
                 int br = srcPixels[y1 * srcW + x1];
 
+                int a = blend(invDx * invDy, (tl >>> 24) & 0xFF, invDx * dy, (tr >>> 24) & 0xFF,
+                        dx * invDy, (bl >>> 24) & 0xFF, dx * dy, (br >>> 24) & 0xFF);
                 int r = blend(invDx * invDy, (tl >> 16) & 0xFF, invDx * dy, (tr >> 16) & 0xFF,
                         dx * invDy, (bl >> 16) & 0xFF, dx * dy, (br >> 16) & 0xFF);
                 int g = blend(invDx * invDy, (tl >> 8) & 0xFF, invDx * dy, (tr >> 8) & 0xFF,
                         dx * invDy, (bl >> 8) & 0xFF, dx * dy, (br >> 8) & 0xFF);
                 int b = blend(invDx * invDy, tl & 0xFF, invDx * dy, tr & 0xFF,
                         dx * invDy, bl & 0xFF, dx * dy, br & 0xFF);
-                dstPixels[y * targetW + x] = (0xFF << 24) | (r << 16) | (g << 8) | b;
+                dstPixels[y * targetW + x] = (clamp(a) << 24) | (r << 16) | (g << 8) | b;
             }
         }
         return makeImage(dstPixels, targetW, targetH);
@@ -190,6 +193,7 @@ public final class BufferedImageResize {
             }
         }
 
+        int[][] tmpA = new int[srcH][targetW];
         int[][] tmpR = new int[srcH][targetW];
         int[][] tmpG = new int[srcH][targetW];
         int[][] tmpB = new int[srcH][targetW];
@@ -197,16 +201,18 @@ public final class BufferedImageResize {
         for (int sy = 0; sy < srcH; sy++) {
             int rowOff = sy * srcW;
             for (int tx = 0; tx < targetW; tx++) {
-                double r = 0, g = 0, b = 0, tw = 0;
+                double a = 0, r = 0, g = 0, b = 0, tw = 0;
                 for (int i = 0; i < xOffs[tx].length; i++) {
                     int px = srcPixels[rowOff + xOffs[tx][i]];
                     double w = xWts[tx][i];
+                    a += ((px >>> 24) & 0xFF) * w;
                     r += ((px >> 16) & 0xFF) * w;
                     g += ((px >> 8) & 0xFF) * w;
                     b += (px & 0xFF) * w;
                     tw += w;
                 }
                 if (tw > 0) {
+                    tmpA[sy][tx] = (int) Math.round(a / tw);
                     tmpR[sy][tx] = (int) Math.round(r / tw);
                     tmpG[sy][tx] = (int) Math.round(g / tw);
                     tmpB[sy][tx] = (int) Math.round(b / tw);
@@ -217,17 +223,18 @@ public final class BufferedImageResize {
         int[] dstPixels = new int[targetW * targetH];
         for (int ty = 0; ty < targetH; ty++) {
             for (int tx = 0; tx < targetW; tx++) {
-                double r = 0, g = 0, b = 0, tw = 0;
+                double a = 0, r = 0, g = 0, b = 0, tw = 0;
                 for (int i = 0; i < yOffs[ty].length; i++) {
                     int sy = yOffs[ty][i];
                     double w = yWts[ty][i];
+                    a += tmpA[sy][tx] * w;
                     r += tmpR[sy][tx] * w;
                     g += tmpG[sy][tx] * w;
                     b += tmpB[sy][tx] * w;
                     tw += w;
                 }
                 if (tw > 0) {
-                    dstPixels[ty * targetW + tx] = (0xFF << 24)
+                    dstPixels[ty * targetW + tx] = (clamp((int) Math.round(a / tw)) << 24)
                             | (clamp((int) Math.round(r / tw)) << 16)
                             | (clamp((int) Math.round(g / tw)) << 8)
                             | clamp((int) Math.round(b / tw));

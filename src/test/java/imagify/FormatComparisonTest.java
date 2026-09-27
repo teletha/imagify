@@ -12,6 +12,7 @@ package imagify;
 import static org.junit.jupiter.api.Assertions.*;
 
 import imagify.avif.AvifException;
+import imagify.avif.AvifException;
 import imagify.avif.jna.AvifCodec;
 import imagify.avif.jna.AvifLibrary;
 import imagify.webp.WebpCodec;
@@ -29,7 +30,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Converts every PNG under {@code src/test/resources/png} to AVIF and to WebP at a range
+ * Converts every PNG under {@code src/test/resources/png} to AVIF and WebP at a range
  * of quality settings, measures what each setting costs in bytes and what it gives up in
  * fidelity, and writes the comparison to an HTML report.
  *
@@ -43,8 +44,8 @@ class FormatComparisonTest {
 
     private static final String REPORT_DIR = "target/test-output/report";
 
-    /** Quality settings to compare. Both {@code libavif} and {@code libwebp} take 0-100. */
-    private static final int[] QUALITIES = {10, 30, 50, 70, 90};
+    /** Quality settings to compare. AVIF and WebP take 0-100. */
+    private static final int[] QUALITIES = {10, 20, 30, 40, 50, 60, 70, 80, 90};
 
     /** The library default: slow enough to be fair, fast enough to keep the test short. */
     private static final int AVIF_SPEED = AvifLibrary.DEFAULT_SPEED;
@@ -202,6 +203,21 @@ class FormatComparisonTest {
 
     // ------------------------------------------------------------------ measurement
 
+    /** Flattens a potentially transparent image to opaque by compositing on white. */
+    private static BufferedImage flattenToOpaque(BufferedImage image) {
+        if (image.getType() == BufferedImage.TYPE_INT_RGB) {
+            return image;
+        }
+        BufferedImage opaque = new BufferedImage(
+                image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        var g = opaque.createGraphics();
+        g.setColor(java.awt.Color.WHITE);
+        g.fillRect(0, 0, image.getWidth(), image.getHeight());
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+        return opaque;
+    }
+
     private static int[] argb(BufferedImage image) {
         return ImageMetrics.argb(image);
     }
@@ -288,7 +304,8 @@ class FormatComparisonTest {
                 .append("<meta charset=\"utf-8\">\n")
                 .append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n")
                 .append("<title>AVIF / WebP 画質とサイズの比較</title>\n")
-                .append("<style>\n").append(ReportAssets.css()).append("\n</style>\n</head>\n<body>\n");
+                .append("<style>\n").append(ReportAssets.css()).append(extraCss())
+                .append("\n</style>\n</head>\n<body>\n");
 
         html.append("<h1>AVIF / WebP 画質とサイズの比較</h1>\n")
                 .append("<p class=\"lead\">").append(samples.size()).append(" 枚の PNG（合計 ")
@@ -300,50 +317,60 @@ class FormatComparisonTest {
         appendDetail(html, samples);
 
         html.append("<h2>3. 画像比較</h2>\n")
-                .append("<p class=\"note\">各画像をドラッグすると、原画像（左）と変換後（右）の境目が動く。"
-                        + "1× は元画像のピクセル寸そのまま（等倍）で表示する。</p>\n")
-                .append("<div class=\"zoom\">")
-                .append("<button data-zoom=\"1\">1×</button>")
-                .append("<button data-zoom=\"2\" class=\"on\">2×</button>")
-                .append("<button data-zoom=\"3\">3×</button>")
-                .append("<button data-zoom=\"4\">4×</button>")
-                .append("</div>\n");
+                .append("<p class=\"note\">各画像の変換結果を表示。画像は最大幅 480px に制限して表示。</p>\n");
 
         for (Sample sample : samples) {
             String ratio = sample.width() + "/" + sample.height();
-            // 1× is the image's own pixel size, so the grid is sized from the source.
             String size = "--w:" + sample.width() + "px;--ar:" + ratio;
             String originalPath = relative("original/" + sample.id() + ".png");
             html.append("<div class=\"sample\" id=\"").append(sample.id()).append("\">\n<h3>")
-                    .append(escape(sample.name())).append("</h3>\n")
-                    .append("<div class=\"grid\">\n")
+                    .append(escape(sample.name())).append("</h3>\n");
+
+            // Original image
+            html.append("<div class=\"grid\">\n")
                     .append("<figure class=\"cmp\" style=\"").append(size).append("\">")
-                    .append("<div class=\"stack\" style=\"").append(size).append("\">")
-                    .append("<img class=\"after\" src=\"").append(escape(originalPath))
+                    .append("<img src=\"").append(escape(originalPath))
                     .append("\" alt=\"").append(escape(sample.name())).append("\" loading=\"lazy\">")
-                    .append("</div>")
                     .append("<figcaption>原画像 · ").append(group(sample.sourceBytes()))
                     .append(" · ").append(sample.width()).append("×").append(sample.height())
-                    .append("</figcaption></figure>\n");
+                    .append("</figcaption></figure>\n")
+                    .append("</div>\n");
 
-            for (Variant variant : sample.variants()) {
-                html.append("<figure class=\"cmp\" style=\"").append(size).append("\">")
-                        .append("<div class=\"stack\" style=\"").append(size).append("\">")
-                        .append("<img class=\"after\" src=\"").append(escape(originalPath))
-                        .append("\" alt=\"\" loading=\"lazy\">")
-                        .append("<div class=\"clip\"><img class=\"before\" src=\"")
-                        .append(escape(relative(variant.decoded().toString())))
-                        .append("\" alt=\"").append(escape(variant.label()))
-                        .append("\" loading=\"lazy\"></div></div>")
-                        .append("<figcaption>").append(escape(variant.label()))
-                        .append(" · ").append(group(variant.bytes()))
-                        .append(" · SSIM ").append(String.format("%.4f", variant.ssim()))
-                        .append("</figcaption></figure>\n");
+            // Per-format comparison grids
+            for (String format : new String[] {AVIF, WEBP}) {
+                html.append("<h4>").append(format.toUpperCase()).append("</h4>\n<div class=\"grid\">\n");
+                for (Variant variant : sample.variants()) {
+                    // Include WebP lossless in the WebP section
+                    if (WEBP.equals(format) && WEBP_LOSSLESS.equals(variant.format())) {
+                        // include
+                    } else if (!variant.format().equals(format)) {
+                        continue;
+                    }
+                    html.append("<figure class=\"cmp\" style=\"").append(size).append("\">")
+                            .append("<img src=\"").append(escape(relative(variant.decoded().toString())))
+                            .append("\" alt=\"").append(escape(variant.label())).append("\" loading=\"lazy\">")
+                            .append("<figcaption>").append(escape(variant.label()))
+                            .append(" · ").append(group(variant.bytes()))
+                            .append(" · SSIM ").append(String.format("%.4f", variant.ssim()))
+                            .append("</figcaption></figure>\n");
+                }
+                html.append("</div>\n");
             }
-            html.append("</div>\n</div>\n");
+
+            html.append("</div>\n");
         }
 
         return html.append("<script>\n").append(ReportAssets.js()).append("\n</script>\n</body>\n</html>\n").toString();
+    }
+
+    /** Extra CSS for this report. */
+    private static String extraCss() {
+        return ""
+            + ":root{--zoom:1}"
+            + ".stack{user-select:none;-webkit-user-select:none}"
+            + ".cmp img{max-width:480px;height:auto;display:block}"
+            + "@media(prefers-color-scheme:dark){"
+            + ".cmp img{background:repeating-conic-gradient(#161b22 0 25%,#0d1117 0 50%) 0 0/16px 16px}}";
     }
 
     private static void appendSummary(StringBuilder html, List<Sample> samples) {
@@ -367,28 +394,44 @@ class FormatComparisonTest {
     private static void appendDetail(StringBuilder html, List<Sample> samples) {
         html.append("<h2>2. 一覧</h2>\n")
                 .append("<p class=\"note\">見出しをクリックすると並び替えられる。"
-                        + "括弧内は PNG に対する圧縮率と SSIM。</p>\n")
-                .append("<table>\n<thead><tr><th>画像</th><th>サイズ</th><th>PNG</th>");
-        for (String format : new String[] {AVIF, WEBP}) {
-            for (int quality : QUALITIES) {
-                html.append("<th>").append(format).append(" q").append(quality).append("</th>");
-            }
-        }
-        html.append("<th>webp lossless</th></tr></thead>\n<tbody>\n");
+                        + "括弧内は PNG に対する圧縮率と SSIM。</p>\n");
 
+        // Separate table per format
+        for (String format : new String[] {AVIF, WEBP}) {
+            String displayName = format.toUpperCase();
+            html.append("<h3>").append(displayName).append("</h3>\n")
+                    .append("<table>\n<thead><tr><th>画像</th><th>サイズ</th><th>PNG</th>");
+            for (int quality : QUALITIES) {
+                html.append("<th>q").append(quality).append("</th>");
+            }
+            html.append("</tr></thead>\n<tbody>\n");
+
+            for (Sample sample : samples) {
+                html.append("<tr><td class=\"name\"><a href=\"#").append(sample.id()).append("\">")
+                        .append(escape(sample.name())).append("</a>")
+                        .append(sample.opaque() ? "" : " <span class=\"tag\">透過あり</span>")
+                        .append("</td><td class=\"num\">").append(sample.width()).append("×")
+                        .append(sample.height()).append("</td><td class=\"num\">")
+                        .append(group(sample.sourceBytes())).append("</td>");
+                for (int quality : QUALITIES) {
+                    html.append(cell(sample, format, quality));
+                }
+                html.append("</tr>\n");
+            }
+            html.append("</tbody>\n</table>\n");
+        }
+
+        // WebP lossless as a separate section
+        html.append("<h3>WebP Lossless</h3>\n")
+                .append("<table>\n<thead><tr><th>画像</th><th>サイズ</th><th>PNG</th><th>webp lossless</th></tr></thead>\n<tbody>\n");
         for (Sample sample : samples) {
             html.append("<tr><td class=\"name\"><a href=\"#").append(sample.id()).append("\">")
                     .append(escape(sample.name())).append("</a>")
                     .append(sample.opaque() ? "" : " <span class=\"tag\">透過あり</span>")
                     .append("</td><td class=\"num\">").append(sample.width()).append("×")
                     .append(sample.height()).append("</td><td class=\"num\">")
-                    .append(group(sample.sourceBytes())).append("</td>");
-            for (String format : new String[] {AVIF, WEBP}) {
-                for (int quality : QUALITIES) {
-                    html.append(cell(sample, format, quality));
-                }
-            }
-            html.append(cell(sample, WEBP_LOSSLESS, 0)).append("</tr>\n");
+                    .append(group(sample.sourceBytes())).append("</td>")
+                    .append(cell(sample, WEBP_LOSSLESS, 0)).append("</tr>\n");
         }
         html.append("</tbody>\n</table>\n");
     }
