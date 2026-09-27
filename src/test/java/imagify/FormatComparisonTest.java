@@ -202,108 +202,20 @@ class FormatComparisonTest {
 
     // ------------------------------------------------------------------ measurement
 
-    /** Reads an image into one packed ARGB int per pixel, which is layout independent. */
     private static int[] argb(BufferedImage image) {
-        int[] pixels = new int[image.getWidth() * image.getHeight()];
-        int i = 0;
-        for (int y = 0; y < image.getHeight(); y++) {
-            for (int x = 0; x < image.getWidth(); x++) {
-                pixels[i++] = image.getRGB(x, y);
-            }
-        }
-        return pixels;
+        return ImageMetrics.argb(image);
     }
 
     private static boolean isOpaque(int[] pixels) {
-        for (int pixel : pixels) {
-            if ((pixel >>> 24) != 0xFF) {
-                return false;
-            }
-        }
-        return true;
+        return ImageMetrics.isOpaque(pixels);
     }
 
-    /** Peak signal to noise ratio over the colour channels, in decibels. */
     private static double psnr(int[] reference, int[] actual) {
-        double squared = 0;
-        for (int i = 0; i < reference.length; i++) {
-            int a = reference[i];
-            int b = actual[i];
-            int dr = ((a >>> 16) & 0xFF) - ((b >>> 16) & 0xFF);
-            int dg = ((a >>> 8) & 0xFF) - ((b >>> 8) & 0xFF);
-            int db = (a & 0xFF) - (b & 0xFF);
-            squared += (double) dr * dr + (double) dg * dg + (double) db * db;
-        }
-        double mse = squared / (reference.length * 3);
-        return mse == 0 ? 99 : 10 * Math.log10(255.0 * 255.0 / mse);
+        return ImageMetrics.psnr(reference, actual);
     }
 
-    /** Mean structural similarity over luma, averaged over the usual 8x8 windows. */
     private static double ssim(int[] reference, int[] actual, int width, int height) {
-        final int window = 8;
-        if (width < window || height < window) {
-            return 1;
-        }
-        double[] referenceLuma = luma(reference);
-        double[] actualLuma = luma(actual);
-        final double c1 = square(0.01 * 255);
-        final double c2 = square(0.03 * 255);
-        final int n = window * window;
-
-        double total = 0;
-        int windows = 0;
-        for (int y = 0; y + window <= height; y++) {
-            for (int x = 0; x + window <= width; x++) {
-                double sumA = 0;
-                double sumB = 0;
-                for (int j = 0; j < window; j++) {
-                    int row = (y + j) * width + x;
-                    for (int i = 0; i < window; i++) {
-                        sumA += referenceLuma[row + i];
-                        sumB += actualLuma[row + i];
-                    }
-                }
-                double meanA = sumA / n;
-                double meanB = sumB / n;
-
-                double varianceA = 0;
-                double varianceB = 0;
-                double covariance = 0;
-                for (int j = 0; j < window; j++) {
-                    int row = (y + j) * width + x;
-                    for (int i = 0; i < window; i++) {
-                        double da = referenceLuma[row + i] - meanA;
-                        double db = actualLuma[row + i] - meanB;
-                        varianceA += da * da;
-                        varianceB += db * db;
-                        covariance += da * db;
-                    }
-                }
-                varianceA /= n - 1;
-                varianceB /= n - 1;
-                covariance /= n - 1;
-
-                total += ((2 * meanA * meanB + c1) * (2 * covariance + c2))
-                        / ((meanA * meanA + meanB * meanB + c1) * (varianceA + varianceB + c2));
-                windows++;
-            }
-        }
-        return total / windows;
-    }
-
-    private static double[] luma(int[] pixels) {
-        double[] out = new double[pixels.length];
-        for (int i = 0; i < pixels.length; i++) {
-            int pixel = pixels[i];
-            out[i] = 0.299 * ((pixel >>> 16) & 0xFF)
-                    + 0.587 * ((pixel >>> 8) & 0xFF)
-                    + 0.114 * (pixel & 0xFF);
-        }
-        return out;
-    }
-
-    private static double square(double value) {
-        return value * value;
+        return ImageMetrics.ssim(reference, actual, width, height);
     }
 
     // ------------------------------------------------------------------ aggregation
@@ -376,7 +288,7 @@ class FormatComparisonTest {
                 .append("<meta charset=\"utf-8\">\n")
                 .append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n")
                 .append("<title>AVIF / WebP 画質とサイズの比較</title>\n")
-                .append("<style>\n").append(css()).append("\n</style>\n</head>\n<body>\n");
+                .append("<style>\n").append(ReportAssets.css()).append("\n</style>\n</head>\n<body>\n");
 
         html.append("<h1>AVIF / WebP 画質とサイズの比較</h1>\n")
                 .append("<p class=\"lead\">").append(samples.size()).append(" 枚の PNG（合計 ")
@@ -431,7 +343,7 @@ class FormatComparisonTest {
             html.append("</div>\n</div>\n");
         }
 
-        return html.append("<script>\n").append(js()).append("\n</script>\n</body>\n</html>\n").toString();
+        return html.append("<script>\n").append(ReportAssets.js()).append("\n</script>\n</body>\n</html>\n").toString();
     }
 
     private static void appendSummary(StringBuilder html, List<Sample> samples) {
@@ -500,89 +412,5 @@ class FormatComparisonTest {
 
     private static String escape(String text) {
         return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;");
-    }
-
-    private static String css() {
-        return ""
-            + ":root{--zoom:2}"
-            + "*{box-sizing:border-box}"
-            + "body{margin:0;padding:32px;font:14px/1.6 -apple-system,'Segoe UI','Noto Sans JP',sans-serif;"
-            + "color:#1b1f23;background:#fff}"
-            + "h1{font-size:24px;margin:0 0 8px}"
-            + "h2{font-size:19px;margin:40px 0 4px;padding-bottom:6px;border-bottom:2px solid #1b1f23}"
-            + "h3{font-size:15px;margin:28px 0 8px;font-weight:600}"
-            + ".lead{margin:0 0 8px;color:#57606a;max-width:70ch}"
-            + ".note{margin:0 0 12px;color:#57606a}"
-            + "table{border-collapse:collapse;font-size:13px;margin-bottom:8px}"
-            + "th,td{border:1px solid #d0d7de;padding:5px 9px;white-space:nowrap}"
-            + "th{background:#f6f8fa;cursor:pointer;user-select:none}"
-            + "th:hover{background:#eaeef2}"
-            + "td.num{text-align:right;font-variant-numeric:tabular-nums}"
-            + "td small{display:block;color:#6e7781;font-size:11px}"
-            + "td.name{font-weight:600}"
-            + "td.name a{color:#0969da;text-decoration:none}"
-            + "td.name a:hover{text-decoration:underline}"
-            + ".tag{font-size:11px;font-weight:400;color:#9a6700;background:#fff8c5;padding:0 4px;"
-            + "border-radius:3px}"
-            + ".zoom{margin:0 0 20px}"
-            + ".zoom button{font:inherit;padding:4px 12px;border:1px solid #d0d7de;background:#f6f8fa;"
-            + "cursor:pointer}"
-            + ".zoom button:first-child{border-radius:6px 0 0 6px}"
-            + ".zoom button:last-child{border-radius:0 6px 6px 0}"
-            + ".zoom button+button{border-left:none}"
-            + ".zoom button.on{background:#1b1f23;color:#fff;border-color:#1b1f23}"
-            + ".sample{border-top:1px solid #d0d7de;padding-top:4px}"
-            + ".grid{display:flex;flex-wrap:wrap;gap:16px}"
-            + ".cmp{margin:0;width:calc(var(--w) * var(--zoom));flex:0 0 auto}"
-            + ".stack{position:relative;width:100%;aspect-ratio:var(--ar);overflow:hidden;line-height:0;"
-            + "border:1px solid #d0d7de;border-radius:6px;cursor:ew-resize;"
-            + "background:repeating-conic-gradient(#e9edf1 0 25%,#fff 0 50%) 0 0/16px 16px}"
-            + ".stack img{position:absolute;top:0;left:0;display:block;image-rendering:pixelated}"
-            + ".stack .after{width:100%;height:100%}"
-            + ".stack .clip{position:absolute;top:0;left:0;height:100%;width:50%;overflow:hidden}"
-            + ".stack .before{height:100%;width:auto;max-width:none}"
-            + "figcaption{font-size:11px;color:#57606a;padding-top:4px;line-height:1.4;word-break:break-word}"
-            + "@media(prefers-color-scheme:dark){"
-            + "body{background:#0d1117;color:#e6edf3}"
-            + "h2{border-color:#e6edf3}"
-            + ".lead,.note,figcaption{color:#8b949e}"
-            + "th{background:#161b22}th:hover{background:#21262d}"
-            + "th,td{border-color:#30363d}.stack{border-color:#30363d}"
-            + "td small{color:#8b949e}"
-            + "td.name a{color:#4493f8}}";
-    }
-
-    private static String js() {
-        return ""
-            + "document.querySelectorAll('.zoom button').forEach(function(b){"
-            + "  b.addEventListener('click',function(){"
-            + "    document.documentElement.style.setProperty('--zoom',b.dataset.zoom);"
-            + "    document.querySelectorAll('.zoom button').forEach(function(o){"
-            + "      o.classList.toggle('on',o===b);});});});"
-            + "document.querySelectorAll('.stack .clip').forEach(function(clip){"
-            + "  var stack=clip.parentNode;"
-            + "  function move(e){"
-            + "    var r=stack.getBoundingClientRect();"
-            + "    var ratio=(e.clientX-r.left)/r.width;"
-            + "    clip.style.width=(Math.min(1,Math.max(0,ratio))*100)+'%';}"
-            + "  stack.addEventListener('pointerdown',function(e){"
-            + "    stack.setPointerCapture(e.pointerId);move(e);});"
-            + "  stack.addEventListener('pointermove',function(e){"
-            + "    if(e.buttons)move(e);});"
-            + "});"
-            + "function sortBy(table,index,asc){"
-            + "  var body=table.tBodies[0];"
-            + "  var rows=Array.prototype.slice.call(body.rows);"
-            + "  var key=function(row){"
-            + "    var text=row.cells[index]?row.cells[index].textContent.trim():'';"
-            + "    var num=parseFloat(text.replace('%',''));"
-            + "    return isNaN(num)?text.toLowerCase():num;};"
-            + "  rows.sort(function(a,b){var x=key(a),y=key(b);"
-            + "    return x<y?(asc?-1:1):x>y?(asc?1:-1):0;});"
-            + "  rows.forEach(function(r){body.appendChild(r);});}"
-            + "document.querySelectorAll('table').forEach(function(table){"
-            + "  table.querySelectorAll('th').forEach(function(th,index){"
-            + "    var asc=true;"
-            + "    th.addEventListener('click',function(){asc=!asc;sortBy(table,index,asc);});});});";
     }
 }

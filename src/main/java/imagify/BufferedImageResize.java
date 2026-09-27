@@ -25,13 +25,90 @@ public final class BufferedImageResize {
         }
         BufferedImage src = ensureARGB(source);
 
-        if (algorithm == ResizeAlgorithm.BILINEAR) {
+        if (algorithm == ResizeAlgorithm.NEAREST) {
+            return resizeNearest(src, targetW, targetH);
+        } else if (algorithm == ResizeAlgorithm.AREA) {
+            return resizeArea(src, targetW, targetH);
+        } else if (algorithm == ResizeAlgorithm.BILINEAR) {
             return resizeBilinear(src, targetW, targetH);
         } else if (algorithm == ResizeAlgorithm.HQX) {
             return XbrzScale.resize(src, targetW, targetH);
         } else {
             return resizeKernel(src, targetW, targetH, algorithm);
         }
+    }
+
+    /** Nearest neighbour - picks the closest source pixel. */
+    private static BufferedImage resizeNearest(BufferedImage src, int targetW, int targetH) {
+        int srcW = src.getWidth();
+        int srcH = src.getHeight();
+        if (srcW == targetW && srcH == targetH) return copyImage(src);
+
+        double xRatio = (double) srcW / targetW;
+        double yRatio = (double) srcH / targetH;
+        int[] srcPixels = getRGBArray(src);
+        int[] dstPixels = new int[targetW * targetH];
+
+        for (int y = 0; y < targetH; y++) {
+            int srcY = (int) Math.floor((y + 0.5) * yRatio - 0.5);
+            srcY = Math.max(0, Math.min(srcH - 1, srcY));
+            for (int x = 0; x < targetW; x++) {
+                int srcX = (int) Math.floor((x + 0.5) * xRatio - 0.5);
+                srcX = Math.max(0, Math.min(srcW - 1, srcX));
+                dstPixels[y * targetW + x] = srcPixels[srcY * srcW + srcX];
+            }
+        }
+        return makeImage(dstPixels, targetW, targetH);
+    }
+
+    /** Area averaging (box filter) - each output pixel is the average of the corresponding source region. */
+    private static BufferedImage resizeArea(BufferedImage src, int targetW, int targetH) {
+        int srcW = src.getWidth();
+        int srcH = src.getHeight();
+        if (srcW == targetW && srcH == targetH) return copyImage(src);
+
+        double xRatio = (double) srcW / targetW;
+        double yRatio = (double) srcH / targetH;
+        int[] srcPixels = getRGBArray(src);
+        int[] dstPixels = new int[targetW * targetH];
+
+        for (int y = 0; y < targetH; y++) {
+            double sy0 = y * yRatio;
+            double sy1 = (y + 1) * yRatio;
+            int y0 = (int) Math.floor(sy0);
+            int y1 = (int) Math.ceil(sy1);
+            y0 = Math.max(0, Math.min(srcH - 1, y0));
+            y1 = Math.max(0, Math.min(srcH, y1));
+
+            for (int x = 0; x < targetW; x++) {
+                double sx0 = x * xRatio;
+                double sx1 = (x + 1) * xRatio;
+                int x0 = (int) Math.floor(sx0);
+                int x1 = (int) Math.ceil(sx1);
+                x0 = Math.max(0, Math.min(srcW - 1, x0));
+                x1 = Math.max(0, Math.min(srcW, x1));
+
+                long r = 0, g = 0, b = 0;
+                int count = 0;
+                for (int sy = y0; sy < y1; sy++) {
+                    int rowOff = sy * srcW;
+                    for (int sx = x0; sx < x1; sx++) {
+                        int px = srcPixels[rowOff + sx];
+                        r += (px >> 16) & 0xFF;
+                        g += (px >> 8) & 0xFF;
+                        b += px & 0xFF;
+                        count++;
+                    }
+                }
+                if (count > 0) {
+                    dstPixels[y * targetW + x] = (0xFF << 24)
+                            | (clamp((int) Math.round(r / (double) count)) << 16)
+                            | (clamp((int) Math.round(g / (double) count)) << 8)
+                            | clamp((int) Math.round(b / (double) count));
+                }
+            }
+        }
+        return makeImage(dstPixels, targetW, targetH);
     }
 
     private static BufferedImage resizeBilinear(BufferedImage src, int targetW, int targetH) {

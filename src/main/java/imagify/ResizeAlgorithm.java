@@ -15,6 +15,22 @@ package imagify;
  */
 public enum ResizeAlgorithm {
 
+    /** Nearest neighbour - preserves exact pixel values, essential for pixel art. */
+    NEAREST(0) {
+        @Override
+        protected double kernel(double x) {
+            return 0.0; // handled specially
+        }
+    },
+
+    /** Box / area averaging - ideal for downscaling, no ringing. */
+    AREA(0) {
+        @Override
+        protected double kernel(double x) {
+            return 0.0; // handled specially
+        }
+    },
+
     BILINEAR(1) {
         @Override
         protected double kernel(double x) {
@@ -23,12 +39,23 @@ public enum ResizeAlgorithm {
         }
     },
 
+    /** Bicubic B-spline (B=1, C=0) - smoother than Catmull-Rom. */
+    BSPLINE(2) {
+        @Override
+        protected double kernel(double x) {
+            x = Math.abs(x);
+            if (x < 1.0) return (2.0/3.0) - x * x + 0.5 * x * x * x;
+            if (x < 2.0) return (4.0/3.0) - 2.0 * x + x * x - (1.0/6.0) * x * x * x;
+            return 0.0;
+        }
+    },
+
     CATROM(2) {
         @Override
         protected double kernel(double x) {
             x = Math.abs(x);
-            if (x < 1.0) return 0.5 * (-x * x * x + 2.0 * x * x - 0.5 * x + 1.0);
-            if (x < 2.0) return 0.5 * (x * x * x - 2.5 * x * x + 2.0 * x + 0.5);
+            if (x < 1.0) return 1.5 * x * x * x - 2.5 * x * x + 1.0;
+            if (x < 2.0) return -0.5 * x * x * x + 2.5 * x * x - 4.0 * x + 2.0;
             return 0.0;
         }
     },
@@ -47,6 +74,27 @@ public enum ResizeAlgorithm {
                 return ((-B - 6.0 * C) * x3 + (6.0 * B + 30.0 * C) * x2 + (-12.0 * B - 48.0 * C) * x + (8.0 * B + 24.0 * C)) / 6.0;
             }
             return 0.0;
+        }
+    },
+
+    /** Gaussian blur kernel - smooth, no negative lobes. */
+    GAUSSIAN(2) {
+        @Override
+        protected double kernel(double x) {
+            x = Math.abs(x);
+            if (x >= 2.0) return 0.0;
+            // sigma chosen so kernel(2) ≈ 0
+            return Math.exp(-2.0 * x * x);
+        }
+    },
+
+    LANCZOS2(2) {
+        @Override
+        protected double kernel(double x) {
+            if (x == 0.0) return 1.0;
+            x = Math.abs(x);
+            if (x >= 2.0) return 0.0;
+            return Math.sin(Math.PI * x) * Math.sin(Math.PI * x / 2.0) / (Math.PI * x * (Math.PI * x / 2.0));
         }
     },
 
