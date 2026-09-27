@@ -119,18 +119,36 @@ public class WebpImageReader extends ImageReader {
     @Override
     public IIOMetadata getStreamMetadata() throws IIOException {
         checkInput();
-        return null;
+        // The loop count belongs to the file rather than to any one frame, and the frame timing that
+        // goes with it is not what a caller of stream metadata is after. Reporting it here is what
+        // lets a generic reader find it, which is the same route an animated AVIF takes.
+        WebpImageInfo image = checkInfo();
+        return new WebpMetadata(image, 0, image.loopCount());
     }
 
     @Override
     public IIOMetadata getImageMetadata(int imageIndex) throws IIOException {
-        return new WebpMetadata(checkIndex(imageIndex));
+        WebpImageInfo image = checkIndex(imageIndex);
+        return new WebpMetadata(image, durationMsOf(image, imageIndex), image.loopCount());
+    }
+
+    /**
+     * @return how long the frame is shown, or 0 when the file has no meaningful timing. A still
+     *         image is not a one frame animation, so it gets no duration.
+     */
+    private int durationMsOf(WebpImageInfo image, int imageIndex) throws IIOException {
+        if (!image.hasAnimation()) {
+            return 0;
+        }
+        int[] timings = delays();
+        return imageIndex < timings.length ? timings[imageIndex] : 0;
     }
 
     @Override
     public IIOMetadata getImageMetadata(int imageIndex, String metadataFormat, Set<String> extraMetadataFormats)
             throws IIOException {
-        WebpMetadata metadata = new WebpMetadata(checkIndex(imageIndex));
+        WebpImageInfo image = checkIndex(imageIndex);
+        WebpMetadata metadata = new WebpMetadata(image, durationMsOf(image, imageIndex), image.loopCount());
         // Fail fast, with a useful message, on an unsupported format name.
         metadata.getAsTree(metadataFormat);
         return metadata;

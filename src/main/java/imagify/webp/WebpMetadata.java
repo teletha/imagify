@@ -23,6 +23,22 @@ final class WebpMetadata extends IIOMetadata {
     static final String NATIVE_FORMAT = "imagify_webp_1.0";
 
     /**
+     * How long a frame is shown, in milliseconds.
+     *
+     * <p>The standard metadata format has no notion of a frame being shown for a while, and neither
+     * does WebP's own container in a way a reader can pick up generically, so the duration is
+     * published under this name. {@link imagify.ImageReader} looks for exactly this attribute, which
+     * is how an animated WebP and an animated AVIF both report their timing.
+     */
+    static final String DURATION_MS = "durationMs";
+
+    /**
+     * How often the sequence repeats, where 0 means forever. This belongs to the file rather than to
+     * any one frame, so it is what {@code getStreamMetadata()} publishes.
+     */
+    static final String REPETITION_COUNT = "repetitionCount";
+
+    /**
      * The one standard metadata format, spelled out because {@link IIOMetadata} does not expose the
      * constant the other way round in every JDK.
      */
@@ -31,12 +47,18 @@ final class WebpMetadata extends IIOMetadata {
     private final IIOMetadataNode nativeRoot;
     private final IIOMetadataNode standardRoot;
 
-    WebpMetadata(WebpImageInfo info) {
+    /**
+     * @param info           the properties of the file, which every frame shares
+     * @param durationMs     how long the frame this metadata describes is shown, or 0 for a frame
+     *                       with no meaningful timing
+     * @param repetitionCount how often the file repeats, where 0 means forever
+     */
+    WebpMetadata(WebpImageInfo info, int durationMs, int repetitionCount) {
         // The two extra format arrays go together: IIOMetadata rejects a non-null name array with a
         // null class name array. The names are only informational, so a null entry names the
         // default implementation, which is the right answer for the standard format here.
         super(true, NATIVE_FORMAT, null, new String[] { STANDARD_FORMAT }, new String[] { null });
-        this.nativeRoot = nativeNode(info);
+        this.nativeRoot = nativeNode(info, durationMs, repetitionCount);
         this.standardRoot = standardNode(info);
     }
 
@@ -65,7 +87,7 @@ final class WebpMetadata extends IIOMetadata {
         throw new UnsupportedOperationException("WebP metadata is read only");
     }
 
-    private static IIOMetadataNode nativeNode(WebpImageInfo info) {
+    private static IIOMetadataNode nativeNode(WebpImageInfo info, int durationMs, int repetitionCount) {
         IIOMetadataNode root = new IIOMetadataNode(NATIVE_FORMAT);
         root.setAttribute("width", Integer.toString(info.width()));
         root.setAttribute("height", Integer.toString(info.height()));
@@ -74,8 +96,18 @@ final class WebpMetadata extends IIOMetadata {
         root.setAttribute("format", WebpCodec.formatName(info.format()));
         root.setAttribute("frameCount", Integer.toString(info.frameCount()));
         if (info.hasAnimation()) {
-            root.setAttribute("loopCount", Integer.toString(info.loopCount()));
+            // Kept under its own name as well, because a caller holding the image metadata of a
+            // frame is the only place some of them look, and it costs one attribute to be found
+            // either way.
+            root.setAttribute("loopCount", Integer.toString(repetitionCount));
         }
+        // Only a frame that is actually shown for a while gets a duration. Leaving it off for a
+        // still keeps a reader that looks for it from mistaking "no duration" for "shown for no time
+        // at all", and a repetition count of 0 already means the one true answer: forever.
+        if (durationMs > 0) {
+            root.setAttribute(DURATION_MS, Integer.toString(durationMs));
+        }
+        root.setAttribute(REPETITION_COUNT, Integer.toString(repetitionCount));
         return root;
     }
 
