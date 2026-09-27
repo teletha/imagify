@@ -241,6 +241,11 @@ const root = {
 			"type": "Class"
 		},
 		{
+			"name": "WebpCodec.DecodedWebp",
+			"packageName": "imagify.webp",
+			"type": "Record"
+		},
+		{
 			"name": "WebpImageReaderSpi",
 			"packageName": "imagify.webp",
 			"type": "Class"
