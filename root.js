@@ -251,6 +251,11 @@ const root = {
 			"type": "Class"
 		},
 		{
+			"name": "FrameSequence",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
 			"name": "ImagePipeline",
 			"packageName": "imagify",
 			"type": "Class"

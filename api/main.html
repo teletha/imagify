@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="l">
-		<header class="m" date="2026-09-26">
-			<h1 class="s"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="j"><a href="api/main.html" id="API"><svg class="package">
+	<body class="KB">
+		<header class="S" date="2026-09-26">
+			<h1 class="T"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="U"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,16 +35,16 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="Z"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="V"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="n"></nav>
-		<article class="e" id="Article">
-			<div class="y">
+		<nav class="M"></nav>
+		<article class="l" id="Article">
+			<div class="q">
 				<section class="A">
 					<h2>Imagify API Overview</h2>
 					<p>This page provides a concise overview of the available APIs, including their purpose, key functionalities, and usage patterns. It serves as a starting point for developers to understand how to integrate and interact with the system effectively.</p>
@@ -158,7 +158,7 @@ and written directly once the parent structure has been read.</td>
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.ImageWriter.html">ImageWriter</a></code></td>
-								<td>Writes BufferedImage to various destinations with format control.</td>
+								<td>Writes images to various destinations with format control.</td>
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.BufferedImageResize.html">BufferedImageResize</a></code></td>
@@ -171,7 +171,7 @@ Supports resampling algorithms: BILINEAR, CATROM, MITCHELL, LANCZOS3, HQX (xBRZ)
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.ImageReader.html">ImageReader</a></code></td>
-								<td>Reads BufferedImage from various sources with automatic format detection.</td>
+								<td>Reads images from various sources with automatic format detection.</td>
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.svg.SvgImageReader.html">SvgImageReader</a></code></td>
@@ -226,6 +226,10 @@ Supports resampling algorithms: BILINEAR, CATROM, MITCHELL, LANCZOS3, HQX (xBRZ)
 								<td>ImageWriter</td>
 							</tr>
 							<tr>
+								<td><code><a href="api/imagify.FrameSequence.html">FrameSequence</a></code></td>
+								<td>A sequence of image frames with their display durations.</td>
+							</tr>
+							<tr>
 								<td><code><a href="api/imagify.ImagePipeline.html">ImagePipeline</a></code></td>
 								<td>Fluent pipeline API for image processing.</td>
 							</tr>
@@ -269,8 +273,8 @@ Each algorithm provides a kernel function and a support radius.</td>
 				</section>
 			</div>
 		</article>
-		<aside class="o"></aside>
-		<footer class="T">
+		<aside class="p"></aside>
+		<footer class="n">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
