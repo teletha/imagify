@@ -224,6 +224,16 @@ public interface AvifLibrary extends Library {
     int DEFAULT_QUALITY = 60;
     /** Default encoder speed (0 = slowest/best, 10 = fastest/worst). */
     int DEFAULT_SPEED = 6;
+    /**
+     * Default encoder speed for animations.
+     *
+     * <p>An animation pays the encoder cost once per frame, so the speed setting that is a fair
+     * trade for a single image is a bad one for a hundred frames. Measured over the 58 frame
+     * 498x280 test animation, going from {@link #DEFAULT_SPEED} to this value cut the encode from
+     * 11.3 s to 0.49 s and made the file <em>smaller</em> (1,421,148 to 957,821 bytes), for a loss
+     * of about 0.5 dB PSNR. Speed 10 buys nothing further, so this is where the curve flattens.</p>
+     */
+    int DEFAULT_ANIMATION_SPEED = 8;
 
     // ------------------------------------------------------------------------------ functions
 

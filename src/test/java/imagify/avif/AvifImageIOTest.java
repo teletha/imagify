@@ -441,6 +441,7 @@ class AvifImageIOTest {
         assertEquals("12", root.getAttribute("width"));
         assertEquals("9", root.getAttribute("height"));
         assertEquals("8", root.getAttribute("depth"));
+        // The still encoder writes 4:4:4; only the animation encoder subsamples chroma.
         assertEquals("YUV444", root.getAttribute("yuvFormat"));
         assertEquals("0", root.getAttribute("rotation"));
         assertEquals("false", root.getAttribute("mirrored"));

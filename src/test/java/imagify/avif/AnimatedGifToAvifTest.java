@@ -10,6 +10,7 @@
 package imagify.avif;
 
 import imagify.avif.jna.AvifCodec;
+import imagify.avif.jna.AvifLibrary;
 import imagify.avif.AvifImageInfo;
 import imagify.ImageMetrics;
 
@@ -207,6 +208,33 @@ class AnimatedGifToAvifTest {
 
         System.out.printf("  Fidelity check: %d frames checked, PSNR=%.1f, SSIM=%.4f%n",
                 validFrames, avgPsnr, avgSsim);
+    }
+
+    @Test
+    @DisplayName("アニメAVIFは彩度を4:2:0に間引く")
+    void animationSubsamplesChroma() throws Exception {
+        Assumptions.assumeTrue(AvifCodec.isAvailable(), () -> "libavif is not available");
+
+        Path gifDir = Paths.get(GIF_DIR);
+        Assumptions.assumeTrue(Files.isDirectory(gifDir), () -> GIF_DIR + " does not exist");
+        Path gif = Files.list(gifDir)
+                .filter(p -> p.toString().toLowerCase().endsWith(".gif"))
+                .sorted()
+                .findFirst()
+                .orElse(null);
+        Assumptions.assumeTrue(gif != null, () -> "no GIF files in " + GIF_DIR);
+
+        byte[] avifBytes = AvifCodec.encodeAnimation(
+                readAllGifFrames(gif), readGifFrameDelays(gif), 60, 0);
+
+        // The animation encoder deliberately writes 4:2:0, where the still encoder writes 4:4:4.
+        // 4:2:0 is what makes the encode affordable: it hands AV1 one full plane and two quarter
+        // planes per frame instead of three full ones, worth about 1.7x on the encode and 2.2x on
+        // the file at the same quality. This test pins the choice down so it cannot regress
+        // silently; AvifImageIOTest covers the still side staying at 4:4:4.
+        assertEquals(AvifLibrary.AVIF_PIXEL_FORMAT_YUV420,
+                AvifCodec.readHeader(avifBytes).yuvFormat(),
+                "the animation encoder should subsample chroma to 4:2:0");
     }
 
     // ------------------------------------------------------------------ helpers
