@@ -7,6 +7,9 @@
 	<name>imagify</name>
 	<description>AVIF encoding and decoding for Java, backed by libavif.
 
+Also provides an `ImageIO` plug-in for ICO files and a read-only
+`ImageIO` plug-in that rasterises SVG through JSVG.
+
 ## Loading
 
 The native `libavif` shared library is bundled for Windows, macOS
@@ -34,6 +37,22 @@ use, so no installation is required.
 
     BufferedImage image = ImageIO.read(new File(&quot;photo.avif&quot;));
     ImageIO.write(image, &quot;avif&quot;, new File(&quot;out.avif&quot;));
+
+## ICO
+
+    BufferedImage image = ImageIO.read(new File(&quot;app.ico&quot;));
+    ImageIO.write(image, &quot;ico&quot;, new File(&quot;out.ico&quot;));
+
+The writer stores a 32-bit BGRA bitmap with an AND mask derived
+from the alpha channel, so transparency is preserved. The reader
+decodes the entry closest to 256x256.
+
+## SVG
+
+    BufferedImage image = ImageIO.read(new File(&quot;icon.svg&quot;));
+
+SVG is read only. It is rasterised with JSVG at the size declared
+by the document, so resizing is a separate step.
 
 ## Header-only read
 
@@ -70,16 +89,16 @@ Supported `libavif` versions: `1.0.0` to `1.4.x`.</description>
 			<exclusions/>
 		</dependency>
 		<dependency>
-			<groupId>dev.matrixlab.webp4j</groupId>
-			<artifactId>webp4j-core</artifactId>
-			<version>2.5.0</version>
+			<groupId>com.github.weisj</groupId>
+			<artifactId>jsvg</artifactId>
+			<version>2.2.0</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
-			<groupId>com.github.weisj</groupId>
-			<artifactId>jsvg</artifactId>
-			<version>2.0.0</version>
+			<groupId>dev.matrixlab.webp4j</groupId>
+			<artifactId>webp4j-core</artifactId>
+			<version>2.5.0</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
