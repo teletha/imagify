@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="n">
-		<header class="c" date="2026-09-26">
-			<h1 class="d"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="U"><a href="api/main.html" id="API"><svg class="package">
+	<body class="JB">
+		<header class="i" date="2026-09-26">
+			<h1 class="j"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="X"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="e"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="k"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="K"></nav>
-		<article class="o" id="Article">
-			<section class="V"><code class="AB">imagify.avif.jna</code>
-				<h2 class="Class h"><code class="T">AvifDecoder</code></h2>
-				<div class="q">
+		<nav class="y"></nav>
+		<article class="u" id="Article">
+			<section class="g"><code class="HB">imagify.avif.jna</code>
+				<h2 class="Class a"><code class="b">AvifDecoder</code></h2>
+				<div class="O">
 					<ul class="E G">
 						<li><code>com.sun.jna.Structure</code></li>
 					</ul>
@@ -56,120 +56,120 @@
  members - whose offsets are identical in every 1.x release - are ever touched.
 </p>
 				</span></section>
-			<section class="V" id="codecChoice">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">codecChoice</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifCodecChoice</code> value.</p></span></section>
-			<section class="V" id="maxThreads">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">maxThreads</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>Number of threads used for decoding; must be set before <code>avifDecoderParse</code>.</p></span></section>
-			<section class="V" id="requestedSource">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">requestedSource</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifDecoderSource</code> value.</p></span></section>
-			<section class="V" id="allowProgressive">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">allowProgressive</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>.</p></span></section>
-			<section class="V" id="allowIncremental">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">allowIncremental</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>.</p></span></section>
-			<section class="V" id="ignoreExif">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">ignoreExif</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, the Exif payload is not extracted.</p></span></section>
-			<section class="V" id="ignoreXMP">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">ignoreXMP</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, the XMP payload is not extracted.</p></span></section>
-			<section class="V" id="imageSizeLimit">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">imageSizeLimit</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>Maximum number of pixels to decode; 0 means unlimited.</p></span></section>
-			<section class="V" id="imageDimensionLimit">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">imageDimensionLimit</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>Maximum width or height to decode; 0 means unlimited.</p></span></section>
-			<section class="V" id="imageCountLimit">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">imageCountLimit</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>Maximum number of images to decode; 0 means unlimited.</p></span></section>
-			<section class="V" id="strictFlags">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">strictFlags</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_STRICT_*</code> bit set.</p></span></section>
-			<section class="V" id="image">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">image</code><i class="Z"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ByReference" href="api/imagify.avif.jna.AvifImage.ByReference.html">ByReference</a></code></i></h2><span class="A"><p>The image the decoder currently points at.</p></span></section>
-			<section class="V" id="imageIndex">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">imageIndex</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>Zero based index of the current image.</p></span></section>
-			<section class="V" id="imageCount">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">imageCount</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>Total number of images in the file; 1 for still images.</p></span></section>
-			<section class="V" id="progressiveState">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">progressiveState</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifProgressiveState</code> value.</p></span></section>
-			<section class="V" id="imageTiming">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">imageTiming</code><i class="Z"><code class="return"><a aria-label="imagify.avif.jna.AvifImageTiming" href="api/imagify.avif.jna.AvifImageTiming.html">AvifImageTiming</a></code></i></h2><span class="A"><p>Timing of the current image.</p></span></section>
-			<section class="V" id="timescale">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">timescale</code><i class="Z"><code class="return">long</code></i></h2><span class="A"><p>Timescale of the media in Hz.</p></span></section>
-			<section class="V" id="duration">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">duration</code><i class="Z"><code class="return">double</code></i></h2><span class="A"><p>Duration of one playback in seconds.</p></span></section>
-			<section class="V" id="durationInTimescales">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">durationInTimescales</code><i class="Z"><code class="return">long</code></i></h2><span class="A"><p>Duration of one playback in <code><a aria-label="imagify.avif.jna.AvifDecoder" href="api/imagify.avif.jna.AvifDecoder.html#timescale">#timescale</a></code> units.</p></span></section>
-			<section class="V" id="repetitionCount">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">repetitionCount</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>Number of repetitions of the sequence.</p></span></section>
-			<section class="V" id="alphaPresent">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">alphaPresent</code><i class="Z"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; output field telling whether an alpha channel was decoded.</p></span></section>
-			<section class="V" id="ioStats">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">ioStats</code><i class="Z"><code class="return"><a aria-label="imagify.avif.jna.AvifIOStats" href="api/imagify.avif.jna.AvifIOStats.html">AvifIOStats</a></code></i></h2><span class="A"><p>I/O statistics.</p></span></section>
-			<section class="V" id="diag">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">diag</code><i class="Z"><code class="return"><a aria-label="imagify.avif.jna.AvifDiagnostics" href="api/imagify.avif.jna.AvifDiagnostics.html">AvifDiagnostics</a></code></i></h2><span class="A"><p>Error message buffer.</p></span></section>
-			<section class="V" id="io">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">io</code><i class="Z"><code class="return"><a aria-label="imagify.avif.jna.AvifDecoder.AvifIO" href="api/imagify.avif.jna.AvifDecoder.AvifIO.html">AvifIO</a></code></i></h2><span class="A"><p>The reader currently in use.</p></span></section>
-			<section class="V" id="data">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">data</code><i class="Z"><code class="return">com.sun.jna.Pointer</code></i></h2><span class="A"><p>Opaque codec state owned by <code>libavif</code>.</p></span></section>
-			<section class="V" id="AvifDecoder()">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">AvifDecoder</code><code class="BB">()</code></h2>
+			<section class="g" id="codecChoice">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">codecChoice</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifCodecChoice</code> value.</p></span></section>
+			<section class="g" id="maxThreads">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">maxThreads</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>Number of threads used for decoding; must be set before <code>avifDecoderParse</code>.</p></span></section>
+			<section class="g" id="requestedSource">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">requestedSource</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifDecoderSource</code> value.</p></span></section>
+			<section class="g" id="allowProgressive">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">allowProgressive</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>.</p></span></section>
+			<section class="g" id="allowIncremental">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">allowIncremental</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>.</p></span></section>
+			<section class="g" id="ignoreExif">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">ignoreExif</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, the Exif payload is not extracted.</p></span></section>
+			<section class="g" id="ignoreXMP">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">ignoreXMP</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; when set, the XMP payload is not extracted.</p></span></section>
+			<section class="g" id="imageSizeLimit">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">imageSizeLimit</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>Maximum number of pixels to decode; 0 means unlimited.</p></span></section>
+			<section class="g" id="imageDimensionLimit">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">imageDimensionLimit</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>Maximum width or height to decode; 0 means unlimited.</p></span></section>
+			<section class="g" id="imageCountLimit">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">imageCountLimit</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>Maximum number of images to decode; 0 means unlimited.</p></span></section>
+			<section class="g" id="strictFlags">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">strictFlags</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>An <code>AVIF_STRICT_*</code> bit set.</p></span></section>
+			<section class="g" id="image">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">image</code><i class="T"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ByReference" href="api/imagify.avif.jna.AvifImage.ByReference.html">ByReference</a></code></i></h2><span class="A"><p>The image the decoder currently points at.</p></span></section>
+			<section class="g" id="imageIndex">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">imageIndex</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>Zero based index of the current image.</p></span></section>
+			<section class="g" id="imageCount">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">imageCount</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>Total number of images in the file; 1 for still images.</p></span></section>
+			<section class="g" id="progressiveState">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">progressiveState</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifProgressiveState</code> value.</p></span></section>
+			<section class="g" id="imageTiming">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">imageTiming</code><i class="T"><code class="return"><a aria-label="imagify.avif.jna.AvifImageTiming" href="api/imagify.avif.jna.AvifImageTiming.html">AvifImageTiming</a></code></i></h2><span class="A"><p>Timing of the current image.</p></span></section>
+			<section class="g" id="timescale">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">timescale</code><i class="T"><code class="return">long</code></i></h2><span class="A"><p>Timescale of the media in Hz.</p></span></section>
+			<section class="g" id="duration">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">duration</code><i class="T"><code class="return">double</code></i></h2><span class="A"><p>Duration of one playback in seconds.</p></span></section>
+			<section class="g" id="durationInTimescales">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">durationInTimescales</code><i class="T"><code class="return">long</code></i></h2><span class="A"><p>Duration of one playback in <code><a aria-label="imagify.avif.jna.AvifDecoder" href="api/imagify.avif.jna.AvifDecoder.html#timescale">#timescale</a></code> units.</p></span></section>
+			<section class="g" id="repetitionCount">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">repetitionCount</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>Number of repetitions of the sequence.</p></span></section>
+			<section class="g" id="alphaPresent">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">alphaPresent</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>An <code>avifBool</code>; output field telling whether an alpha channel was decoded.</p></span></section>
+			<section class="g" id="ioStats">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">ioStats</code><i class="T"><code class="return"><a aria-label="imagify.avif.jna.AvifIOStats" href="api/imagify.avif.jna.AvifIOStats.html">AvifIOStats</a></code></i></h2><span class="A"><p>I/O statistics.</p></span></section>
+			<section class="g" id="diag">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">diag</code><i class="T"><code class="return"><a aria-label="imagify.avif.jna.AvifDiagnostics" href="api/imagify.avif.jna.AvifDiagnostics.html">AvifDiagnostics</a></code></i></h2><span class="A"><p>Error message buffer.</p></span></section>
+			<section class="g" id="io">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">io</code><i class="T"><code class="return"><a aria-label="imagify.avif.jna.AvifDecoder.AvifIO" href="api/imagify.avif.jna.AvifDecoder.AvifIO.html">AvifIO</a></code></i></h2><span class="A"><p>The reader currently in use.</p></span></section>
+			<section class="g" id="data">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">data</code><i class="T"><code class="return">com.sun.jna.Pointer</code></i></h2><span class="A"><p>Opaque codec state owned by <code>libavif</code>.</p></span></section>
+			<section class="g" id="AvifDecoder()">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">AvifDecoder</code><code class="d">()</code></h2>
 			</section>
-			<section class="V" id="AvifDecoder(com.sun.jna.Pointer)">
-				<h2 class="JB"><i class="PUBLIC"></i><code class="T">AvifDecoder</code><code class="BB">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></h2>
-				<table class="u">
-					<tr class="k">
+			<section class="g" id="AvifDecoder(com.sun.jna.Pointer)">
+				<h2 class="w"><i class="PUBLIC"></i><code class="b">AvifDecoder</code><code class="d">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></h2>
+				<table class="W">
+					<tr class="BB">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">peer</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="V" id="getFieldOrder()">
-				<h2 class="JB"><i class="OVERRIDE PROTECTED"></i><code class="T">getFieldOrder</code><code class="BB">()</code><i class="Z"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-				<table class="u">
-					<tr class="v">
+			<section class="g" id="getFieldOrder()">
+				<h2 class="w"><i class="OVERRIDE PROTECTED"></i><code class="b">getFieldOrder</code><code class="d">()</code><i class="T"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="p">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="p">
-			<div class="y">
-				<h5 class="W">Constructors</h5>
+		<aside class="c">
+			<div class="e">
+				<h5 class="GB">Constructors</h5>
 				<ul>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#AvifDecoder()">AvifDecoder</a></code><code class="BB">()</code></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#AvifDecoder(com.sun.jna.Pointer)">AvifDecoder</a></code><code class="BB">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#AvifDecoder()">AvifDecoder</a></code><code class="d">()</code></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#AvifDecoder(com.sun.jna.Pointer)">AvifDecoder</a></code><code class="d">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></li>
 				</ul>
-				<h5 class="W">Fields</h5>
+				<h5 class="GB">Fields</h5>
 				<ul>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#codecChoice">codecChoice</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#maxThreads">maxThreads</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#requestedSource">requestedSource</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#allowProgressive">allowProgressive</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#allowIncremental">allowIncremental</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#ignoreExif">ignoreExif</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#ignoreXMP">ignoreXMP</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageSizeLimit">imageSizeLimit</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageDimensionLimit">imageDimensionLimit</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageCountLimit">imageCountLimit</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#strictFlags">strictFlags</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#image">image</a></code><i class="O"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ByReference" href="api/imagify.avif.jna.AvifImage.ByReference.html">ByReference</a></code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageIndex">imageIndex</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageCount">imageCount</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#progressiveState">progressiveState</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageTiming">imageTiming</a></code><i class="O"><code class="return"><a aria-label="imagify.avif.jna.AvifImageTiming" href="api/imagify.avif.jna.AvifImageTiming.html">AvifImageTiming</a></code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#timescale">timescale</a></code><i class="O"><code class="return">long</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#duration">duration</a></code><i class="O"><code class="return">double</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#durationInTimescales">durationInTimescales</a></code><i class="O"><code class="return">long</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#repetitionCount">repetitionCount</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#alphaPresent">alphaPresent</a></code><i class="O"><code class="return">int</code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#ioStats">ioStats</a></code><i class="O"><code class="return"><a aria-label="imagify.avif.jna.AvifIOStats" href="api/imagify.avif.jna.AvifIOStats.html">AvifIOStats</a></code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#diag">diag</a></code><i class="O"><code class="return"><a aria-label="imagify.avif.jna.AvifDiagnostics" href="api/imagify.avif.jna.AvifDiagnostics.html">AvifDiagnostics</a></code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#io">io</a></code><i class="O"><code class="return"><a aria-label="imagify.avif.jna.AvifDecoder.AvifIO" href="api/imagify.avif.jna.AvifDecoder.AvifIO.html">AvifIO</a></code></i></li>
-					<li class="KB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#data">data</a></code><i class="O"><code class="return">com.sun.jna.Pointer</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#codecChoice">codecChoice</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#maxThreads">maxThreads</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#requestedSource">requestedSource</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#allowProgressive">allowProgressive</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#allowIncremental">allowIncremental</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#ignoreExif">ignoreExif</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#ignoreXMP">ignoreXMP</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageSizeLimit">imageSizeLimit</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageDimensionLimit">imageDimensionLimit</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageCountLimit">imageCountLimit</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#strictFlags">strictFlags</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#image">image</a></code><i class="m"><code class="return"><a aria-label="imagify.avif.jna.AvifImage.ByReference" href="api/imagify.avif.jna.AvifImage.ByReference.html">ByReference</a></code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageIndex">imageIndex</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageCount">imageCount</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#progressiveState">progressiveState</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#imageTiming">imageTiming</a></code><i class="m"><code class="return"><a aria-label="imagify.avif.jna.AvifImageTiming" href="api/imagify.avif.jna.AvifImageTiming.html">AvifImageTiming</a></code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#timescale">timescale</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#duration">duration</a></code><i class="m"><code class="return">double</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#durationInTimescales">durationInTimescales</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#repetitionCount">repetitionCount</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#alphaPresent">alphaPresent</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#ioStats">ioStats</a></code><i class="m"><code class="return"><a aria-label="imagify.avif.jna.AvifIOStats" href="api/imagify.avif.jna.AvifIOStats.html">AvifIOStats</a></code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#diag">diag</a></code><i class="m"><code class="return"><a aria-label="imagify.avif.jna.AvifDiagnostics" href="api/imagify.avif.jna.AvifDiagnostics.html">AvifDiagnostics</a></code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#io">io</a></code><i class="m"><code class="return"><a aria-label="imagify.avif.jna.AvifDecoder.AvifIO" href="api/imagify.avif.jna.AvifDecoder.AvifIO.html">AvifIO</a></code></i></li>
+					<li class="t"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#data">data</a></code><i class="m"><code class="return">com.sun.jna.Pointer</code></i></li>
 				</ul>
-				<h5 class="W">Methods</h5>
+				<h5 class="GB">Methods</h5>
 				<ul>
-					<li class="KB"><i class="OVERRIDE PROTECTED"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#getFieldOrder()">getFieldOrder</a></code><code class="BB">()</code><i class="O"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+					<li class="t"><i class="OVERRIDE PROTECTED"></i><code><a href="api/imagify.avif.jna.AvifDecoder.html#getFieldOrder()">getFieldOrder</a></code><code class="d">()</code><i class="m"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="N">
+		<footer class="n">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
