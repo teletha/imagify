@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="y">
-		<header class="j" date="2026-09-28">
-			<h1 class="k"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="W"><a href="api/main.html" id="API"><svg class="package">
+	<body class="w">
+		<header class="O" date="2026-09-28">
+			<h1 class="P"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="Q"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,16 +35,16 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="a"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="R"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="Z"></nav>
-		<article class="z" id="Article">
-			<div class="Y">
+		<nav class="x"></nav>
+		<article class="N" id="Article">
+			<div class="v">
 				<section class="A">
 					<h2>Imagify API Overview</h2>
 					<p>This page provides a concise overview of the available APIs, including their purpose, key functionalities, and usage patterns. It serves as a starting point for developers to understand how to integrate and interact with the system effectively.</p>
@@ -58,7 +58,11 @@ AVIF images.</td>
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html">JpegliLibrary</a></code></td>
-								<td>JNA binding for the C ABI in src/main/native/imagify_jpegli.h.</td>
+								<td>JNA binding for the C ABI in src/main/native/jpegli/imagify_jpegli.h.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.webp.jna.WebpLibrary.html">WebpLibrary</a></code></td>
+								<td>JNA binding for the C ABI in src/main/native/webp/imagify_webp.h.</td>
 							</tr>
 						</table>
 					</section>
@@ -269,12 +273,20 @@ javax.imageio.ImageWriteParam has nowhere to put.</td>
 								<td>ImageWriter</td>
 							</tr>
 							<tr>
-								<td><code><a href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code></td>
-								<td>ImageReader</td>
+								<td><code><a href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpLibrary.WebpAnimation</a></code></td>
+								<td>What the animation control chunk of a WebP file says.</td>
 							</tr>
 							<tr>
-								<td><code><a href="api/imagify.webp.WebpCodec.html">WebpCodec</a></code></td>
-								<td>WebP encoding and decoding, delegated to libwebp through webp4j.</td>
+								<td><code><a href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpLibrary.WebpFeatures</a></code></td>
+								<td>What the container headers of a WebP file say, without a pixel being decoded.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.webp.jna.WebpCodec.html">WebpCodec</a></code></td>
+								<td>Entry point to the libwebp based WebP codec.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code></td>
+								<td>ImageReader</td>
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.webp.WebpImageReaderSpi.html">WebpImageReaderSpi</a></code></td>
@@ -369,7 +381,7 @@ Each algorithm provides a kernel function and a support radius.</td>
 								<td>Properties of the image contained in a WebP file, as reported by the container headers.</td>
 							</tr>
 							<tr>
-								<td><code><a href="api/imagify.webp.WebpCodec.DecodedWebp.html">WebpCodec.DecodedWebp</a></code></td>
+								<td><code><a href="api/imagify.webp.jna.WebpCodec.DecodedWebp.html">WebpCodec.DecodedWebp</a></code></td>
 								<td>A WebP file read in a single pass, holding its properties and its frames together.</td>
 							</tr>
 							<tr>
@@ -381,8 +393,8 @@ Each algorithm provides a kernel function and a support radius.</td>
 				</section>
 			</div>
 		</article>
-		<aside class="AB"></aside>
-		<footer class="u">
+		<aside class="Z"></aside>
+		<footer class="T">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

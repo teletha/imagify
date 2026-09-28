@@ -10,6 +10,7 @@ const root = {
 		"imagify.jpeg",
 		"imagify.jpeg.jna",
 		"imagify.webp",
+		"imagify.webp.jna",
 		"imagify.pixels"
 	],
 	"types": [
@@ -339,19 +340,34 @@ const root = {
 			"type": "Exception"
 		},
 		{
-			"name": "WebpImageReader",
-			"packageName": "imagify.webp",
+			"name": "WebpLibrary",
+			"packageName": "imagify.webp.jna",
+			"type": "Interface"
+		},
+		{
+			"name": "WebpLibrary.WebpAnimation",
+			"packageName": "imagify.webp.jna",
+			"type": "Class"
+		},
+		{
+			"name": "WebpLibrary.WebpFeatures",
+			"packageName": "imagify.webp.jna",
 			"type": "Class"
 		},
 		{
 			"name": "WebpCodec",
-			"packageName": "imagify.webp",
+			"packageName": "imagify.webp.jna",
 			"type": "Class"
 		},
 		{
 			"name": "WebpCodec.DecodedWebp",
-			"packageName": "imagify.webp",
+			"packageName": "imagify.webp.jna",
 			"type": "Record"
+		},
+		{
+			"name": "WebpImageReader",
+			"packageName": "imagify.webp",
+			"type": "Class"
 		},
 		{
 			"name": "WebpImageReaderSpi",

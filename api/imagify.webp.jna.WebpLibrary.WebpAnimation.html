@@ -44,25 +44,40 @@
 		</header>
 		<nav class="x"></nav>
 		<article class="N" id="Article">
-			<section class="v"><code class="LB">imagify.avif.jna</code>
-				<h2 class="Class AB"><code class="DB">AvifDecoder.AvifIO</code></h2>
+			<section class="v"><code class="LB">imagify.webp.jna</code>
+				<h2 class="Class AB"><code class="DB">WebpLibrary.WebpAnimation</code></h2>
 				<div class="z">
 					<ul class="E G">
-						<li><code>com.sun.jna.PointerType</code></li>
+						<li><code>com.sun.jna.Structure</code></li>
 					</ul>
-					<ul class="E H">
-						<li><code>com.sun.jna.NativeMapped</code></li>
-					</ul>
-				</div><span class="A"><p>Opaque handle for <code>avifIO</code>; its layout is private to <code>libavif</code>.</p></span></section>
-			<section class="v" id="AvifIO()">
-				<h2 class="J"><i class="PUBLIC"></i><code class="DB">AvifIO</code><code class="n">()</code></h2>
+				</div><span class="A"><p>What the animation control chunk of a WebP file says.</p><p>This is <code>imagify_webp_animation</code> in <code>imagify_webp.h</code>. It is filled in by
+ <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_read_animation">#imagify_webp_read_animation</a></code> and <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_decode_animation">#imagify_webp_decode_animation</a></code>.
+</p>
+				</span></section>
+			<section class="v" id="frameCount">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">frameCount</code><i class="Y"><code class="return">int</code></i></h2><span class="A"><p>Number of frames.</p></span></section>
+			<section class="v" id="loopCount">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">loopCount</code><i class="Y"><code class="return">int</code></i></h2><span class="A"><p>How often the animation repeats, 0 meaning forever.</p></span></section>
+			<section class="v" id="width">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">width</code><i class="Y"><code class="return">int</code></i></h2><span class="A"><p>Canvas width in pixels, which is the size of every frame.</p></span></section>
+			<section class="v" id="height">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">height</code><i class="Y"><code class="return">int</code></i></h2><span class="A"><p>Canvas height in pixels, which is the size of every frame.</p></span></section>
+			<section class="v" id="WebpAnimation()">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">WebpAnimation</code><code class="n">()</code></h2>
 			</section>
 		</article>
 		<aside class="Z">
 			<div class="M">
 				<h5 class="g">Constructors</h5>
 				<ul>
-					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifDecoder.AvifIO.html#AvifIO()">AvifIO</a></code><code class="n">()</code></li>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html#WebpAnimation()">WebpAnimation</a></code><code class="n">()</code></li>
+				</ul>
+				<h5 class="g">Fields</h5>
+				<ul>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html#frameCount">frameCount</a></code><i class="V"><code class="return">int</code></i></li>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html#loopCount">loopCount</a></code><i class="V"><code class="return">int</code></i></li>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html#width">width</a></code><i class="V"><code class="return">int</code></i></li>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html#height">height</a></code><i class="V"><code class="return">int</code></i></li>
 				</ul>
 			</div>
 		</aside>

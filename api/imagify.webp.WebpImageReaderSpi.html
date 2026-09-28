@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="y">
-		<header class="j" date="2026-09-28">
-			<h1 class="k"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="W"><a href="api/main.html" id="API"><svg class="package">
+	<body class="w">
+		<header class="O" date="2026-09-28">
+			<h1 class="P"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="Q"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="a"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="R"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="Z"></nav>
-		<article class="z" id="Article">
-			<section class="Y"><code class="L">imagify.webp</code>
-				<h2 class="Class GB"><code class="g">WebpImageReaderSpi</code></h2>
-				<div class="EB">
+		<nav class="x"></nav>
+		<article class="N" id="Article">
+			<section class="v"><code class="LB">imagify.webp</code>
+				<h2 class="Class AB"><code class="DB">WebpImageReaderSpi</code></h2>
+				<div class="z">
 					<ul class="E G">
 						<li><code><a aria-label="javax.imageio.spi.ImageReaderSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageReaderSpi.html">ImageReaderSpi</a></code></li>
 						<li><code><a aria-label="javax.imageio.spi.ImageReaderWriterSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageReaderWriterSpi.html">ImageReaderWriterSpi</a></code></li>
@@ -55,196 +55,196 @@
 					<ul class="E H">
 						<li><code><a aria-label="javax.imageio.spi.RegisterableService 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/RegisterableService.html">RegisterableService</a></code></li>
 					</ul>
-				</div><span class="A"><p>Registers <code><a aria-label="imagify.webp.WebpImageReader" href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code> with <code>ImageIO</code>.</p><p>Decoding needs the native <code>libwebp</code> library, which <code>webp4j</code> bundles and unpacks on
- first use. To keep <code>ImageIO</code> usable when that library is absent,
+				</div><span class="A"><p>Registers <code><a aria-label="imagify.webp.WebpImageReader" href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code> with <code>ImageIO</code>.</p><p>Decoding needs the native <code>libwebp</code> library, which this jar bundles and unpacks on first
+ use. To keep <code>ImageIO</code> usable when that library is absent,
  <code><a aria-label="imagify.webp.WebpImageReaderSpi" href="api/imagify.webp.WebpImageReaderSpi.html#canDecodeInput(java.lang.Object)">#canDecodeInput(Object)</a></code> answers <code>false</code> in that case, which makes <code>ImageIO.read()</code>
  fall through to the other providers instead of failing hard.
 </p>
 				</span></section>
-			<section class="Y" id="VERSION">
-				<h2 class="v"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="g">VERSION</code><i class="f"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Version of this service provider implementation.</p></span></section>
-			<section class="Y" id="WebpImageReaderSpi()">
-				<h2 class="v"><i class="PUBLIC"></i><code class="g">WebpImageReaderSpi</code><code class="LB">()</code></h2>
+			<section class="v" id="VERSION">
+				<h2 class="J"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="DB">VERSION</code><i class="Y"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Version of this service provider implementation.</p></span></section>
+			<section class="v" id="WebpImageReaderSpi()">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">WebpImageReaderSpi</code><code class="n">()</code></h2>
 			</section>
-			<section class="Y" id="canDecodeInput(java.lang.Object)">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">canDecodeInput</code><code class="LB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code>)</code><i class="f"><code>boolean</code></i></h2>
-				<table class="l">
-					<tr class="K">
+			<section class="v" id="canDecodeInput(java.lang.Object)">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">canDecodeInput</code><code class="n">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code>)</code><i class="Y"><code>boolean</code></i></h2>
+				<table class="GB">
+					<tr class="U">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code></td>
 						<td></td>
 					</tr>
-					<tr class="t">
+					<tr class="BB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="createReaderInstance(java.lang.Object)">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">createReaderInstance</code><code class="LB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="f"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></i></h2>
-				<table class="l">
-					<tr class="K">
+			<section class="v" id="createReaderInstance(java.lang.Object)">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">createReaderInstance</code><code class="n">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="Y"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></i></h2>
+				<table class="GB">
+					<tr class="U">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code></td>
 						<td></td>
 					</tr>
-					<tr class="t">
+					<tr class="BB">
 						<td><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="getFormatNames()">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">getFormatNames</code><code class="LB">()</code><i class="f"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="getFormatNames()">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">getFormatNames</code><code class="n">()</code><i class="Y"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="getFileSuffixes()">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">getFileSuffixes</code><code class="LB">()</code><i class="f"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="getFileSuffixes()">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">getFileSuffixes</code><code class="n">()</code><i class="Y"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="getMIMETypes()">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">getMIMETypes</code><code class="LB">()</code><i class="f"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="getMIMETypes()">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">getMIMETypes</code><code class="n">()</code><i class="Y"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="getPluginClassName()">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">getPluginClassName</code><code class="LB">()</code><i class="f"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="getPluginClassName()">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">getPluginClassName</code><code class="n">()</code><i class="Y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="getReaderClass()">
-				<h2 class="v"><i class="PUBLIC"></i><code class="g">getReaderClass</code><code class="LB">()</code><i class="f"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.webp.WebpImageReader" href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code></code></code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="getReaderClass()">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">getReaderClass</code><code class="n">()</code><i class="Y"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.webp.WebpImageReader" href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code></code></code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.webp.WebpImageReader" href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code></code></code></td>
 						<td><span><p>the reader this provider creates</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="isStandardStreamMetadataFormatSupported()">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">isStandardStreamMetadataFormatSupported</code><code class="LB">()</code><i class="f"><code>boolean</code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="isStandardStreamMetadataFormatSupported()">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">isStandardStreamMetadataFormatSupported</code><code class="n">()</code><i class="Y"><code>boolean</code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="getNativeStreamMetadataFormatName()">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">getNativeStreamMetadataFormatName</code><code class="LB">()</code><i class="f"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="getNativeStreamMetadataFormatName()">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">getNativeStreamMetadataFormatName</code><code class="n">()</code><i class="Y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="isStandardImageMetadataFormatSupported()">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">isStandardImageMetadataFormatSupported</code><code class="LB">()</code><i class="f"><code>boolean</code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="isStandardImageMetadataFormatSupported()">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">isStandardImageMetadataFormatSupported</code><code class="n">()</code><i class="Y"><code>boolean</code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="getNativeImageMetadataFormatName()">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">getNativeImageMetadataFormatName</code><code class="LB">()</code><i class="f"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="getNativeImageMetadataFormatName()">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">getNativeImageMetadataFormatName</code><code class="n">()</code><i class="Y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="getVendorName()">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">getVendorName</code><code class="LB">()</code><i class="f"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="getVendorName()">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">getVendorName</code><code class="n">()</code><i class="Y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="getVersion()">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">getVersion</code><code class="LB">()</code><i class="f"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="getVersion()">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">getVersion</code><code class="n">()</code><i class="Y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="getDescription(java.util.Locale)">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">getDescription</code><code class="LB">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="f"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="l">
-					<tr class="K">
+			<section class="v" id="getDescription(java.util.Locale)">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">getDescription</code><code class="n">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="Y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="GB">
+					<tr class="U">
 						<td><code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code></td>
 						<td></td>
 					</tr>
-					<tr class="t">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="toString()">
-				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="g">toString</code><code class="LB">()</code><i class="f"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="l">
-					<tr class="t">
+			<section class="v" id="toString()">
+				<h2 class="J"><i class="OVERRIDE PUBLIC"></i><code class="DB">toString</code><code class="n">()</code><i class="Y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="GB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="AB">
-			<div class="R">
-				<h5 class="r">Constructors</h5>
+		<aside class="Z">
+			<div class="M">
+				<h5 class="g">Constructors</h5>
 				<ul>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#WebpImageReaderSpi()">WebpImageReaderSpi</a></code><code class="LB">()</code></li>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#WebpImageReaderSpi()">WebpImageReaderSpi</a></code><code class="n">()</code></li>
 				</ul>
-				<h5 class="r">Static Fields</h5>
+				<h5 class="g">Static Fields</h5>
 				<ul>
-					<li class="m"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#VERSION">VERSION</a></code><i class="IB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="i"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#VERSION">VERSION</a></code><i class="V"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
-				<h5 class="r">Methods</h5>
+				<h5 class="g">Methods</h5>
 				<ul>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#canDecodeInput(java.lang.Object)">canDecodeInput</a></code><code class="LB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code>)</code><i class="IB"><code>boolean</code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#createReaderInstance(java.lang.Object)">createReaderInstance</a></code><code class="LB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="IB"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getFormatNames()">getFormatNames</a></code><code class="LB">()</code><i class="IB"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getFileSuffixes()">getFileSuffixes</a></code><code class="LB">()</code><i class="IB"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getMIMETypes()">getMIMETypes</a></code><code class="LB">()</code><i class="IB"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getPluginClassName()">getPluginClassName</a></code><code class="LB">()</code><i class="IB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="m"><i class="PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getReaderClass()">getReaderClass</a></code><code class="LB">()</code><i class="IB"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.webp.WebpImageReader" href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code></code></code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#isStandardStreamMetadataFormatSupported()">isStandardStreamMetadataFormatSupported</a></code><code class="LB">()</code><i class="IB"><code>boolean</code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getNativeStreamMetadataFormatName()">getNativeStreamMetadataFormatName</a></code><code class="LB">()</code><i class="IB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#isStandardImageMetadataFormatSupported()">isStandardImageMetadataFormatSupported</a></code><code class="LB">()</code><i class="IB"><code>boolean</code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getNativeImageMetadataFormatName()">getNativeImageMetadataFormatName</a></code><code class="LB">()</code><i class="IB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getVendorName()">getVendorName</a></code><code class="LB">()</code><i class="IB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getVersion()">getVersion</a></code><code class="LB">()</code><i class="IB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getDescription(java.util.Locale)">getDescription</a></code><code class="LB">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="IB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="m"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#toString()">toString</a></code><code class="LB">()</code><i class="IB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#canDecodeInput(java.lang.Object)">canDecodeInput</a></code><code class="n">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code>)</code><i class="V"><code>boolean</code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#createReaderInstance(java.lang.Object)">createReaderInstance</a></code><code class="n">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="V"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getFormatNames()">getFormatNames</a></code><code class="n">()</code><i class="V"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getFileSuffixes()">getFileSuffixes</a></code><code class="n">()</code><i class="V"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getMIMETypes()">getMIMETypes</a></code><code class="n">()</code><i class="V"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getPluginClassName()">getPluginClassName</a></code><code class="n">()</code><i class="V"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getReaderClass()">getReaderClass</a></code><code class="n">()</code><i class="V"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.webp.WebpImageReader" href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code></code></code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#isStandardStreamMetadataFormatSupported()">isStandardStreamMetadataFormatSupported</a></code><code class="n">()</code><i class="V"><code>boolean</code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getNativeStreamMetadataFormatName()">getNativeStreamMetadataFormatName</a></code><code class="n">()</code><i class="V"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#isStandardImageMetadataFormatSupported()">isStandardImageMetadataFormatSupported</a></code><code class="n">()</code><i class="V"><code>boolean</code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getNativeImageMetadataFormatName()">getNativeImageMetadataFormatName</a></code><code class="n">()</code><i class="V"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getVendorName()">getVendorName</a></code><code class="n">()</code><i class="V"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getVersion()">getVersion</a></code><code class="n">()</code><i class="V"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#getDescription(java.util.Locale)">getDescription</a></code><code class="n">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="V"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="i"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.webp.WebpImageReaderSpi.html#toString()">toString</a></code><code class="n">()</code><i class="V"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="u">
+		<footer class="T">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

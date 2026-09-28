@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<meta content="Explains how to use Imagify and its API. " name="description"/>
+		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<title>Imagify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="w">
+		<header class="O" date="2026-09-28">
+			<h1 class="P"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="Q"><a href="api/main.html" id="API"><svg class="package">
+						<use href="main.svg#package"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify/discussions" id="Community" target="_blank"><svg class="user">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify" id="Repository" target="_blank"><svg class="github">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="R"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<nav class="x"></nav>
+		<article class="N" id="Article">
+			<section class="v"><code class="LB">imagify.webp.jna</code>
+				<h2 class="Class AB"><code class="DB">WebpLibrary.WebpFeatures</code></h2>
+				<div class="z">
+					<ul class="E G">
+						<li><code>com.sun.jna.Structure</code></li>
+					</ul>
+				</div><span class="A"><p>What the container headers of a WebP file say, without a pixel being decoded.</p><p>This is <code>imagify_webp_features</code> in <code>imagify_webp.h</code>. It is filled in by
+ <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_read_features">#imagify_webp_read_features</a></code> and <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_decode">#imagify_webp_decode</a></code>.
+</p>
+				</span></section>
+			<section class="v" id="width">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">width</code><i class="Y"><code class="return">int</code></i></h2><span class="A"><p>Canvas width in pixels.</p></span></section>
+			<section class="v" id="height">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">height</code><i class="Y"><code class="return">int</code></i></h2><span class="A"><p>Canvas height in pixels.</p></span></section>
+			<section class="v" id="hasAlpha">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">hasAlpha</code><i class="Y"><code class="return">int</code></i></h2><span class="A"><p>1 when the bitstream carries a non premultiplied alpha channel.</p></span></section>
+			<section class="v" id="hasAnimation">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">hasAnimation</code><i class="Y"><code class="return">int</code></i></h2><span class="A"><p>1 when the file holds an animation rather than a single still frame.</p></span></section>
+			<section class="v" id="format">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">format</code><i class="Y"><code class="return">int</code></i></h2><span class="A"><p>One of the <code>FORMAT_*</code> values.</p></span></section>
+			<section class="v" id="WebpFeatures()">
+				<h2 class="J"><i class="PUBLIC"></i><code class="DB">WebpFeatures</code><code class="n">()</code></h2>
+			</section>
+		</article>
+		<aside class="Z">
+			<div class="M">
+				<h5 class="g">Constructors</h5>
+				<ul>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html#WebpFeatures()">WebpFeatures</a></code><code class="n">()</code></li>
+				</ul>
+				<h5 class="g">Fields</h5>
+				<ul>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html#width">width</a></code><i class="V"><code class="return">int</code></i></li>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html#height">height</a></code><i class="V"><code class="return">int</code></i></li>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html#hasAlpha">hasAlpha</a></code><i class="V"><code class="return">int</code></i></li>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html#hasAnimation">hasAnimation</a></code><i class="V"><code class="return">int</code></i></li>
+					<li class="i"><i class="PUBLIC"></i><code><a href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html#format">format</a></code><i class="V"><code class="return">int</code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="T">
+			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
+		</footer>
+	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
+</html>
