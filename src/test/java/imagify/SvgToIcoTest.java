@@ -36,7 +36,7 @@ class SvgToIcoTest {
     private static final String PNG_OUT_DIR = "target/test-output/png";
 
     @org.junit.jupiter.api.Test
-    @org.junit.jupiter.api.DisplayName("src/test/resources/svg内の全SVGをICOに変換して出力する")
+    @org.junit.jupiter.api.DisplayName("Convert all SVGs under src/test/resources/svg to ICO")
     void allSvgsToIco() throws Exception {
         Path svgPath = Paths.get(SVG_DIR);
         if (!Files.isDirectory(svgPath)) {
@@ -74,7 +74,7 @@ class SvgToIcoTest {
     }
 
     @org.junit.jupiter.api.Test
-    @org.junit.jupiter.api.DisplayName("SVG→ICO→読み戻しでピクセルが完全に一致する")
+    @org.junit.jupiter.api.DisplayName("SVG→ICO→read back: pixels match exactly")
     void allSvgsSurviveTheRoundTrip() throws Exception {
         Path svgPath = Paths.get(SVG_DIR);
         if (!Files.isDirectory(svgPath)) {
@@ -108,7 +108,7 @@ class SvgToIcoTest {
     }
 
     @org.junit.jupiter.api.Test
-    @org.junit.jupiter.api.DisplayName("SVGからImageIOで読み取れる")
+    @org.junit.jupiter.api.DisplayName("Readable from SVG via ImageIO")
     void readViaImageIO() throws Exception {
         URL url = getClass().getResource("/svg/default_file.svg");
         assertNotNull(url, "missing /svg/default_file.svg");

@@ -27,46 +27,46 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * 入力可能な全フォーマットから出力可能な全フォーマットへのクロス変換を検証する。
+ * Verifies cross-conversion from every input format to every output format.
  *
- * <p>各形式で画像をエンコードし、デコードして全形式に再エンコードする。
- * 変換後の画像サイズが一致することを保証する。</p>
+ * <p>Encodes an image in each format, decodes it, and re-encodes it in all
+ * formats. Ensures that the decoded image size matches after each round-trip.</p>
  *
- * <p>JPEG/BMP はアルファを持てないため、ソース画像を適切に選択する。</p>
+ * <p>JPEG/BMP cannot carry alpha, so the source image is chosen appropriately.</p>
  */
 class CrossFormatConversionTest {
 
-    /** 入力・出力として使用する全フォーマット。 */
+    /** All formats used as input and output. */
     private static final ImageFormat[] FORMATS = {
             ImageFormat.JPEG, ImageFormat.PNG, ImageFormat.GIF,
             ImageFormat.GIF89A, ImageFormat.BMP, ImageFormat.WEBP, ImageFormat.AVIF
     };
 
-    /** AVIF/WebP にはネイティブライブラリが必要。 */
+    /** AVIF/WebP require a native library. */
     private static final ImageFormat[] LOSSY_FORMATS = {ImageFormat.WEBP, ImageFormat.AVIF};
 
-    /** アルファを持てない形式。 */
+    /** Formats that cannot carry alpha. */
     private static final List<ImageFormat> NO_ALPHA_FORMATS = Arrays.asList(ImageFormat.JPEG, ImageFormat.BMP);
 
     @Test
-    @DisplayName("全フォーマット間のクロス変換：各入力形式から全出力形式へ変換できる")
+    @DisplayName("Cross-conversion across all formats: every input can be converted to every output")
     void everyFormatToEveryFormat(@TempDir Path dir) throws IOException {
         assumeLibs();
 
-        // アルファ対応形式と非対応形式の両方のソースを用意
+        // Prepare sources for both alpha-capable and non-alpha-capable formats
         BufferedImage alphaSource = alphaGradient(48, 32);
         BufferedImage rgbSource = rgbGradient(48, 32);
 
         List<String> failures = new ArrayList<>();
 
         for (ImageFormat input : FORMATS) {
-            // 入力形式がアルファを持てるかでソースを選択
+            // Choose source based on whether the input format supports alpha
             BufferedImage inputSource = input.supportsAlpha() ? alphaSource : rgbSource;
             byte[] encoded;
             try {
                 encoded = encode(inputSource, input);
             } catch (Exception e) {
-                continue; // この形式でエンコードできない場合はスキップ
+                continue; // Skip formats that cannot be encoded
             }
             if (encoded == null || encoded.length == 0) continue;
 
@@ -74,26 +74,26 @@ class CrossFormatConversionTest {
             try {
                 decoded = ImageReader.read(encoded, input).toBufferedImage();
             } catch (Exception e) {
-                continue; // デコードできない場合はスキップ
+                continue; // Skip formats that cannot be decoded
             }
 
             for (ImageFormat output : FORMATS) {
-                // GIF89A は GIF と同一なのでスキップ
+                // GIF89A is identical to GIF, so skip
                 if (output == ImageFormat.GIF89A && input != ImageFormat.GIF89A) continue;
-                // 同一形式は他のテストでカバー済み
+                // Same-format conversions are covered by other tests
                 if (input == output) continue;
 
                 String msg = input + " → " + output;
                 try {
-                    // 出力がアルファ不可の場合はアルファを落としてエンコード
+                    // Strip alpha for formats that don't support it
                     BufferedImage outputSource = output.supportsAlpha() ? decoded : stripAlpha(decoded);
                     byte[] reEncoded = ImageWriter.toBytes(outputSource, output, 0.8);
-                    assertNotEquals(0, reEncoded.length, msg + ": 出力が空");
+                    assertNotEquals(0, reEncoded.length, msg + ": output is empty");
 
-                    // 再度読み込んでサイズ確認
+                    // Read back and verify dimensions
                     BufferedImage finalImage = ImageReader.read(reEncoded, output).toBufferedImage();
-                    assertEquals(decoded.getWidth(), finalImage.getWidth(), msg + ": 幅");
-                    assertEquals(decoded.getHeight(), finalImage.getHeight(), msg + ": 高さ");
+                    assertEquals(decoded.getWidth(), finalImage.getWidth(), msg + ": width");
+                    assertEquals(decoded.getHeight(), finalImage.getHeight(), msg + ": height");
                 } catch (Exception e) {
                     failures.add(msg + ": " + e.getMessage());
                 }
@@ -102,14 +102,14 @@ class CrossFormatConversionTest {
 
         if (!failures.isEmpty()) {
             StringBuilder sb = new StringBuilder();
-            sb.append("以下の変換に失敗しました (").append(failures.size()).append("件):\n");
+            sb.append("The following conversions failed (").append(failures.size()).append("):\n");
             for (String f : failures) sb.append("  ").append(f).append("\n");
             fail(sb.toString());
         }
     }
 
     @Test
-    @DisplayName("全フォーマットのバイト配列入力→自動判別→全フォーマット出力")
+    @DisplayName("Auto-detect input format, then convert to every output format")
     void autoDetectInputToEveryOutput(@TempDir Path dir) throws IOException {
         assumeLibs();
 
@@ -128,7 +128,7 @@ class CrossFormatConversionTest {
             }
             if (encoded == null || encoded.length == 0) continue;
 
-            // ヘッダーから自動判別で読み込み
+            // Auto-detect format from header
             BufferedImage decoded;
             try {
                 decoded = ImageReader.read(encoded).toBufferedImage();
@@ -145,10 +145,10 @@ class CrossFormatConversionTest {
                 try {
                     BufferedImage outputSource = output.supportsAlpha() ? decoded : stripAlpha(decoded);
                     byte[] outBytes = ImageWriter.toBytes(outputSource, output, 0.8);
-                    assertNotEquals(0, outBytes.length, msg + ": 出力が空");
+                    assertNotEquals(0, outBytes.length, msg + ": output is empty");
                     BufferedImage finalImage = ImageReader.read(outBytes).toBufferedImage();
-                    assertEquals(decoded.getWidth(), finalImage.getWidth(), msg + ": 幅");
-                    assertEquals(decoded.getHeight(), finalImage.getHeight(), msg + ": 高さ");
+                    assertEquals(decoded.getWidth(), finalImage.getWidth(), msg + ": width");
+                    assertEquals(decoded.getHeight(), finalImage.getHeight(), msg + ": height");
                 } catch (Exception e) {
                     failures.add(msg + ": " + e.getMessage());
                 }
@@ -157,14 +157,14 @@ class CrossFormatConversionTest {
 
         if (!failures.isEmpty()) {
             StringBuilder sb = new StringBuilder();
-            sb.append("以下の自動判別変換に失敗しました (").append(failures.size()).append("件):\n");
+            sb.append("The following auto-detect conversions failed (").append(failures.size()).append("):\n");
             for (String f : failures) sb.append("  ").append(f).append("\n");
             fail(sb.toString());
         }
     }
 
     @Test
-    @DisplayName("各フォーマットの品質パラメータが0.0と1.0の両端で動作する")
+    @DisplayName("Quality parameter works at both 0.0 and 1.0 for all formats")
     void qualityBoundariesWorkForAllFormats(@TempDir Path dir) throws IOException {
         assumeLibs();
 
@@ -173,16 +173,16 @@ class CrossFormatConversionTest {
             try {
                 byte[] low = ImageWriter.toBytes(source, format, 0.0);
                 byte[] high = ImageWriter.toBytes(source, format, 1.0);
-                assertTrue(low.length > 0, format + ": quality 0.0 で書き込めない");
-                assertTrue(high.length > 0, format + ": quality 1.0 で書き込めない");
+                assertTrue(low.length > 0, format + ": cannot write at quality 0.0");
+                assertTrue(high.length > 0, format + ": cannot write at quality 1.0");
             } catch (Exception e) {
-                fail(format + ": quality boundary が動作しない - " + e.getMessage());
+                fail(format + ": quality boundary does not work - " + e.getMessage());
             }
         }
     }
 
     @Test
-    @DisplayName("損失形式間のクロス変換で品質がファイルサイズに反映される")
+    @DisplayName("Lossy format cross-conversion reflects quality in file size")
     void lossyCrossConversionFollowsQuality(@TempDir Path dir) throws IOException {
         assumeLibs();
 
@@ -192,7 +192,7 @@ class CrossFormatConversionTest {
             byte[] high = ImageWriter.toBytes(source, format, 0.95);
             byte[] low = ImageWriter.toBytes(source, format, 0.05);
             assertTrue(low.length < high.length,
-                    format + ": 低品質(" + low.length + ") が高品質(" + high.length + ") より大きい");
+                    format + ": low quality (" + low.length + ") is larger than high quality (" + high.length + ")");
         }
     }
 
@@ -221,7 +221,7 @@ class CrossFormatConversionTest {
         return image;
     }
 
-    /** アルファチャネルを落として RGB 形式に変換する。 */
+    /** Strips the alpha channel, converting to RGB. */
     private static BufferedImage stripAlpha(BufferedImage source) {
         if (!source.getColorModel().hasAlpha()) return source;
         BufferedImage rgb = new BufferedImage(

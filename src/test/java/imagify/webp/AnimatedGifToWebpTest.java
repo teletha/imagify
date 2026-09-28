@@ -27,10 +27,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * アニメGIF → アニメWebP 変換の完全検証。
+ * Complete verification of animated GIF to animated WebP conversion.
  *
- * <p>フレーム数、タイミング、寸法、ピクセル忠実度（PSNR/SSIM）を
- * プログラム的に検証する。</p>
+ * <p>Frame count, timing, dimensions, pixel fidelity (PSNR/SSIM) are
+ * verified programmatically.</p>
  */
 class AnimatedGifToWebpTest {
 
@@ -38,7 +38,7 @@ class AnimatedGifToWebpTest {
     private static final String REPORT_DIR = "target/test-output/anime-gif-to-webp";
 
     @Test
-    @DisplayName("アニメGIFをアニメWebPに変換し、フレーム数・タイミング・寸法・画質を保持する")
+    @DisplayName("Converts animated GIF to animated WebP, preserving frame count, timing, dimensions, and quality")
     void convertsAnimatedGifToWebp(@TempDir Path dir) throws Exception {
         Assumptions.assumeTrue(WebpCodec.isAvailable(),
                 () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
@@ -55,7 +55,7 @@ class AnimatedGifToWebpTest {
         Path reportDir = Paths.get(REPORT_DIR);
         Files.createDirectories(reportDir);
 
-        // 全GIFの集計
+        // Aggregate across all GIFs
         int totalFrames = 0;
         int passedGifs = 0;
         for (int i = 0; i < gifs.size(); i++) {
@@ -72,7 +72,7 @@ class AnimatedGifToWebpTest {
     }
 
     @Test
-    @DisplayName("アニメGIFからWebPへの変換でピクセルレベルの忠実度を検証")
+    @DisplayName("Verify pixel-level fidelity in animated GIF to WebP conversion")
     void pixelFidelityPreserved(@TempDir Path dir) throws Exception {
         Assumptions.assumeTrue(WebpCodec.isAvailable(),
                 () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
@@ -86,7 +86,7 @@ class AnimatedGifToWebpTest {
                 .toList();
         Assumptions.assumeFalse(gifs.isEmpty());
 
-        // 少なくとも1枚のGIFでPSNR/SSIMを検証（convertsAnimatedGifToWebpと被らないようにサブディレクトリ）
+        // Verify PSNR/SSIM on at least one GIF (use a subdirectory to avoid overlap with convertsAnimatedGifToWebp)
         Path gif = gifs.get(0);
         Path reportDir = Paths.get(REPORT_DIR);
         Path fidelityDir = reportDir.resolve("fidelity");
@@ -100,7 +100,7 @@ class AnimatedGifToWebpTest {
     }
 
     @Test
-    @DisplayName("アニメGIFのフレームをリサイズしてアニメWebPに変換する")
+    @DisplayName("Resize animated GIF frames and convert to animated WebP")
     void resizedAnimatedGifToWebp(@TempDir Path dir) throws Exception {
         Assumptions.assumeTrue(WebpCodec.isAvailable(),
                 () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
@@ -114,7 +114,7 @@ class AnimatedGifToWebpTest {
                 .toList();
         Assumptions.assumeFalse(gifs.isEmpty());
 
-        // 最初のGIFで検証
+        // Verify on the first GIF
         Path gif = gifs.get(0);
         List<BufferedImage> originalFrames = readAllGifFrames(gif);
         int[] delaysMs = readGifFrameDelays(gif);
@@ -131,7 +131,7 @@ class AnimatedGifToWebpTest {
                 resizedFrames, delaysMs, 75, false, 0);
         assertTrue(webpBytes.length > 0, "encoded WebP is empty");
 
-        // デコードして検証
+        // Decode and verify
         WebpImageInfo info = WebpCodec.readHeader(webpBytes);
         assertTrue(info.hasAnimation(), "output is not an animation");
         assertEquals(resizedFrames.size(), info.frameCount(), "frame count mismatch");
@@ -139,14 +139,14 @@ class AnimatedGifToWebpTest {
         List<BufferedImage> decodedFrames = WebpCodec.decodeAnimation(webpBytes);
         assertEquals(resizedFrames.size(), decodedFrames.size(), "decoded frame count mismatch");
 
-        // 全デコードフレームの寸法がリサイズ後の寸法と一致すること
+        // Verify all decoded frames match the resized dimensions
         for (BufferedImage frame : decodedFrames) {
             assertEquals(targetW, frame.getWidth(), "decoded frame width mismatch");
             assertEquals(targetH, frame.getHeight(), "decoded frame height mismatch");
         }
 
-        // ピクセルレベルの忠実度も検証（リサイズ前のフレームとの比較は不可能だが、
-        // デコードされたフレーム自体に画質劣化がないことを確認）
+        // Also verify pixel-level fidelity (comparison with pre-resize frames is impossible, but
+        // confirm there is no quality degradation in the decoded frames themselves)
         double avgPsnr = 0;
         double avgSsim = 0;
         int checked = 0;
@@ -182,7 +182,7 @@ class AnimatedGifToWebpTest {
 
     // ------------------------------------------------------------------ conversion
 
-    /** 1つのGIFの変換結果を保持するレコード。 */
+    /** A record holding the conversion result of a single GIF. */
     private record ConvertResult(
             int frameCount,
             int webpBytesLength,

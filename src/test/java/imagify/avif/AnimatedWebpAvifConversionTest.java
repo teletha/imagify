@@ -30,10 +30,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * アニメWebP ↔ アニメAVIFの相互変換テスト。
+ * Test for mutual conversion between animated WebP and animated AVIF.
  *
- * <p>アニメGIFを中間ソースとして使用し、
- * WebP→AVIF および AVIF→WebP の変換を検証する。
+ * <p>Uses animated GIF as an intermediate source,
+ * and verifies conversion from WebP→AVIF and AVIF→WebP.
  */
 class AnimatedWebpAvifConversionTest {
 
@@ -41,7 +41,7 @@ class AnimatedWebpAvifConversionTest {
     private static final String REPORT_DIR = "target/test-output/webp-avif-conversion";
 
     @Test
-    @DisplayName("アニメWebPをアニメAVIFに変換し、フレームと寸法を保持する")
+    @DisplayName("Converts animated WebP to animated AVIF, preserving frames and dimensions")
     void webpToAvif(@TempDir Path dir) throws Exception {
         Assumptions.assumeTrue(WebpCodec.isAvailable(),
                 () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
@@ -61,29 +61,29 @@ class AnimatedWebpAvifConversionTest {
         List<BufferedImage> frames = readAllGifFrames(gif);
         int[] delaysMs = readGifFrameDelays(gif);
 
-        // アニメGIF → アニメWebP
+        // Animate GIF → animated WebP
         byte[] webpBytes = WebpCodec.encodeAnimation(frames, delaysMs, 75, false, 0);
         assertTrue(webpBytes.length > 0, "encoded WebP is empty");
 
-        // WebP → デコード → AVIF
+        // WebP → decode → AVIF
         List<BufferedImage> webpFrames = WebpCodec.decodeAnimation(webpBytes);
         assertFalse(webpFrames.isEmpty(), "decoded WebP frames should not be empty");
 
         byte[] avifBytes = AvifCodec.encodeAnimation(webpFrames, delaysMs, 60, 0);
         assertTrue(avifBytes.length > 0, "encoded AVIF is empty");
 
-        // AVIFをデコードして検証
+        // Decode AVIF and verify
         List<BufferedImage> avifFrames = AvifCodec.decodeAnimation(avifBytes);
         assertFalse(avifFrames.isEmpty(), "decoded AVIF frames should not be empty");
 
-        // フレーム数と寸法を確認
+        // Verify frame count and dimensions
         assertEquals(webpFrames.size(), avifFrames.size(), "frame count mismatch");
         for (BufferedImage frame : avifFrames) {
             assertEquals(frames.get(0).getWidth(), frame.getWidth(), "frame width mismatch");
             assertEquals(frames.get(0).getHeight(), frame.getHeight(), "frame height mismatch");
         }
 
-        // 出力
+        // Output
         Path reportDir = Paths.get(REPORT_DIR).resolve("webp-to-avif");
         Files.createDirectories(reportDir);
         Path outFile = reportDir.resolve(gif.getFileName().toString().replace(".gif", ".webp-to-avif.avif"));
@@ -94,7 +94,7 @@ class AnimatedWebpAvifConversionTest {
     }
 
     @Test
-    @DisplayName("アニメAVIFをアニメWebPに変換し、フレームと寸法を保持する")
+    @DisplayName("Converts animated AVIF to animated WebP, preserving frames and dimensions")
     void avifToWebp(@TempDir Path dir) throws Exception {
         Assumptions.assumeTrue(WebpCodec.isAvailable(),
                 () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
@@ -114,29 +114,29 @@ class AnimatedWebpAvifConversionTest {
         List<BufferedImage> frames = readAllGifFrames(gif);
         int[] delaysMs = readGifFrameDelays(gif);
 
-        // アニメGIF → アニメAVIF
+        // Animate GIF → animated AVIF
         byte[] avifBytes = AvifCodec.encodeAnimation(frames, delaysMs, 60, 0);
         assertTrue(avifBytes.length > 0, "encoded AVIF is empty");
 
-        // AVIF → デコード → WebP
+        // AVIF → decode → WebP
         List<BufferedImage> avifFrames = AvifCodec.decodeAnimation(avifBytes);
         assertFalse(avifFrames.isEmpty(), "decoded AVIF frames should not be empty");
 
         byte[] webpBytes = WebpCodec.encodeAnimation(avifFrames, delaysMs, 75, false, 0);
         assertTrue(webpBytes.length > 0, "encoded WebP is empty");
 
-        // WebPをデコードして検証
+        // Decode WebP and verify
         List<BufferedImage> webpFrames = WebpCodec.decodeAnimation(webpBytes);
         assertFalse(webpFrames.isEmpty(), "decoded WebP frames should not be empty");
 
-        // フレーム数と寸法を確認
+        // Verify frame count and dimensions
         assertEquals(frames.size(), webpFrames.size(), "frame count mismatch");
         for (BufferedImage frame : webpFrames) {
             assertEquals(frames.get(0).getWidth(), frame.getWidth(), "frame width mismatch");
             assertEquals(frames.get(0).getHeight(), frame.getHeight(), "frame height mismatch");
         }
 
-        // 出力
+        // Output
         Path reportDir = Paths.get(REPORT_DIR).resolve("avif-to-webp");
         Files.createDirectories(reportDir);
         Path outFile = reportDir.resolve(gif.getFileName().toString().replace(".gif", ".avif-to-webp.webp"));
@@ -147,7 +147,7 @@ class AnimatedWebpAvifConversionTest {
     }
 
     @Test
-    @DisplayName("アニメWebP→AVIF→WebPのround-tripでフレームが保持される")
+    @DisplayName("Animated WebP→AVIF→WebP round-trip preserves frames")
     void roundTripWebpAvifWebp(@TempDir Path dir) throws Exception {
         Assumptions.assumeTrue(WebpCodec.isAvailable(),
                 () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
@@ -167,7 +167,7 @@ class AnimatedWebpAvifConversionTest {
         List<BufferedImage> originalFrames = readAllGifFrames(gif);
         int[] delaysMs = readGifFrameDelays(gif);
 
-        // 元のGIFフレーム → WebP → AVIF → WebP
+        // Original GIF frames → WebP → AVIF → WebP
         byte[] webp1 = WebpCodec.encodeAnimation(originalFrames, delaysMs, 75, false, 0);
         List<BufferedImage> webpFrames = WebpCodec.decodeAnimation(webp1);
         byte[] avifBytes = AvifCodec.encodeAnimation(webpFrames, delaysMs, 60, 0);
@@ -175,17 +175,17 @@ class AnimatedWebpAvifConversionTest {
         byte[] webp2 = WebpCodec.encodeAnimation(avifFrames, delaysMs, 75, false, 0);
         List<BufferedImage> webpResult = WebpCodec.decodeAnimation(webp2);
 
-        // 最終的なWebPフレーム数が元と一致する
+        // Final WebP frame count matches original
         assertEquals(originalFrames.size(), webpResult.size(),
                 "round-trip frame count should match original");
 
-        // 全てのフレームの寸法が一致する
+        // All frames match dimensions
         for (BufferedImage frame : webpResult) {
             assertEquals(originalFrames.get(0).getWidth(), frame.getWidth(), "frame width mismatch");
             assertEquals(originalFrames.get(0).getHeight(), frame.getHeight(), "frame height mismatch");
         }
 
-        // 出力
+        // Output
         Path reportDir = Paths.get(REPORT_DIR).resolve("roundtrip");
         Files.createDirectories(reportDir);
         Path outFile = reportDir.resolve(gif.getFileName().toString().replace(".gif", ".roundtrip.webp"));
@@ -195,7 +195,7 @@ class AnimatedWebpAvifConversionTest {
     }
 
     @Test
-    @DisplayName("アニメAVIF→WebP→AVIFのround-tripでフレームが保持される")
+    @DisplayName("Animated AVIF→WebP→AVIF round-trip preserves frames")
     void roundTripAvifWebpAvif(@TempDir Path dir) throws Exception {
         Assumptions.assumeTrue(WebpCodec.isAvailable(),
                 () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
@@ -215,7 +215,7 @@ class AnimatedWebpAvifConversionTest {
         List<BufferedImage> originalFrames = readAllGifFrames(gif);
         int[] delaysMs = readGifFrameDelays(gif);
 
-        // 元のGIFフレーム → AVIF → WebP → AVIF
+        // Original GIF frames → AVIF → WebP → AVIF
         byte[] avif1 = AvifCodec.encodeAnimation(originalFrames, delaysMs, 60, 0);
         List<BufferedImage> avifFrames = AvifCodec.decodeAnimation(avif1);
         byte[] webpBytes = WebpCodec.encodeAnimation(avifFrames, delaysMs, 75, false, 0);
@@ -223,17 +223,17 @@ class AnimatedWebpAvifConversionTest {
         byte[] avif2 = AvifCodec.encodeAnimation(webpFrames, delaysMs, 60, 0);
         List<BufferedImage> avifResult = AvifCodec.decodeAnimation(avif2);
 
-        // 最終的なAVIFフレーム数が元と一致する
+        // Final AVIF frame count matches original
         assertEquals(originalFrames.size(), avifResult.size(),
                 "round-trip frame count should match original");
 
-        // 全てのフレームの寸法が一致する
+        // All frames match dimensions
         for (BufferedImage frame : avifResult) {
             assertEquals(originalFrames.get(0).getWidth(), frame.getWidth(), "frame width mismatch");
             assertEquals(originalFrames.get(0).getHeight(), frame.getHeight(), "frame height mismatch");
         }
 
-        // 出力
+        // Output
         Path reportDir = Paths.get(REPORT_DIR).resolve("roundtrip");
         Files.createDirectories(reportDir);
         Path outFile = reportDir.resolve(gif.getFileName().toString().replace(".gif", ".roundtrip.avif"));

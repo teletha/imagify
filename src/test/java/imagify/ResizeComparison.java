@@ -295,20 +295,20 @@ class ResizeComparison {
         html.append("<!DOCTYPE html>\n<html lang=\"ja\">\n<head>\n")
                 .append("<meta charset=\"utf-8\">\n")
                 .append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n")
-                .append("<title>リサイズアルゴリズムの比較</title>\n")
+                .append("<title>Resize Algorithm Comparison</title>\n")
                 .append("<style>\n")
                 .append(ReportAssets.css())
                 .append(extraCss())
                 .append("\n</style>\n</head>\n<body>\n");
 
-        html.append("<h1>リサイズアルゴリズムの比較</h1>\n")
+        html.append("<h1>Resize Algorithm Comparison</h1>\n")
                 .append("<p class=\"lead\">")
                 .append(samples.size())
-                .append(" 枚の PNG を ")
+                .append(" images with ")
                 .append(ResizeAlgorithm.values().length)
-                .append(" 種類のアルゴリズムで ")
+                .append(" resize algorithms to ")
                 .append(TARGET_SCALES.length)
-                .append(" 段階のサイズにリサイズし、所要時間と画質指標を比べたもの。</p>\n");
+                .append(" target sizes, measuring time and quality metrics.</p>\n");
 
         appendNotes(html);
         appendSummary(html, samples);
@@ -320,36 +320,34 @@ class ResizeComparison {
 
     private static void appendNotes(StringBuilder html) {
         String reference = REFERENCE.name().toLowerCase();
-        html.append("<h2>1. 見方</h2>\n")
-                .append("<p class=\"note\">リサンプリングには正解の画像が存在しない。そのため以下の数値は絶対的な誤差ではなく、横の並びで読むためのものである。</p>\n")
-                .append("<table>\n<thead><tr><th>指標</th><th>算出方法</th><th>読み方</th>")
+        html.append("<h2>1. How to read</h2>\n")
+                .append("<p class=\"note\">Resampling has no ground truth. The figures below are not absolute errors, but meant to be read across a row.</p>\n")
+                .append("<table>\n<thead><tr><th>Metric</th><th>Calculation</th><th>How to read</th>")
                 .append("</tr></thead>\n<tbody>\n")
-                .append("<tr><td>PSNR / SSIM</td><td>目標サイズまでリサイズし、")
+                .append("<tr><td>PSNR / SSIM</td><td>Resized to target size, then ")
                 .append(reference)
-                .append(" で元サイズへ戻してから元画像と比較</td>")
-                .append("<td>往復して情報をどれだけ保ったか。復元に使う ")
+                .append(" to restore to source size and compared with the original</td>")
+                .append("<td>How much information was preserved through the round trip. The ")
                 .append(reference)
-                .append(" は全アルゴリズム共通なので横の比較は公平だが、絶対値そのものは意味を持たない</td></tr>\n")
-                .append("<tr><td>鮮鋭度</td><td>結果の平均勾配を元画像の平均勾配で割り、")
-                .append("さらに線形スケールなら残るはずの値で割る</td>")
-                .append("<td>基準画像が要らない指標。1.000 が適正で、下回ればボケ、")
-                .append("上回ればリンギングや存在しないエッジの生成</td></tr>\n")
-                .append("<tr><td>時間</td><td><code>BufferedImageResize.resize</code> 1 回の実測</td>")
-                .append("<td>同じアルゴリズムの初回呼び出しはクラス読み込みの分を含むため大きめに出る</td></tr>\n")
+                .append(" restoration pass is the same for all algorithms, so the horizontal comparison is fair, but the absolute value itself has little meaning</td></tr>\n")
+                .append("<tr><td>Sharpness</td><td>Mean gradient magnitude of the result divided by that of the source, further divided by what a linear resize would predict</td>")
+                .append("<td>A metric that needs no reference. 1.000 is correct; below is blur, above is ringing or invented edges</td></tr>\n")
+                .append("<tr><td>Time</td><td><code>BufferedImageResize.resize</code> one call measured</td>")
+                .append("<td>The first call for an algorithm includes class loading, so it reads high</td></tr>\n")
                 .append("</tbody>\n</table>\n")
-                .append("<p class=\"note\">比較対象はドット絵で、<code>ResizeAlgorithm</code> の 5 種は")
-                .append("いずれも平滑化フィルタである。ドット絵はピクセルを 1 個も動かしたくないので、")
-                .append("ニアレストネイバーが選択肢に含まれていないこと自体がこの比較の結論である。</p>\n")
-                .append("<p class=\"note\"><code>HQX</code> は xBRZ の実装で、整数倍以外に拡大できない。" + "80 / 70 / 60 / 50 / 40 px は元画像 (105 / 107 px) の整数倍ではないので、")
-                .append("表と画像では n/a として示している。</p>\n");
+                .append("<p class=\"note\">The corpus is pixel art, and the 5 algorithms in <code>ResizeAlgorithm</code> are")
+                .append("all smoothing filters. Pixel art should keep pixels alone, so")
+                .append("the absence of nearest neighbour among them is itself the headline.</p>\n")
+                .append("<p class=\"note\"><code>HQX</code> is an xBRZ implementation that only accepts exact integer multiples. " + "80 / 70 / 60 / 50 / 40 px is not an integer multiple of the source (105 / 107 px), so")
+                .append("shown as n/a in the table and images.</p>\n");
     }
 
     private static void appendSummary(StringBuilder html, List<Sample> samples) {
         List<String[]> rows = summaryRows(samples);
-        html.append("<h2>2. 集計</h2>\n")
-                .append("<p class=\"note\">全画像の平均。見出しをクリックすると並び替えられる。</p>\n")
-                .append("<table>\n<thead><tr><th>サイズ</th><th>アルゴリズム</th><th>平均時間</th>")
-                .append("<th>PSNR (dB)</th><th>SSIM</th><th>鮮鋭度</th><th>平均サイズ</th>")
+        html.append("<h2>2. Summary</h2>\n")
+                .append("<p class=\"note\">Average across all images. Click a heading to sort.</p>\n")
+                .append("<table>\n<thead><tr><th>Size</th><th>Algorithm</th><th>Avg Time</th>")
+                .append("<th>PSNR (dB)</th><th>SSIM</th><th>Sharpness</th><th>Avg Size</th>")
                 .append("</tr></thead>\n<tbody>\n");
         for (String[] row : rows) {
             html.append("<tr><td>")
@@ -372,9 +370,9 @@ class ResizeComparison {
     }
 
     private static void appendDetail(StringBuilder html, List<Sample> samples) {
-        html.append("<h2>3. 一覧</h2>\n")
-                .append("<p class=\"note\">画像ごとの値。括弧内は処理時間と鮮鋭度。" + "サイズごとに PSNR 最高のセルを強調している。</p>\n")
-                .append("<table>\n<thead><tr><th>画像</th><th>サイズ</th>");
+        html.append("<h2>3. Detail</h2>\n")
+                .append("<p class=\"note\">Values per image. (in brackets: processing time and sharpness). Cells with the best PSNR per size are highlighted.</p>\n")
+                .append("<table>\n<thead><tr><th>Image</th><th>Size</th>");
         for (double targetScale : TARGET_SCALES) {
             for (ResizeAlgorithm algorithm : ResizeAlgorithm.values()) {
                 html.append("<th>").append(sizeLabel(targetScale)).append(' ').append(algorithm.name().toLowerCase()).append("</th>");
@@ -388,7 +386,7 @@ class ResizeComparison {
                     .append("\">")
                     .append(escape(sample.name()))
                     .append("</a>")
-                    .append(sample.opaque() ? "" : " <span class=\"tag\">透過あり</span>")
+                    .append(sample.opaque() ? "" : " <span class=\"tag\">Transparency</span>")
                     .append("</td><td class=\"num\">")
                     .append(sample.width())
                     .append("×")
@@ -419,7 +417,7 @@ class ResizeComparison {
     }
 
     private static void appendComparisons(StringBuilder html, List<Sample> samples) {
-        html.append("<h2>4. 画像比較</h2>\n").append("<p class=\"note\">各画像と各スケールのリサイズ結果を示す。</p>\n");
+        html.append("<h2>4. Image Comparison</h2>\n").append("<p class=\"note\">Show resize results per image and scale.</p>\n");
 
         for (Sample sample : samples) {
             html.append("<div class=\"sample\" id=\"")
@@ -434,8 +432,8 @@ class ResizeComparison {
 
             // Original at native size.
             String origSize = "--w:" + sample.width() + "px;--ar:" + sample.width() + "/" + sample.height();
-            html.append("<h4>元画像</h4>\n<div class=\"grid\">\n")
-                    .append(figure(relative(sample.original().toString()), origSize, "元画像 · " + sample.width() + "×" + sample.height()))
+            html.append("<h4>Original image</h4>\n<div class=\"grid\">\n")
+                    .append(figure(relative(sample.original().toString()), origSize, "Original image · " + sample.width() + "×" + sample.height()))
                     .append("</div>\n");
 
             // Per target scale, one figure per algorithm.
@@ -448,7 +446,7 @@ class ResizeComparison {
                         continue;
                     }
                     String caption = variant.label() + " · " + variant.width() + "×" + variant.height() + "<small>PSNR " + String
-                            .format("%.1f", variant.psnr()) + " · SSIM " + String.format("%.4f", variant.ssim()) + " · 鮮鋭度 " + String
+                            .format("%.1f", variant.psnr()) + " · SSIM " + String.format("%.4f", variant.ssim()) + " · Sharpness " + String
                                     .format("%.3f", variant.sharpness()) + " · " + String
                                             .format("%.2f ms", variant.nanos() / 1_000_000.0) + " · " + group(variant.size()) + "</small>";
                     String size = "--w:" + variant.width() + "px;--ar:" + variant.width() + "/" + variant.height();
@@ -471,8 +469,8 @@ class ResizeComparison {
         int targetH = Math.max(1, (int) Math.round(sample.height() * targetScale));
         String size = "--w:" + targetW + "px;--ar:" + targetW + "/" + targetH;
         return "<figure class=\"cmp\" style=\"" + size + "\">" + "<div class=\"na-box\">" + escape(algorithm.name()
-                .toLowerCase()) + "<br>非対応</div>" + "<figcaption>" + sizeLabel(targetScale) + ' ' + escape(algorithm.name()
-                        .toLowerCase()) + " · 非対応" + (reason.isEmpty() ? ""
+                .toLowerCase()) + "<br>unsupported</div>" + "<figcaption>" + sizeLabel(targetScale) + ' ' + escape(algorithm.name()
+                        .toLowerCase()) + " · unsupported" + (reason.isEmpty() ? ""
                                 : "<small>" + escape(reason) + "</small>") + "</figcaption></figure>\n";
     }
 

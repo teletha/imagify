@@ -32,9 +32,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * アニメGIF → アニメAVIF変換のテスト。
+ * Test for animated GIF to animated AVIF conversion.
  *
- * <p>リサイズ版と通常版で出力先ディレクトリが分離されていることを確認する。
+ * <p>Verifies that resized and normal versions have separate output directories.
  */
 class AnimatedGifToAvifTest {
 
@@ -42,7 +42,7 @@ class AnimatedGifToAvifTest {
     private static final String REPORT_DIR = "target/test-output/anime-gif-to-avif";
 
     @Test
-    @DisplayName("アニメGIFをアニメAVIFに変換し、フレーム数・寸法・画質を保持する")
+    @DisplayName("Converts animated GIF to animated AVIF, preserving frame count, dimensions, and quality")
     void convertsAnimatedGifToAvif(@TempDir Path dir) throws Exception {
         Assumptions.assumeTrue(AvifCodec.isAvailable(),
                 () -> "libavif is not available");
@@ -59,34 +59,34 @@ class AnimatedGifToAvifTest {
         Path reportDir = Paths.get(REPORT_DIR);
         Files.createDirectories(reportDir);
 
-        // 少なくとも1枚のGIFで検証
+        // Verify on at least one GIF
         Path gif = gifs.get(0);
         List<BufferedImage> frames = readAllGifFrames(gif);
         int[] delaysMs = readGifFrameDelays(gif);
 
-        // リサイズなしでAVIFに変換
+        // Convert to AVIF without resizing
         byte[] avifBytes = AvifCodec.encodeAnimation(frames, delaysMs, 60, 0);
         assertTrue(avifBytes.length > 0, "encoded AVIF is empty");
 
-        // デコードして検証
+        // Decode and verify
         List<BufferedImage> decodedFrames = AvifCodec.decodeAnimation(avifBytes);
         assertFalse(decodedFrames.isEmpty(), "decoded frames should not be empty");
 
-        // フレーム数がゼロでないことを確認
+        // Confirm frame count is not zero
         assertTrue(decodedFrames.size() > 0, "should have decoded frames");
 
-        // 全デコードフレームの寸法が元の寸法と一致する
+        // Verify all decoded frames match original dimensions
         for (BufferedImage frame : decodedFrames) {
             assertEquals(frames.get(0).getWidth(), frame.getWidth(), "frame width mismatch");
             assertEquals(frames.get(0).getHeight(), frame.getHeight(), "frame height mismatch");
         }
 
-        // 出力ファイルを書き込み
+        // Write output file
         Path outFile = reportDir.resolve(gif.getFileName().toString().replace(".gif", ".avif"));
         Files.createDirectories(reportDir);
         Files.write(outFile, avifBytes);
 
-        // AVIFヘッダー情報を確認
+        // Verify AVIF header info
         AvifImageInfo info = AvifCodec.readHeader(avifBytes);
         assertEquals(frames.get(0).getWidth(), info.width(), "AVIF width mismatch");
         assertEquals(frames.get(0).getHeight(), info.height(), "AVIF height mismatch");
@@ -97,7 +97,7 @@ class AnimatedGifToAvifTest {
     }
 
     @Test
-    @DisplayName("アニメGIFのフレームをリサイズしてアニメAVIFに変換する")
+    @DisplayName("Resize animated GIF frames and convert to animated AVIF")
     void resizedAnimatedGifToAvif(@TempDir Path dir) throws Exception {
         Assumptions.assumeTrue(AvifCodec.isAvailable(),
                 () -> "libavif is not available");
@@ -118,7 +118,7 @@ class AnimatedGifToAvifTest {
         int targetW = Math.max(1, originalFrames.get(0).getWidth() / 2);
         int targetH = Math.max(1, originalFrames.get(0).getHeight() / 2);
 
-        // リサイズしてAVIFにエンコード
+        // Resize and encode to AVIF
         List<BufferedImage> resizedFrames = new java.util.ArrayList<>();
         for (BufferedImage frame : originalFrames) {
             resizedFrames.add(resize(frame, targetW, targetH));
@@ -127,17 +127,17 @@ class AnimatedGifToAvifTest {
         byte[] avifBytes = AvifCodec.encodeAnimation(resizedFrames, delaysMs, 60, 0);
         assertTrue(avifBytes.length > 0, "encoded AVIF is empty");
 
-        // デコードして検証
+        // Decode and verify
         List<BufferedImage> decodedFrames = AvifCodec.decodeAnimation(avifBytes);
         assertFalse(decodedFrames.isEmpty(), "decoded frames should not be empty");
 
-        // 全デコードフレームの寸法がリサイズ後の寸法と一致する
+        // Verify all decoded frames match resized dimensions
         for (BufferedImage frame : decodedFrames) {
             assertEquals(targetW, frame.getWidth(), "decoded frame width mismatch");
             assertEquals(targetH, frame.getHeight(), "decoded frame height mismatch");
         }
 
-        // 出力ファイルを別ディレクトリに書き込み
+        // Write output file to a separate directory
         Path resizedDir = Paths.get("target/test-output/anime-gif-resized-to-avif");
         Files.createDirectories(resizedDir);
         Path outFile = resizedDir.resolve(gif.getFileName().toString().replace(".gif", "_resized.avif"));
@@ -150,7 +150,7 @@ class AnimatedGifToAvifTest {
     }
 
     @Test
-    @DisplayName("アニメGIF→アニメAVIF変換のピクセルレベル忠実度を検証")
+    @DisplayName("Verify pixel-level fidelity in animated GIF to AVIF conversion")
     void pixelFidelityPreserved(@TempDir Path dir) throws Exception {
         Assumptions.assumeTrue(AvifCodec.isAvailable(),
                 () -> "libavif is not available");
@@ -168,16 +168,16 @@ class AnimatedGifToAvifTest {
         List<BufferedImage> originalFrames = readAllGifFrames(gif);
         int[] delaysMs = readGifFrameDelays(gif);
 
-        // リサイズなしでAVIFに変換
+        // Convert to AVIF without resizing
         byte[] avifBytes = AvifCodec.encodeAnimation(originalFrames, delaysMs, 60, 0);
 
-        // デコード
+        // Decode
         List<BufferedImage> decodedFrames = AvifCodec.decodeAnimation(avifBytes);
 
-        // 少なくとも1フレームはデコードされるべき
+        // At least one frame should be decoded
         assertFalse(decodedFrames.isEmpty(), "should have decoded at least one frame");
 
-        // ピクセルレベルの忠実度を検証
+        // Verify pixel-level fidelity
         int checked = Math.min(originalFrames.size(), decodedFrames.size());
         double avgPsnr = 0;
         double avgSsim = 0;
@@ -196,11 +196,11 @@ class AnimatedGifToAvifTest {
             avgSsim /= validFrames;
         }
 
-        // AVIFはロスリーだが、構造的には類似しているはず
+        // AVIF is lossy but should be structurally similar
         assertTrue(avgSsim > 0.3,
                 "average SSIM should be > 0.3 (lossy AVIF): " + avgSsim);
 
-        // 出力ファイルを書き込み（他のテストと被らないようにサブディレクトリ）
+        // Write output file (to a subdirectory to avoid collision with other tests)
         Path fidelityDir = Paths.get(REPORT_DIR).resolve("fidelity");
         Files.createDirectories(fidelityDir);
         Path outFile = fidelityDir.resolve(gif.getFileName().toString().replace(".gif", ".avif"));
@@ -211,7 +211,7 @@ class AnimatedGifToAvifTest {
     }
 
     @Test
-    @DisplayName("アニメAVIFは彩度を4:2:0に間引く")
+    @DisplayName("Animated AVIF subsamples chroma to 4:2:0")
     void animationSubsamplesChroma() throws Exception {
         Assumptions.assumeTrue(AvifCodec.isAvailable(), () -> "libavif is not available");
 

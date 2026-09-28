@@ -283,25 +283,25 @@ class FormatComparison {
         html.append("<!DOCTYPE html>\n<html lang=\"ja\">\n<head>\n")
                 .append("<meta charset=\"utf-8\">\n")
                 .append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n")
-                .append("<title>AVIF / WebP 画質とサイズの比較</title>\n")
+                .append("<title>AVIF / WebP Quality and Size Comparison</title>\n")
                 .append("<style>\n")
                 .append(ReportAssets.css())
                 .append(extraCss())
                 .append("\n</style>\n</head>\n<body>\n");
 
-        html.append("<h1>AVIF / WebP 画質とサイズの比較</h1>\n")
+        html.append("<h1>AVIF / WebP Quality and Size Comparison</h1>\n")
                 .append("<p class=\"lead\">")
                 .append(samples.size())
-                .append(" 枚の PNG（合計 ")
+                .append(" images (total ")
                 .append(group(source))
-                .append("）を libavif ")
+                .append(") converted to libavif ")
                 .append(AvifCodec.getVersion())
-                .append(" と WebP に変換し、品質ごとのサイズと画質指標を比べたもの。" + "画質指標は元画像にデコードし直した結果に対して算出している。</p>\n");
+                .append(", and WebP, comparing the size and quality metrics per quality setting." + "Quality metrics are calculated against the result of re-decoding the original image.</p>\n");
 
         appendSummary(html, samples);
         appendDetail(html, samples);
 
-        html.append("<h2>3. 画像比較</h2>\n").append("<p class=\"note\">各画像の変換結果を表示。画像は最大幅 480px に制限して表示。</p>\n");
+        html.append("<h2>3. Comparison</h2>\n").append("<p class=\"note\">Show conversion results per image. Images are displayed with a max width of 480px.</p>\n");
 
         for (Sample sample : samples) {
             String ratio = sample.width() + "/" + sample.height();
@@ -323,7 +323,7 @@ class FormatComparison {
                     .append("\" alt=\"")
                     .append(escape(sample.name()))
                     .append("\" loading=\"lazy\">")
-                    .append("<figcaption>原画像 · ")
+                    .append("<figcaption>original · ")
                     .append(group(sample.sourceBytes()))
                     .append(" · ")
                     .append(sample.width())
@@ -373,10 +373,10 @@ class FormatComparison {
     }
 
     private static void appendSummary(StringBuilder html, List<Sample> samples) {
-        html.append("<h2>1. 集計</h2>\n")
-                .append("<p class=\"note\">全画像の合計。SSIM が 1 に近いほど原画像に似ている。</p>\n")
-                .append("<table>\n<thead><tr><th>形式</th><th>品質</th><th>合計サイズ</th>")
-                .append("<th>PNG 比</th><th>PSNR (dB)</th><th>SSIM</th><th>エンコード</th>")
+        html.append("<h2>1. Summary</h2>\n")
+                .append("<p class=\"note\">Total across all images. The closer SSIM is to 1, the more similar to the original.</p>\n")
+                .append("<table>\n<thead><tr><th>format</th><th>quality</th><th>total size</th>")
+                .append("<th>vs PNG</th><th>PSNR (dB)</th><th>SSIM</th><th>encode</th>")
                 .append("</tr></thead>\n<tbody>\n");
         for (String[] row : summaryRows(samples)) {
             html.append("<tr><td>")
@@ -399,12 +399,12 @@ class FormatComparison {
     }
 
     private static void appendDetail(StringBuilder html, List<Sample> samples) {
-        html.append("<h2>2. 一覧</h2>\n").append("<p class=\"note\">見出しをクリックすると並び替えられる。" + "括弧内は PNG に対する圧縮率と SSIM。</p>\n");
+        html.append("<h2>2. Detail</h2>\n").append("<p class=\"note\">Click a heading to sort." + "(brackets show compression ratio and SSIM vs PNG).</p>\n");
 
         // Separate table per format
         for (String format : new String[] {AVIF, WEBP}) {
             String displayName = format.toUpperCase();
-            html.append("<h3>").append(displayName).append("</h3>\n").append("<table>\n<thead><tr><th>画像</th><th>サイズ</th><th>PNG</th>");
+            html.append("<h3>").append(displayName).append("</h3>\n").append("<table>\n<thead><tr><th>image</th><th>size</th><th>PNG</th>");
             for (int quality : QUALITIES) {
                 html.append("<th>q").append(quality).append("</th>");
             }
@@ -416,7 +416,7 @@ class FormatComparison {
                         .append("\">")
                         .append(escape(sample.name()))
                         .append("</a>")
-                        .append(sample.opaque() ? "" : " <span class=\"tag\">透過あり</span>")
+                        .append(sample.opaque() ? "" : " <span class=\"tag\">alpha</span>")
                         .append("</td><td class=\"num\">")
                         .append(sample.width())
                         .append("×")
@@ -434,14 +434,14 @@ class FormatComparison {
 
         // WebP lossless as a separate section
         html.append("<h3>WebP Lossless</h3>\n")
-                .append("<table>\n<thead><tr><th>画像</th><th>サイズ</th><th>PNG</th><th>webp lossless</th></tr></thead>\n<tbody>\n");
+                .append("<table>\n<thead><tr><th>image</th><th>size</th><th>PNG</th><th>webp lossless</th></tr></thead>\n<tbody>\n");
         for (Sample sample : samples) {
             html.append("<tr><td class=\"name\"><a href=\"#")
                     .append(sample.id())
                     .append("\">")
                     .append(escape(sample.name()))
                     .append("</a>")
-                    .append(sample.opaque() ? "" : " <span class=\"tag\">透過あり</span>")
+                    .append(sample.opaque() ? "" : " <span class=\"tag\">alpha</span>")
                     .append("</td><td class=\"num\">")
                     .append(sample.width())
                     .append("×")
