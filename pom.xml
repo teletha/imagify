@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.teletha</groupId>
 	<artifactId>imagify</artifactId>
-	<version>1.0.3</version>
+	<version>1.1.0</version>
 	<packaging>jar</packaging>
 	<name>imagify</name>
 	<description>AVIF encoding and decoding for Java, backed by libavif.
@@ -28,8 +28,10 @@ The `jpegli` library is bundled and unpacked the same way.
     -Dimagify.jpeg.bundled=false   # ignore the bundled library,
                                     # use a system jpegli instead
 
-The native `libwebp` library is bundled the same way, inside
-`webp4j`.
+The native `libwebp` library is bundled the same way.
+
+    -Dimagify.webp.bundled=false  # ignore the bundled library,
+                                    # use a system libwebp instead
 
 Neither is required for JPEG to work. When one of them is
 missing for the running platform, the `ImageIO` plug-in steps
@@ -110,10 +112,12 @@ decodes the entry closest to 256x256.
     List&lt;BufferedImage&gt; frames =
         WebpCodec.decodeAnimation(animated);
 
-Lossless `VP8L` output is selected by choosing the
-`WebP Lossless` compression type of the write parameter, or by
-passing `true` to `WebpCodec.encode`. An animated file is read
-as one image per frame, each already composited onto the canvas.
+The direct API lives in `imagify.webp.jna.WebpCodec`, alongside
+the `imagify.webp` ImageIO plug-in it backs. Lossless `VP8L`
+output is selected by choosing the `WebP Lossless` compression
+type of the write parameter, or by passing `true` to
+`WebpCodec.encode`. An animated file is read as one image per
+frame, each already composited onto the canvas.
 
 ## SVG
 
@@ -143,8 +147,9 @@ by the document, so resizing is a separate step.
 ## Version
 
 Supported `libavif` versions: `1.0.0` to `1.4.x`. `JpegliCodec`
-binds a flat C ABI of its own rather than jpegli&apos;s, and refuses
-a library built against another revision of it.</description>
+and `WebpCodec` bind a flat C ABI of their own rather than
+jpegli&apos;s or libwebp&apos;s, and refuse a library built against
+another revision of it.</description>
 	<licenses>
 		<license>
 			<name>MIT License</name>
@@ -170,13 +175,6 @@ a library built against another revision of it.</description>
 			<groupId>com.github.weisj</groupId>
 			<artifactId>jsvg</artifactId>
 			<version>2.2.0</version>
-			<scope>compile</scope>
-			<exclusions/>
-		</dependency>
-		<dependency>
-			<groupId>dev.matrixlab.webp4j</groupId>
-			<artifactId>webp4j-core</artifactId>
-			<version>2.5.0</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
