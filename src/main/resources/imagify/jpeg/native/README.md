@@ -31,13 +31,13 @@ Run it with:
 gh workflow run jpegli-natives.yml
 ```
 
-The build is driven by `src/main/native/CMakeLists.txt`, which is an overlay on jpegli's own build
+The build is driven by `src/main/native/jpegli/CMakeLists.txt`, which is an overlay on jpegli's own build
 rather than a fork of it:
 
 ```
 git clone --recurse-submodules https://github.com/google/jpegli
 git -C jpegli checkout 031a0077f5799a6041004267fc12b956c1f52a20
-cmake -S src/main/native -B build \
+cmake -S src/main/native/jpegli -B build \
       -DCMAKE_BUILD_TYPE=Release \
       -DIMAGIFY_JPEGLI_SOURCE_DIR=$PWD/jpegli \
       -DIMAGIFY_JPEGLI_VERSION=0.12.0
@@ -138,7 +138,7 @@ report will quote.
 
 That said, the bundled library is whatever the workflow last built, so its version drifts over time.
 What this jar actually binds is not jpegli but the flat C ABI declared in
-`src/main/native/imagify_jpegli.h`, and that is what `JpegliLibrary.ABI_VERSION` gates on: a library
+`src/main/native/jpegli/imagify_jpegli.h`, and that is what `JpegliLibrary.ABI_VERSION` gates on: a library
 built against a different revision of the header answers the version call with something else and is
 refused before the first call, rather than being discovered later as garbage pixels. Raising
 `ABI_VERSION` is a deliberate act that means the header changed in a way the binding does not know

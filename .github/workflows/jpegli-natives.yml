@@ -106,7 +106,7 @@ jobs:
           ninja --version
 
       - name: Configure
-        # src/main/native is an overlay rather than a fork of jpegli's build: jpegli only declares
+        # src/main/native/jpegli is an overlay rather than a fork of jpegli's build: jpegli only declares
         # its libjpeg62 compatible target where the linker understands a version script, which
         # excludes Windows and macOS, and the overlay re-declares it for all three with whatever the
         # local linker does understand. See the comments in that CMakeLists.txt.
@@ -118,7 +118,7 @@ jobs:
         # The version is passed in rather than derived, because `git describe` has no tags to work
         # from and would report the short commit hash as the jpegli version.
         run: >
-          cmake -S src/main/native -B build -G Ninja
+          cmake -S src/main/native/jpegli -B build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DIMAGIFY_JPEGLI_SOURCE_DIR=${{ github.workspace }}/jpegli
           -DIMAGIFY_JPEGLI_VERSION=${{ env.JPEGLI_VERSION }}

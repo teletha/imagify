@@ -44,7 +44,7 @@ import static java.lang.System.getLogger;
  * libjpegli-macos-arm64.dylib
  * </pre>
  *
- * <p>See {@code src/main/native/CMakeLists.txt} for how they are built. The short version is that
+ * <p>See {@code src/main/native/jpegli/CMakeLists.txt} for how they are built. The short version is that
  * they are statically linked against jpegli and highway, so that they have no further dependencies
  * at all: on Windows the loader resolves the dependencies of a {@code LoadLibrary}ed module against
  * the directory of the executable and against {@code PATH} only, never against the directory of the

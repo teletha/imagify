@@ -59,9 +59,8 @@ nothing.
 with Windows, so again a user who has installed nothing would be missing them.
 
 `check-self-contained.py` enforces the result: `VCRUNTIME140.dll` and `MSVCP140.dll` are not on its
-allow list, so a build that picks them up fails. For reference, the DLLs bundled in
-`webp4j-core` sit in the same position, importing nothing beyond `KERNEL32.dll` and the C runtime
-that Windows provides.
+allow list, so a build that picks them up fails. The imagify shims are in the same position,
+importing nothing beyond `KERNEL32.dll` and the C runtime that Windows provides.
 
 ### Naming the target CPU
 
