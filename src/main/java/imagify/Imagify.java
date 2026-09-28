@@ -624,8 +624,8 @@ public final class Imagify {
      * @param delayMs how long each frame is shown, in milliseconds
      * @return this pipeline for chaining
      */
-    public Imagify splitGrid(int columns, int rows, int delayMs) {
-        return splitGrid(columns, rows, checkedGridSize(columns, rows), delayMs);
+    public Imagify asAnimation(int columns, int rows, int delayMs) {
+        return asAnimation(columns, rows, checkedGridSize(columns, rows), delayMs);
     }
 
     /**
@@ -633,9 +633,9 @@ public final class Imagify {
      * the frames of an animation. Use it when the last row of the sheet is not full.
      *
      * @param frameCount how many pieces to take, at most {@code columns * rows}
-     * @see #splitGrid(int, int, int)
+     * @see #asAnimation(int, int, int)
      */
-    public Imagify splitGrid(int columns, int rows, int frameCount, int delayMs) {
+    public Imagify asAnimation(int columns, int rows, int frameCount, int delayMs) {
         int capacity = checkedGridSize(columns, rows);
         if (frameCount <= 0 || capacity < frameCount) {
             throw new IllegalArgumentException("a " + columns + "x" + rows + " grid holds 1 to " + capacity + " frames, got " + frameCount);
