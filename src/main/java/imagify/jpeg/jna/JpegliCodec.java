@@ -92,7 +92,7 @@ public final class JpegliCodec {
     }
 
     /**
-     * Returns the version of the loaded jpegli, for example {@code "0.5.0 (abc1234)"}.
+     * Returns the version of the loaded jpegli, for example {@code "0.12.0"}.
      *
      * @return the reported version, or {@code null} when the library is unavailable
      */

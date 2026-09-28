@@ -16,6 +16,21 @@ error handling to live.
 The binaries these produce go into `src/main/resources/imagify/jpeg/native/`, which is documented by
 `README.md` in that directory and built by `.github/workflows/jpegli-natives.yml`.
 
+## Which jpegli this binds
+
+The libjpeg62 API, not jpegli's own. jpegli ships a `libjpeg62` compatible layer, and binding that
+is what keeps this shim to the handful of scalars in `imagify_jpegli.h` instead of several hundred
+struct fields that follow the libjpeg revision rather than anything this project controls.
+
+jpegli publishes neither tags nor releases, so the workflow pins a commit
+(`JPEGLI_COMMIT`, next to the `JPEGLI_VERSION` that `JpegliCodec.getVersion()` reports) and
+`IMAGIFY_JPEGLI_SOURCE_DIR` points at a checkout of it. The layer's exact revision is not something
+this project can configure, either: `lib/jpegli.cmake` would pass `JPEG_LIB_VERSION` to the wrapper
+through a variable it never assigns, so the wrapper is compiled with that macro undefined and its
+`#if JPEG_LIB_VERSION >= 70` guards all read false. The 6.2 API is what gets built, which is why
+`JCS_YCbCr_422` — a constant that has never existed in libjpeg — cannot appear in the shim, and why
+subsampling is written as a sampling factor rather than as a colour space.
+
 ## Why a shim at all
 
 The obvious binding is JNA straight onto jpegli's libjpeg62 interface: name `jpeg_create_compress`

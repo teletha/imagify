@@ -17,7 +17,13 @@ permissions:
   contents: write
 
 env:
-  JPEGLI_VERSION: v0.5.0
+  # jpegli publishes neither tags nor releases, so there is nothing to pin a version to and the
+  # commit is the only thing that can be pinned. The version beside it is jpegli/lib/CMakeLists.txt's
+  # own JPEGLI_LIBRARY_VERSION at that commit, and the two are only ever meaningful together: it is
+  # reported by JpegliCodec.getVersion() and ends up in a bug report, which is no use if it names a
+  # different revision than the one that was built.
+  JPEGLI_COMMIT: 031a0077f5799a6041004267fc12b956c1f52a20
+  JPEGLI_VERSION: 0.12.0
 
 jobs:
   build:
@@ -41,12 +47,15 @@ jobs:
           python-version: '3.12'
 
       - name: Check out jpegli
-        # submodules: highway is jpegli's own dependency and is fetched by the jpegli build itself,
-        # so a checkout without it fails the configure step rather than the link.
+        # submodules: recursive, and not optional. highway is a hard dependency that the jpegli
+        # configure refuses to continue without, and Little-CMS is one too even though nothing here
+        # links it: jpegli always includes lib/jpegli_cms.cmake and third_party/CMakeLists.txt
+        # FATAL_ERRORs on finding neither Little-CMS nor skcms. The rest of the submodules are only
+        # for tools and tests, all of which are configured off.
         uses: actions/checkout@v4
         with:
           repository: google/jpegli
-          ref: ${{ env.JPEGLI_VERSION }}
+          ref: ${{ env.JPEGLI_COMMIT }}
           path: jpegli
           submodules: recursive
 
@@ -88,8 +97,13 @@ jobs:
           sudo apt-get install -y ninja-build
 
       - name: Install Ninja (macOS)
+        # brew install exits non-zero on a runner that already has ninja, so the failure is expected
+        # on some images and must not fail the step. Asking the binary for its version is what
+        # actually decides, since `|| true` would swallow a genuine install failure as well.
         if: runner.os == 'macOS'
-        run: brew install ninja
+        run: |
+          brew install ninja || true
+          ninja --version
 
       - name: Configure
         # src/main/native is an overlay rather than a fork of jpegli's build: jpegli only declares
@@ -101,15 +115,13 @@ jobs:
         # that is the one being replaced, and highway linked in statically: a shared library loaded
         # by absolute path out of a temporary directory cannot be counted on to find a sibling.
         #
-        # CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded is /MT rather than /MD. The default would leave
-        # the library importing VCRUNTIME140.dll and MSVCP140.dll, which come from the Visual C++
-        # redistributable rather than from Windows, so a user who has installed nothing would be
-        # missing them. CMake ignores the variable on the Unix targets.
+        # The version is passed in rather than derived, because `git describe` has no tags to work
+        # from and would report the short commit hash as the jpegli version.
         run: >
           cmake -S src/main/native -B build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DIMAGIFY_JPEGLI_SOURCE_DIR=${{ github.workspace }}/jpegli
-          -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+          -DIMAGIFY_JPEGLI_VERSION=${{ env.JPEGLI_VERSION }}
 
       - name: Build
         # imagify_jpegli is the shim plus the static jpegli and highway behind it. There is no
@@ -118,8 +130,9 @@ jobs:
         run: cmake --build build --target imagify_jpegli
 
       - name: Collect
-        # One name pattern for every platform. CMake's lib prefix applies to DLLs too, so the
-        # Windows output is libjpegli.dll and the others libjpegli.so and libjpegli.dylib.
+        # One name pattern for every platform. CMake puts no prefix on a DLL, so the Windows output
+        # is jpegli.dll and the others libjpegli.so and libjpegli.dylib; both spellings of the
+        # Windows one are matched so that a change of prefix cannot turn into an empty result.
         # -type f skips the libjpegli.so.1.0.0 symlinks and copies the real file.
         shell: bash
         run: |
@@ -160,8 +173,9 @@ jobs:
           tag_name: jpegli-natives
           name: jpegli-natives
           body: |
-            Rolling build of the `jpegli` shared libraries bundled in `imagify`, built from
-            `${{ env.JPEGLI_VERSION }}`.
+            Rolling build of the `jpegli` shared libraries bundled in `imagify`, built from jpegli
+            ${{ env.JPEGLI_VERSION }} at `${{ env.JPEGLI_COMMIT }}`. jpegli publishes neither tags nor
+            releases, so the commit is the pin.
 
             Drop these files into `src/main/resources/imagify/jpeg/native/`.
           files: dist/*

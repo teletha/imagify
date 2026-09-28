@@ -374,19 +374,20 @@ int imagify_jpegli_encode(const uint8_t* pixels, int width, int height, int qual
     cinfo.in_color_space = JCS_RGB;
     jpeg_set_defaults(&cinfo);
     /*
-     * jpeg_set_colorspace rebuilds comp_info from the colour space it is given, so the sampling
-     * factors have to be written after it and not before. 4:4:4 is the one that needs saying out
-     * loud: libjpeg has no JCS_YCbCr_444, and plain JCS_YCbCr means 4:2:0.
+     * There is no libjpeg constant for 4:2:2 or for 4:4:4. J_COLOR_SPACE names the colour transform
+     * and says nothing about how finely the two colour difference channels are stored, so plain
+     * JCS_YCbCr on its own means 4:2:0, which is what the two factors below default to.
+     *
+     * Only the luma channel's pair is written, because libjpeg requires the others to divide it
+     * evenly and derives them from it. 4:4:4 is 1 by 1 rather than a colour space of its own for
+     * the same reason: expressing it as JCS_YCbCr plus 1 by 1 is the only way to say it.
+     *
+     * These are written after jpeg_set_colorspace rather than before it, because that call rebuilds
+     * comp_info from the colour space it is given and would otherwise overwrite them.
      */
-    if (subsampling == IMAGIFY_JPEG_SAMP_422) {
-      jpeg_set_colorspace(&cinfo, JCS_YCbCr_422);
-    } else {
-      jpeg_set_colorspace(&cinfo, JCS_YCbCr);
-      if (subsampling == IMAGIFY_JPEG_SAMP_444) {
-        cinfo.comp_info[0].h_samp_factor = 1;
-        cinfo.comp_info[0].v_samp_factor = 1;
-      }
-    }
+    jpeg_set_colorspace(&cinfo, JCS_YCbCr);
+    cinfo.comp_info[0].h_samp_factor = (subsampling == IMAGIFY_JPEG_SAMP_422) ? 2 : 1;
+    cinfo.comp_info[0].v_samp_factor = (subsampling == IMAGIFY_JPEG_SAMP_420) ? 2 : 1;
     jpeg_set_quality(&cinfo, quality, TRUE);
     /* The standard tables are the default, and computing a set per image costs a pass over the
        coefficients and a table the decoder has to read. */

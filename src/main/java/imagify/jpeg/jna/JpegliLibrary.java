@@ -130,7 +130,7 @@ public interface JpegliLibrary extends Library {
     String imagify_jpegli_abi_version();
 
     /**
-     * @return the jpegli version the library was built from, for example {@code "0.5.0 (abc1234)"}
+     * @return the jpegli version the library was built from, for example {@code "0.12.0"}
      */
     String imagify_jpegli_jpegli_version();
 

@@ -56,7 +56,7 @@ extern "C" {
 const char* imagify_jpegli_abi_version(void);
 
 /*
- * @return the jpegli version this library was built from, as a string such as "0.5.0 (abc1234)"
+ * @return the jpegli version this library was built from, as a string such as "0.12.0"
  */
 const char* imagify_jpegli_jpegli_version(void);
 
