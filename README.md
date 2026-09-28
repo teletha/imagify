@@ -30,8 +30,10 @@ The `jpegli` library is bundled and unpacked the same way.
     -Dimagify.jpeg.bundled=false   # ignore the bundled library,
                                     # use a system jpegli instead
 
-The native `libwebp` library is bundled the same way, inside
-`webp4j`.
+The native `libwebp` library is bundled the same way.
+
+    -Dimagify.webp.bundled=false  # ignore the bundled library,
+                                    # use a system libwebp instead
 
 Neither is required for JPEG to work. When one of them is
 missing for the running platform, the `ImageIO` plug-in steps
@@ -112,10 +114,12 @@ decodes the entry closest to 256x256.
     List<BufferedImage> frames =
         WebpCodec.decodeAnimation(animated);
 
-Lossless `VP8L` output is selected by choosing the
-`WebP Lossless` compression type of the write parameter, or by
-passing `true` to `WebpCodec.encode`. An animated file is read
-as one image per frame, each already composited onto the canvas.
+The direct API lives in `imagify.webp.jna.WebpCodec`, alongside
+the `imagify.webp` ImageIO plug-in it backs. Lossless `VP8L`
+output is selected by choosing the `WebP Lossless` compression
+type of the write parameter, or by passing `true` to
+`WebpCodec.encode`. An animated file is read as one image per
+frame, each already composited onto the canvas.
 
 ## SVG
 
@@ -145,8 +149,9 @@ by the document, so resizing is a separate step.
 ## Version
 
 Supported `libavif` versions: `1.0.0` to `1.4.x`. `JpegliCodec`
-binds a flat C ABI of its own rather than jpegli's, and refuses
-a library built against another revision of it.
+and `WebpCodec` bind a flat C ABI of their own rather than
+jpegli's or libwebp's, and refuse a library built against
+another revision of it.
 <p align="right"><a href="#top">back to top</a></p>
 
 
@@ -174,7 +179,7 @@ Add it into in the dependencies element like so:
 <dependency>
     <groupId>com.github.teletha</groupId>
     <artifactId>imagify</artifactId>
-    <version>1.0.3</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 #### [Gradle](https://gradle.org/)
@@ -187,7 +192,7 @@ repositories {
 Add it into the dependencies section like so:
 ```gradle
 dependencies {
-    implementation 'com.github.teletha:imagify:1.0.3'
+    implementation 'com.github.teletha:imagify:1.1.0'
 }
 ```
 #### [SBT](https://www.scala-sbt.org/)
@@ -197,7 +202,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add it into the libraryDependencies section like so:
 ```scala
-libraryDependencies += "com.github.teletha" % "imagify" % "1.0.3"
+libraryDependencies += "com.github.teletha" % "imagify" % "1.1.0"
 ```
 #### [Leiningen](https://leiningen.org/)
 Add JitPack repository at the end of repositories in your project().clj:
@@ -206,12 +211,12 @@ Add JitPack repository at the end of repositories in your project().clj:
 ```
 Add it into the dependencies section like so:
 ```clj
-:dependencies [[com.github.teletha/imagify "1.0.3"]]
+:dependencies [[com.github.teletha/imagify "1.1.0"]]
 ```
 #### [Bee](https://teletha.github.io/bee)
 Add it into your project definition class like so:
 ```java
-require("com.github.teletha", "imagify", "1.0.3");
+require("com.github.teletha", "imagify", "1.1.0");
 ```
 <p align="right"><a href="#top">back to top</a></p>
 
@@ -241,7 +246,6 @@ If you think something might be a bug, but you're not sure, ask on StackOverflow
 Imagify depends on the following products on runtime.
 * [jna-5.19.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.19.1)
 * [jsvg-2.2.0](https://mvnrepository.com/artifact/com.github.weisj/jsvg/2.2.0)
-* [webp4j-core-2.5.0](https://mvnrepository.com/artifact/dev.matrixlab.webp4j/webp4j-core/2.5.0)
 <p align="right"><a href="#top">back to top</a></p>
 
 
