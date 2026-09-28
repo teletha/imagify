@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.function.UnaryOperator;
+import java.util.function.Function;
 
 /**
  * Fluent pipeline API for image processing.
@@ -349,7 +349,7 @@ public final class Imagify {
      * Resizes all frames to exact dimensions using the specified algorithm.
      */
     public Imagify resize(int targetW, int targetH, ResizeAlgorithm algorithm) {
-        return map(frame -> BufferedImageResize.resize(frame, targetW, targetH, algorithm));
+        return map(BufferedImageResize.resize(targetW, targetH, algorithm));
     }
 
     /**
@@ -506,13 +506,13 @@ public final class Imagify {
      * </p>
      */
     public Imagify crop(int x, int y, int width, int height) {
-        return map(frame -> BufferedImageTransform.crop(frame, x, y, width, height));
+        return map(BufferedImageTransform.crop(x, y, width, height));
     }
 
     /**
      * Rotates every frame clockwise, resampling bilinearly unless the angle is a multiple of 90.
      *
-     * @see BufferedImageTransform#rotate(BufferedImage, double)
+     * @see BufferedImageTransform#rotate(double)
      */
     public Imagify rotate(double degrees) {
         return rotate(degrees, ResizeAlgorithm.DEFAULT);
@@ -521,30 +521,30 @@ public final class Imagify {
     /**
      * Rotates every frame clockwise.
      *
-     * @see BufferedImageTransform#rotate(BufferedImage, double, ResizeAlgorithm)
+     * @see BufferedImageTransform#rotate(double, ResizeAlgorithm)
      */
     public Imagify rotate(double degrees, ResizeAlgorithm algorithm) {
-        return map(frame -> BufferedImageTransform.rotate(frame, degrees, algorithm));
+        return map(BufferedImageTransform.rotate(degrees, algorithm));
     }
 
     /**
      * Mirrors every frame left to right.
      */
     public Imagify flipHorizontal() {
-        return map(BufferedImageTransform::flipHorizontal);
+        return map(BufferedImageTransform.flipHorizontal());
     }
 
     /**
      * Mirrors every frame top to bottom.
      */
     public Imagify flipVertical() {
-        return map(BufferedImageTransform::flipVertical);
+        return map(BufferedImageTransform.flipVertical());
     }
 
     /**
      * Applies an operation to every frame, keeping the timing of the sequence untouched.
      */
-    public Imagify map(UnaryOperator<BufferedImage> operation) {
+    public Imagify map(Function<BufferedImage, BufferedImage> operation) {
         var frames = new ArrayList<BufferedImage>(frameSequence.frameCount());
         for (BufferedImage frame : frameSequence.frames()) {
             frames.add(operation.apply(frame));
@@ -682,7 +682,7 @@ public final class Imagify {
                 throw new IllegalArgumentException("the cell " + cell + " lies outside the " + sheet.getWidth() + "x" + sheet
                         .getHeight() + " image");
             }
-            frames.add(BufferedImageTransform.crop(sheet, cell.x(), cell.y(), cell.width(), cell.height()));
+            frames.add(BufferedImageTransform.crop(cell.x(), cell.y(), cell.width(), cell.height()).apply(sheet));
         }
         // 0 loops for ever, the way a sheet cut into an animation is usually meant to play
         int[] delays = new int[frames.size()];

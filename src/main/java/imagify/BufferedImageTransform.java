@@ -14,14 +14,16 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.function.Function;
 
 /**
  * Pixel rearrangement operations on a single {@link BufferedImage}: cropping, rotating and flipping.
  *
- * <p>Every method returns a new image of {@link BufferedImage#TYPE_INT_ARGB} and leaves the source
- * untouched. That is the same normalisation {@link BufferedImageResize} applies, so the result of one
- * of these can be handed straight to the other, and a frame of a {@link FrameSequence} can be moved
- * around without its neighbours noticing a difference.
+ * <p>Every operation returns a {@link Function} that produces a new image of
+ * {@link BufferedImage#TYPE_INT_ARGB} and leaves the source untouched. That is the same
+ * normalisation {@link BufferedImageResize} applies, so the result of one of these can be
+ * handed straight to the other, and a frame of a {@link FrameSequence} can be moved around
+ * without its neighbours noticing a difference.
  *
  * <p>Rotating by a multiple of 90 degrees moves whole pixels and is therefore exact. Any other angle
  * has to resample, and of the {@link ResizeAlgorithm}s only {@link ResizeAlgorithm#NEAREST} and
@@ -32,9 +34,12 @@ import java.awt.image.BufferedImage;
  *
  * <p>Usage:</p>
  * <pre>{@code
- * BufferedImage icon = BufferedImageTransform.crop(sheet, 0, 0, 32, 32);
- * BufferedImage upright = BufferedImageTransform.rotate(photo, -90);
- * BufferedImage mirrored = BufferedImageTransform.flipHorizontal(portrait);
+ * Function<BufferedImage, BufferedImage> crop = BufferedImageTransform.crop(0, 0, 32, 32);
+ * BufferedImage icon = crop.apply(sheet);
+ * Function<BufferedImage, BufferedImage> rotate = BufferedImageTransform.rotate(photo, -90);
+ * BufferedImage upright = rotate.apply(photo);
+ * Function<BufferedImage, BufferedImage> mirror = BufferedImageTransform.flipHorizontal();
+ * BufferedImage mirrored = mirror.apply(portrait);
  * }</pre>
  */
 public final class BufferedImageTransform {
@@ -44,62 +49,60 @@ public final class BufferedImageTransform {
     // --------------------------------------------------------------------------------- crop
 
     /**
-     * Extracts a rectangle as a new image.
+     * Returns a function that extracts a rectangle from an image as a new image.
      *
      * <p>The region is copied rather than viewed, so the result shares no raster with the source.
      * That matters here: {@link BufferedImage#getSubimage} hands back a view onto the parent, which
      * keeps the whole parent alive and leaves the copy off the plain image types the encoders expect.
      *
-     * @param source the image to cut from
      * @param x      left edge, in source pixels
      * @param y      top edge, in source pixels
      * @param width  width of the region, in pixels
      * @param height height of the region, in pixels
-     * @return the extracted region
+     * @return a function that extracts the requested region
      * @throws IllegalArgumentException when the region is empty or reaches outside the image
      */
-    public static BufferedImage crop(BufferedImage source, int x, int y, int width, int height) {
-        require(source, "no image to crop");
+    public static Function<BufferedImage, BufferedImage> crop(int x, int y, int width, int height) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException(
                     "the crop size must be positive, got " + width + "x" + height);
         }
-        if (x < 0 || y < 0 || x + width > source.getWidth() || y + height > source.getHeight()) {
-            throw new IllegalArgumentException("the crop region at " + x + "," + y + " of "
-                    + width + "x" + height + " does not fit in the "
-                    + source.getWidth() + "x" + source.getHeight() + " image");
-        }
-        return draw(source, width, height,
-                AffineTransform.getTranslateInstance(-x, -y),
-                RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        return source -> {
+            require(source, "no image to crop");
+            if (x < 0 || y < 0 || x + width > source.getWidth() || y + height > source.getHeight()) {
+                throw new IllegalArgumentException("the crop region at " + x + "," + y + " of "
+                        + width + "x" + height + " does not fit in the "
+                        + source.getWidth() + "x" + source.getHeight() + " image");
+            }
+            return draw(source, width, height,
+                    AffineTransform.getTranslateInstance(-x, -y),
+                    RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        };
     }
 
     // ------------------------------------------------------------------------------- rotate
 
     /**
-     * Rotates an image, resampling bilinearly when the angle is not a multiple of 90 degrees.
+     * Returns a function that rotates an image, resampling bilinearly when the angle is not
+     * a multiple of 90 degrees.
      *
-     * @param source  the image to rotate
      * @param degrees the angle, clockwise, any finite value
-     * @return the rotated image
-     * @throws IllegalArgumentException when the source is missing or the angle is not finite
+     * @return a function that produces the rotated image
+     * @throws IllegalArgumentException when the angle is not finite
      */
-    public static BufferedImage rotate(BufferedImage source, double degrees) {
-        return rotate(source, degrees, ResizeAlgorithm.BILINEAR);
+    public static Function<BufferedImage, BufferedImage> rotate(double degrees) {
+        return rotate(degrees, ResizeAlgorithm.BILINEAR);
     }
 
     /**
-     * Rotates an image.
+     * Returns a function that rotates an image.
      *
-     * @param source    the image to rotate
      * @param degrees   the angle, clockwise, any finite value
      * @param algorithm how to resample, honoured only for angles that are not a multiple of 90 degrees
-     * @return the rotated image
-     * @throws IllegalArgumentException when the source or the algorithm is missing, or the angle is
-     *                                  not finite
+     * @return a function that produces the rotated image
+     * @throws IllegalArgumentException when the algorithm is missing, or the angle is not finite
      */
-    public static BufferedImage rotate(BufferedImage source, double degrees, ResizeAlgorithm algorithm) {
-        require(source, "no image to rotate");
+    public static Function<BufferedImage, BufferedImage> rotate(double degrees, ResizeAlgorithm algorithm) {
         if (algorithm == null) {
             throw new IllegalArgumentException("no resampling algorithm");
         }
@@ -107,23 +110,26 @@ public final class BufferedImageTransform {
             throw new IllegalArgumentException("the angle must be a finite number, got " + degrees);
         }
 
-        int width = source.getWidth();
-        int height = source.getHeight();
-        int quarter = quarterTurns(degrees);
-        if (quarter < 0) {
-            // An angle that is not a whole quarter turn has to resample, and the only two ways of
-            // doing that Java2D offers are nearest neighbour and bilinear. Anything else falls back to
-            // bilinear rather than pretending to be a kernel it is not.
-            return draw(source, width, height,
-                    AffineTransform.getRotateInstance(Math.toRadians(degrees), width / 2.0, height / 2.0),
-                    algorithm == ResizeAlgorithm.NEAREST
-                            ? RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
-                            : RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        }
-        boolean swapsAxes = quarter % 2 != 0;
-        return draw(source, swapsAxes ? height : width, swapsAxes ? width : height,
-                rightAngle(quarter, width, height),
-                RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        return source -> {
+            require(source, "no image to rotate");
+            int width = source.getWidth();
+            int height = source.getHeight();
+            int quarter = quarterTurns(degrees);
+            if (quarter < 0) {
+                // An angle that is not a whole quarter turn has to resample, and the only two ways of
+                // doing that Java2D offers are nearest neighbour and bilinear. Anything else falls back to
+                // bilinear rather than pretending to be a kernel it is not.
+                return draw(source, width, height,
+                        AffineTransform.getRotateInstance(Math.toRadians(degrees), width / 2.0, height / 2.0),
+                        algorithm == ResizeAlgorithm.NEAREST
+                                ? RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
+                                : RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            }
+            boolean swapsAxes = quarter % 2 != 0;
+            return draw(source, swapsAxes ? height : width, swapsAxes ? width : height,
+                    rightAngle(quarter, width, height),
+                    RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        };
     }
 
     /**
@@ -167,42 +173,42 @@ public final class BufferedImageTransform {
     // --------------------------------------------------------------------------------- flip
 
     /**
-     * Mirrors an image left to right.
+     * Returns a function that mirrors an image left to right.
      *
-     * @param source the image to mirror
-     * @return the mirrored image
+     * @return a function that produces the mirrored image
      * @throws IllegalArgumentException when the source is missing
      */
-    public static BufferedImage flipHorizontal(BufferedImage source) {
-        return flip(source, true);
+    public static Function<BufferedImage, BufferedImage> flipHorizontal() {
+        return flip(true);
     }
 
     /**
-     * Mirrors an image top to bottom.
+     * Returns a function that mirrors an image top to bottom.
      *
-     * @param source the image to mirror
-     * @return the mirrored image
+     * @return a function that produces the mirrored image
      * @throws IllegalArgumentException when the source is missing
      */
-    public static BufferedImage flipVertical(BufferedImage source) {
-        return flip(source, false);
+    public static Function<BufferedImage, BufferedImage> flipVertical() {
+        return flip(false);
     }
 
-    private static BufferedImage flip(BufferedImage source, boolean horizontal) {
-        require(source, "no image to flip");
-        int width = source.getWidth();
-        int height = source.getHeight();
-        AffineTransform transform = horizontal
-                ? AffineTransform.getScaleInstance(-1, 1)
-                : AffineTransform.getScaleInstance(1, -1);
-        // Mirroring about the origin lands the image in the negative quadrant, so it has to be
-        // shifted back by its own size. The shift has to come after the mirror, which is what
-        // preConcatenate() means: the mirror is applied to the point first, the shift to the result.
-        transform.preConcatenate(horizontal
-                ? AffineTransform.getTranslateInstance(width, 0)
-                : AffineTransform.getTranslateInstance(0, height));
-        return draw(source, width, height, transform,
-                RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+    private static Function<BufferedImage, BufferedImage> flip(boolean horizontal) {
+        return source -> {
+            require(source, "no image to flip");
+            int width = source.getWidth();
+            int height = source.getHeight();
+            AffineTransform transform = horizontal
+                    ? AffineTransform.getScaleInstance(-1, 1)
+                    : AffineTransform.getScaleInstance(1, -1);
+            // Mirroring about the origin lands the image in the negative quadrant, so it has to be
+            // shifted back by its own size. The shift has to come after the mirror, which is what
+            // preConcatenate() means: the mirror is applied to the point first, the shift to the result.
+            transform.preConcatenate(horizontal
+                    ? AffineTransform.getTranslateInstance(width, 0)
+                    : AffineTransform.getTranslateInstance(0, height));
+            return draw(source, width, height, transform,
+                    RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        };
     }
 
     // ------------------------------------------------------------------------- internals

@@ -10,6 +10,7 @@
 package imagify;
 
 import java.awt.image.BufferedImage;
+import java.util.function.Function;
 
 /**
  * High-quality {@link BufferedImage} resizing utility.
@@ -19,23 +20,39 @@ public final class BufferedImageResize {
 
     private BufferedImageResize() {}
 
-    public static BufferedImage resize(BufferedImage source, int targetW, int targetH, ResizeAlgorithm algorithm) {
+    /**
+     * Returns a function that resizes an image to the given dimensions.
+     *
+     * <p>The target size and the algorithm are fixed when the function is built, so the same
+     * function can be applied to every frame of a {@link FrameSequence} without recomputing
+     * either. The source is normalised to {@link BufferedImage#TYPE_INT_ARGB} on the way in,
+     * which is the same normalisation {@link BufferedImageTransform} applies, so the result of
+     * one of these can be handed straight to the other.
+     *
+     * @param targetW   the width to resize to
+     * @param targetH   the height to resize to
+     * @param algorithm the resampling algorithm
+     * @return a function that produces the resized image
+     * @throws IllegalArgumentException when the target size is not positive
+     */
+    public static Function<BufferedImage, BufferedImage> resize(int targetW, int targetH, ResizeAlgorithm algorithm) {
         if (targetW <= 0 || targetH <= 0) {
             throw new IllegalArgumentException("Target dimensions must be positive");
         }
-        BufferedImage src = ensureARGB(source);
-
-        if (algorithm == ResizeAlgorithm.NEAREST) {
-            return resizeNearest(src, targetW, targetH);
-        } else if (algorithm == ResizeAlgorithm.AREA) {
-            return resizeArea(src, targetW, targetH);
-        } else if (algorithm == ResizeAlgorithm.BILINEAR) {
-            return resizeBilinear(src, targetW, targetH);
-        } else if (algorithm == ResizeAlgorithm.HQX) {
-            return XbrzScale.resize(src, targetW, targetH);
-        } else {
-            return resizeKernel(src, targetW, targetH, algorithm);
-        }
+        return source -> {
+            BufferedImage src = ensureARGB(source);
+            if (algorithm == ResizeAlgorithm.NEAREST) {
+                return resizeNearest(src, targetW, targetH);
+            } else if (algorithm == ResizeAlgorithm.AREA) {
+                return resizeArea(src, targetW, targetH);
+            } else if (algorithm == ResizeAlgorithm.BILINEAR) {
+                return resizeBilinear(src, targetW, targetH);
+            } else if (algorithm == ResizeAlgorithm.HQX) {
+                return XbrzScale.resize(src, targetW, targetH);
+            } else {
+                return resizeKernel(src, targetW, targetH, algorithm);
+            }
+        };
     }
 
     /** Nearest neighbour - picks the closest source pixel. */

@@ -55,7 +55,7 @@ public final class ImageResizer {
      * @return the resized image
      */
     public static BufferedImage resize(BufferedImage source, int targetW, int targetH, ResizeAlgorithm algorithm) {
-        return BufferedImageResize.resize(source, targetW, targetH, algorithm);
+        return BufferedImageResize.resize(targetW, targetH, algorithm).apply(source);
     }
 
     /**

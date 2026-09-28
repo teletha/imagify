@@ -71,7 +71,7 @@ class BufferedImageTransformTest {
         @DisplayName("takes out the requested region and nothing else")
         void takesTheRegion() {
             BufferedImage source = labelled(6, 4);
-            BufferedImage cropped = BufferedImageTransform.crop(source, 2, 1, 3, 2);
+            BufferedImage cropped = BufferedImageTransform.crop(2, 1, 3, 2).apply(source);
             assertEquals(3, cropped.getWidth());
             assertEquals(2, cropped.getHeight());
             for (int y = 0; y < 2; y++) {
@@ -85,7 +85,7 @@ class BufferedImageTransformTest {
         @DisplayName("copies the region instead of viewing it, so the parent is not kept alive")
         void copiesRatherThanViews() {
             BufferedImage source = labelled(6, 4);
-            BufferedImage cropped = BufferedImageTransform.crop(source, 0, 0, 2, 2);
+            BufferedImage cropped = BufferedImageTransform.crop(0, 0, 2, 2).apply(source);
             // getSubimage() would hand back a view that shares the parent raster and reports a
             // TYPE_CUSTOM image, neither of which an encoder here is willing to take.
             assertEquals(BufferedImage.TYPE_INT_ARGB, cropped.getType());
@@ -101,7 +101,7 @@ class BufferedImageTransformTest {
             BufferedImage source = new BufferedImage(2, 1, BufferedImage.TYPE_INT_ARGB);
             source.setRGB(0, 0, 0x80ff0000);
             source.setRGB(1, 0, 0x00ffffff);
-            BufferedImage cropped = BufferedImageTransform.crop(source, 0, 0, 2, 1);
+            BufferedImage cropped = BufferedImageTransform.crop(0, 0, 2, 1).apply(source);
             // Blending instead of replacing would send the half transparent pixel through
             // premultiplied space and round it, which is what this pins down.
             assertEquals(0x80ff0000, cropped.getRGB(0, 0));
@@ -123,7 +123,7 @@ class BufferedImageTransformTest {
             custom.setRGB(0, 0, 0xffff0000);
             custom.setRGB(1, 1, 0xff00ff00);
 
-            BufferedImage cropped = BufferedImageTransform.crop(custom, 1, 1, 1, 1);
+            BufferedImage cropped = BufferedImageTransform.crop(1, 1, 1, 1).apply(custom);
             assertEquals(1, cropped.getWidth());
             assertEquals(0xff00ff00, cropped.getRGB(0, 0));
             assertEquals(BufferedImage.TYPE_INT_ARGB, cropped.getType());
@@ -134,17 +134,17 @@ class BufferedImageTransformTest {
         void refusesImpossibleRegions() {
             BufferedImage source = labelled(6, 4);
             assertThrows(IllegalArgumentException.class,
-                    () -> BufferedImageTransform.crop(source, 0, 0, 0, 2), "zero width");
+                    () -> BufferedImageTransform.crop(0, 0, 0, 2), "zero width");
             assertThrows(IllegalArgumentException.class,
-                    () -> BufferedImageTransform.crop(source, 0, 0, 2, -1), "negative height");
+                    () -> BufferedImageTransform.crop(0, 0, 2, -1), "negative height");
             assertThrows(IllegalArgumentException.class,
-                    () -> BufferedImageTransform.crop(source, -1, 0, 2, 2), "negative x");
+                    () -> BufferedImageTransform.crop(-1, 0, 2, 2).apply(source), "negative x");
             assertThrows(IllegalArgumentException.class,
-                    () -> BufferedImageTransform.crop(source, 5, 0, 2, 2), "past the right edge");
+                    () -> BufferedImageTransform.crop(5, 0, 2, 2).apply(source), "past the right edge");
             assertThrows(IllegalArgumentException.class,
-                    () -> BufferedImageTransform.crop(source, 0, 3, 2, 2), "past the bottom edge");
+                    () -> BufferedImageTransform.crop(0, 3, 2, 2).apply(source), "past the bottom edge");
             assertThrows(IllegalArgumentException.class,
-                    () -> BufferedImageTransform.crop(null, 0, 0, 1, 1), "no image");
+                    () -> BufferedImageTransform.crop(0, 0, 1, 1).apply(null), "no image");
         }
     }
 
@@ -159,9 +159,9 @@ class BufferedImageTransformTest {
         void rightAnglesAreLossless() {
             // A 4 by 3 image, so that a wrong transpose cannot hide behind a square.
             BufferedImage source = labelled(4, 3);
-            BufferedImage quarter = BufferedImageTransform.rotate(source, 90);
-            BufferedImage half = BufferedImageTransform.rotate(source, 180);
-            BufferedImage three = BufferedImageTransform.rotate(source, 270);
+            BufferedImage quarter = BufferedImageTransform.rotate(90).apply(source);
+            BufferedImage half = BufferedImageTransform.rotate(180).apply(source);
+            BufferedImage three = BufferedImageTransform.rotate(270).apply(source);
 
             // 90 degrees clockwise: the left column becomes the top row.
             assertEquals(3, quarter.getWidth());
@@ -193,10 +193,10 @@ class BufferedImageTransformTest {
         @DisplayName("by no angle at all changes nothing")
         void zeroIsIdentity() {
             BufferedImage source = labelled(4, 3);
-            assertSamePixels(source, BufferedImageTransform.rotate(source, 0));
+            assertSamePixels(source, BufferedImageTransform.rotate(0).apply(source));
             // A full turn is the same as none, whichever way the multiples are worked out.
-            assertSamePixels(source, BufferedImageTransform.rotate(source, 360));
-            assertSamePixels(source, BufferedImageTransform.rotate(source, -360));
+            assertSamePixels(source, BufferedImageTransform.rotate(360).apply(source));
+            assertSamePixels(source, BufferedImageTransform.rotate(-360).apply(source));
         }
 
         @Test
@@ -205,7 +205,7 @@ class BufferedImageTransformTest {
             BufferedImage source = labelled(5, 3);
             BufferedImage turned = source;
             for (int i = 0; i < 4; i++) {
-                turned = BufferedImageTransform.rotate(turned, 90);
+                turned = BufferedImageTransform.rotate(90).apply(turned);
             }
             assertSamePixels(source, turned);
         }
@@ -215,7 +215,7 @@ class BufferedImageTransformTest {
         void nearlyRightAnglesAreResampled() {
             BufferedImage source = labelled(4, 3);
             // 89.9999 degrees cannot be done by moving pixels, so it keeps the canvas and interpolates.
-            BufferedImage turned = BufferedImageTransform.rotate(source, 89.9999);
+            BufferedImage turned = BufferedImageTransform.rotate(89.9999).apply(source);
             assertEquals(4, turned.getWidth());
             assertEquals(3, turned.getHeight());
         }
@@ -225,7 +225,7 @@ class BufferedImageTransformTest {
         void arbitraryAnglesKeepTheCanvas() {
             BufferedImage source = labelled(8, 6);
             for (double degrees : new double[] { 45, 30, -45, 12.5, 180.5 }) {
-                BufferedImage turned = BufferedImageTransform.rotate(source, degrees);
+                BufferedImage turned = BufferedImageTransform.rotate(degrees).apply(source);
                 assertEquals(8, turned.getWidth(), "width at " + degrees);
                 assertEquals(6, turned.getHeight(), "height at " + degrees);
             }
@@ -235,7 +235,7 @@ class BufferedImageTransformTest {
         @DisplayName("by an arbitrary angle really does resample")
         void arbitraryAnglesInterpolate() {
             BufferedImage source = labelled(9, 9);
-            BufferedImage turned = BufferedImageTransform.rotate(source, 45);
+            BufferedImage turned = BufferedImageTransform.rotate(45).apply(source);
             boolean anyChange = false;
             for (int y = 0; y < 9 && !anyChange; y++) {
                 for (int x = 0; x < 9; x++) {
@@ -252,8 +252,8 @@ class BufferedImageTransformTest {
         @DisplayName("resamples with the requested algorithm where Java2D has one")
         void honoursTheAlgorithm() {
             BufferedImage source = labelled(16, 16);
-            BufferedImage nearest = BufferedImageTransform.rotate(source, 45, ResizeAlgorithm.NEAREST);
-            BufferedImage bilinear = BufferedImageTransform.rotate(source, 45, ResizeAlgorithm.BILINEAR);
+            BufferedImage nearest = BufferedImageTransform.rotate(45, ResizeAlgorithm.NEAREST).apply(source);
+            BufferedImage bilinear = BufferedImageTransform.rotate(45, ResizeAlgorithm.BILINEAR).apply(source);
             assertNotSame(nearest, bilinear);
             // Nearest neighbour copies whole pixels, so where the source covers the canvas the output
             // is always opaque. The corners of a turned image are not covered, and stay as the
@@ -266,19 +266,19 @@ class BufferedImageTransformTest {
             }
             assertEquals(0, nearest.getRGB(0, 0) >>> 24, "the uncovered corner should be transparent");
             // An algorithm Java2D cannot express still resamples rather than refusing to work.
-            assertDoesNotThrow(() -> BufferedImageTransform.rotate(source, 45, ResizeAlgorithm.LANCZOS3));
+            assertDoesNotThrow(() -> BufferedImageTransform.rotate(45, ResizeAlgorithm.LANCZOS3).apply(source));
         }
 
         @Test
         @DisplayName("refuses an angle that is not a finite number")
         void refusesNonFiniteAngles() {
             BufferedImage source = labelled(4, 3);
-            assertThrows(IllegalArgumentException.class, () -> BufferedImageTransform.rotate(source, Double.NaN));
+            assertThrows(IllegalArgumentException.class, () -> BufferedImageTransform.rotate(Double.NaN));
             assertThrows(IllegalArgumentException.class,
-                    () -> BufferedImageTransform.rotate(source, Double.POSITIVE_INFINITY));
-            assertThrows(IllegalArgumentException.class, () -> BufferedImageTransform.rotate(null, 90));
+                    () -> BufferedImageTransform.rotate(Double.POSITIVE_INFINITY));
+            assertThrows(IllegalArgumentException.class, () -> BufferedImageTransform.rotate(90).apply(null));
             assertThrows(IllegalArgumentException.class,
-                    () -> BufferedImageTransform.rotate(source, 45, null));
+                    () -> BufferedImageTransform.rotate(45, null));
         }
     }
 
@@ -292,7 +292,7 @@ class BufferedImageTransformTest {
         @DisplayName("horizontally mirrors each row")
         void horizontal() {
             BufferedImage source = labelled(4, 3);
-            BufferedImage flipped = BufferedImageTransform.flipHorizontal(source);
+            BufferedImage flipped = BufferedImageTransform.flipHorizontal().apply(source);
             assertEquals(4, flipped.getWidth());
             assertEquals(3, flipped.getHeight());
             for (int y = 0; y < 3; y++) {
@@ -306,7 +306,7 @@ class BufferedImageTransformTest {
         @DisplayName("vertically mirrors each column")
         void vertical() {
             BufferedImage source = labelled(4, 3);
-            BufferedImage flipped = BufferedImageTransform.flipVertical(source);
+            BufferedImage flipped = BufferedImageTransform.flipVertical().apply(source);
             for (int y = 0; y < 3; y++) {
                 for (int x = 0; x < 4; x++) {
                     assertEquals(source.getRGB(x, 2 - y), flipped.getRGB(x, y), "pixel " + x + "," + y);
@@ -318,18 +318,19 @@ class BufferedImageTransformTest {
         @DisplayName("twice is the image it started from")
         void twiceIsIdentity() {
             BufferedImage source = labelled(4, 3);
-            assertSamePixels(source, BufferedImageTransform.flipHorizontal(
-                    BufferedImageTransform.flipHorizontal(source)));
-            assertSamePixels(source, BufferedImageTransform.flipVertical(
-                    BufferedImageTransform.flipVertical(source)));
+            assertSamePixels(source, BufferedImageTransform.flipHorizontal().apply(
+                    BufferedImageTransform.flipHorizontal().apply(source)));
+            assertSamePixels(source, BufferedImageTransform.flipVertical().apply(
+                    BufferedImageTransform.flipVertical().apply(source)));
         }
 
         @Test
         @DisplayName("both ways at once is the same as a half turn")
         void bothWaysIsAHalfTurn() {
             BufferedImage source = labelled(4, 3);
-            assertSamePixels(BufferedImageTransform.rotate(source, 180),
-                    BufferedImageTransform.flipVertical(BufferedImageTransform.flipHorizontal(source)));
+            assertSamePixels(BufferedImageTransform.rotate(180).apply(source),
+                    BufferedImageTransform.flipVertical().apply(
+                            BufferedImageTransform.flipHorizontal().apply(source)));
         }
 
         @Test
@@ -338,7 +339,7 @@ class BufferedImageTransformTest {
             BufferedImage source = new BufferedImage(2, 1, BufferedImage.TYPE_INT_ARGB);
             source.setRGB(0, 0, 0x80ff0000);
             source.setRGB(1, 0, 0x00ffffff);
-            BufferedImage flipped = BufferedImageTransform.flipHorizontal(source);
+            BufferedImage flipped = BufferedImageTransform.flipHorizontal().apply(source);
             assertEquals(0x80ff0000, flipped.getRGB(1, 0));
             // The colour of a fully transparent pixel does not survive the trip through premultiplied
             // space, which is the one thing Java2D cannot be asked to keep, and nobody can see it
@@ -349,8 +350,8 @@ class BufferedImageTransformTest {
         @Test
         @DisplayName("refuses to work on nothing")
         void refusesNothing() {
-            assertThrows(IllegalArgumentException.class, () -> BufferedImageTransform.flipHorizontal(null));
-            assertThrows(IllegalArgumentException.class, () -> BufferedImageTransform.flipVertical(null));
+            assertThrows(IllegalArgumentException.class, () -> BufferedImageTransform.flipHorizontal().apply(null));
+            assertThrows(IllegalArgumentException.class, () -> BufferedImageTransform.flipVertical().apply(null));
         }
     }
 }

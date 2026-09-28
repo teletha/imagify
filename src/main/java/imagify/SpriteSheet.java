@@ -402,7 +402,7 @@ public final class SpriteSheet {
         int h = frame.getHeight();
         switch (fit) {
         case STRETCH:
-            return w == cw && h == ch ? frame : BufferedImageResize.resize(frame, cw, ch, algorithm);
+            return w == cw && h == ch ? frame : BufferedImageResize.resize(cw, ch, algorithm).apply(frame);
 
         case INSIDE: {
             if (w <= cw && h <= ch) {
@@ -411,7 +411,7 @@ public final class SpriteSheet {
             double scale = Math.min((double) cw / w, (double) ch / h);
             int scaledW = Math.min(cw, Math.max(1, (int) Math.round(w * scale)));
             int scaledH = Math.min(ch, Math.max(1, (int) Math.round(h * scale)));
-            return BufferedImageResize.resize(frame, scaledW, scaledH, algorithm);
+            return BufferedImageResize.resize(scaledW, scaledH, algorithm).apply(frame);
         }
 
         case FILL: {
@@ -419,8 +419,8 @@ public final class SpriteSheet {
             // Rounding up, and never below the cell, is what keeps the crop inside the image.
             int scaledW = Math.max(cw, (int) Math.ceil(w * scale));
             int scaledH = Math.max(ch, (int) Math.ceil(h * scale));
-            BufferedImage scaled = scaledW == w && scaledH == h ? frame : BufferedImageResize.resize(frame, scaledW, scaledH, algorithm);
-            return BufferedImageTransform.crop(scaled, (scaledW - cw) / 2, (scaledH - ch) / 2, cw, ch);
+            BufferedImage scaled = scaledW == w && scaledH == h ? frame : BufferedImageResize.resize(scaledW, scaledH, algorithm).apply(frame);
+            return BufferedImageTransform.crop((scaledW - cw) / 2, (scaledH - ch) / 2, cw, ch).apply(scaled);
         }
 
         default:

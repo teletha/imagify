@@ -204,7 +204,7 @@ class ResizeComparison {
         long start = System.nanoTime();
         BufferedImage result;
         try {
-            result = BufferedImageResize.resize(source, targetW, targetH, algorithm);
+            result = BufferedImageResize.resize(targetW, targetH, algorithm).apply(source);
         } catch (RuntimeException e) {
             // xBRZ refuses anything that is not an exact integer multiple, and says why.
             // That is an answer worth showing rather than an error worth hiding.
@@ -218,7 +218,7 @@ class ResizeComparison {
         // Put the result back to the source size and see how much of the original survived
         // the trip. Both directions go back to the source size, and the same pass is used
         // for every algorithm, so the numbers rank fairly.
-        BufferedImage restored = BufferedImageResize.resize(result, width, height, REFERENCE);
+        BufferedImage restored = BufferedImageResize.resize(width, height, REFERENCE).apply(result);
         int[] actual = ImageMetrics.argb(restored);
 
         // A linear resize of the same factor would leave this much edge behind. Anything

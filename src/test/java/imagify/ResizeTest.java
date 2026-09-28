@@ -63,7 +63,7 @@ public class ResizeTest {
     }
 
     static void testResize(BufferedImage src, ResizeAlgorithm algo, int tw, int th) {
-        BufferedImage result = BufferedImageResize.resize(src, tw, th, algo);
+        BufferedImage result = BufferedImageResize.resize(tw, th, algo).apply(src);
         System.out.printf("%-12s: %dx%d -> %dx%d OK%n", algo.name(), src.getWidth(), src.getHeight(), result.getWidth(), result.getHeight());
     }
 }
