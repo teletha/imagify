@@ -445,8 +445,12 @@ public abstract class ImageFormat {
      * </p>
      *
      * <p>
-     * Both are left unset, which is not the same as a value: it means the encoder keeps its own
-     * choice, and that choice differs between a still image and an animation.
+     * Two more concern the colour the file holds rather than the effort spent on it:
+     * {@link #subsampling}, how finely the two colour-difference channels are stored, and
+     * {@link #chromaDownsampling}, the filter the conversion from RGB reduces them with. A setting
+     * is a value, or it is left unset, which is not the same thing: unset means the encoder keeps
+     * its own choice, and for the subsampling that choice differs between a still image and an
+     * animation.
      * </p>
      */
     public static final class Avif extends ImageFormat {
@@ -467,14 +471,50 @@ public abstract class ImageFormat {
          */
         public final Integer alphaQuality;
 
+        /**
+         * How finely the two colour-difference channels are stored, or {@code null} to leave the
+         * choice to the encoder, which is not one value but two: {@link Subsampling#YUV444} for a
+         * still image, because a lone picture is where someone is most likely to be looking
+         * closely at a saturated edge, and {@link Subsampling#YUV420} for an animation, where the
+         * cost of the alternative is paid once per frame.
+         *
+         * <p>
+         * Naming a value here overrides both, which is the point of the setting: a caller who wants
+         * the smallest animation there is asks for {@link Subsampling#YUV420} on a still image too,
+         * and a caller who wants a text screenshot as an animation asks for
+         * {@link Subsampling#YUV444} there as well.
+         * </p>
+         */
+        public final Subsampling subsampling;
+
+        /**
+         * The filter the conversion from RGB reduces the colour-difference channels with, or
+         * {@code null} to leave the choice to the encoder, which is
+         * {@link ChromaDownsampling#AUTOMATIC}.
+         *
+         * <p>
+         * This is a second, narrower thing than {@link #subsampling}: it decides how the reduction
+         * is done, not whether it happens, and it therefore has nothing at all to do with a file
+         * stored as {@link Subsampling#YUV444}, where no channel is ever reduced. On a
+         * {@link Subsampling#YUV420} file it is worth having, because reducing by averaging keeps
+         * colour edges from bleeding into one another while
+         * {@link ChromaDownsampling#SHARP_YUV} keeps them from smearing, and the two are not the
+         * same picture.
+         * </p>
+         */
+        public final ChromaDownsampling chromaDownsampling;
+
         private Avif() {
-            this(null, null);
+            this(null, null, null, null);
         }
 
-        private Avif(Integer speed, Integer alphaQuality) {
+        private Avif(Integer speed, Integer alphaQuality, Subsampling subsampling,
+                ChromaDownsampling chromaDownsampling) {
             super("AVIF", "avif", "image/avif", null, true, true, 0.70);
             this.speed = speed;
             this.alphaQuality = alphaQuality;
+            this.subsampling = subsampling;
+            this.chromaDownsampling = chromaDownsampling;
         }
 
         /**
@@ -486,7 +526,7 @@ public abstract class ImageFormat {
             if (speed < 0 || speed > 10) {
                 throw new IllegalArgumentException("the encoder speed must be between 0 and 10, got " + speed);
             }
-            return new Avif(speed, alphaQuality);
+            return new Avif(speed, alphaQuality, subsampling, chromaDownsampling);
         }
 
         /**
@@ -498,7 +538,25 @@ public abstract class ImageFormat {
             if (alphaQuality < AvifLibrary.AVIF_QUALITY_WORST || alphaQuality > AvifLibrary.AVIF_QUALITY_BEST) {
                 throw new IllegalArgumentException("the alpha quality must be between " + AvifLibrary.AVIF_QUALITY_WORST + " and " + AvifLibrary.AVIF_QUALITY_BEST + ", got " + alphaQuality);
             }
-            return new Avif(speed, alphaQuality);
+            return new Avif(speed, alphaQuality, subsampling, chromaDownsampling);
+        }
+
+        /**
+         * @param subsampling how finely to store the colour-difference channels, or {@code null} to
+         *                    leave it to the encoder
+         * @return this format asking for that much colour detail
+         */
+        public Avif subsampling(Subsampling subsampling) {
+            return new Avif(speed, alphaQuality, subsampling, chromaDownsampling);
+        }
+
+        /**
+         * @param chromaDownsampling the filter to reduce the colour-difference channels with, or
+         *                            {@code null} to leave it to the encoder
+         * @return this format asking for that filter
+         */
+        public Avif chromaDownsampling(ChromaDownsampling chromaDownsampling) {
+            return new Avif(speed, alphaQuality, subsampling, chromaDownsampling);
         }
 
         /**
@@ -511,8 +569,9 @@ public abstract class ImageFormat {
          */
         @Override
         public boolean equals(Object object) {
-            return object instanceof Avif other && super.equals(object) && Objects.equals(speed, other.speed) && Objects
-                    .equals(alphaQuality, other.alphaQuality);
+            return object instanceof Avif other && super.equals(object) && Objects.equals(speed, other.speed)
+                    && Objects.equals(alphaQuality, other.alphaQuality) && subsampling == other.subsampling
+                    && chromaDownsampling == other.chromaDownsampling;
         }
 
         /**
@@ -520,7 +579,66 @@ public abstract class ImageFormat {
          */
         @Override
         public int hashCode() {
-            return Objects.hash(super.hashCode(), speed, alphaQuality);
+            return Objects.hash(super.hashCode(), speed, alphaQuality, subsampling, chromaDownsampling);
+        }
+
+        /**
+         * How finely the colour-difference channels are stored, named the way the format's own pixel
+         * format enumeration writes it down.
+         */
+        public enum Subsampling {
+            /** YUV444, the colour channels at full size: the most detail and the largest file. */
+            YUV444(AvifLibrary.AVIF_PIXEL_FORMAT_YUV444),
+
+            /** YUV422, the colour channels half the width: the usual choice for text and line art. */
+            YUV422(AvifLibrary.AVIF_PIXEL_FORMAT_YUV422),
+
+            /** YUV420, the colour channels half in both directions: the smallest, and what is written for an animation unless asked otherwise. */
+            YUV420(AvifLibrary.AVIF_PIXEL_FORMAT_YUV420),
+
+            /** YUV400, no colour channels at all: greyscale, the smallest of all. */
+            YUV400(AvifLibrary.AVIF_PIXEL_FORMAT_YUV400);
+
+            /** The underlying {@code AVIF_PIXEL_FORMAT_*} value. */
+            public final int pixelFormat;
+
+            Subsampling(int pixelFormat) {
+                this.pixelFormat = pixelFormat;
+            }
+        }
+
+        /**
+         * The filter the conversion from RGB reduces the colour-difference channels with, named the
+         * way the RGB image description enumeration writes it down.
+         *
+         * <p>
+         * This is a second, narrower thing than {@link Subsampling}: it decides how the reduction is
+         * done, not whether it happens. It therefore has nothing at all to do with a file stored as
+         * {@link Subsampling#YUV444}, where no channel is ever reduced.
+         * </p>
+         */
+        public enum ChromaDownsampling {
+            /** The encoder chooses, which is the best balance of quality and speed. */
+            AUTOMATIC(AvifLibrary.AVIF_CHROMA_DOWNSAMPLING_AUTOMATIC),
+
+            /** The quickest reduction, which may show visible colour bleeding on saturated edges. */
+            FASTEST(AvifLibrary.AVIF_CHROMA_DOWNSAMPLING_FASTEST),
+
+            /** The best-looking reduction, which averages the chroma values. */
+            BEST_QUALITY(AvifLibrary.AVIF_CHROMA_DOWNSAMPLING_BEST_QUALITY),
+
+            /** A simple box average of the chroma samples. */
+            AVERAGE(AvifLibrary.AVIF_CHROMA_DOWNSAMPLING_AVERAGE),
+
+            /** A sharpness-preserving filter that tries to keep colour edges from smearing. */
+            SHARP_YUV(AvifLibrary.AVIF_CHROMA_DOWNSAMPLING_SHARP_YUV);
+
+            /** The underlying {@code AVIF_CHROMA_DOWNSAMPLING_*} value. */
+            public final int value;
+
+            ChromaDownsampling(int value) {
+                this.value = value;
+            }
         }
     }
 

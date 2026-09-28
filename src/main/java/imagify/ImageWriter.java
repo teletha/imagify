@@ -281,7 +281,9 @@ public final class ImageWriter {
         if (format instanceof ImageFormat.Avif avif) {
             try {
                 return AvifCodec.encodeAnimation(frames.frames(), frames.delaysMs(), encoderQuality,
-                        frames.loopCount(), avif.speed, avif.alphaQuality);
+                        frames.loopCount(), avif.speed, avif.alphaQuality,
+                        avif.subsampling != null ? avif.subsampling.pixelFormat : -1,
+                        avif.chromaDownsampling != null ? avif.chromaDownsampling.value : -1);
             } catch (AvifException e) {
                 throw new IOException("failed to encode AVIF animation", e);
             }
@@ -380,7 +382,9 @@ public final class ImageWriter {
     private static byte[] encodeAvif(BufferedImage image, ImageFormat.Avif avif, double quality) throws IOException {
         try {
             return AvifCodec.encode(image, (int) Math.round(quality * AvifLibrary.AVIF_QUALITY_BEST),
-                    avif.speed, avif.alphaQuality);
+                    avif.speed, avif.alphaQuality,
+                    avif.subsampling != null ? avif.subsampling.pixelFormat : -1,
+                    avif.chromaDownsampling != null ? avif.chromaDownsampling.value : -1);
         } catch (AvifException e) {
             throw new IOException("failed to encode an AVIF image: " + e.getMessage(), e);
         }

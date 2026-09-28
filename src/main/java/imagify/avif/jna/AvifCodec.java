@@ -316,6 +316,30 @@ public final class AvifCodec {
      */
     public static byte[] encode(RenderedImage source, int quality, Integer speed, Integer alphaQuality)
             throws AvifException {
+        return encode(source, quality, speed, alphaQuality, -1, -1);
+    }
+
+    /**
+     * Encodes an image as AVIF with explicit subsampling and chroma downsampling filter.
+     *
+     * <p>A setting that is {@code -1} is not a value but an absence of one, and the encoder's own
+     * choice is made in its place: {@link AvifLibrary#DEFAULT_SPEED} for the speed,
+     * {@link AvifLibrary#AVIF_QUALITY_LOSSLESS} for the alpha quality, {@link AvifLibrary#AVIF_PIXEL_FORMAT_YUV444}
+     * for a still image, and {@link AvifLibrary#AVIF_CHROMA_DOWNSAMPLING_AUTOMATIC} for the filter.
+     *
+     * @param source the image to encode; any {@link RenderedImage} is accepted
+     * @param quality 0 (smallest) to 100 (lossless)
+     * @param speed 0 (slowest, best quality) to 10 (fastest, worst quality), or {@code null} for
+     *        {@link AvifLibrary#DEFAULT_SPEED}
+     * @param alphaQuality 0 (worst) to {@link AvifLibrary#AVIF_QUALITY_BEST} (every alpha value kept
+     *        as it was given), or {@code null} for {@link AvifLibrary#AVIF_QUALITY_LOSSLESS}
+     * @param pixelFormat an {@code AVIF_PIXEL_FORMAT_*} value, or {@code -1} for the encoder's choice
+     * @param chromaDownsampling an {@code AVIF_CHROMA_DOWNSAMPLING_*} value, or {@code -1} for the encoder's choice
+     * @return the complete AVIF file
+     * @throws AvifException when the library is unavailable or the image cannot be encoded
+     */
+    public static byte[] encode(RenderedImage source, int quality, Integer speed, Integer alphaQuality,
+            int pixelFormat, int chromaDownsampling) throws AvifException {
         AvifLibrary lib = requireLibrary();
         if (source == null) {
             throw new AvifException("no image to encode");
@@ -327,28 +351,25 @@ public final class AvifCodec {
         }
         byte[] pixels = AbgrPixels.toAbgrBytes(source, 0, 0, width, height, 1, 1);
 
-        // 8 bit 4:4:4 for a single image. Chroma subsampling to 4:2:0 would be about 1.5x faster and
-        // twice as small here too, but it halves chroma resolution in both directions, and a lone
-        // image is exactly where someone is most likely to be looking closely at a saturated edge.
-        // encodeAnimation() trades that away on purpose, where the cost is paid once per frame.
-        AvifImage image = lib.avifImageCreate(width, height, 8, AvifLibrary.AVIF_PIXEL_FORMAT_YUV444);
+        // The still-image default is 4:4:4, unless the format asks for something else.
+        int yuvFormat = pixelFormat >= 0 ? pixelFormat : AvifLibrary.AVIF_PIXEL_FORMAT_YUV444;
+        AvifImage image = lib.avifImageCreate(width, height, 8, yuvFormat);
         if (image == null) {
             throw new AvifException("avifImageCreate() returned NULL for " + width + "x" + height);
         }
         try {
             image.read();
-            toYuv(lib, image, pixels);
+            toYuv(lib, image, pixels, chromaDownsampling);
             return finish(lib, image, quality,
                     speed != null ? speed : AvifLibrary.DEFAULT_SPEED,
-                    // Alpha planes are cheap, and lossy alpha is the single most visible AVIF
-                    // artefact, so the plane is kept exactly unless a caller says otherwise.
                     alphaQuality != null ? alphaQuality : AvifLibrary.AVIF_QUALITY_LOSSLESS);
         } finally {
             lib.avifImageDestroy(image);
         }
     }
 
-    private static void toYuv(AvifLibrary lib, AvifImage image, byte[] pixels) throws AvifException {
+    private static void toYuv(AvifLibrary lib, AvifImage image, byte[] pixels, int chromaDownsampling)
+            throws AvifException {
         AvifRGBImage rgb = new AvifRGBImage();
         lib.avifRGBImageSetDefaults(rgb, image);
         // A TYPE_4BYTE_ABGR raster keeps its banks in A, B, G, R order, so the buffer can be handed
@@ -357,6 +378,9 @@ public final class AvifCodec {
         rgb.depth = 8;
         // avifRGBImageSetDefaults() hard codes RGBA/8, so the stride has to be derived again.
         rgb.rowBytes = image.width * lib.avifRGBImagePixelSize(rgb);
+        if (chromaDownsampling >= 0) {
+            rgb.chromaDownsampling = chromaDownsampling;
+        }
 
         check(lib, lib.avifRGBImageAllocatePixels(rgb), "avifRGBImageAllocatePixels()");
         try {
@@ -417,7 +441,7 @@ public final class AvifCodec {
      */
     public static byte[] encodeAnimation(List<BufferedImage> frames, int[] durationsMs,
             int quality, int loopCount) throws AvifException {
-        return encodeAnimation(frames, durationsMs, quality, loopCount, null, null);
+        return encodeAnimation(frames, durationsMs, quality, loopCount, null, null, -1, -1);
     }
 
     /**
@@ -442,6 +466,36 @@ public final class AvifCodec {
      */
     public static byte[] encodeAnimation(List<BufferedImage> frames, int[] durationsMs,
             int quality, int loopCount, Integer speed, Integer alphaQuality) throws AvifException {
+        return encodeAnimation(frames, durationsMs, quality, loopCount, speed, alphaQuality, -1, -1);
+    }
+
+    /**
+     * Encodes a sequence of frames as an animated AVIF file with explicit subsampling and chroma
+     * downsampling filter.
+     *
+     * <p>A setting that is {@code -1} is not a value but an absence of one, and the encoder's own
+     * choice is made in its place: {@link AvifLibrary#DEFAULT_ANIMATION_SPEED} for the speed,
+     * {@link AvifLibrary#AVIF_QUALITY_LOSSLESS} for the alpha quality,
+     * {@link AvifLibrary#AVIF_PIXEL_FORMAT_YUV420} for an animation, and
+     * {@link AvifLibrary#AVIF_CHROMA_DOWNSAMPLING_AUTOMATIC} for the filter.
+     *
+     * @param frames            the frames, all of the same size, at least two
+     * @param durationsMs       how long each frame is shown, in milliseconds, one entry per frame
+     * @param quality           0 (smallest) to 100 (lossless)
+     * @param loopCount         how often the animation repeats, 0 meaning forever
+     * @param speed             0 (slowest, best quality) to 10 (fastest, worst quality), or {@code null}
+     *                          for {@link AvifLibrary#DEFAULT_ANIMATION_SPEED}
+     * @param alphaQuality      0 (worst) to {@link AvifLibrary#AVIF_QUALITY_BEST} (every alpha value kept
+     *                          as it was given), or {@code null} for
+     *                          {@link AvifLibrary#AVIF_QUALITY_LOSSLESS}
+     * @param pixelFormat       an {@code AVIF_PIXEL_FORMAT_*} value, or {@code -1} for the encoder's choice
+     * @param chromaDownsampling an {@code AVIF_CHROMA_DOWNSAMPLING_*} value, or {@code -1} for the encoder's choice
+     * @return the complete animated AVIF file
+     * @throws AvifException when the library is unavailable or the frames cannot be encoded
+     */
+    public static byte[] encodeAnimation(List<BufferedImage> frames, int[] durationsMs,
+            int quality, int loopCount, Integer speed, Integer alphaQuality,
+            int pixelFormat, int chromaDownsampling) throws AvifException {
         AvifLibrary lib = requireLibrary();
         if (frames == null || frames.size() < 2) {
             throw new AvifException("an animation needs at least two frames, got "
@@ -462,6 +516,9 @@ public final class AvifCodec {
             }
         }
 
+        // The animation default is 4:2:0, unless the format asks for something else.
+        int yuvFormat = pixelFormat >= 0 ? pixelFormat : AvifLibrary.AVIF_PIXEL_FORMAT_YUV420;
+
         AvifEncoder encoder = lib.avifEncoderCreate();
         if (encoder == null) {
             throw new AvifException("avifEncoderCreate() returned NULL");
@@ -480,15 +537,10 @@ public final class AvifCodec {
             for (int i = 0; i < frames.size(); i++) {
                 BufferedImage frame = frames.get(i);
                 byte[] pixels = AbgrPixels.toAbgrBytes(frame, 0, 0, width, height, 1, 1);
-                // 4:2:0 rather than 4:4:4. Chroma subsampling is not only a file size decision: it
-                // also shrinks what AV1 has to encode per frame by two thirds, which is worth 1.7x
-                // on the encode and 2.2x on the file for the same quality setting. The cost is that
-                // chroma is half resolution in both directions, so sharp saturated colour edges can
-                // bleed. Averaged over a whole animation that is far less visible than the wait.
-                AvifImage image = lib.avifImageCreate(width, height, 8, AvifLibrary.AVIF_PIXEL_FORMAT_YUV420);
+                AvifImage image = lib.avifImageCreate(width, height, 8, yuvFormat);
                 try {
                     image.read();
-                    toYuv(lib, image, pixels);
+                    toYuv(lib, image, pixels, chromaDownsampling);
                     long duration = Math.round((long) durationsMs[i] * encoder.timescale / 1000.0);
                     check(lib, lib.avifEncoderAddImage(encoder, image, duration, AvifLibrary.AVIF_ADD_IMAGE_FLAG_NONE),
                             "avifEncoderAddImage() at frame " + i);
