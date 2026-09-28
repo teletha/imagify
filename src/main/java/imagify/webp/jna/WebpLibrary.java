@@ -15,6 +15,9 @@ import com.sun.jna.Structure;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.ptr.PointerByReference;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * JNA binding for the C ABI in {@code src/main/native/webp/imagify_webp.h}.
  *
@@ -161,6 +164,11 @@ public interface WebpLibrary extends Library {
 
         /** One of the {@code FORMAT_*} values. */
         public int format;
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("width", "height", "hasAlpha", "hasAnimation", "format");
+        }
     }
 
     /**
@@ -182,6 +190,11 @@ public interface WebpLibrary extends Library {
 
         /** Canvas height in pixels, which is the size of every frame. */
         public int height;
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("frameCount", "loopCount", "width", "height");
+        }
     }
 
     // --------------------------------------------------------------------------------- functions
