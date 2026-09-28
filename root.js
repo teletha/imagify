@@ -183,12 +183,42 @@ const root = {
 		{
 			"name": "ImageFormat",
 			"packageName": "imagify",
-			"type": "Enum"
+			"type": "AbstractClass"
 		},
 		{
-			"name": "ImageOption",
+			"name": "ImageFormat.Bmp",
 			"packageName": "imagify",
-			"type": "Functional"
+			"type": "Class"
+		},
+		{
+			"name": "ImageFormat.Avif",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
+			"name": "ImageFormat.Webp",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
+			"name": "ImageFormat.Gif89a",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
+			"name": "ImageFormat.Gif",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
+			"name": "ImageFormat.Png",
+			"packageName": "imagify",
+			"type": "Class"
+		},
+		{
+			"name": "ImageFormat.Jpeg",
+			"packageName": "imagify",
+			"type": "Class"
 		},
 		{
 			"name": "ImageReader",

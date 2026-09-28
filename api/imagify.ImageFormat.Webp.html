@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<meta content="Explains how to use Imagify and its API. " name="description"/>
+		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<title>Imagify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="s">
+		<header class="T" date="2026-09-26">
+			<h1 class="U"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="K"><a href="api/main.html" id="API"><svg class="package">
+						<use href="main.svg#package"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify/discussions" id="Community" target="_blank"><svg class="user">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify" id="Repository" target="_blank"><svg class="github">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="M"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<nav class="l"></nav>
+		<article class="e" id="Article">
+			<section class="CB"><code class="p">imagify</code>
+				<h2 class="Class r"><code class="n">ImageFormat.Webp</code></h2>
+				<div class="a">
+					<ul class="E G">
+						<li><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></li>
+					</ul>
+				</div><span class="A"><p>WebP format (.webp). Lossy/lossless. Alpha support.
+Magic bytes: &quot;RIFF....&quot; + &quot;WEBP&quot;</p><p>
+ WebP is the one format that comes in more than one flavour: <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#WEBP">#WEBP</a></code> is the lossy
+ <code>VP8</code> bitstream and <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#lossless()">#lossless()</a></code> the lossless <code>VP8L</code> one. They are separate
+ values because the choice belongs to the encoder, and because a caller that has just read a
+ file back wants to write it in the flavour it was read in: <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#fromHeader(byte[])">#fromHeader(byte[])</a></code> answers
+ with whichever of the two the bytes say, so a file that survives a read and a write still holds
+ every pixel it held before.
+ </p><p>
+ A flavour is a value rather than a constant, because a format may well come to carry more
+ settings than this one, and a value that answers to its settings is the one that can. Two
+ flavours holding the same settings are equal without being the same object.
+ </p></span></section>
+			<section class="CB" id="lossless">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC"></i></i><code class="n">lossless</code><i class="w"><code class="return">boolean</code></i></h2><span class="A"><p>Whether the pixels are stored without loss, which also means the quality is ignored.</p></span></section>
+			<section class="CB" id="lossless()">
+				<h2 class="z"><i class="PUBLIC"></i><code class="n">lossless</code><code class="AB">()</code><i class="w"><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></h2>
+				<table class="u">
+					<tr class="o">
+						<td><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></td>
+						<td><span><p>the lossless flavour of this format, whose <code>VP8L</code> bitstream keeps every
+pixel as it was given</p></span></td>
+					</tr>
+				</table>
+			</section>
+			<section class="CB" id="equals(java.lang.Object)">
+				<h2 class="z"><i class="OVERRIDE PUBLIC"></i><code class="n">equals</code><code class="AB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="w"><code>boolean</code></i></h2>
+				<table class="u">
+					<tr class="DB">
+						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code></td>
+						<td></td>
+					</tr>
+					<tr class="o">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="A"><p>
+ The flavour is part of what a WebP format is, so the lossy and the lossless one are not
+ the same value.
+ </p></span></section>
+			<section class="CB" id="hashCode()">
+				<h2 class="z"><i class="OVERRIDE PUBLIC"></i><code class="n">hashCode</code><code class="AB">()</code><i class="w"><code>int</code></i></h2>
+				<table class="u">
+					<tr class="o">
+						<td><code>int</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+		</article>
+		<aside class="L">
+			<div class="i">
+				<h5 class="t">Fields</h5>
+				<ul>
+					<li class="v"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Webp.html#lossless">lossless</a></code><i class="KB"><code class="return">boolean</code></i></li>
+				</ul>
+				<h5 class="t">Methods</h5>
+				<ul>
+					<li class="v"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Webp.html#lossless()">lossless</a></code><code class="AB">()</code><i class="KB"><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></li>
+					<li class="v"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Webp.html#equals(java.lang.Object)">equals</a></code><code class="AB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="KB"><code>boolean</code></i></li>
+					<li class="v"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Webp.html#hashCode()">hashCode</a></code><code class="AB">()</code><i class="KB"><code>int</code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="b">
+			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
+		</footer>
+	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
+</html>

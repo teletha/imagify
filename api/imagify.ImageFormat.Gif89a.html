@@ -44,38 +44,34 @@
 		</header>
 		<nav class="l"></nav>
 		<article class="e" id="Article">
-			<section class="CB"><code class="p">imagify.avif.jna</code>
-				<h2 class="Class r"><code class="n">AvifImage.ByReference</code></h2>
+			<section class="CB"><code class="p">imagify</code>
+				<h2 class="Class r"><code class="n">ImageFormat.Gif89a</code></h2>
 				<div class="a">
 					<ul class="E G">
-						<li><code><a aria-label="imagify.avif.jna.AvifImage" href="api/imagify.avif.jna.AvifImage.html">AvifImage</a></code></li>
-						<li><code>com.sun.jna.Structure</code></li>
+						<li><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></li>
 					</ul>
-					<ul class="E H">
-						<li><code>com.sun.jna.Structure.ByReference</code></li>
-					</ul>
-				</div><span class="A"><p>View on an <code>avifImage</code> that is owned by somebody else, for example
-<code>avifDecoder.image</code>. JNA shares the parent&apos;s native memory, so the fields can be read
-and written directly once the parent structure has been read.</p></span></section>
-			<section class="CB" id="ByReference()">
-				<h2 class="z"><i class="PUBLIC"></i><code class="n">ByReference</code><code class="AB">()</code></h2>
-			</section>
-			<section class="CB" id="ByReference(com.sun.jna.Pointer)">
-				<h2 class="z"><i class="PUBLIC"></i><code class="n">ByReference</code><code class="AB">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></h2>
+				</div><span class="A"><p>GIF89a, the animated and interlaced flavour of <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#GIF">#GIF</a></code>.</p><p>
+ It is a constant of its own because the version number in the header is the only thing
+ that tells the two apart, and a caller that read a file back may want to write it in the
+ same flavour. Both answer <code>&quot;gif&quot;</code> to <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#getFormatName()">#getFormatName()</a></code>, because they share a
+ single encoder, so writing either one produces a plain GIF file.
+ </p></span></section>
+			<section class="CB" id="getFormatName()">
+				<h2 class="z"><i class="OVERRIDE PUBLIC"></i><code class="n">getFormatName</code><code class="AB">()</code><i class="w"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
 				<table class="u">
-					<tr class="DB">
-						<td><code>com.sun.jna.Pointer</code><code class="parameterName">peer</code></td>
+					<tr class="o">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
-				</table>
-			</section>
+				</table><span class="A"><p>
+ The encoder is the GIF one, which is registered as <code>&quot;gif&quot;</code>, not <code>&quot;gif89a&quot;</code>.
+ </p></span></section>
 		</article>
 		<aside class="L">
 			<div class="i">
-				<h5 class="t">Constructors</h5>
+				<h5 class="t">Methods</h5>
 				<ul>
-					<li class="v"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.ByReference.html#ByReference()">ByReference</a></code><code class="AB">()</code></li>
-					<li class="v"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifImage.ByReference.html#ByReference(com.sun.jna.Pointer)">ByReference</a></code><code class="AB">(<code>com.sun.jna.Pointer</code><code class="parameterName">peer</code>)</code></li>
+					<li class="v"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Gif89a.html#getFormatName()">getFormatName</a></code><code class="AB">()</code><i class="KB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
