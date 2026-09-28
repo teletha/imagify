@@ -34,7 +34,8 @@ import org.junit.jupiter.api.Test;
  * Tests the transforms {@link Imagify} adds on top of {@link BufferedImageResize}: the aspect ratio
  * preserving resizes, the padding, and the crop, rotate and flip.
  *
- * <p>Most of the tests run against a single frame, but a transform has to reach every frame of a
+ * <p>
+ * Most of the tests run against a single frame, but a transform has to reach every frame of a
  * sequence while leaving its timing alone, and that is checked against a real animated GIF because
  * there is no other way to get a {@link FrameSequence} with more than one frame.
  */
@@ -73,12 +74,12 @@ class ImagifyTransformTest {
      * Writes an animated GIF, which is the one sequence format {@link Imagify#read(byte[])} can
      * always read back without any native library.
      *
-     * <p>The frame delays go in through the standard metadata as a {@code GraphicControlExtension},
+     * <p>
+     * The frame delays go in through the standard metadata as a {@code GraphicControlExtension},
      * which is the only public way to set them, and it is also exactly what
      * {@link imagify.ImageReader} looks for when it reads the animation back.
      */
-    private static byte[] animatedGif(int frameCount, int width, int height, int[] delaysMs)
-            throws IOException {
+    private static byte[] animatedGif(int frameCount, int width, int height, int[] delaysMs) throws IOException {
         ImageWriter writer = ImageIO.getImageWritersBySuffix("gif").next();
         ImageWriteParam param = writer.getDefaultWriteParam();
         param.setDestinationType(ImageTypeSpecifier.createFromBufferedImageType(BufferedImage.TYPE_INT_ARGB));
@@ -88,8 +89,7 @@ class ImagifyTransformTest {
             writer.prepareWriteSequence(null);
             for (int index = 0; index < frameCount; index++) {
                 BufferedImage frame = frame(index, width, height);
-                IIOMetadata metadata = writer.getDefaultImageMetadata(
-                        ImageTypeSpecifier.createFromRenderedImage(frame), param);
+                IIOMetadata metadata = writer.getDefaultImageMetadata(ImageTypeSpecifier.createFromRenderedImage(frame), param);
                 applyDelay(metadata, delaysMs[index] / 10);
                 writer.writeToSequence(new IIOImage(frame, null, metadata), param);
             }
@@ -291,8 +291,7 @@ class ImagifyTransformTest {
         @Test
         @DisplayName("crop takes the same rectangle out of every frame")
         void cropEveryFrame() throws IOException {
-            Imagify image = Imagify.read(animatedGif(3, 40, 20, new int[] { 100, 200, 300 }))
-                    .crop(10, 5, 20, 8);
+            Imagify image = Imagify.read(animatedGif(3, 40, 20, new int[] {100, 200, 300})).crop(10, 5, 20, 8);
             assertEquals(3, image.frameCount());
             for (BufferedImage frame : image.get().frames()) {
                 assertEquals(20, frame.getWidth());
@@ -303,8 +302,7 @@ class ImagifyTransformTest {
         @Test
         @DisplayName("rotate turns every frame and swaps the axes on a right angle")
         void rotateEveryFrame() throws IOException {
-            Imagify image = Imagify.read(animatedGif(3, 40, 20, new int[] { 100, 200, 300 }))
-                    .rotate(90);
+            Imagify image = Imagify.read(animatedGif(3, 40, 20, new int[] {100, 200, 300})).rotate(90);
             for (BufferedImage frame : image.get().frames()) {
                 assertEquals(20, frame.getWidth());
                 assertEquals(40, frame.getHeight());
@@ -314,8 +312,7 @@ class ImagifyTransformTest {
         @Test
         @DisplayName("flip leaves the size alone and mirrors the pixels")
         void flipEveryFrame() throws IOException {
-            Imagify image = Imagify.read(animatedGif(2, 40, 20, new int[] { 100, 200 }))
-                    .flipHorizontal();
+            Imagify image = Imagify.read(animatedGif(2, 40, 20, new int[] {100, 200})).flipHorizontal();
             assertEquals(2, image.frameCount());
             for (BufferedImage frame : image.get().frames()) {
                 assertEquals(40, frame.getWidth());
@@ -326,14 +323,13 @@ class ImagifyTransformTest {
         @Test
         @DisplayName("a transform leaves the timing of the sequence alone")
         void keepsTheTiming() throws IOException {
-            int[] delays = { 100, 200, 300 };
+            int[] delays = {100, 200, 300};
             FrameSequence cropped = Imagify.read(animatedGif(3, 40, 20, delays)).crop(0, 0, 10, 10).get();
             assertArrayEquals(delays, cropped.delaysMs());
             assertEquals(0, cropped.loopCount());
 
             // Chaining must not disturb the timing either.
-            FrameSequence chain = Imagify.read(animatedGif(3, 40, 20, delays))
-                    .rotate(90).flipVertical().padTo(60, 60, Color.BLACK).get();
+            FrameSequence chain = Imagify.read(animatedGif(3, 40, 20, delays)).rotate(90).flipVertical().padTo(60, 60, Color.BLACK).get();
             assertArrayEquals(delays, chain.delaysMs());
             assertEquals(3, chain.frameCount());
         }
@@ -353,8 +349,7 @@ class ImagifyTransformTest {
 
     @Test
     @DisplayName("transforms can be chained into a pipeline that writes a file")
-    void chainedIntoAWrite(@org.junit.jupiter.api.io.TempDir java.nio.file.Path directory)
-            throws IOException {
+    void chainedIntoAWrite(@org.junit.jupiter.api.io.TempDir java.nio.file.Path directory) throws IOException {
         java.nio.file.Path out = directory.resolve("chained.png");
         Imagify.read(writePng(solid(400, 100, 0xff3366cc)))
                 .crop(50, 0, 200, 100)
@@ -372,8 +367,7 @@ class ImagifyTransformTest {
     @Test
     @DisplayName("resizing a sequence keeps every frame the same size")
     void resizingASequenceKeepsFramesAligned() throws IOException {
-        Imagify image = Imagify.read(animatedGif(4, 40, 20, new int[] { 50, 50, 50, 50 }))
-                .resizeToFill(16, 16);
+        Imagify image = Imagify.read(animatedGif(4, 40, 20, new int[] {50, 50, 50, 50})).resizeToFill(16, 16);
         int width = image.toBufferedImage().getWidth();
         int height = image.toBufferedImage().getHeight();
         for (BufferedImage frame : image.get().frames()) {

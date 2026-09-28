@@ -94,65 +94,108 @@ public final class Imagify {
     // ═══════════════════════════════════════════════════
 
     /**
-     * Starts a pipeline by reading from a byte array.
-     * Format is auto-detected from magic bytes.
+     * Starts a pipeline by reading from one or more byte arrays.
+     * Format is auto-detected from magic bytes. Each array provides one frame.
      *
-     * @param data the encoded image data
+     * @param datas the encoded image data
      * @return this pipeline for chaining
      */
-    public static Imagify read(byte[] data) {
+    public static Imagify read(byte[]... datas) {
+        return readBytes(Arrays.asList(datas));
+    }
+
+    /**
+     * Starts a pipeline by reading from one or more file paths.
+     * Format is auto-detected from extension or header. Each path provides one frame.
+     *
+     * @param paths the file paths
+     * @return this pipeline for chaining
+     */
+    public static Imagify read(Path... paths) {
+        return readPaths(Arrays.asList(paths));
+    }
+
+    /**
+     * Starts a pipeline by reading from one or more InputStreams.
+     * Format is auto-detected from magic bytes. Each stream provides one frame.
+     *
+     * @param inputs the input streams
+     * @return this pipeline for chaining
+     */
+    public static Imagify read(InputStream... inputs) {
+        return readStreams(Arrays.asList(inputs));
+    }
+
+    /**
+     * Starts a pipeline from one or more already-decoded images, each as a frame.
+     *
+     * @param images the images, not copied
+     * @return this pipeline for chaining
+     */
+    public static Imagify read(BufferedImage... images) {
+        return readImages(Arrays.asList(images));
+    }
+
+    /**
+     * Starts a pipeline by reading from a list of byte arrays.
+     * Each array provides one frame.
+     *
+     * @param datas the encoded image data
+     * @return this pipeline for chaining
+     */
+    public static Imagify readBytes(List<byte[]> datas) {
         Imagify pipe = new Imagify();
-        try {
-            pipe.frameSequence = ImageReader.read(data);
-        } catch (IOException e) {
-            throw new IOError(e);
+        if (datas.isEmpty()) {
+            throw new IllegalArgumentException("At least one data array is required");
         }
+        pipe.addBytes(datas);
         return pipe;
     }
 
     /**
-     * Starts a pipeline by reading from a file path.
-     * Format is auto-detected from extension or header.
+     * Starts a pipeline by reading from a list of file paths.
+     * Each path provides one frame.
      *
-     * @param path the file path
+     * @param paths the file paths
      * @return this pipeline for chaining
      */
-    public static Imagify read(Path path) {
+    public static Imagify readPaths(List<Path> paths) {
         Imagify pipe = new Imagify();
-        try {
-            pipe.frameSequence = ImageReader.read(path);
-        } catch (IOException e) {
-            throw new IOError(e);
+        if (paths.isEmpty()) {
+            throw new IllegalArgumentException("At least one path is required");
         }
+        pipe.addPaths(paths);
         return pipe;
     }
 
     /**
-     * Starts a pipeline by reading from an InputStream.
-     * Format is auto-detected from magic bytes.
+     * Starts a pipeline by reading from a list of InputStreams.
+     * Each stream provides one frame.
      *
-     * @param in the input stream
+     * @param inputs the input streams
      * @return this pipeline for chaining
      */
-    public static Imagify read(InputStream in) {
+    public static Imagify readStreams(List<InputStream> inputs) {
         Imagify pipe = new Imagify();
-        try {
-            pipe.frameSequence = ImageReader.read(in);
-        } catch (IOException e) {
-            throw new IOError(e);
+        if (inputs.isEmpty()) {
+            throw new IllegalArgumentException("At least one input stream is required");
         }
+        pipe.addStreams(inputs);
         return pipe;
     }
 
     /**
-     * Starts a pipeline from an image that is already decoded, as a single frame.
+     * Starts a pipeline from a list of already-decoded images, each as a frame.
      *
-     * @param image the image, not copied
+     * @param images the images, not copied
      * @return this pipeline for chaining
      */
-    public static Imagify read(BufferedImage image) {
+    public static Imagify readImages(List<BufferedImage> images) {
         Imagify pipe = new Imagify();
-        pipe.frameSequence = singleFrame(Objects.requireNonNull(image, "image"));
+        if (images.isEmpty()) {
+            throw new IllegalArgumentException("At least one image is required");
+        }
+        pipe.addImages(images);
         return pipe;
     }
 
@@ -185,6 +228,141 @@ public final class Imagify {
         SpriteSheet sheet = SpriteSheet.create().addFrames(paths);
         layout.accept(sheet);
         return read(sheet.toImage());
+    }
+
+    // ═══════════════════════════════════════════════════
+    // Frame addition
+    // ═══════════════════════════════════════════════════
+
+    /**
+     * Merges a {@link FrameSequence} into the current sequence.
+     */
+    private void addFrameSequence(FrameSequence seq) {
+        if (frameSequence == null) {
+            frameSequence = seq;
+        } else {
+            var frames = new ArrayList<BufferedImage>(frameSequence.frames());
+            frames.addAll(seq.frames());
+            var delays = Arrays.copyOf(frameSequence.delaysMs(), frameSequence.frameCount() + seq.frameCount());
+            System.arraycopy(seq.delaysMs(), 0, delays, frameSequence.frameCount(), seq.frameCount());
+            frameSequence = new FrameSequence(frames, delays, frameSequence.loopCount());
+        }
+    }
+
+    /**
+     * Adds frames from one or more file paths. Only the first frame of each file is taken.
+     *
+     * @param paths the file paths
+     * @return this pipeline for chaining
+     */
+    public Imagify add(Path... paths) {
+        return addPaths(List.of(paths));
+    }
+
+    /**
+     * Adds frames from one or more byte arrays. Only the first frame of each is taken.
+     *
+     * @param datas the encoded image data
+     * @return this pipeline for chaining
+     */
+    public Imagify add(byte[]... datas) {
+        return addBytes(List.of(datas));
+    }
+
+    /**
+     * Adds frames from one or more BufferedImages.
+     *
+     * @param images the frame images
+     * @return this pipeline for chaining
+     */
+    public Imagify add(BufferedImage... images) {
+        return addImages(List.of(images));
+    }
+
+    /**
+     * Adds frames from one or more InputStreams. Only the first frame of each is taken.
+     *
+     * @param inputs the input streams
+     * @return this pipeline for chaining
+     */
+    public Imagify add(InputStream... inputs) {
+        return addStreams(List.of(inputs));
+    }
+
+    /**
+     * Adds frames from a list of file paths. Only the first frame of each file is taken.
+     *
+     * @param paths the file paths
+     * @return this pipeline for chaining
+     */
+    public Imagify addPaths(List<Path> paths) {
+        for (Path path : paths) {
+            try {
+                addFrameSequence(ImageReader.read(path));
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to read: " + path, e);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Adds frames from a list of byte arrays. Auto-detects the format of each
+     * byte array and adds the first frame of each.
+     *
+     * @param datas the encoded image data
+     * @return this pipeline for chaining
+     */
+    public Imagify addBytes(List<byte[]> datas) {
+        for (byte[] data : datas) {
+            try {
+                addFrameSequence(ImageReader.read(data));
+            } catch (IOException e) {
+                throw new IOError(e);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Adds frames from a list of BufferedImages.
+     *
+     * @param images the frame images
+     * @return this pipeline for chaining
+     */
+    public Imagify addImages(List<BufferedImage> images) {
+        for (BufferedImage image : images) {
+            Objects.requireNonNull(image, "image");
+            if (frameSequence == null) {
+                frameSequence = singleFrame(image);
+            } else {
+                var frames = new ArrayList<BufferedImage>(frameSequence.frameCount() + 1);
+                frames.addAll(frameSequence.frames());
+                frames.add(image);
+                int[] delays = Arrays.copyOf(frameSequence.delaysMs(), frameSequence.frameCount() + 1);
+                delays[frameSequence.frameCount()] = 0;
+                this.frameSequence = new FrameSequence(frames, delays, frameSequence.loopCount());
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Adds frames from a list of InputStreams. Auto-detects the format of each
+     * stream and adds the first frame of each.
+     *
+     * @param inputs the input streams
+     * @return this pipeline for chaining
+     */
+    public Imagify addStreams(List<InputStream> inputs) {
+        for (InputStream in : inputs) {
+            try {
+                addFrameSequence(ImageReader.read(in));
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to read from stream", e);
+            }
+        }
+        return this;
     }
 
     // ═══════════════════════════════════════════════════
@@ -405,6 +583,10 @@ public final class Imagify {
         this.frameSequence = new FrameSequence(frames, frameSequence.delaysMs(), frameSequence.loopCount());
         return this;
     }
+
+    // ═══════════════════════════════════════════════════
+    // Validation helpers
+    // ═══════════════════════════════════════════════════
 
     private static void checkSize(int targetW, int targetH) {
         if (targetW <= 0 || targetH <= 0) {

@@ -23,7 +23,6 @@ import java.util.List;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.imageio.metadata.IIOMetadata;
-import javax.imageio.stream.ImageInputStream;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -34,8 +33,10 @@ import org.junit.jupiter.api.Test;
  * Tests that an animated WebP reports its frame timing and its loop count through the standard
  * {@code ImageIO} metadata, which is the only route {@link imagify.ImageReader} has.
  *
- * <p>Two things used to be missing here. The reader returned {@code null} stream metadata, so the
- * loop count was thrown away and every animation looked as though it repeated forever; and the frame
+ * <p>
+ * Two things used to be missing here. The reader returned {@code null} stream metadata, so the
+ * loop count was thrown away and every animation looked as though it repeated forever; and the
+ * frame
  * durations were never published, so every frame of every animation was reported as lasting a
  * second. Both are read out of the animation without decoding any pixels here, so these tests only
  * need the native library to be present, not any particular encoder.
@@ -44,8 +45,7 @@ class AnimatedWebpImageIOTest {
 
     @BeforeAll
     static void requireLibwebp() {
-        assumeTrue(WebpCodec.isAvailable(),
-                () -> "skipped: libwebp is not available (" + WebpCodec.getUnavailableReason() + ")");
+        assumeTrue(WebpCodec.isAvailable(), () -> "skipped: libwebp is not available (" + WebpCodec.getUnavailableReason() + ")");
     }
 
     // -------------------------------------------------------------------------------- fixture
@@ -85,8 +85,7 @@ class AnimatedWebpImageIOTest {
     }
 
     private static String attribute(IIOMetadata metadata, String name) {
-        var node = metadata.getAsTree(metadata.getNativeMetadataFormatName())
-                .getAttributes().getNamedItem(name);
+        var node = metadata.getAsTree(metadata.getNativeMetadataFormatName()).getAttributes().getNamedItem(name);
         return node == null ? null : node.getNodeValue();
     }
 
@@ -99,12 +98,11 @@ class AnimatedWebpImageIOTest {
         @Test
         @DisplayName("says how long each frame is shown")
         void carriesTheFrameDuration() throws IOException {
-            int[] delays = { 40, 80, 120, 200 };
+            int[] delays = {40, 80, 120, 200};
             WebpImageReader reader = reader(animation(delays.length, 32, 24, delays, 0));
             for (int index = 0; index < delays.length; index++) {
-                assertEquals(Integer.toString(delays[index]),
-                        attribute(reader.getImageMetadata(index), "durationMs"),
-                        "frame " + index + " duration");
+                assertEquals(Integer
+                        .toString(delays[index]), attribute(reader.getImageMetadata(index), "durationMs"), "frame " + index + " duration");
             }
         }
 
@@ -119,17 +117,15 @@ class AnimatedWebpImageIOTest {
             }
             WebpImageReader reader = reader(encoded);
             assertFalse(reader.getNumImages(true) > 1, "a still should hold one frame");
-            assertNull(attribute(reader.getImageMetadata(0), "durationMs"),
-                    "a still image should publish no duration");
+            assertNull(attribute(reader.getImageMetadata(0), "durationMs"), "a still image should publish no duration");
         }
 
         @Test
         @DisplayName("keeps the properties it always published")
         void keepsTheExistingProperties() throws IOException {
-            WebpImageReader reader = reader(animation(4, 40, 30, new int[] { 40, 40, 40, 40 }, 3));
+            WebpImageReader reader = reader(animation(4, 40, 30, new int[] {40, 40, 40, 40}, 3));
             for (int index = 0; index < 4; index++) {
-                var root = reader.getImageMetadata(index)
-                        .getAsTree(WebpMetadata.NATIVE_FORMAT);
+                var root = reader.getImageMetadata(index).getAsTree(WebpMetadata.NATIVE_FORMAT);
                 var attributes = root.getAttributes();
                 assertEquals("40", attributes.getNamedItem("width").getNodeValue());
                 assertEquals("30", attributes.getNamedItem("height").getNodeValue());
@@ -148,32 +144,23 @@ class AnimatedWebpImageIOTest {
         @Test
         @DisplayName("is not null any more, because there is something to say in it")
         void isNotNull() throws IOException {
-            IIOMetadata metadata = reader(animation(3, 32, 24, new int[] { 40, 40, 40 }, 2))
-                    .getStreamMetadata();
+            IIOMetadata metadata = reader(animation(3, 32, 24, new int[] {40, 40, 40}, 2)).getStreamMetadata();
             assertNotNull(metadata, "the loop count was being thrown away");
         }
 
         @Test
         @DisplayName("says how often the sequence repeats")
         void carriesTheLoopCount() throws IOException {
-            assertEquals("5", attribute(
-                    reader(animation(3, 32, 24, new int[] { 40, 40, 40 }, 5)).getStreamMetadata(),
-                    "repetitionCount"));
-            assertEquals("1", attribute(
-                    reader(animation(3, 32, 24, new int[] { 40, 40, 40 }, 1)).getStreamMetadata(),
-                    "repetitionCount"));
+            assertEquals("5", attribute(reader(animation(3, 32, 24, new int[] {40, 40, 40}, 5)).getStreamMetadata(), "repetitionCount"));
+            assertEquals("1", attribute(reader(animation(3, 32, 24, new int[] {40, 40, 40}, 1)).getStreamMetadata(), "repetitionCount"));
             // Zero is the container's way of saying forever.
-            assertEquals("0", attribute(
-                    reader(animation(3, 32, 24, new int[] { 40, 40, 40 }, 0)).getStreamMetadata(),
-                    "repetitionCount"));
+            assertEquals("0", attribute(reader(animation(3, 32, 24, new int[] {40, 40, 40}, 0)).getStreamMetadata(), "repetitionCount"));
         }
 
         @Test
         @DisplayName("leaves the frame timing out, which is not what it is for")
         void leavesTheDurationOut() throws IOException {
-            assertNull(attribute(
-                    reader(animation(3, 32, 24, new int[] { 40, 40, 40 }, 2)).getStreamMetadata(),
-                    "durationMs"));
+            assertNull(attribute(reader(animation(3, 32, 24, new int[] {40, 40, 40}, 2)).getStreamMetadata(), "durationMs"));
         }
     }
 
@@ -186,14 +173,11 @@ class AnimatedWebpImageIOTest {
         @Test
         @DisplayName("keeps every frame, its timing and its loop count")
         void keepsEverything() throws IOException {
-            int[] delays = { 40, 80, 120, 200 };
-            imagify.FrameSequence sequence =
-                    imagify.ImageReader.read(animation(delays.length, 32, 24, delays, 5));
+            int[] delays = {40, 80, 120, 200};
+            imagify.FrameSequence sequence = imagify.ImageReader.read(animation(delays.length, 32, 24, delays, 5));
             assertEquals(delays.length, sequence.frameCount());
-            assertArrayEquals(delays, sequence.delaysMs(),
-                    "the animation was reported as uniformly one second a frame");
-            assertEquals(5, sequence.loopCount(),
-                    "the loop count was reported as if the animation repeated forever");
+            assertArrayEquals(delays, sequence.delaysMs(), "the animation was reported as uniformly one second a frame");
+            assertEquals(5, sequence.loopCount(), "the loop count was reported as if the animation repeated forever");
         }
 
         @Test
@@ -213,11 +197,8 @@ class AnimatedWebpImageIOTest {
         @Test
         @DisplayName("applies a transform to every frame without disturbing the timing")
         void transformsEveryFrame() throws IOException {
-            int[] delays = { 40, 80, 120 };
-            imagify.Imagify image = imagify.Imagify
-                    .read(animation(delays.length, 32, 24, delays, 2))
-                    .rotate(90)
-                    .crop(0, 0, 10, 10);
+            int[] delays = {40, 80, 120};
+            imagify.Imagify image = imagify.Imagify.read(animation(delays.length, 32, 24, delays, 2)).rotate(90).crop(0, 0, 10, 10);
             assertEquals(delays.length, image.frameCount());
             assertArrayEquals(delays, image.get().delaysMs());
             assertEquals(2, image.get().loopCount());
@@ -230,10 +211,8 @@ class AnimatedWebpImageIOTest {
         @Test
         @DisplayName("survives a round trip through the writer")
         void roundTripsThroughTheWriter() throws IOException {
-            int[] delays = { 40, 80, 120 };
-            byte[] again = imagify.Imagify
-                    .read(animation(delays.length, 32, 24, delays, 4))
-                    .writeToBytes(imagify.ImageFormat.WEBP);
+            int[] delays = {40, 80, 120};
+            byte[] again = imagify.Imagify.read(animation(delays.length, 32, 24, delays, 4)).writeToBytes(imagify.ImageFormat.WEBP);
             imagify.FrameSequence sequence = imagify.ImageReader.read(again);
             assertEquals(delays.length, sequence.frameCount());
             assertArrayEquals(delays, sequence.delaysMs());

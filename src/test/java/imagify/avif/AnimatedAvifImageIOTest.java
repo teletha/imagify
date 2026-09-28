@@ -27,8 +27,6 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.metadata.IIOMetadata;
-import javax.imageio.spi.ImageReaderSpi;
-import javax.imageio.stream.ImageInputStream;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +38,8 @@ import org.junit.jupiter.api.Test;
  * {@link imagify.ImageReader} and therefore {@link imagify.Imagify} do when they are handed an
  * animated AVIF file.
  *
- * <p>Before the animation was understood, the reader reported one image no matter what the file held
+ * <p>
+ * Before the animation was understood, the reader reported one image no matter what the file held
  * and handed back the first frame, so an animation was silently reduced to a still. These tests pin
  * down that the frame count, the individual frames, the frame timing and the loop count all survive
  * the trip.
@@ -49,9 +48,8 @@ class AnimatedAvifImageIOTest {
 
     @BeforeAll
     static void requireLibavif() {
-        assumeTrue(imagify.avif.jna.AvifCodec.isAvailable(),
-                () -> "skipped: libavif is not available ("
-                        + imagify.avif.jna.AvifCodec.getUnavailableReason() + ")");
+        assumeTrue(imagify.avif.jna.AvifCodec
+                .isAvailable(), () -> "skipped: libavif is not available (" + imagify.avif.jna.AvifCodec.getUnavailableReason() + ")");
     }
 
     // -------------------------------------------------------------------------------- fixture
@@ -84,7 +82,10 @@ class AnimatedAvifImageIOTest {
         }
     }
 
-    /** @return a single frame AVIF, which is the same reader asked to handle one image rather than a sequence */
+    /**
+     * @return a single frame AVIF, which is the same reader asked to handle one image rather than a
+     *         sequence
+     */
     private static byte[] still(int width, int height) {
         try {
             return imagify.avif.jna.AvifCodec.encode(frame(0, width, height), 70, 8);
@@ -111,8 +112,7 @@ class AnimatedAvifImageIOTest {
     }
 
     private static String attribute(IIOMetadata metadata, String name) {
-        var node = metadata.getAsTree(metadata.getNativeMetadataFormatName())
-                .getAttributes().getNamedItem(name);
+        var node = metadata.getAsTree(metadata.getNativeMetadataFormatName()).getAttributes().getNamedItem(name);
         return node == null ? null : node.getNodeValue();
     }
 
@@ -139,7 +139,7 @@ class AnimatedAvifImageIOTest {
         void isTheRealCount() throws IOException {
             // An animation needs at least two frames, so a one frame file is a still image and is
             // covered by the round trip test instead.
-            for (int count : new int[] { 2, 5, 12 }) {
+            for (int count : new int[] {2, 5, 12}) {
                 byte[] encoded = animation(count, 32, 24, new int[count], 0);
                 assertEquals(count, reader(encoded).getNumImages(true), count + " frames");
                 assertEquals(count, reader(encoded).getNumImages(false), count + " frames");
@@ -157,8 +157,7 @@ class AnimatedAvifImageIOTest {
         @DisplayName("is what ImageIO itself reports")
         void isWhatImageIOReports() throws IOException {
             byte[] encoded = animation(6, 32, 24, new int[6], 0);
-            Iterator<ImageReader> readers = ImageIO.getImageReaders(ImageIO.createImageInputStream(
-                    new ByteArrayInputStream(encoded)));
+            Iterator<ImageReader> readers = ImageIO.getImageReaders(ImageIO.createImageInputStream(new ByteArrayInputStream(encoded)));
             assertTrue(readers.hasNext(), "ImageIO found no AVIF reader");
             ImageReader reader = readers.next();
             try {
@@ -249,13 +248,11 @@ class AnimatedAvifImageIOTest {
         @Test
         @DisplayName("of a frame says how long that frame is shown")
         void carriesTheFrameDuration() throws IOException {
-            int[] delays = { 40, 80, 120, 200 };
+            int[] delays = {40, 80, 120, 200};
             byte[] encoded = animation(delays.length, 32, 24, delays, 0);
             AvifImageReader reader = reader(encoded);
             for (int index = 0; index < delays.length; index++) {
-                assertEquals(Integer.toString(delays[index]),
-                        attribute(reader.getImageMetadata(index), "durationMs"),
-                        "frame " + index);
+                assertEquals(Integer.toString(delays[index]), attribute(reader.getImageMetadata(index), "durationMs"), "frame " + index);
             }
         }
 
@@ -270,11 +267,9 @@ class AnimatedAvifImageIOTest {
         @Test
         @DisplayName("of the file says how often the sequence repeats")
         void carriesTheLoopCount() throws IOException {
-            assertEquals("5", attribute(reader(animation(3, 32, 24, new int[3], 5))
-                    .getStreamMetadata(), "repetitionCount"));
+            assertEquals("5", attribute(reader(animation(3, 32, 24, new int[3], 5)).getStreamMetadata(), "repetitionCount"));
             // Zero is the container's way of saying forever.
-            assertEquals("0", attribute(reader(animation(3, 32, 24, new int[3], 0))
-                    .getStreamMetadata(), "repetitionCount"));
+            assertEquals("0", attribute(reader(animation(3, 32, 24, new int[3], 0)).getStreamMetadata(), "repetitionCount"));
         }
 
         @Test
@@ -299,7 +294,7 @@ class AnimatedAvifImageIOTest {
         @Test
         @DisplayName("keeps every frame, its timing and its loop count")
         void keepsEverything() throws IOException {
-            int[] delays = { 40, 80, 120, 200 };
+            int[] delays = {40, 80, 120, 200};
             byte[] encoded = animation(delays.length, 32, 24, delays, 5);
             imagify.FrameSequence sequence = imagify.ImageReader.read(encoded);
             assertEquals(delays.length, sequence.frameCount());
@@ -315,7 +310,7 @@ class AnimatedAvifImageIOTest {
         @Test
         @DisplayName("applies a transform to every frame of an animated AVIF")
         void transformsEveryFrame() throws IOException {
-            int[] delays = { 40, 80, 120, 200 };
+            int[] delays = {40, 80, 120, 200};
             byte[] encoded = animation(delays.length, 32, 24, delays, 0);
             imagify.Imagify image = imagify.Imagify.read(encoded).rotate(90).crop(0, 0, 10, 10);
             assertEquals(delays.length, image.frameCount());
@@ -338,7 +333,7 @@ class AnimatedAvifImageIOTest {
         @Test
         @DisplayName("survives a round trip through the writer")
         void roundTripsThroughTheWriter() throws IOException {
-            int[] delays = { 40, 80, 120 };
+            int[] delays = {40, 80, 120};
             byte[] encoded = animation(delays.length, 32, 24, delays, 4);
             byte[] again = imagify.Imagify.read(encoded).writeToBytes(imagify.ImageFormat.AVIF);
             imagify.FrameSequence sequence = imagify.ImageReader.read(again);
