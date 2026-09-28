@@ -7,7 +7,10 @@ const root = {
 		"imagify",
 		"imagify.svg",
 		"imagify.ico",
-		"imagify.webp"
+		"imagify.jpeg",
+		"imagify.jpeg.jna",
+		"imagify.webp",
+		"imagify.pixels"
 	],
 	"types": [
 		{
@@ -281,6 +284,51 @@ const root = {
 			"type": "Class"
 		},
 		{
+			"name": "JpegException",
+			"packageName": "imagify.jpeg",
+			"type": "Exception"
+		},
+		{
+			"name": "JpegWriteParam",
+			"packageName": "imagify.jpeg",
+			"type": "Class"
+		},
+		{
+			"name": "JpegliCodec",
+			"packageName": "imagify.jpeg.jna",
+			"type": "Class"
+		},
+		{
+			"name": "JpegliLibrary",
+			"packageName": "imagify.jpeg.jna",
+			"type": "Interface"
+		},
+		{
+			"name": "JpegImageReaderSpi",
+			"packageName": "imagify.jpeg",
+			"type": "Class"
+		},
+		{
+			"name": "JpegImageReader",
+			"packageName": "imagify.jpeg",
+			"type": "Class"
+		},
+		{
+			"name": "JpegImageWriterSpi",
+			"packageName": "imagify.jpeg",
+			"type": "Class"
+		},
+		{
+			"name": "JpegImageWriter",
+			"packageName": "imagify.jpeg",
+			"type": "Class"
+		},
+		{
+			"name": "JpegImageInfo",
+			"packageName": "imagify.jpeg",
+			"type": "Record"
+		},
+		{
 			"name": "WebpImageInfo",
 			"packageName": "imagify.webp",
 			"type": "Record"
@@ -324,6 +372,21 @@ const root = {
 			"name": "FrameSequence",
 			"packageName": "imagify",
 			"type": "Class"
+		},
+		{
+			"name": "AbgrPixels",
+			"packageName": "imagify.pixels",
+			"type": "Class"
+		},
+		{
+			"name": "StillImageRead",
+			"packageName": "imagify.pixels",
+			"type": "Class"
+		},
+		{
+			"name": "StillImageRead.Sample",
+			"packageName": "imagify.pixels",
+			"type": "Record"
 		},
 		{
 			"name": "ImageResizer",

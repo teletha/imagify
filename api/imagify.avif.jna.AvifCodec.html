@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="r">
-		<header class="s" date="2026-09-26">
-			<h1 class="FB"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="GB"><a href="api/main.html" id="API"><svg class="package">
+	<body class="p">
+		<header class="q" date="2026-09-26">
+			<h1 class="w"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="BB"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="U"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="CB"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="l"></nav>
-		<article class="m" id="Article">
-			<section class="j"><code class="KB">imagify.avif.jna</code>
-				<h2 class="Class DB"><code class="JB">AvifCodec</code></h2>
-				<div class="d"></div><span class="A"><p>Entry point to the <code>libavif</code> based AVIF codec.</p><p>The native library is loaded lazily, on first use, and failing to load it is never fatal: the
+		<nav class="t"></nav>
+		<article class="r" id="Article">
+			<section class="DB"><code class="P">imagify.avif.jna</code>
+				<h2 class="Class n"><code class="J">AvifCodec</code></h2>
+				<div class="v"></div><span class="A"><p>Entry point to the <code>libavif</code> based AVIF codec.</p><p>The native library is loaded lazily, on first use, and failing to load it is never fatal: the
  ImageIO service providers of this library then stay inert instead of breaking <code>ImageIO</code> for
  every other format. Use <code><a aria-label="imagify.avif.jna.AvifCodec" href="api/imagify.avif.jna.AvifCodec.html#isAvailable()">#isAvailable()</a></code> to find out.
  
@@ -68,116 +68,116 @@
 						</p>
 					</p>
 				</span></section>
-			<section class="j" id="isAvailable()">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">isAvailable</code><code class="M">()</code><i class="e"><code>boolean</code></i></h2>
-				<table class="Z">
-					<tr class="p">
+			<section class="DB" id="isAvailable()">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">isAvailable</code><code class="y">()</code><i class="U"><code>boolean</code></i></h2>
+				<table class="N">
+					<tr class="R">
 						<td><code>boolean</code></td>
 						<td><span><code>true</code> when the native library was loaded and its version is supported</span></td>
 					</tr>
 				</table><span class="A"><p>Returns whether AVIF encoding and decoding can be used in this JVM.</p></span></section>
-			<section class="j" id="getUnavailableReason()">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">getUnavailableReason</code><code class="M">()</code><i class="e"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="Z">
-					<tr class="p">
+			<section class="DB" id="getUnavailableReason()">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">getUnavailableReason</code><code class="y">()</code><i class="U"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="N">
+					<tr class="R">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>a human readable description of the problem</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns why the native library cannot be used, or <code>null</code> when everything is fine.</p></span></section>
-			<section class="j" id="getVersion()">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">getVersion</code><code class="M">()</code><i class="e"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="Z">
-					<tr class="p">
+			<section class="DB" id="getVersion()">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">getVersion</code><code class="y">()</code><i class="U"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="N">
+					<tr class="R">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the reported version, or <code>null</code> when the library is unavailable</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns the version of the loaded <code>libavif</code>, for example <code>&quot;1.1.0 (abc1234)&quot;</code>.</p></span></section>
-			<section class="j" id="supportedVersions()">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">supportedVersions</code><code class="M">()</code><i class="e"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="Z">
-					<tr class="p">
+			<section class="DB" id="supportedVersions()">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">supportedVersions</code><code class="y">()</code><i class="U"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="N">
+					<tr class="R">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>for example <code>&quot;1.0 - 1.4&quot;</code></p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns the supported <code>libavif</code> version range.</p></span></section>
-			<section class="j" id="library()">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">library</code><code class="M">()</code><i class="e"><code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></i></h2>
-				<table class="Z">
-					<tr class="p">
+			<section class="DB" id="library()">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">library</code><code class="y">()</code><i class="U"><code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></i></h2>
+				<table class="N">
+					<tr class="R">
 						<td><code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></td>
 						<td><span><p>the library, or <code>null</code> when it is unavailable</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns the shared handle to the native library, loading it on first use.</p></span></section>
-			<section class="j" id="requireLibrary()">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">requireLibrary</code><code class="M">()</code><i class="e"><code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></i></h2>
-				<table class="Z">
-					<tr class="p">
+			<section class="DB" id="requireLibrary()">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">requireLibrary</code><code class="y">()</code><i class="U"><code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></i></h2>
+				<table class="N">
+					<tr class="R">
 						<td><code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></td>
 						<td><span><p>the library, never <code>null</code></p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Returns the shared handle to the native library or fails.</p></span></section>
-			<section class="j" id="defaultThreads()">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">defaultThreads</code><code class="M">()</code><i class="e"><code>int</code></i></h2>
-				<table class="Z">
-					<tr class="p">
+			<section class="DB" id="defaultThreads()">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">defaultThreads</code><code class="y">()</code><i class="U"><code>int</code></i></h2>
+				<table class="N">
+					<tr class="R">
 						<td><code>int</code></td>
 						<td><span><p>a value between 1 and 16</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns the number of threads <code>libavif</code> may use.</p><p>Overridable with the <code>imagify.avif.threads</code> system property.
 </p>
 				</span></section>
-			<section class="j" id="readHeader(byte[])">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">readHeader</code><code class="M">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="e"><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="readHeader(byte[])">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">readHeader</code><code class="y">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="U"><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code array="fix">byte</code><code class="parameterName">encoded</code></td>
 						<td><span><p>the complete AVIF file</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></td>
 						<td><span><p>the image properties</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Parses only the container headers of an AVIF file.</p></span></section>
-			<section class="j" id="decode(byte[])">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">decode</code><code class="M">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="e"><code><a aria-label="imagify.avif.jna.AvifCodec.DecodedImage" href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">DecodedImage</a></code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="decode(byte[])">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">decode</code><code class="y">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="U"><code><a aria-label="imagify.avif.jna.AvifCodec.DecodedImage" href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">DecodedImage</a></code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code array="fix">byte</code><code class="parameterName">encoded</code></td>
 						<td><span><p>the complete AVIF file</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code><a aria-label="imagify.avif.jna.AvifCodec.DecodedImage" href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">DecodedImage</a></code></td>
 						<td><span><p>the decoded image and its properties</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Decodes an AVIF file using the default number of threads.</p></span></section>
-			<section class="j" id="decode(byte[],int)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">decode</code><code class="M">(<code array="fix">byte</code><code class="parameterName">encoded</code>, <code>int</code><code class="parameterName">threads</code>)</code><i class="e"><code><a aria-label="imagify.avif.jna.AvifCodec.DecodedImage" href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">DecodedImage</a></code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="decode(byte[],int)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">decode</code><code class="y">(<code array="fix">byte</code><code class="parameterName">encoded</code>, <code>int</code><code class="parameterName">threads</code>)</code><i class="U"><code><a aria-label="imagify.avif.jna.AvifCodec.DecodedImage" href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">DecodedImage</a></code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code array="fix">byte</code><code class="parameterName">encoded</code></td>
 						<td><span><p>the complete AVIF file</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">threads</code></td>
 						<td><span><p>the number of threads <code>libavif</code> may use</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code><a aria-label="imagify.avif.jna.AvifCodec.DecodedImage" href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">DecodedImage</a></code></td>
 						<td><span><p>the decoded image and its properties</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
@@ -187,73 +187,73 @@
  alpha.
 </p>
 				</span></section>
-			<section class="j" id="encode(java.awt.image.RenderedImage)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">encode</code><code class="M">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>)</code><i class="e"><code array="fix">byte</code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="encode(java.awt.image.RenderedImage)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">encode</code><code class="y">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>)</code><i class="U"><code array="fix">byte</code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the image to encode</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>the complete AVIF file</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Encodes an image as AVIF using the default quality and the encoder&apos;s own speed and alpha
 quality.</p></span></section>
-			<section class="j" id="encode(java.awt.image.RenderedImage,int,int)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">encode</code><code class="M">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>)</code><i class="e"><code array="fix">byte</code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="encode(java.awt.image.RenderedImage,int,int)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">encode</code><code class="y">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>)</code><i class="U"><code array="fix">byte</code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the image to encode; any <code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code> is accepted</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><p>0 (smallest) to 100 (lossless)</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">speed</code></td>
 						<td><span><p>0 (slowest, best quality) to 10 (fastest, worst quality)</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>the complete AVIF file</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Encodes an image as AVIF at the default alpha quality.</p></span></section>
-			<section class="j" id="encode(java.awt.image.RenderedImage,int,java.lang.Integer,java.lang.Integer)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">encode</code><code class="M">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>)</code><i class="e"><code array="fix">byte</code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="encode(java.awt.image.RenderedImage,int,java.lang.Integer,java.lang.Integer)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">encode</code><code class="y">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>)</code><i class="U"><code array="fix">byte</code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the image to encode; any <code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code> is accepted</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><p>0 (smallest) to 100 (lossless)</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code></td>
 						<td><span><p>0 (slowest, best quality) to 10 (fastest, worst quality), or <code>null</code> for
 <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#DEFAULT_SPEED">AvifLibrary#DEFAULT_SPEED</a></code></p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code></td>
 						<td><span><p>0 (worst) to <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_BEST">AvifLibrary#AVIF_QUALITY_BEST</a></code> (every alpha value kept
 as it was given), or <code>null</code> for <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_LOSSLESS">AvifLibrary#AVIF_QUALITY_LOSSLESS</a></code></p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>the complete AVIF file</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
@@ -262,40 +262,40 @@ as it was given), or <code>null</code> for <code><a aria-label="imagify.avif.jna
  <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_LOSSLESS">AvifLibrary#AVIF_QUALITY_LOSSLESS</a></code> for the alpha quality.
 </p>
 				</span></section>
-			<section class="j" id="encode(java.awt.image.RenderedImage,int,java.lang.Integer,java.lang.Integer,int,int)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">encode</code><code class="M">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">pixelFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="e"><code array="fix">byte</code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="encode(java.awt.image.RenderedImage,int,java.lang.Integer,java.lang.Integer,int,int)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">encode</code><code class="y">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">pixelFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="U"><code array="fix">byte</code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the image to encode; any <code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code> is accepted</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><p>0 (smallest) to 100 (lossless)</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code></td>
 						<td><span><p>0 (slowest, best quality) to 10 (fastest, worst quality), or <code>null</code> for
 <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#DEFAULT_SPEED">AvifLibrary#DEFAULT_SPEED</a></code></p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code></td>
 						<td><span><p>0 (worst) to <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_BEST">AvifLibrary#AVIF_QUALITY_BEST</a></code> (every alpha value kept
 as it was given), or <code>null</code> for <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_LOSSLESS">AvifLibrary#AVIF_QUALITY_LOSSLESS</a></code></p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">pixelFormat</code></td>
 						<td><span><p>an <code>AVIF_PIXEL_FORMAT_*</code> value, or <code>-1</code> for the encoder&apos;s choice</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">chromaDownsampling</code></td>
 						<td><span><p>an <code>AVIF_CHROMA_DOWNSAMPLING_*</code> value, or <code>-1</code> for the encoder&apos;s choice</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>the complete AVIF file</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
@@ -305,70 +305,70 @@ as it was given), or <code>null</code> for <code><a aria-label="imagify.avif.jna
  for a still image, and <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_CHROMA_DOWNSAMPLING_AUTOMATIC">AvifLibrary#AVIF_CHROMA_DOWNSAMPLING_AUTOMATIC</a></code> for the filter.
 </p>
 				</span></section>
-			<section class="j" id="encodeAnimation(java.util.List,int[],int,int)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">encodeAnimation</code><code class="M">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>)</code><i class="e"><code array="fix">byte</code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="encodeAnimation(java.util.List,int[],int,int)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">encodeAnimation</code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>)</code><i class="U"><code array="fix">byte</code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code></td>
 						<td><span><p>the frames, all of the same size, at least two</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code array="fix">int</code><code class="parameterName">durationsMs</code></td>
 						<td><span><p>how long each frame is shown, in milliseconds, one entry per frame</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><p>0 (smallest) to 100 (lossless)</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">loopCount</code></td>
 						<td><span><p>how often the animation repeats, 0 meaning forever</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>the complete animated AVIF file</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Encodes a sequence of frames as an animated AVIF file at the encoder&apos;s own speed and alpha
 quality.</p></span></section>
-			<section class="j" id="encodeAnimation(java.util.List,int[],int,int,java.lang.Integer,java.lang.Integer)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">encodeAnimation</code><code class="M">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>)</code><i class="e"><code array="fix">byte</code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="encodeAnimation(java.util.List,int[],int,int,java.lang.Integer,java.lang.Integer)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">encodeAnimation</code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>)</code><i class="U"><code array="fix">byte</code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code></td>
 						<td><span><p>the frames, all of the same size, at least two</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code array="fix">int</code><code class="parameterName">durationsMs</code></td>
 						<td><span><p>how long each frame is shown, in milliseconds, one entry per frame</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><p>0 (smallest) to 100 (lossless)</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">loopCount</code></td>
 						<td><span><p>how often the animation repeats, 0 meaning forever</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code></td>
 						<td><span><p>0 (slowest, best quality) to 10 (fastest, worst quality), or <code>null</code>
 for <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#DEFAULT_ANIMATION_SPEED">AvifLibrary#DEFAULT_ANIMATION_SPEED</a></code></p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code></td>
 						<td><span><p>0 (worst) to <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_BEST">AvifLibrary#AVIF_QUALITY_BEST</a></code> (every alpha value kept
 as it was given), or <code>null</code> for
 <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_LOSSLESS">AvifLibrary#AVIF_QUALITY_LOSSLESS</a></code></p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>the complete animated AVIF file</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
@@ -378,49 +378,49 @@ as it was given), or <code>null</code> for
  <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_LOSSLESS">AvifLibrary#AVIF_QUALITY_LOSSLESS</a></code> for the alpha quality.
 </p>
 				</span></section>
-			<section class="j" id="encodeAnimation(java.util.List,int[],int,int,java.lang.Integer,java.lang.Integer,int,int)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">encodeAnimation</code><code class="M">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">pixelFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="e"><code array="fix">byte</code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="encodeAnimation(java.util.List,int[],int,int,java.lang.Integer,java.lang.Integer,int,int)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">encodeAnimation</code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">pixelFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="U"><code array="fix">byte</code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code></td>
 						<td><span><p>the frames, all of the same size, at least two</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code array="fix">int</code><code class="parameterName">durationsMs</code></td>
 						<td><span><p>how long each frame is shown, in milliseconds, one entry per frame</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><p>0 (smallest) to 100 (lossless)</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">loopCount</code></td>
 						<td><span><p>how often the animation repeats, 0 meaning forever</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code></td>
 						<td><span><p>0 (slowest, best quality) to 10 (fastest, worst quality), or <code>null</code>
 for <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#DEFAULT_ANIMATION_SPEED">AvifLibrary#DEFAULT_ANIMATION_SPEED</a></code></p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code></td>
 						<td><span><p>0 (worst) to <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_BEST">AvifLibrary#AVIF_QUALITY_BEST</a></code> (every alpha value kept
 as it was given), or <code>null</code> for
 <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_LOSSLESS">AvifLibrary#AVIF_QUALITY_LOSSLESS</a></code></p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">pixelFormat</code></td>
 						<td><span><p>an <code>AVIF_PIXEL_FORMAT_*</code> value, or <code>-1</code> for the encoder&apos;s choice</p></span></td>
 					</tr>
-					<tr class="v">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">chromaDownsampling</code></td>
 						<td><span><p>an <code>AVIF_CHROMA_DOWNSAMPLING_*</code> value, or <code>-1</code> for the encoder&apos;s choice</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>the complete animated AVIF file</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
@@ -432,30 +432,30 @@ downsampling filter.</p><p>A setting that is <code>-1</code> is not a value but 
  <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_CHROMA_DOWNSAMPLING_AUTOMATIC">AvifLibrary#AVIF_CHROMA_DOWNSAMPLING_AUTOMATIC</a></code> for the filter.
 </p>
 				</span></section>
-			<section class="j" id="decodeAnimation(byte[])">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">decodeAnimation</code><code class="M">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="e"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="decodeAnimation(byte[])">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">decodeAnimation</code><code class="y">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="U"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code array="fix">byte</code><code class="parameterName">data</code></td>
 						<td><span><p>the encoded AVIF bytes</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></td>
 						<td><span><p>the list of decoded frames</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="GB">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Decodes all frames of an animated AVIF file.</p></span></section>
-			<section class="j" id="isAvif(byte[])">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">isAvif</code><code class="M">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="e"><code>boolean</code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="isAvif(byte[])">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">isAvif</code><code class="y">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="U"><code>boolean</code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code array="fix">byte</code><code class="parameterName">data</code></td>
 						<td><span><p>the leading bytes of a file, at least 12 of them</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code>boolean</code></td>
 						<td><span><code>true</code> when the data looks like an AVIF file</span></td>
 					</tr>
@@ -464,118 +464,118 @@ brand in the leading <code>ftyp</code> box.</p><p>The check is pure Java and the
  lets <code>ImageIO</code> still recognise AVIF files.
 </p>
 				</span></section>
-			<section class="j" id="pixelFormatName(int)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">pixelFormatName</code><code class="M">(<code>int</code><code class="parameterName">yuvFormat</code>)</code><i class="e"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="pixelFormatName(int)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">pixelFormatName</code><code class="y">(<code>int</code><code class="parameterName">yuvFormat</code>)</code><i class="U"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">yuvFormat</code></td>
 						<td><span><p>an <code>AVIF_PIXEL_FORMAT_*</code> value</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the symbolic name, for example <code>&quot;YUV420&quot;</code></p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="rangeName(int)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">rangeName</code><code class="M">(<code>int</code><code class="parameterName">value</code>)</code><i class="e"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="rangeName(int)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">rangeName</code><code class="y">(<code>int</code><code class="parameterName">value</code>)</code><i class="U"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">value</code></td>
 						<td><span><p>an <code>AVIF_RANGE_*</code> value</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the symbolic name</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="chromaSamplePositionName(int)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">chromaSamplePositionName</code><code class="M">(<code>int</code><code class="parameterName">value</code>)</code><i class="e"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="chromaSamplePositionName(int)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">chromaSamplePositionName</code><code class="y">(<code>int</code><code class="parameterName">value</code>)</code><i class="U"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">value</code></td>
 						<td><span><p>an <code>AVIF_CHROMA_SAMPLE_POSITION_*</code> value</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the symbolic name</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="colorPrimariesName(int)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">colorPrimariesName</code><code class="M">(<code>int</code><code class="parameterName">value</code>)</code><i class="e"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="colorPrimariesName(int)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">colorPrimariesName</code><code class="y">(<code>int</code><code class="parameterName">value</code>)</code><i class="U"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">value</code></td>
 						<td><span><p>an <code>AVIF_COLOR_PRIMARIES_*</code> value</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the symbolic name</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="transferName(int)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">transferName</code><code class="M">(<code>int</code><code class="parameterName">value</code>)</code><i class="e"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="transferName(int)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">transferName</code><code class="y">(<code>int</code><code class="parameterName">value</code>)</code><i class="U"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">value</code></td>
 						<td><span><p>an <code>AVIF_TRANSFER_CHARACTERISTICS_*</code> value</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the symbolic name</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="matrixCoefficientsName(int)">
-				<h2 class="a"><i class="STATIC PUBLIC"></i><code class="JB">matrixCoefficientsName</code><code class="M">(<code>int</code><code class="parameterName">value</code>)</code><i class="e"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="Z">
-					<tr class="v">
+			<section class="DB" id="matrixCoefficientsName(int)">
+				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">matrixCoefficientsName</code><code class="y">(<code>int</code><code class="parameterName">value</code>)</code><i class="U"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="N">
+					<tr class="Y">
 						<td><code>int</code><code class="parameterName">value</code></td>
 						<td><span><p>an <code>AVIF_MATRIX_COEFFICIENTS_*</code> value</p></span></td>
 					</tr>
-					<tr class="p">
+					<tr class="R">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the symbolic name</p></span></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="t">
-			<div class="q">
-				<h5 class="S">Static Methods</h5>
+		<aside class="u">
+			<div class="i">
+				<h5 class="LB">Static Methods</h5>
 				<ul>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#isAvailable()">isAvailable</a></code><code class="M">()</code><i class="T"><code>boolean</code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#getUnavailableReason()">getUnavailableReason</a></code><code class="M">()</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#getVersion()">getVersion</a></code><code class="M">()</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#supportedVersions()">supportedVersions</a></code><code class="M">()</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#library()">library</a></code><code class="M">()</code><i class="T"><code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#requireLibrary()">requireLibrary</a></code><code class="M">()</code><i class="T"><code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#defaultThreads()">defaultThreads</a></code><code class="M">()</code><i class="T"><code>int</code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#readHeader(byte[])">readHeader</a></code><code class="M">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="T"><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#decode(byte[])">decode</a></code><code class="M">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="T"><code><a aria-label="imagify.avif.jna.AvifCodec.DecodedImage" href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">DecodedImage</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#decode(byte[],int)">decode</a></code><code class="M">(<code array="fix">byte</code><code class="parameterName">encoded</code>, <code>int</code><code class="parameterName">threads</code>)</code><i class="T"><code><a aria-label="imagify.avif.jna.AvifCodec.DecodedImage" href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">DecodedImage</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encode(java.awt.image.RenderedImage)">encode</a></code><code class="M">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>)</code><i class="T"><code array="fix">byte</code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encode(java.awt.image.RenderedImage,int,int)">encode</a></code><code class="M">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>)</code><i class="T"><code array="fix">byte</code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encode(java.awt.image.RenderedImage,int,java.lang.Integer,java.lang.Integer)">encode</a></code><code class="M">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>)</code><i class="T"><code array="fix">byte</code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encode(java.awt.image.RenderedImage,int,java.lang.Integer,java.lang.Integer,int,int)">encode</a></code><code class="M">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">pixelFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="T"><code array="fix">byte</code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encodeAnimation(java.util.List,int[],int,int)">encodeAnimation</a></code><code class="M">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>)</code><i class="T"><code array="fix">byte</code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encodeAnimation(java.util.List,int[],int,int,java.lang.Integer,java.lang.Integer)">encodeAnimation</a></code><code class="M">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>)</code><i class="T"><code array="fix">byte</code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encodeAnimation(java.util.List,int[],int,int,java.lang.Integer,java.lang.Integer,int,int)">encodeAnimation</a></code><code class="M">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">pixelFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="T"><code array="fix">byte</code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#decodeAnimation(byte[])">decodeAnimation</a></code><code class="M">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="T"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#isAvif(byte[])">isAvif</a></code><code class="M">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="T"><code>boolean</code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#pixelFormatName(int)">pixelFormatName</a></code><code class="M">(<code>int</code><code class="parameterName">yuvFormat</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#rangeName(int)">rangeName</a></code><code class="M">(<code>int</code><code class="parameterName">value</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#chromaSamplePositionName(int)">chromaSamplePositionName</a></code><code class="M">(<code>int</code><code class="parameterName">value</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#colorPrimariesName(int)">colorPrimariesName</a></code><code class="M">(<code>int</code><code class="parameterName">value</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#transferName(int)">transferName</a></code><code class="M">(<code>int</code><code class="parameterName">value</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#matrixCoefficientsName(int)">matrixCoefficientsName</a></code><code class="M">(<code>int</code><code class="parameterName">value</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#isAvailable()">isAvailable</a></code><code class="y">()</code><i class="FB"><code>boolean</code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#getUnavailableReason()">getUnavailableReason</a></code><code class="y">()</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#getVersion()">getVersion</a></code><code class="y">()</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#supportedVersions()">supportedVersions</a></code><code class="y">()</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#library()">library</a></code><code class="y">()</code><i class="FB"><code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#requireLibrary()">requireLibrary</a></code><code class="y">()</code><i class="FB"><code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#defaultThreads()">defaultThreads</a></code><code class="y">()</code><i class="FB"><code>int</code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#readHeader(byte[])">readHeader</a></code><code class="y">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="FB"><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#decode(byte[])">decode</a></code><code class="y">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="FB"><code><a aria-label="imagify.avif.jna.AvifCodec.DecodedImage" href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">DecodedImage</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#decode(byte[],int)">decode</a></code><code class="y">(<code array="fix">byte</code><code class="parameterName">encoded</code>, <code>int</code><code class="parameterName">threads</code>)</code><i class="FB"><code><a aria-label="imagify.avif.jna.AvifCodec.DecodedImage" href="api/imagify.avif.jna.AvifCodec.DecodedImage.html">DecodedImage</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encode(java.awt.image.RenderedImage)">encode</a></code><code class="y">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>)</code><i class="FB"><code array="fix">byte</code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encode(java.awt.image.RenderedImage,int,int)">encode</a></code><code class="y">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>)</code><i class="FB"><code array="fix">byte</code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encode(java.awt.image.RenderedImage,int,java.lang.Integer,java.lang.Integer)">encode</a></code><code class="y">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>)</code><i class="FB"><code array="fix">byte</code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encode(java.awt.image.RenderedImage,int,java.lang.Integer,java.lang.Integer,int,int)">encode</a></code><code class="y">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">pixelFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="FB"><code array="fix">byte</code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encodeAnimation(java.util.List,int[],int,int)">encodeAnimation</a></code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>)</code><i class="FB"><code array="fix">byte</code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encodeAnimation(java.util.List,int[],int,int,java.lang.Integer,java.lang.Integer)">encodeAnimation</a></code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>)</code><i class="FB"><code array="fix">byte</code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#encodeAnimation(java.util.List,int[],int,int,java.lang.Integer,java.lang.Integer,int,int)">encodeAnimation</a></code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">speed</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">pixelFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="FB"><code array="fix">byte</code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#decodeAnimation(byte[])">decodeAnimation</a></code><code class="y">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="FB"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#isAvif(byte[])">isAvif</a></code><code class="y">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="FB"><code>boolean</code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#pixelFormatName(int)">pixelFormatName</a></code><code class="y">(<code>int</code><code class="parameterName">yuvFormat</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#rangeName(int)">rangeName</a></code><code class="y">(<code>int</code><code class="parameterName">value</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#chromaSamplePositionName(int)">chromaSamplePositionName</a></code><code class="y">(<code>int</code><code class="parameterName">value</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#colorPrimariesName(int)">colorPrimariesName</a></code><code class="y">(<code>int</code><code class="parameterName">value</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#transferName(int)">transferName</a></code><code class="y">(<code>int</code><code class="parameterName">value</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.html#matrixCoefficientsName(int)">matrixCoefficientsName</a></code><code class="y">(<code>int</code><code class="parameterName">value</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="Y">
+		<footer class="s">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

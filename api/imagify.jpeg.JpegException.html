@@ -44,8 +44,8 @@
 		</header>
 		<nav class="t"></nav>
 		<article class="r" id="Article">
-			<section class="DB"><code class="P">imagify.avif</code>
-				<h2 class="Exception n"><code class="J">AvifException</code></h2>
+			<section class="DB"><code class="P">imagify.jpeg</code>
+				<h2 class="Exception n"><code class="J">JpegException</code></h2>
 				<div class="v">
 					<ul class="E G">
 						<li><code><a aria-label="java.lang.Exception 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Exception.html">Exception</a></code></li>
@@ -54,12 +54,17 @@
 					<ul class="E H">
 						<li><code><a aria-label="java.io.Serializable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></li>
 					</ul>
-				</div><span class="A"><p>Signals that an AVIF operation failed.</p><p>The most common causes are a missing or too old <code>libavif</code> native library and malformed
+				</div><span class="A"><p>Signals that a JPEG operation failed.</p><p>The most common causes are a missing or incompatible jpegli native library and malformed
  input.
+ 
+						<p>Every message this carries comes either from the C shim in <code>src/main/native</code> or from
+ <code><a aria-label="imagify.jpeg.JpegException" href="api/imagify.jpeg.JpegException.html#JpegException(java.lang.String,java.lang.Throwable)">#JpegException(String, Throwable)</a></code> wrapping whatever JNA reported while loading the shared
+ library, so the text is a description rather than a stable identifier. Nothing should parse it.
 </p>
+					</p>
 				</span></section>
-			<section class="DB" id="AvifException(java.lang.String)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">AvifException</code><code class="y">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>)</code></h2>
+			<section class="DB" id="JpegException(java.lang.String)">
+				<h2 class="HB"><i class="PUBLIC"></i><code class="J">JpegException</code><code class="y">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>)</code></h2>
 				<table class="N">
 					<tr class="Y">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code></td>
@@ -67,8 +72,8 @@
 					</tr>
 				</table>
 			</section>
-			<section class="DB" id="AvifException(java.lang.String,java.lang.Throwable)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">AvifException</code><code class="y">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>, <code><a aria-label="java.lang.Throwable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code><code class="parameterName">cause</code>)</code></h2>
+			<section class="DB" id="JpegException(java.lang.String,java.lang.Throwable)">
+				<h2 class="HB"><i class="PUBLIC"></i><code class="J">JpegException</code><code class="y">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>, <code><a aria-label="java.lang.Throwable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code><code class="parameterName">cause</code>)</code></h2>
 				<table class="N">
 					<tr class="Y">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code></td>
@@ -85,8 +90,8 @@
 			<div class="i">
 				<h5 class="LB">Constructors</h5>
 				<ul>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.avif.AvifException.html#AvifException(java.lang.String)">AvifException</a></code><code class="y">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>)</code></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.avif.AvifException.html#AvifException(java.lang.String,java.lang.Throwable)">AvifException</a></code><code class="y">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>, <code><a aria-label="java.lang.Throwable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code><code class="parameterName">cause</code>)</code></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegException.html#JpegException(java.lang.String)">JpegException</a></code><code class="y">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>)</code></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegException.html#JpegException(java.lang.String,java.lang.Throwable)">JpegException</a></code><code class="y">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>, <code><a aria-label="java.lang.Throwable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code><code class="parameterName">cause</code>)</code></li>
 				</ul>
 			</div>
 		</aside>

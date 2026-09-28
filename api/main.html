@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="r">
-		<header class="s" date="2026-09-26">
-			<h1 class="FB"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="GB"><a href="api/main.html" id="API"><svg class="package">
+	<body class="p">
+		<header class="q" date="2026-09-26">
+			<h1 class="w"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="BB"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,16 +35,16 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="U"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="CB"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="l"></nav>
-		<article class="m" id="Article">
-			<div class="j">
+		<nav class="t"></nav>
+		<article class="r" id="Article">
+			<div class="DB">
 				<section class="A">
 					<h2>Imagify API Overview</h2>
 					<p>This page provides a concise overview of the available APIs, including their purpose, key functionalities, and usage patterns. It serves as a starting point for developers to understand how to integrate and interact with the system effectively.</p>
@@ -55,6 +55,10 @@
 								<td><code><a href="api/imagify.avif.jna.AvifLibrary.html">AvifLibrary</a></code></td>
 								<td>JNA binding for the subset of the libavif C API that is required to decode and encode
 AVIF images.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html">JpegliLibrary</a></code></td>
+								<td>JNA binding for the C ABI in src/main/native/imagify_jpegli.h.</td>
 							</tr>
 						</table>
 					</section>
@@ -240,6 +244,31 @@ Magic bytes: no reliable header (starts with 0xFF 0xD8).</td>
 								<td>Registers IcoImageReader with ImageIO.</td>
 							</tr>
 							<tr>
+								<td><code><a href="api/imagify.jpeg.JpegWriteParam.html">JpegWriteParam</a></code></td>
+								<td>The write parameters of JpegImageWriter, which carry the two settings a JPEG has and an
+javax.imageio.ImageWriteParam has nowhere to put.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.jpeg.jna.JpegliCodec.html">JpegliCodec</a></code></td>
+								<td>Entry point to the jpegli based JPEG codec.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.jpeg.JpegImageReaderSpi.html">JpegImageReaderSpi</a></code></td>
+								<td>Registers JpegImageReader with ImageIO.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.jpeg.JpegImageReader.html">JpegImageReader</a></code></td>
+								<td>ImageReader</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.jpeg.JpegImageWriterSpi.html">JpegImageWriterSpi</a></code></td>
+								<td>Registers JpegImageWriter with ImageIO.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.jpeg.JpegImageWriter.html">JpegImageWriter</a></code></td>
+								<td>ImageWriter</td>
+							</tr>
+							<tr>
 								<td><code><a href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code></td>
 								<td>ImageReader</td>
 							</tr>
@@ -262,6 +291,15 @@ Magic bytes: no reliable header (starts with 0xFF 0xD8).</td>
 							<tr>
 								<td><code><a href="api/imagify.FrameSequence.html">FrameSequence</a></code></td>
 								<td>A sequence of image frames with their display durations.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.pixels.AbgrPixels.html">AbgrPixels</a></code></td>
+								<td>Moves pixels between BufferedImage and the tightly packed A, B, G, R byte order
+this library&apos;s native codecs want on both sides of the boundary.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.pixels.StillImageRead.html">StillImageRead</a></code></td>
+								<td>Applies a ImageReadParam to an image that has already been decoded.</td>
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.ImageResizer.html">ImageResizer</a></code></td>
@@ -323,6 +361,10 @@ Each algorithm provides a kernel function and a support radius.</td>
 								<td>Where one frame&apos;s cell lies in the sheet.</td>
 							</tr>
 							<tr>
+								<td><code><a href="api/imagify.jpeg.JpegImageInfo.html">JpegImageInfo</a></code></td>
+								<td>Properties of the image contained in a JPEG file, as reported by its frame header.</td>
+							</tr>
+							<tr>
 								<td><code><a href="api/imagify.webp.WebpImageInfo.html">WebpImageInfo</a></code></td>
 								<td>Properties of the image contained in a WebP file, as reported by the container headers.</td>
 							</tr>
@@ -330,13 +372,17 @@ Each algorithm provides a kernel function and a support radius.</td>
 								<td><code><a href="api/imagify.webp.WebpCodec.DecodedWebp.html">WebpCodec.DecodedWebp</a></code></td>
 								<td>A WebP file read in a single pass, holding its properties and its frames together.</td>
 							</tr>
+							<tr>
+								<td><code><a href="api/imagify.pixels.StillImageRead.Sample.html">StillImageRead.Sample</a></code></td>
+								<td>The part of a decoded image that a read parameter selects.</td>
+							</tr>
 						</table>
 					</section>
 				</section>
 			</div>
 		</article>
-		<aside class="t"></aside>
-		<footer class="Y">
+		<aside class="u"></aside>
+		<footer class="s">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
