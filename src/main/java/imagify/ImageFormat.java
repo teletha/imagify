@@ -647,8 +647,19 @@ public abstract class ImageFormat {
         }
     }
 
-    /** @see Jpeg */
-    public static final Jpeg JPEG = new Jpeg(Jpeg.DEFAULT_SUBSAMPLING, Jpeg.DEFAULT_OPTIMIZE_HUFFMAN_TABLES);
+    /**
+     * The defaults are spelled out here instead of being read from {@link Jpeg#DEFAULT_SUBSAMPLING}
+     * and {@link Jpeg#DEFAULT_OPTIMIZE_HUFFMAN_TABLES}, because a static field of a subclass cannot
+     * be read while that subclass is still initialising, and comes back {@code null} instead of its
+     * value. {@link Jpeg} extends this class, so a caller who names {@link Jpeg#DEFAULT_SUBSAMPLING}
+     * before naming any format makes the virtual machine initialise {@code Jpeg} first, which
+     * initialises this class first, and the two are then initialising each other. Naming
+     * {@link Jpeg.Subsampling#S420} asks for the nested enum alone, which depends on neither and so
+     * is safe whichever of the three classes is initialised first.
+     *
+     * @see Jpeg
+     */
+    public static final Jpeg JPEG = new Jpeg(Jpeg.Subsampling.S420, false);
 
     /** @see Png */
     public static final Png PNG = new Png(Png.DEFAULT_COMPRESSION_LEVEL);

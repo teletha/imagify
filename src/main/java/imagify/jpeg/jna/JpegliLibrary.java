@@ -15,6 +15,9 @@ import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.ptr.PointerByReference;
 
+import imagify.jpeg.JpegImageWriter;
+import imagify.jpeg.JpegWriteParam;
+
 /**
  * JNA binding for the C ABI in {@code src/main/native/imagify_jpegli.h}.
  *
@@ -26,7 +29,8 @@ import com.sun.jna.ptr.PointerByReference;
  * must not return, and the only portable way of getting control back is {@code setjmp} /
  * {@code longjmp}. JNA cannot take part in that: {@code CallbackReference.DefaultCallbackProxy}
  * catches every {@code Throwable} a {@link com.sun.jna.Callback} throws and passes it to a
- * {@code CallbackExceptionHandler}, and documents that the method must not throw. A callback used as
+ * {@code CallbackExceptionHandler}, and documents that the method must not throw. A callback used
+ * as
  * {@code error_exit} would therefore return normally and libjpeg would carry on after an error it
  * believes to be fatal, so a damaged file could be read into a structure field that was never
  * written. The unwinding happens in the shim instead, where it belongs, and every call here answers
@@ -62,11 +66,13 @@ public interface JpegliLibrary extends Library {
     String LIBRARY_NAME = "jpegli";
 
     /**
-     * The version of the C ABI this binding was written against, as {@code IMAGIFY_JPEGLI_ABI_VERSION}
+     * The version of the C ABI this binding was written against, as
+     * {@code IMAGIFY_JPEGLI_ABI_VERSION}
      * in {@code src/main/native/imagify_jpegli.h} spells it.
      *
      * <p>It is checked once when the library is loaded and nothing else depends on it, because the
-     * only way it could ever be wrong is a library built against a different revision of the header,
+     * only way it could ever be wrong is a library built against a different revision of the
+     * header,
      * and that has to be caught before the first call rather than after it has read a size from the
      * wrong offset.
      */
@@ -76,12 +82,16 @@ public interface JpegliLibrary extends Library {
 
     /** The operation completed. */
     int IMAGIFY_JPEG_OK = 0;
+
     /** A parameter was out of range. */
     int IMAGIFY_JPEG_ERR_ARGUMENT = 1;
+
     /** The input is not a JPEG, or is a damaged one. */
     int IMAGIFY_JPEG_ERR_CORRUPT = 2;
+
     /** An allocation failed. */
     int IMAGIFY_JPEG_ERR_MEMORY = 3;
+
     /** jpegli failed in a way its own error text does not explain. */
     int IMAGIFY_JPEG_ERR_INTERNAL = 4;
 
@@ -89,8 +99,10 @@ public interface JpegliLibrary extends Library {
 
     /** No subsampling at all, the largest file. */
     int IMAGIFY_JPEG_SAMP_444 = 0;
+
     /** The colour channels half the width. */
     int IMAGIFY_JPEG_SAMP_422 = 1;
+
     /** The colour channels half in both directions, the smallest file. */
     int IMAGIFY_JPEG_SAMP_420 = 2;
 
@@ -149,18 +161,14 @@ public interface JpegliLibrary extends Library {
      * @param horizontalFactor receives the luma sampling factor along the width, or null
      * @param verticalFactor receives the luma sampling factor along the height, or null
      * @param densityUnit receives 0 for an aspect ratio, 1 for dots per inch or 2 for dots per
-     *        centimetre, or null
+     *            centimetre, or null
      * @param horizontalDensity receives the horizontal density, or null
      * @param verticalDensity receives the vertical density, or null
      * @param precision receives the bits per channel, which is 8 for anything jpegli reads, or null
      * @param message receives the description of a failure
      * @return {@link #IMAGIFY_JPEG_OK}, or a status saying what went wrong
      */
-    int imagify_jpegli_read_header(Pointer data, long length, IntByReference width,
-            IntByReference height, IntByReference components, IntByReference progressive,
-            IntByReference horizontalFactor, IntByReference verticalFactor, IntByReference densityUnit,
-            IntByReference horizontalDensity, IntByReference verticalDensity, IntByReference precision,
-            Pointer message, long messageCapacity);
+    int imagify_jpegli_read_header(Pointer data, long length, IntByReference width, IntByReference height, IntByReference components, IntByReference progressive, IntByReference horizontalFactor, IntByReference verticalFactor, IntByReference densityUnit, IntByReference horizontalDensity, IntByReference verticalDensity, IntByReference precision, Pointer message, long messageCapacity);
 
     /**
      * Decodes into a buffer the caller owns, and must hand back to {@link #imagify_jpegli_free}.
@@ -174,9 +182,7 @@ public interface JpegliLibrary extends Library {
      * @param message receives the description of a failure
      * @return {@link #IMAGIFY_JPEG_OK}, or a status saying what went wrong
      */
-    int imagify_jpegli_decode(Pointer data, long length, PointerByReference out,
-            LongByReference outLength, IntByReference width, IntByReference height, Pointer message,
-            long messageCapacity);
+    int imagify_jpegli_decode(Pointer data, long length, PointerByReference out, LongByReference outLength, IntByReference width, IntByReference height, Pointer message, long messageCapacity);
 
     /**
      * Encodes {@code width * height * 4} bytes of {@code A, B, G, R} into a baseline JPEG.
@@ -195,12 +201,11 @@ public interface JpegliLibrary extends Library {
      * @param message receives the description of a failure
      * @return {@link #IMAGIFY_JPEG_OK}, or a status saying what went wrong
      */
-    int imagify_jpegli_encode(Pointer pixels, int width, int height, int quality, int subsampling,
-            int optimizeCoding, PointerByReference encoded, LongByReference encodedLength,
-            Pointer message, long messageCapacity);
+    int imagify_jpegli_encode(Pointer pixels, int width, int height, int quality, int subsampling, int optimizeCoding, PointerByReference encoded, LongByReference encodedLength, Pointer message, long messageCapacity);
 
     /**
-     * Frees a buffer handed out by {@link #imagify_jpegli_decode} or {@link #imagify_jpegli_encode}.
+     * Frees a buffer handed out by {@link #imagify_jpegli_decode} or
+     * {@link #imagify_jpegli_encode}.
      * Accepts a null pointer.
      *
      * @param buffer the buffer to free

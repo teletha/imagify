@@ -11,12 +11,16 @@ package imagify;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import imagify.ImageFormat.Jpeg.Subsampling;
 import imagify.jpeg.jna.JpegliCodec;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.security.CodeSource;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
@@ -220,6 +224,27 @@ class ImageFormatJpegTest {
                 "and the setting that was not asked for is left where it was");
 
         assertThrows(IllegalArgumentException.class, () -> ImageFormat.JPEG.subsampling(null));
+    }
+
+    @Test
+    @DisplayName("the default holds whichever of the format classes the caller names first")
+    void theDefaultHoldsUnderEitherInitialisationOrder() throws Exception {
+        // A caller who names the nested subclass before naming any format makes the virtual machine
+        // initialise the subclass first, which initialises this class first, so the two are
+        // initialising each other and a default read out of the subclass comes back null rather
+        // than its value. Nothing in a test JVM can un-initialise a class, so the order is run
+        // again in a loader of its own, with no access to the classes already loaded here.
+        CodeSource source = ImageFormat.class.getProtectionDomain().getCodeSource();
+        assumeTrue(source != null, "the compiled classes are needed in order to load them again");
+
+        try (URLClassLoader loader = new URLClassLoader(new URL[] {source.getLocation()},
+                ClassLoader.getPlatformClassLoader())) {
+            Class<?> jpeg = Class.forName("imagify.ImageFormat$Jpeg", true, loader);
+            Class<?> format = Class.forName("imagify.ImageFormat", true, loader);
+            Object written = jpeg.getField("subsampling").get(format.getField("JPEG").get(null));
+            assertSame(jpeg.getField("DEFAULT_SUBSAMPLING").get(null), written,
+                    "the singleton carries the same default it names, whoever asked first");
+        }
     }
 
     // ------------------------------------------------------------------------------ helpers

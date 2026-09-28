@@ -12,19 +12,19 @@ package imagify;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
-import imagify.avif.jna.AvifCodec;
-import imagify.webp.WebpCodec;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import imagify.avif.jna.AvifCodec;
+import imagify.webp.WebpCodec;
 
 /**
  * Verifies cross-conversion from every input format to every output format.
@@ -37,10 +37,8 @@ import org.junit.jupiter.api.io.TempDir;
 class CrossFormatConversionTest {
 
     /** All formats used as input and output. */
-    private static final ImageFormat[] FORMATS = {
-            ImageFormat.JPEG, ImageFormat.PNG, ImageFormat.GIF,
-            ImageFormat.BMP, ImageFormat.WEBP, ImageFormat.AVIF
-    };
+    private static final ImageFormat[] FORMATS = {ImageFormat.JPEG, ImageFormat.PNG, ImageFormat.GIF, ImageFormat.BMP, ImageFormat.WEBP,
+            ImageFormat.AVIF};
 
     /** AVIF/WebP require a native library. */
     private static final ImageFormat[] LOSSY_FORMATS = {ImageFormat.WEBP, ImageFormat.AVIF};
@@ -101,7 +99,8 @@ class CrossFormatConversionTest {
         if (!failures.isEmpty()) {
             StringBuilder sb = new StringBuilder();
             sb.append("The following conversions failed (").append(failures.size()).append("):\n");
-            for (String f : failures) sb.append("  ").append(f).append("\n");
+            for (String f : failures)
+                sb.append("  ").append(f).append("\n");
             fail(sb.toString());
         }
     }
@@ -155,7 +154,8 @@ class CrossFormatConversionTest {
         if (!failures.isEmpty()) {
             StringBuilder sb = new StringBuilder();
             sb.append("The following auto-detect conversions failed (").append(failures.size()).append("):\n");
-            for (String f : failures) sb.append("  ").append(f).append("\n");
+            for (String f : failures)
+                sb.append("  ").append(f).append("\n");
             fail(sb.toString());
         }
     }
@@ -188,8 +188,7 @@ class CrossFormatConversionTest {
         for (ImageFormat format : LOSSY_FORMATS) {
             byte[] high = ImageWriter.toBytes(source, format, 0.95);
             byte[] low = ImageWriter.toBytes(source, format, 0.05);
-            assertTrue(low.length < high.length,
-                    format + ": low quality (" + low.length + ") is larger than high quality (" + high.length + ")");
+            assertTrue(low.length < high.length, format + ": low quality (" + low.length + ") is larger than high quality (" + high.length + ")");
         }
     }
 
@@ -199,11 +198,7 @@ class CrossFormatConversionTest {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++)
-                image.setRGB(x, y,
-                        ((x * 255 / (width - 1)) << 24)
-                        | ((y * 255 / (height - 1)) << 16)
-                        | ((x * y) % 256 << 8)
-                        | 128);
+                image.setRGB(x, y, ((x * 255 / (width - 1)) << 24) | ((y * 255 / (height - 1)) << 16) | ((x * y) % 256 << 8) | 128);
         return image;
     }
 
@@ -211,18 +206,14 @@ class CrossFormatConversionTest {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++)
-                image.setRGB(x, y,
-                        ((y * 255 / (height - 1)) << 16)
-                        | ((x * y) % 256 << 8)
-                        | 128);
+                image.setRGB(x, y, ((y * 255 / (height - 1)) << 16) | ((x * y) % 256 << 8) | 128);
         return image;
     }
 
     /** Strips the alpha channel, converting to RGB. */
     private static BufferedImage stripAlpha(BufferedImage source) {
         if (!source.getColorModel().hasAlpha()) return source;
-        BufferedImage rgb = new BufferedImage(
-                source.getWidth(), source.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage rgb = new BufferedImage(source.getWidth(), source.getHeight(), BufferedImage.TYPE_INT_RGB);
         rgb.getGraphics().drawImage(source, 0, 0, null);
         return rgb;
     }
@@ -232,9 +223,7 @@ class CrossFormatConversionTest {
     }
 
     private static void assumeLibs() {
-        assumeTrue(WebpCodec.isAvailable(),
-                () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
-        assumeTrue(AvifCodec.isAvailable(),
-                () -> "libavif is not available: " + AvifCodec.getUnavailableReason());
+        assumeTrue(WebpCodec.isAvailable(), () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
+        assumeTrue(AvifCodec.isAvailable(), () -> "libavif is not available: " + AvifCodec.getUnavailableReason());
     }
 }
