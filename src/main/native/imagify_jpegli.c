@@ -375,19 +375,32 @@ int imagify_jpegli_encode(const uint8_t* pixels, int width, int height, int qual
     jpeg_set_defaults(&cinfo);
     /*
      * There is no libjpeg constant for 4:2:2 or for 4:4:4. J_COLOR_SPACE names the colour transform
-     * and says nothing about how finely the two colour difference channels are stored, so plain
-     * JCS_YCbCr on its own means 4:2:0, which is what the two factors below default to.
+     * and says nothing about how finely the two colour difference channels are stored, so the luma
+     * channel's pair of factors is the only thing that has to be said, and each case states both of
+     * it rather than deriving one from the other: deriving them independently is what produced 4:2:0
+     * as 1 by 2 here, which is a subsampling JPEG has no name for.
      *
-     * Only the luma channel's pair is written, because libjpeg requires the others to divide it
-     * evenly and derives them from it. 4:4:4 is 1 by 1 rather than a colour space of its own for
-     * the same reason: expressing it as JCS_YCbCr plus 1 by 1 is the only way to say it.
+     * Only the luma channel is written because libjpeg requires the others to divide it evenly and
+     * takes them from it. 4:4:4 is 1 by 1 rather than a colour space of its own for the same reason.
      *
      * These are written after jpeg_set_colorspace rather than before it, because that call rebuilds
      * comp_info from the colour space it is given and would otherwise overwrite them.
      */
     jpeg_set_colorspace(&cinfo, JCS_YCbCr);
-    cinfo.comp_info[0].h_samp_factor = (subsampling == IMAGIFY_JPEG_SAMP_422) ? 2 : 1;
-    cinfo.comp_info[0].v_samp_factor = (subsampling == IMAGIFY_JPEG_SAMP_420) ? 2 : 1;
+    switch (subsampling) {
+    case IMAGIFY_JPEG_SAMP_420:
+      cinfo.comp_info[0].h_samp_factor = 2;
+      cinfo.comp_info[0].v_samp_factor = 2;
+      break;
+    case IMAGIFY_JPEG_SAMP_422:
+      cinfo.comp_info[0].h_samp_factor = 2;
+      cinfo.comp_info[0].v_samp_factor = 1;
+      break;
+    default:
+      cinfo.comp_info[0].h_samp_factor = 1;
+      cinfo.comp_info[0].v_samp_factor = 1;
+      break;
+    }
     jpeg_set_quality(&cinfo, quality, TRUE);
     /* The standard tables are the default, and computing a set per image costs a pass over the
        coefficients and a table the decoder has to read. */
