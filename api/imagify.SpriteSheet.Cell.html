@@ -44,22 +44,30 @@
 		</header>
 		<nav class="d"></nav>
 		<article class="O" id="Article">
-			<section class="i"><code class="p">imagify.avif.jna</code>
-				<h2 class="Record c"><code class="EB">AvifCodec.DecodedImage</code></h2>
+			<section class="i"><code class="p">imagify</code>
+				<h2 class="Record c"><code class="EB">SpriteSheet.Cell</code></h2>
 				<div class="W">
 					<ul class="E G">
 						<li><code><a aria-label="java.lang.Record 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Record.html">Record</a></code></li>
 					</ul>
-				</div><span class="A"><p>A decoded image together with the properties read from its container.</p></span></section>
-			<section class="i" id="DecodedImage(java.awt.image.BufferedImage,imagify.avif.AvifImageInfo)">
-				<h2 class="v"><i class="PUBLIC"></i><code class="EB">DecodedImage</code><code class="Z">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code><code class="parameterName">info</code>)</code></h2>
+				</div><span class="A"><p>Where one frame&apos;s cell lies in the sheet.</p></span></section>
+			<section class="i" id="Cell(int,int,int,int)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="EB">Cell</code><code class="Z">(<code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code></h2>
 				<table class="J">
 					<tr class="LB">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code></td>
+						<td><code>int</code><code class="parameterName">x</code></td>
 						<td></td>
 					</tr>
 					<tr class="LB">
-						<td><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code><code class="parameterName">info</code></td>
+						<td><code>int</code><code class="parameterName">y</code></td>
+						<td></td>
+					</tr>
+					<tr class="LB">
+						<td><code>int</code><code class="parameterName">width</code></td>
+						<td></td>
+					</tr>
+					<tr class="LB">
+						<td><code>int</code><code class="parameterName">height</code></td>
 						<td></td>
 					</tr>
 				</table>
@@ -95,20 +103,38 @@
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="image()">
-				<h2 class="v"><i class="PUBLIC"></i><code class="EB">image</code><code class="Z">()</code><i class="l"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+			<section class="i" id="x()">
+				<h2 class="v"><i class="PUBLIC"></i><code class="EB">x</code><code class="Z">()</code><i class="l"><code>int</code></i></h2>
 				<table class="J">
 					<tr class="FB">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
+						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="info()">
-				<h2 class="v"><i class="PUBLIC"></i><code class="EB">info</code><code class="Z">()</code><i class="l"><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></i></h2>
+			<section class="i" id="y()">
+				<h2 class="v"><i class="PUBLIC"></i><code class="EB">y</code><code class="Z">()</code><i class="l"><code>int</code></i></h2>
 				<table class="J">
 					<tr class="FB">
-						<td><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></td>
+						<td><code>int</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="i" id="width()">
+				<h2 class="v"><i class="PUBLIC"></i><code class="EB">width</code><code class="Z">()</code><i class="l"><code>int</code></i></h2>
+				<table class="J">
+					<tr class="FB">
+						<td><code>int</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="i" id="height()">
+				<h2 class="v"><i class="PUBLIC"></i><code class="EB">height</code><code class="Z">()</code><i class="l"><code>int</code></i></h2>
+				<table class="J">
+					<tr class="FB">
+						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
@@ -118,15 +144,17 @@
 			<div class="Y">
 				<h5 class="q">Constructors</h5>
 				<ul>
-					<li class="CB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.DecodedImage.html#DecodedImage(java.awt.image.BufferedImage,imagify.avif.AvifImageInfo)">DecodedImage</a></code><code class="Z">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">image</code>, <code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code><code class="parameterName">info</code>)</code></li>
+					<li class="CB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.Cell.html#Cell(int,int,int,int)">Cell</a></code><code class="Z">(<code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code></li>
 				</ul>
 				<h5 class="q">Methods</h5>
 				<ul>
-					<li class="CB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.avif.jna.AvifCodec.DecodedImage.html#toString()">toString</a></code><code class="Z">()</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="CB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.avif.jna.AvifCodec.DecodedImage.html#hashCode()">hashCode</a></code><code class="Z">()</code><i class="T"><code>int</code></i></li>
-					<li class="CB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.avif.jna.AvifCodec.DecodedImage.html#equals(java.lang.Object)">equals</a></code><code class="Z">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="T"><code>boolean</code></i></li>
-					<li class="CB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.DecodedImage.html#image()">image</a></code><code class="Z">()</code><i class="T"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="CB"><i class="PUBLIC"></i><code><a href="api/imagify.avif.jna.AvifCodec.DecodedImage.html#info()">info</a></code><code class="Z">()</code><i class="T"><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></i></li>
+					<li class="CB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.SpriteSheet.Cell.html#toString()">toString</a></code><code class="Z">()</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="CB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.SpriteSheet.Cell.html#hashCode()">hashCode</a></code><code class="Z">()</code><i class="T"><code>int</code></i></li>
+					<li class="CB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.SpriteSheet.Cell.html#equals(java.lang.Object)">equals</a></code><code class="Z">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="T"><code>boolean</code></i></li>
+					<li class="CB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.Cell.html#x()">x</a></code><code class="Z">()</code><i class="T"><code>int</code></i></li>
+					<li class="CB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.Cell.html#y()">y</a></code><code class="Z">()</code><i class="T"><code>int</code></i></li>
+					<li class="CB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.Cell.html#width()">width</a></code><code class="Z">()</code><i class="T"><code>int</code></i></li>
+					<li class="CB"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.Cell.html#height()">height</a></code><code class="Z">()</code><i class="T"><code>int</code></i></li>
 				</ul>
 			</div>
 		</aside>

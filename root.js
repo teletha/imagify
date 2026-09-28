@@ -166,6 +166,21 @@ const root = {
 			"type": "Class"
 		},
 		{
+			"name": "SpriteSheet.Layout",
+			"packageName": "imagify",
+			"type": "Record"
+		},
+		{
+			"name": "SpriteSheet.Cell",
+			"packageName": "imagify",
+			"type": "Record"
+		},
+		{
+			"name": "SpriteSheet.Fit",
+			"packageName": "imagify",
+			"type": "Enum"
+		},
+		{
 			"name": "ImageFormat",
 			"packageName": "imagify",
 			"type": "Enum"

@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="M">
-		<header class="N" date="2026-09-26">
-			<h1 class="n"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="o"><a href="api/main.html" id="API"><svg class="package">
+	<body class="e">
+		<header class="f" date="2026-09-26">
+			<h1 class="U"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="DB"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,16 +35,16 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="d"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="m"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="P"></nav>
+		<nav class="d"></nav>
 		<article class="O" id="Article">
-			<div class="T">
+			<div class="i">
 				<section class="A">
 					<h2>Imagify API Overview</h2>
 					<p>This page provides a concise overview of the available APIs, including their purpose, key functionalities, and usage patterns. It serves as a starting point for developers to understand how to integrate and interact with the system effectively.</p>
@@ -256,6 +256,11 @@ Supports resampling algorithms: BILINEAR, CATROM, MITCHELL, LANCZOS3, HQX (xBRZ)
 						<h4>🛠️ Enum</h4>
 						<table>
 							<tr>
+								<td><code><a href="api/imagify.SpriteSheet.Fit.html">SpriteSheet.Fit</a></code></td>
+								<td>How a frame is made to fit its cell. The names follow the resizing methods of
+Imagify.</td>
+							</tr>
+							<tr>
 								<td><code><a href="api/imagify.ImageFormat.html">ImageFormat</a></code></td>
 								<td>Supported image formats with auto-detection capabilities.</td>
 							</tr>
@@ -278,6 +283,14 @@ Each algorithm provides a kernel function and a support radius.</td>
 								<td>A decoded image together with the properties read from its container.</td>
 							</tr>
 							<tr>
+								<td><code><a href="api/imagify.SpriteSheet.Layout.html">SpriteSheet.Layout</a></code></td>
+								<td>The resolved geometry of a sheet.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.SpriteSheet.Cell.html">SpriteSheet.Cell</a></code></td>
+								<td>Where one frame&apos;s cell lies in the sheet.</td>
+							</tr>
+							<tr>
 								<td><code><a href="api/imagify.webp.WebpImageInfo.html">WebpImageInfo</a></code></td>
 								<td>Properties of the image contained in a WebP file, as reported by the container headers.</td>
 							</tr>
@@ -290,8 +303,8 @@ Each algorithm provides a kernel function and a support radius.</td>
 				</section>
 			</div>
 		</article>
-		<aside class="Q"></aside>
-		<footer class="J">
+		<aside class="g"></aside>
+		<footer class="S">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
