@@ -47,7 +47,7 @@ class ImagifySpriteSheetTest {
     }
 
     // ══════════════════════════════════════════════════════════════════
-    //  spriteSheet(List<Path>, int)
+    //  readPaths(List<Path>).asSpriteSheet(int)
     // ══════════════════════════════════════════════════════════════════════
 
     @Test
@@ -56,7 +56,7 @@ class ImagifySpriteSheetTest {
         BufferedImage[] frames = { red(), green(), blue() };
         List<Path> paths = writeFrames(dir, frames);
 
-        Imagify pipe = Imagify.spriteSheet(paths, 2);
+        Imagify pipe = Imagify.readPaths(paths).asSpriteSheet(2);
         BufferedImage sheet = pipe.toBufferedImage();
 
         assertNotNull(sheet);
@@ -71,7 +71,7 @@ class ImagifySpriteSheetTest {
         BufferedImage[] frames = { red(), green(), blue() };
         List<Path> paths = writeFrames(dir, frames);
 
-        Imagify pipe = Imagify.spriteSheet(paths, 2);
+        Imagify pipe = Imagify.readPaths(paths).asSpriteSheet(2);
         BufferedImage sheet = pipe.toBufferedImage();
 
         // 3 frames in 2 cols: Red(0,0), Green(32,0), Blue(0,32). Sheet is 64x64
@@ -81,7 +81,7 @@ class ImagifySpriteSheetTest {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    //  spriteSheet(List<Path>, Consumer<SpriteSheet>)
+    //  readPaths(List<Path>).asSpriteSheet(Consumer<SpriteSheet>)
     // ══════════════════════════════════════════════════════════════════════
 
     @Test
@@ -90,7 +90,7 @@ class ImagifySpriteSheetTest {
         BufferedImage[] frames = { red(), green(), blue() };
         List<Path> paths = writeFrames(dir, frames);
 
-        Imagify pipe = Imagify.spriteSheet(paths, sheet -> sheet.columns(2).padding(5).spacing(2));
+        Imagify pipe = Imagify.readPaths(paths).asSpriteSheet(sheet -> sheet.columns(2).padding(5).spacing(2));
         BufferedImage sheet = pipe.toBufferedImage();
 
         assertNotNull(sheet);
@@ -107,7 +107,7 @@ class ImagifySpriteSheetTest {
         BufferedImage[] frames = { red(), green(), blue() };
         List<Path> paths = writeFrames(dir, frames);
 
-        Imagify pipe = Imagify.spriteSheet(paths, sheet -> sheet.columns(2).cell(64, 64).padding(8));
+        Imagify pipe = Imagify.readPaths(paths).asSpriteSheet(sheet -> sheet.columns(2).cell(64, 64).padding(8));
         BufferedImage sheet = pipe.toBufferedImage();
 
         // 3 frames, 2 cols, 64x64 cells, padding=8
@@ -142,8 +142,8 @@ class ImagifySpriteSheetTest {
         BufferedImage r = red(), g = green(), b = blue();
         List<Path> paths = writeFrames(dir, r, g, b);
 
-        // spriteSheet creates a multi-frame pipeline, asSpriteSheet converts it to a single image
-        Imagify pipe = Imagify.spriteSheet(paths, 2).asSpriteSheet(1);
+        // asSpriteSheet converts it to a single image
+        Imagify pipe = Imagify.readPaths(paths).asSpriteSheet(2).asSpriteSheet(1);
         FrameSequence seq = pipe.get();
         assertEquals(1, seq.frameCount(), "asSpriteSheet should collapse to a single frame");
     }
@@ -187,7 +187,7 @@ class ImagifySpriteSheetTest {
         Path file = dir.resolve("test.png");
         Files.write(file, png);
 
-        Imagify pipe = Imagify.spriteSheet(List.of(file), 1);
+        Imagify pipe = Imagify.readPaths(List.of(file)).asSpriteSheet(1);
         BufferedImage sheet = pipe.toBufferedImage();
 
         assertTrue(sheet.getWidth() > 0);
@@ -226,7 +226,7 @@ class ImagifySpriteSheetTest {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    //  Full pipeline: spriteSheet → resize → write
+    //  Full pipeline: readPaths → asSpriteSheet → resize → write
     // ══════════════════════════════════════════════════════════════════════
 
     @Test
@@ -236,7 +236,7 @@ class ImagifySpriteSheetTest {
         List<Path> paths = writeFrames(dir, frames);
 
         Path out = dir.resolve("output.png");
-        Imagify.spriteSheet(paths, 2)
+        Imagify.readPaths(paths).asSpriteSheet(2)
                 .resize(16, 16)
                 .writeTo(out);
 
@@ -259,7 +259,7 @@ class ImagifySpriteSheetTest {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    //  Read from byte arrays into spriteSheet
+    //  Read from paths into spriteSheet
     // ══════════════════════════════════════════════════════════════════════
 
     @Test
@@ -274,7 +274,7 @@ class ImagifySpriteSheetTest {
         Files.write(fileR, pngR);
         Files.write(fileG, pngG);
 
-        Imagify pipe = Imagify.spriteSheet(List.of(fileR, fileG), 2);
+        Imagify pipe = Imagify.readPaths(List.of(fileR, fileG)).asSpriteSheet(2);
         BufferedImage sheet = pipe.toBufferedImage();
         assertEquals(64, sheet.getWidth());
         assertEquals(32, sheet.getHeight());

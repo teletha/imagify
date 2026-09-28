@@ -199,37 +199,6 @@ public final class Imagify {
         return pipe;
     }
 
-    /**
-     * Starts a pipeline with one sprite sheet made of the first frame of each file.
-     *
-     * @param paths the files, in the order they appear in the sheet
-     * @param columns the number of columns; the rows follow from the number of files
-     * @return this pipeline for chaining
-     * @see #spriteSheet(List, Consumer)
-     */
-    public static Imagify spriteSheet(List<Path> paths, int columns) {
-        return spriteSheet(paths, sheet -> sheet.columns(columns));
-    }
-
-    /**
-     * Starts a pipeline with one sprite sheet made of the first frame of each file.
-     *
-     * <p>
-     * The files are added to the sheet before {@code layout} runs, so the callback only has to say
-     * how they are arranged. Use {@link #asSpriteSheet(Consumer)} instead to lay out the frames of
-     * an animation.
-     * </p>
-     *
-     * @param paths the files, in the order they appear in the sheet
-     * @param layout configures the grid, the cells, the spacing and so on
-     * @return this pipeline for chaining
-     */
-    public static Imagify spriteSheet(List<Path> paths, Consumer<SpriteSheet> layout) {
-        SpriteSheet sheet = SpriteSheet.create().addFrames(paths);
-        layout.accept(sheet);
-        return read(sheet.toImage());
-    }
-
     // ═══════════════════════════════════════════════════
     // Frame addition
     // ═══════════════════════════════════════════════════
