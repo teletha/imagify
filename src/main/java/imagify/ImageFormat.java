@@ -9,15 +9,16 @@
  */
 package imagify;
 
-import imagify.avif.jna.AvifLibrary;
-import imagify.webp.WebpCodec;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import imagify.ImageFormat.Jpeg.Subsampling;
+import imagify.avif.jna.AvifLibrary;
+import imagify.webp.WebpCodec;
 
 /**
  * Supported image formats with auto-detection capabilities.
@@ -33,9 +34,12 @@ import java.util.Objects;
  * A format whose encoder has settings of its own carries them as well, and a format asking for
  * something other than the default is a value rather than a constant:
  * {@link #WEBP} is the lossy bitstream at the usual encoder effort and {@link Webp#lossless()} the
- * lossless one, {@link AVIF} is the encoder's own speed and alpha quality and
- * {@link Avif#speed(int)} is another. Each method answers with a new value, leaving the one it was
- * called on untouched.
+ * lossless one, {@link #JPEG} is 4:2:0 with the standard entropy coder tables and
+ * {@link Jpeg#subsampling(Subsampling)} is another way to ask for colour detail,
+ * {@link #PNG} is the deflate effort the ImageIO plug-in would have picked and
+ * {@link Png#compressionLevel(int)} is another, {@link Avif} is the encoder's own speed and alpha
+ * quality and {@link Avif#speed(int)} is another. Each method answers with a new value, leaving the
+ * one it was called on untouched.
  * </p>
  *
  * <p>
@@ -57,22 +61,231 @@ public abstract class ImageFormat {
     /**
      * JPEG format (.jpg, .jpeg). Lossy compression. No alpha support.
      * Magic bytes: no reliable header (starts with 0xFF 0xD8).
+     *
+     * <p>
+     * The quality says how much of the picture survives, but it says nothing about how the two
+     * colour-difference channels are laid down. That is {@link #subsampling}: a JPEG may store
+     * them at full size, or half the width, or half in both directions, and the choice is
+     * orthogonal to the quality. {@link #optimizeHuffmanTables} is the other thing the quality
+     * does not say, whether the entropy coder tables are the standard ones or computed from the
+     * image being written.
+     * </p>
+     *
+     * <p>
+     * Both are carried here rather than being a write argument for the same reason the AVIF and
+     * WebP settings are: an {@link javax.imageio.ImageWriteParam} has room for a quality and a
+     * compression type and for nothing else. They describe the file a caller wants, not one
+     * particular write.
+     * </p>
      */
     public static final class Jpeg extends ImageFormat {
 
-        private Jpeg() {
+        /**
+         * The colour-difference resolution a JPEG is written at when the format does not say,
+         * which is the one {@code libjpeg} and every other encoder writes by default.
+         */
+        public static final Subsampling DEFAULT_SUBSAMPLING = Subsampling.S420;
+
+        /**
+         * Whether the entropy coder tables are computed from the image when the format does not
+         * say, which they are not: the standard tables are used, because a caller has to ask for
+         * the extra encode and the extra memory that computing them costs.
+         */
+        public static final boolean DEFAULT_OPTIMIZE_HUFFMAN_TABLES = false;
+
+        /**
+         * How finely the two colour-difference channels are stored, which is what decides the
+         * sharpness of the edges between areas of colour.
+         *
+         * <p>
+         * It costs nothing in the quality argument and shows plainly at the same quality: the
+         * three are three different files of three different sizes holding three different
+         * amounts of the picture. {@link Subsampling#S444} keeps the most and writes the largest,
+         * which is what a screenshot of text wants; {@link Subsampling#S420} is the default and the
+         * smallest.
+         * </p>
+         */
+        public final Subsampling subsampling;
+
+        /**
+         * Whether the entropy coder tables are computed from the image rather than taken from the
+         * standard set, which makes a smaller file for the same pixels at the cost of a slower
+         * encode and a table the decoder has to read rather than one it already knows.
+         */
+        public final boolean optimizeHuffmanTables;
+
+        private Jpeg(Subsampling subsampling, boolean optimizeHuffmanTables) {
             super("JPEG", "jpg", "image/jpeg", new byte[] {(byte) 0xFF, (byte) 0xD8}, false, false, 0.85);
+            this.subsampling = subsampling;
+            this.optimizeHuffmanTables = optimizeHuffmanTables;
+        }
+
+        /**
+         * @param subsampling how finely the colour-difference channels are stored
+         * @return this format asking for that much colour detail
+         * @throws IllegalArgumentException if {@code subsampling} is {@code null}
+         */
+        public Jpeg subsampling(Subsampling subsampling) {
+            if (subsampling == null) {
+                throw new IllegalArgumentException("the subsampling cannot be null");
+            }
+            return new Jpeg(subsampling, optimizeHuffmanTables);
+        }
+
+        /**
+         * @param optimizeHuffmanTables whether the encoder may compute entropy coder tables from
+         *            the image it is writing
+         * @return this format leaving that choice to the encoder
+         */
+        public Jpeg optimizeHuffmanTables(boolean optimizeHuffmanTables) {
+            return new Jpeg(subsampling, optimizeHuffmanTables);
+        }
+
+        /**
+         * {@inheritDoc}
+         *
+         * <p>
+         * The settings are part of what a JPEG format is, so the same picture asked for as 4:4:4
+         * is not the same value as the same picture asked for as 4:2:0.
+         * </p>
+         */
+        @Override
+        public boolean equals(Object object) {
+            return object instanceof Jpeg other && super.equals(object) && subsampling == other.subsampling && optimizeHuffmanTables == other.optimizeHuffmanTables;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int hashCode() {
+            return Objects.hash(super.hashCode(), subsampling, optimizeHuffmanTables);
+        }
+
+        /**
+         * How finely a JPEG stores its two colour-difference channels, named the way the format's
+         * own sampling factors are usually written down.
+         *
+         * <p>
+         * The two factors are the sampling rates the file's frame header carries, and the numbers
+         * in the name are the ratio of luma samples to chroma samples along each axis. Only the
+         * luma channel may be subsampled, so these are the three combinations a three component
+         * JPEG can express; {@link #S420} is the default because it is the smallest, and
+         * {@link #S444} the only one that stores the whole picture.
+         * </p>
+         */
+        public enum Subsampling {
+
+            /** 4:4:4, the colour channels at full size: the most detail and the largest file. */
+            S444(1, 1),
+
+            /**
+             * 4:2:2, the colour channels half the width: the usual choice for text and line art.
+             */
+            S422(2, 1),
+
+            /**
+             * 4:2:0, the colour channels half in both directions: the smallest, and what is written
+             * unless asked otherwise.
+             */
+            S420(2, 2);
+
+            /** The frame header's luma sampling factor along the width. */
+            public final int horizontalFactor;
+
+            /** The frame header's luma sampling factor along the height. */
+            public final int verticalFactor;
+
+            Subsampling(int horizontalFactor, int verticalFactor) {
+                this.horizontalFactor = horizontalFactor;
+                this.verticalFactor = verticalFactor;
+            }
         }
     }
 
     /**
      * PNG format (.png). Lossless compression. Alpha support.
      * Magic bytes: 0x89 0x50 0x4E 0x47 0x0D 0x0A 0x1A 0x0A
+     *
+     * <p>
+     * PNG has no quality to lose. Whatever the encoder is told, the pixels that come back are the
+     * pixels that went in, so the only knob left is how hard the deflate stage works, and that
+     * shows up in the size of the file and in the time it takes and nowhere else. It is
+     * {@link #compressionLevel}, and it is a setting of the format rather than an argument of a
+     * write, because unlike every other format's quality it does not say what the file should
+     * hold: a caller who wants a small PNG says so with the format, and the {@code quality} of
+     * {@link ImageWriter} is left with nothing to do here, as it already had for GIF and BMP.
+     * </p>
      */
     public static final class Png extends ImageFormat {
 
-        private Png() {
+        /**
+         * The deflate effort a PNG is written at when the format does not name one, which is the
+         * effort the ImageIO plug-in picks when it is not told either.
+         *
+         * <p>
+         * Note that this is not the level {@code java.util.zip.Deflater} calls its default, which
+         * is
+         * {@code 6}: the PNG writer settles on {@code 4}, and this is that one, so a plain PNG
+         * written here is the file {@code ImageIO.write} would have written.
+         * </p>
+         */
+        public static final int DEFAULT_COMPRESSION_LEVEL = 4;
+
+        /**
+         * The most effort a deflate stage can be asked for, and the smallest file it will produce.
+         */
+        public static final int MAX_COMPRESSION_LEVEL = 9;
+
+        /**
+         * How hard the deflate stage works, {@code 0} being the quickest and
+         * {@link #MAX_COMPRESSION_LEVEL} the most thorough.
+         *
+         * <p>
+         * Two levels apart are worth a great deal: on a flat 400x400 image the difference between
+         * level {@code 0} and level {@code 9} is 207 times in file size, for the same pixels. The
+         * levels near each other are worth much less and may be worth nothing at all, so this is
+         * a size and a time trade rather than a curve to tune.
+         * </p>
+         */
+        public final int compressionLevel;
+
+        private Png(int compressionLevel) {
             super("PNG", "png", "image/png", new byte[] {(byte) 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A}, true, false, 0.0);
+            this.compressionLevel = compressionLevel;
+        }
+
+        /**
+         * @param level how hard the deflate stage works, 0 (quickest) to 9 (most thorough)
+         * @return this format asking the encoder for that much effort
+         * @throws IllegalArgumentException if the effort is outside what deflate accepts
+         */
+        public Png compressionLevel(int level) {
+            if (level < 0 || level > MAX_COMPRESSION_LEVEL) {
+                throw new IllegalArgumentException("the compression level must be between 0 and " + MAX_COMPRESSION_LEVEL + ", got " + level);
+            }
+            return new Png(level);
+        }
+
+        /**
+         * {@inheritDoc}
+         *
+         * <p>
+         * The effort is part of what a PNG format is, so the same picture asked for at two levels
+         * is not the same value.
+         * </p>
+         */
+        @Override
+        public boolean equals(Object object) {
+            return object instanceof Png other && super.equals(object) && compressionLevel == other.compressionLevel;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int hashCode() {
+            return Objects.hash(super.hashCode(), compressionLevel);
         }
     }
 
@@ -122,10 +335,13 @@ public abstract class ImageFormat {
      *
      * <p>
      * WebP is the one format that comes in more than one flavour: {@link #WEBP} is the lossy
-     * {@code VP8} bitstream and {@link #lossless()} the lossless {@code VP8L} one. They are separate
+     * {@code VP8} bitstream and {@link #lossless()} the lossless {@code VP8L} one. They are
+     * separate
      * values because the choice belongs to the encoder, and because a caller that has just read a
-     * file back wants to write it in the flavour it was read in: {@link #fromHeader(byte[])} answers
-     * with whichever of the two the bytes say, so a file that survives a read and a write still holds
+     * file back wants to write it in the flavour it was read in: {@link #fromHeader(byte[])}
+     * answers
+     * with whichever of the two the bytes say, so a file that survives a read and a write still
+     * holds
      * every pixel it held before.
      * </p>
      *
@@ -158,7 +374,8 @@ public abstract class ImageFormat {
          *
          * <p>
          * More effort buys a smaller file for the same quality at the cost of a slower encode. This
-         * is {@code libwebp}'s {@code method}, and it is honoured for an animation; the binding this
+         * is {@code libwebp}'s {@code method}, and it is honoured for an animation; the binding
+         * this
          * library uses does not offer it to its single image encoder, so a still image is always
          * written at {@link #DEFAULT_COMPRESSION_METHOD}.
          * </p>
@@ -195,16 +412,14 @@ public abstract class ImageFormat {
          * {@inheritDoc}
          *
          * <p>
-         * The flavour and the effort are part of what a WebP format is, so a lossy animation written
+         * The flavour and the effort are part of what a WebP format is, so a lossy animation
+         * written
          * with more effort is not the same value as a lossy one written with less.
          * </p>
          */
         @Override
         public boolean equals(Object object) {
-            return object instanceof Webp other
-                    && super.equals(object)
-                    && lossless == other.lossless
-                    && compressionMethod == other.compressionMethod;
+            return object instanceof Webp other && super.equals(object) && lossless == other.lossless && compressionMethod == other.compressionMethod;
         }
 
         /**
@@ -221,7 +436,8 @@ public abstract class ImageFormat {
      * Magic bytes: "ftyp" box with "avif" brand
      *
      * <p>
-     * AVIF has no switch for lossless encoding: it is a quality of {@code AVIF_QUALITY_LOSSLESS} out
+     * AVIF has no switch for lossless encoding: it is a quality of {@code AVIF_QUALITY_LOSSLESS}
+     * out
      * of {@code AVIF_QUALITY_BEST}, so the quality a write is asked for is what says whether the
      * pixels are kept. The settings that have no other home are carried here instead:
      * {@link #speed}, how long the encoder may take, and {@link #alphaQuality}, how hard the alpha
@@ -280,9 +496,7 @@ public abstract class ImageFormat {
          */
         public Avif alphaQuality(int alphaQuality) {
             if (alphaQuality < AvifLibrary.AVIF_QUALITY_WORST || alphaQuality > AvifLibrary.AVIF_QUALITY_BEST) {
-                throw new IllegalArgumentException("the alpha quality must be between "
-                        + AvifLibrary.AVIF_QUALITY_WORST + " and " + AvifLibrary.AVIF_QUALITY_BEST
-                        + ", got " + alphaQuality);
+                throw new IllegalArgumentException("the alpha quality must be between " + AvifLibrary.AVIF_QUALITY_WORST + " and " + AvifLibrary.AVIF_QUALITY_BEST + ", got " + alphaQuality);
             }
             return new Avif(speed, alphaQuality);
         }
@@ -297,10 +511,8 @@ public abstract class ImageFormat {
          */
         @Override
         public boolean equals(Object object) {
-            return object instanceof Avif other
-                    && super.equals(object)
-                    && Objects.equals(speed, other.speed)
-                    && Objects.equals(alphaQuality, other.alphaQuality);
+            return object instanceof Avif other && super.equals(object) && Objects.equals(speed, other.speed) && Objects
+                    .equals(alphaQuality, other.alphaQuality);
         }
 
         /**
@@ -324,10 +536,10 @@ public abstract class ImageFormat {
     }
 
     /** @see Jpeg */
-    public static final Jpeg JPEG = new Jpeg();
+    public static final Jpeg JPEG = new Jpeg(Jpeg.DEFAULT_SUBSAMPLING, Jpeg.DEFAULT_OPTIMIZE_HUFFMAN_TABLES);
 
     /** @see Png */
-    public static final Png PNG = new Png();
+    public static final Png PNG = new Png(Png.DEFAULT_COMPRESSION_LEVEL);
 
     /** @see Gif */
     public static final Gif GIF = new Gif();
@@ -475,7 +687,8 @@ public abstract class ImageFormat {
     /**
      * Resolves the format by inspecting the magic byte header of the data.
      *
-     * <p>WebP is the one format that comes in more than one flavour, and a header long enough to
+     * <p>
+     * WebP is the one format that comes in more than one flavour, and a header long enough to
      * hold the chunk that names the image bitstream says which one this is, so the answer is
      * {@link #WEBP} or {@link Webp#lossless()} rather than always the lossy one. As many leading
      * bytes as the caller has are all that is needed to decide, and the ones that are missing are
@@ -529,7 +742,8 @@ public abstract class ImageFormat {
     /**
      * Resolves which flavour of WebP the data is in, which is the one thing a file name cannot say.
      *
-     * <p>Only the bytes can tell a {@code VP8L} file from a {@code VP8 } one, and the chunk that
+     * <p>
+     * Only the bytes can tell a {@code VP8L} file from a {@code VP8 } one, and the chunk that
      * names the bitstream is a little way into the file, so a caller that passes a shorter prefix
      * than {@link WebpCodec#losslessHeaderLength()} gets the lossy flavour. That is the right way
      * round to be wrong in: a file read as lossy still decodes, a file read as lossless would only
@@ -542,7 +756,8 @@ public abstract class ImageFormat {
     /**
      * Resolves the format from a file path (extension-based), with header fallback.
      *
-     * <p>The name alone decides here, which is deliberate: this is what a writer resolves the
+     * <p>
+     * The name alone decides here, which is deliberate: this is what a writer resolves the
      * format of a destination from, and a file that is already sitting at that path must not
      * decide what is written over it. A reader that wants the flavour of a file rather than the
      * format of a name hands its bytes to {@link #fromHeader(byte[])} instead.
@@ -591,7 +806,8 @@ public abstract class ImageFormat {
      * {@inheritDoc}
      *
      * <p>
-     * A format is a value: a subclass that carries settings of its own is expected to add them here,
+     * A format is a value: a subclass that carries settings of its own is expected to add them
+     * here,
      * since {@link #WEBP} and the lossless WebP that {@link Webp#lossless()} hands out are two
      * requests rather than two constants, and a caller comparing them with {@code equals} is asking
      * whether they ask for the same thing.
@@ -602,13 +818,9 @@ public abstract class ImageFormat {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         ImageFormat other = (ImageFormat) object;
-        return name.equals(other.name)
-                && extension.equals(other.extension)
-                && mimeType.equals(other.mimeType)
-                && supportsAlpha == other.supportsAlpha
-                && supportsAnimation == other.supportsAnimation
-                && Double.compare(defaultQuality, other.defaultQuality) == 0
-                && Arrays.equals(magicBytes, other.magicBytes);
+        return name.equals(other.name) && extension.equals(other.extension) && mimeType
+                .equals(other.mimeType) && supportsAlpha == other.supportsAlpha && supportsAnimation == other.supportsAnimation && Double
+                        .compare(defaultQuality, other.defaultQuality) == 0 && Arrays.equals(magicBytes, other.magicBytes);
     }
 
     /**

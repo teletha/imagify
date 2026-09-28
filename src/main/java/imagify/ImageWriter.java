@@ -18,7 +18,11 @@ import imagify.webp.WebpImageWriterSpi;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriteParam;
+import javax.imageio.metadata.IIOInvalidTreeException;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
 import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -27,6 +31,9 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Writes images to various destinations with format control.
@@ -38,7 +45,10 @@ import java.util.Iterator;
  *
  * <p>Quality is a {@code 0.0} to {@code 1.0} value that is handed to the encoder through the
  * compression quality of an {@link ImageWriteParam}, so a smaller number means a smaller file and
- * more loss. Formats without a quality axis, such as GIF and BMP, ignore it.</p>
+ * more loss. Formats without a quality axis ignore it: GIF and BMP because nothing in them can
+ * lose anything, and PNG because nothing in it ever does. A PNG's effort is a setting of the format
+ * instead, {@link ImageFormat.Png#compressionLevel(int)}, and asking for a high quality on one
+ * would only have asked the compressor to work less.</p>
  *
  * <p>WebP is written in whichever of its two flavours the format asks for:
  * {@link ImageFormat#WEBP} produces the lossy {@code VP8} bitstream and
@@ -47,13 +57,17 @@ import java.util.Iterator;
  * it.</p>
  *
  * <p>Settings a format carries rather than a write: the WebP encoder effort
- * ({@link ImageFormat.Webp#compressionMethod(int)}), and the AVIF encoder speed
+ * ({@link ImageFormat.Webp#compressionMethod(int)}), the JPEG colour-difference resolution
+ * ({@link ImageFormat.Jpeg#subsampling(ImageFormat.Jpeg.Subsampling)}) and entropy coder tables
+ * ({@link ImageFormat.Jpeg#optimizeHuffmanTables(boolean)}), the PNG deflate effort
+ * ({@link ImageFormat.Png#compressionLevel(int)}), and the AVIF encoder speed
  * ({@link ImageFormat.Avif#speed(int)}) and alpha quality
  * ({@link ImageFormat.Avif#alphaQuality(int)}). They are handed to the encoder whatever the output
  * is, and the WebP one is an animation setting, because that is all the WebP binding this library
- * uses offers it for. An {@link ImageWriteParam} can carry none of them, so an AVIF still image is
- * encoded through {@link AvifCodec} rather than through the ImageIO plug-in that wraps the same
- * codec.</p>
+ * uses offers it for. An {@link ImageWriteParam} has room for a quality and a compression type and
+ * for nothing else, so the JPEG subsampling travels as image metadata and the encoder settings of
+ * the other two are handed to their codecs directly: an AVIF still image is encoded through
+ * {@link AvifCodec} rather than through the ImageIO plug-in that wraps the same codec.</p>
  *
  * <p>{@link FrameSequence} handling: if the sequence has more than one frame and the target
  * format supports animation, the frames are encoded as an animation. Otherwise the first
@@ -311,10 +325,55 @@ public final class ImageWriter {
             if (param == null) {
                 writer.write(image);
             } else {
-                writer.write(null, new IIOImage(image, null, null), param);
+                writer.write(null, new IIOImage(image, null, jpegMetadata(writer, image, param, format)),
+                        param);
             }
         } finally {
             writer.dispose();
+        }
+    }
+
+    /**
+     * The image metadata a format asks for, or {@code null} when it asks for none.
+     *
+     * <p>
+     * Only JPEG has anything to say here: the colour-difference channels are laid down at the
+     * sampling rates its frame header names, and those are not an {@link ImageWriteParam} but
+     * image metadata. A JPEG written at {@link ImageFormat.Jpeg#DEFAULT_SUBSAMPLING} says nothing,
+     * which is the point of answering {@code null} for it: the write then carries no metadata at
+     * all, exactly as it did before, and the file it produces is the file the writer would have
+     * written on its own.
+     * </p>
+     */
+    private static IIOMetadata jpegMetadata(javax.imageio.ImageWriter writer, BufferedImage image,
+            ImageWriteParam param, ImageFormat format) throws IOException {
+        if (!(format instanceof ImageFormat.Jpeg jpeg)
+                || jpeg.subsampling == ImageFormat.Jpeg.DEFAULT_SUBSAMPLING) {
+            return null;
+        }
+        try {
+            IIOMetadata metadata = writer.getDefaultImageMetadata(
+                    ImageTypeSpecifier.createFromRenderedImage(image), param);
+            String nativeFormat = metadata.getNativeMetadataFormatName();
+            Node root = metadata.getAsTree(nativeFormat);
+            NodeList components = ((Element) root).getElementsByTagName("componentSpec");
+            for (int i = 0; i < components.getLength(); i++) {
+                Element component = (Element) components.item(i);
+                // Only the luma channel carries a sampling rate of its own, and it is the one the
+                // frame header numbers 1. The two colour-difference channels follow it.
+                boolean luma = "1".equals(component.getAttribute("componentId"));
+                component.setAttribute("HsamplingFactor", String.valueOf(
+                        luma ? jpeg.subsampling.horizontalFactor : 1));
+                component.setAttribute("VsamplingFactor", String.valueOf(
+                        luma ? jpeg.subsampling.verticalFactor : 1));
+            }
+            metadata.mergeTree(nativeFormat, root);
+            return metadata;
+        } catch (IIOInvalidTreeException | IllegalArgumentException e) {
+            // A JPEG that quietly lost the colour detail it was asked for would be worse than one
+            // that failed, so the caller is told the request cannot be honoured.
+            throw new IOException("the JPEG writer would not accept " + jpeg.subsampling
+                    + " subsampling: " + e.getMessage(), e);
         }
     }
 
@@ -332,7 +391,7 @@ public final class ImageWriter {
         if (param == null || !param.canWriteCompressed()) return null;
         try {
             param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-            param.setCompressionQuality((float) quality);
+            param.setCompressionQuality(encoderQuality(format, quality));
         } catch (IllegalStateException | UnsupportedOperationException e) {
             return null;
         }
@@ -350,7 +409,41 @@ public final class ImageWriter {
                         + WebpImageWriterSpi.COMPRESSION_TYPE_LOSSLESS + " compression type: " + e.getMessage(), e);
             }
         }
+        if (format instanceof ImageFormat.Jpeg jpeg && jpeg.optimizeHuffmanTables) {
+            // The entropy coder tables are this one's own extension of the write param, so the
+            // switch is only there to be asked for and the format is the only place a caller can.
+            if (param instanceof JPEGImageWriteParam jpegParam) {
+                jpegParam.setOptimizeHuffmanTables(true);
+            }
+        }
         return param;
+    }
+
+    /**
+     * The compression quality to hand the write param, which is the argument for every format
+     * except one.
+     *
+     * <p>
+     * A PNG's write param has nothing but a quality to give, and this library's use of it is
+     * worse than nothing: the plug-in reads the quality as a deflate level, so the argument a
+     * caller passes to say how much of the picture to keep decides instead how hard the compressor
+     * works, and a request for the best quality on a lossless format is answered with a file many
+     * times larger holding exactly the same pixels. The effort is therefore taken from
+     * {@link ImageFormat.Png#compressionLevel}, which is where a caller can say it out loud, and the
+     * argument is ignored here just as it already was for GIF and BMP.
+     * </p>
+     *
+     * <p>
+     * The two are the same scale read in opposite directions, the plug-in counting deflate levels
+     * down from {@code 0} while its quality counts up from {@code 0.0}, so the level a format names
+     * is asked for as the quality that lands on it.
+     * </p>
+     */
+    private static float encoderQuality(ImageFormat format, double quality) {
+        if (format instanceof ImageFormat.Png png) {
+            return 1.0f - (float) png.compressionLevel / ImageFormat.Png.MAX_COMPRESSION_LEVEL;
+        }
+        return (float) quality;
     }
 
     private static void checkQuality(double quality) {

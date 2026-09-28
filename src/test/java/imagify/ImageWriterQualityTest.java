@@ -40,11 +40,14 @@ class ImageWriterQualityTest {
     /** The formats whose encoders spend real effort on the quality they are given. */
     private static final ImageFormat[] LOSSY = {ImageFormat.JPEG, ImageFormat.WEBP, ImageFormat.AVIF};
 
-    /** PNG has no quality axis either, but its writer maps quality onto a deflate level. */
-    private static final ImageFormat[] LEVELLED = {ImageFormat.PNG};
-
-    /** GIF and BMP advertise compression types yet refuse an explicit mode, so they ignore quality. */
-    private static final ImageFormat[] NO_AXIS = {ImageFormat.GIF, ImageFormat.BMP};
+    /**
+     * The formats that cannot lose anything: GIF and BMP advertise compression types yet refuse an
+     * explicit mode, and PNG's writer reads the quality as a deflate level, so for all three the
+     * argument has nothing to spend itself on. What a PNG spends its effort on instead is a setting
+     * of the format, {@link ImageFormat.Png#compressionLevel(int)}, tested in
+     * {@link ImageFormatPngTest}.
+     */
+    private static final ImageFormat[] NO_AXIS = {ImageFormat.GIF, ImageFormat.BMP, ImageFormat.PNG};
 
     @Test
     @DisplayName("a lossy format gets smaller as the quality drops")
@@ -81,19 +84,6 @@ class ImageWriterQualityTest {
             assertTrue(byDefault > low && byDefault < high,
                     format + ": the default of " + format.getDefaultQuality() + " gave " + byDefault
                             + ", which is not between " + low + " and " + high);
-        }
-    }
-
-    @Test
-    @DisplayName("PNG honours quality as a deflate level")
-    void pngFollowsQuality() throws IOException {
-        BufferedImage image = sample(120, 90);
-
-        for (ImageFormat format : LEVELLED) {
-            int low = ImageWriter.toBytes(image, format, 0.01).length;
-            int high = ImageWriter.toBytes(image, format, 0.99).length;
-            assertTrue(low < high,
-                    format + ": 0.01 gave " + low + " and 0.99 gave " + high);
         }
     }
 
