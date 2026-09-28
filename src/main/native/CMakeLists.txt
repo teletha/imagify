@@ -243,7 +243,14 @@ elseif(APPLE)
   target_link_options(imagify_jpegli PRIVATE "-Wl,-install_name,@rpath/libjpegli.1.dylib")
 
 else()
-  set(IMAGIFY_JPEGLI_MAP_CONTENT "LIBJPEGLI 1.0 {\n  global:\n")
+  # The version node's name is one identifier, not a name and a version: there is no version number
+  # field in a version script, so a space between the two parses the name and then trips over the
+  # second token where the brace is expected. jpegli's own script spells it the same way,
+  # LIBJPEG_6.2, rather than LIBJPEG 6.2.
+  #
+  # The soname is a separate matter and comes from the VERSION and SOVERSION properties below, not
+  # from anything in here.
+  set(IMAGIFY_JPEGLI_MAP_CONTENT "LIBJPEGLI_1 {\n  global:\n")
   foreach(symbol IN LISTS IMAGIFY_JPEGLI_SYMBOLS)
     string(APPEND IMAGIFY_JPEGLI_MAP_CONTENT "    ${symbol};\n")
   endforeach()
