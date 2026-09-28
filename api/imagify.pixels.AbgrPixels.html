@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="p">
-		<header class="q" date="2026-09-26">
-			<h1 class="w"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="BB"><a href="api/main.html" id="API"><svg class="package">
+	<body class="K">
+		<header class="L" date="2026-09-26">
+			<h1 class="i"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="j"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="CB"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="d"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="t"></nav>
-		<article class="r" id="Article">
-			<section class="DB"><code class="P">imagify.pixels</code>
-				<h2 class="Class n"><code class="J">AbgrPixels</code></h2>
-				<div class="v"></div><span class="A"><p>Moves pixels between <code>BufferedImage</code> and the tightly packed <code>A, B, G, R</code> byte order
+		<nav class="O"></nav>
+		<article class="M" id="Article">
+			<section class="V"><code class="w">imagify.pixels</code>
+				<h2 class="Class GB"><code class="s">AbgrPixels</code></h2>
+				<div class="BB"></div><span class="A"><p>Moves pixels between <code>BufferedImage</code> and the tightly packed <code>A, B, G, R</code> byte order
 this library&apos;s native codecs want on both sides of the boundary.</p><p>That byte order is what <code>libavif</code> calls <code>AVIF_RGB_FORMAT_ABGR</code>, what the jpegli
  shim in <code>src/main/native/imagify_jpegli.c</code> is given, and what a
  <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html#TYPE_4BYTE_ABGR">BufferedImage#TYPE_4BYTE_ABGR</a></code> raster holds in memory, so an image of that exact type can
@@ -68,58 +68,58 @@ this library&apos;s native codecs want on both sides of the boundary.</p><p>That
 						</p>
 					</p>
 				</span></section>
-			<section class="DB" id="toBufferedImage(byte[],int,int)">
-				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">toBufferedImage</code><code class="y">(<code array="fix">byte</code><code class="parameterName">abgr</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="U"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="toBufferedImage(byte[],int,int)">
+				<h2 class="g"><i class="PUBLIC STATIC"></i><code class="s">toBufferedImage</code><code class="x">(<code array="fix">byte</code><code class="parameterName">abgr</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="JB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code array="fix">byte</code><code class="parameterName">abgr</code></td>
 						<td><span><p>at least <code>width * height * 4</code> bytes in A, B, G, R order</p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td><span><p>image width</p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td><span><p>image height</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>a <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html#TYPE_4BYTE_ABGR">BufferedImage#TYPE_4BYTE_ABGR</a></code> image</p></span></td>
 					</tr>
 				</table><span class="A"><p>Wraps tightly packed A, B, G, R bytes into a new image.</p></span></section>
-			<section class="DB" id="toAbgrBytes(java.awt.image.RenderedImage,int,int,int,int,int,int)">
-				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">toAbgrBytes</code><code class="y">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">subX</code>, <code>int</code><code class="parameterName">subY</code>)</code><i class="U"><code array="fix">byte</code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="toAbgrBytes(java.awt.image.RenderedImage,int,int,int,int,int,int)">
+				<h2 class="g"><i class="PUBLIC STATIC"></i><code class="s">toAbgrBytes</code><code class="x">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">subX</code>, <code>int</code><code class="parameterName">subY</code>)</code><i class="JB"><code array="fix">byte</code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the image to read</p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">x</code></td>
 						<td><span><p>left edge of the region, in image coordinates</p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">y</code></td>
 						<td><span><p>top edge of the region, in image coordinates</p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td><span><p>region width, in destination pixels</p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td><span><p>region height, in destination pixels</p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">subX</code></td>
 						<td><span><p>horizontal sub sampling factor, at least 1</p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">subY</code></td>
 						<td><span><p>vertical sub sampling factor, at least 1</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code array="fix">byte</code></td>
 						<td><span><code>width * height * 4</code> bytes in A, B, G, R order</span></td>
 					</tr>
@@ -128,16 +128,16 @@ this library&apos;s native codecs want on both sides of the boundary.</p><p>That
 </p>
 				</span></section>
 		</article>
-		<aside class="u">
-			<div class="i">
-				<h5 class="LB">Static Methods</h5>
+		<aside class="P">
+			<div class="l">
+				<h5 class="J">Static Methods</h5>
 				<ul>
-					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.pixels.AbgrPixels.html#toBufferedImage(byte[],int,int)">toBufferedImage</a></code><code class="y">(<code array="fix">byte</code><code class="parameterName">abgr</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="FB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.pixels.AbgrPixels.html#toAbgrBytes(java.awt.image.RenderedImage,int,int,int,int,int,int)">toAbgrBytes</a></code><code class="y">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">subX</code>, <code>int</code><code class="parameterName">subY</code>)</code><i class="FB"><code array="fix">byte</code></i></li>
+					<li class="X"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.pixels.AbgrPixels.html#toBufferedImage(byte[],int,int)">toBufferedImage</a></code><code class="x">(<code array="fix">byte</code><code class="parameterName">abgr</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="u"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="X"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.pixels.AbgrPixels.html#toAbgrBytes(java.awt.image.RenderedImage,int,int,int,int,int,int)">toAbgrBytes</a></code><code class="x">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">subX</code>, <code>int</code><code class="parameterName">subY</code>)</code><i class="u"><code array="fix">byte</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="s">
+		<footer class="N">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

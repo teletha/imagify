@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="p">
-		<header class="q" date="2026-09-26">
-			<h1 class="w"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="BB"><a href="api/main.html" id="API"><svg class="package">
+	<body class="K">
+		<header class="L" date="2026-09-26">
+			<h1 class="i"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="j"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="CB"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="d"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="t"></nav>
-		<article class="r" id="Article">
-			<section class="DB"><code class="P">imagify</code>
-				<h2 class="Class n"><code class="J">ImageFormat.Avif</code></h2>
-				<div class="v">
+		<nav class="O"></nav>
+		<article class="M" id="Article">
+			<section class="V"><code class="w">imagify</code>
+				<h2 class="Class GB"><code class="s">ImageFormat.Avif</code></h2>
+				<div class="BB">
 					<ul class="E G">
 						<li><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></li>
 					</ul>
@@ -66,18 +66,18 @@ Magic bytes: &quot;ftyp&quot; box with &quot;avif&quot; brand</p><p>
  its own choice, and for the subsampling that choice differs between a still image and an
  animation.
  </p></span></section>
-			<section class="DB" id="speed">
-				<h2 class="HB"><i class="FINAL"><i class="PUBLIC"></i></i><code class="J">speed</code><i class="U"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></h2><span class="A"><p>How long the encoder may take, <code>0</code> being the slowest and most thorough and
+			<section class="V" id="speed">
+				<h2 class="g"><i class="FINAL"><i class="PUBLIC"></i></i><code class="s">speed</code><i class="JB"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></h2><span class="A"><p>How long the encoder may take, <code>0</code> being the slowest and most thorough and
 <code>10</code> the quickest. Unset means <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#DEFAULT_SPEED">AvifLibrary#DEFAULT_SPEED</a></code> for a still image
 and <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#DEFAULT_ANIMATION_SPEED">AvifLibrary#DEFAULT_ANIMATION_SPEED</a></code> for an animation, which pays the cost of
 a speed setting once per frame.</p></span></section>
-			<section class="DB" id="alphaQuality">
-				<h2 class="HB"><i class="FINAL"><i class="PUBLIC"></i></i><code class="J">alphaQuality</code><i class="U"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></h2><span class="A"><p>How hard the alpha plane is compressed, <code>AVIF_QUALITY_WORST</code> being the worst and
+			<section class="V" id="alphaQuality">
+				<h2 class="g"><i class="FINAL"><i class="PUBLIC"></i></i><code class="s">alphaQuality</code><i class="JB"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></h2><span class="A"><p>How hard the alpha plane is compressed, <code>AVIF_QUALITY_WORST</code> being the worst and
 <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_BEST">AvifLibrary#AVIF_QUALITY_BEST</a></code> keeping every alpha value as it was given. Unset
 means <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_LOSSLESS">AvifLibrary#AVIF_QUALITY_LOSSLESS</a></code>, because lossy alpha is the single most
 visible AVIF artefact and an alpha plane is cheap to store.</p></span></section>
-			<section class="DB" id="subsampling">
-				<h2 class="HB"><i class="FINAL"><i class="PUBLIC"></i></i><code class="J">subsampling</code><i class="U"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>How finely the two colour-difference channels are stored, or <code>null</code> to leave the
+			<section class="V" id="subsampling">
+				<h2 class="g"><i class="FINAL"><i class="PUBLIC"></i></i><code class="s">subsampling</code><i class="JB"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>How finely the two colour-difference channels are stored, or <code>null</code> to leave the
 choice to the encoder, which is not one value but two: <code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html#YUV444">Subsampling#YUV444</a></code> for a
 still image, because a lone picture is where someone is most likely to be looking
 closely at a saturated edge, and <code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html#YUV420">Subsampling#YUV420</a></code> for an animation, where the
@@ -87,8 +87,8 @@ cost of the alternative is paid once per frame.</p><p>
  and a caller who wants a text screenshot as an animation asks for
  <code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html#YUV444">Subsampling#YUV444</a></code> there as well.
  </p></span></section>
-			<section class="DB" id="chromaDownsampling">
-				<h2 class="HB"><i class="FINAL"><i class="PUBLIC"></i></i><code class="J">chromaDownsampling</code><i class="U"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>The filter the conversion from RGB reduces the colour-difference channels with, or
+			<section class="V" id="chromaDownsampling">
+				<h2 class="g"><i class="FINAL"><i class="PUBLIC"></i></i><code class="s">chromaDownsampling</code><i class="JB"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>The filter the conversion from RGB reduces the colour-difference channels with, or
 <code>null</code> to leave the choice to the encoder, which is
 <code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#AUTOMATIC">ChromaDownsampling#AUTOMATIC</a></code>.</p><p>
  This is a second, narrower thing than <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#subsampling">#subsampling</a></code>: it decides how the reduction
@@ -99,68 +99,68 @@ cost of the alternative is paid once per frame.</p><p>
  <code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#SHARP_YUV">ChromaDownsampling#SHARP_YUV</a></code> keeps them from smearing, and the two are not the
  same picture.
  </p></span></section>
-			<section class="DB" id="speed(int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">speed</code><code class="y">(<code>int</code><code class="parameterName">speed</code>)</code><i class="U"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="speed(int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">speed</code><code class="x">(<code>int</code><code class="parameterName">speed</code>)</code><i class="JB"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">speed</code></td>
 						<td><span><p>0 (slowest, best quality) to 10 (fastest, worst quality)</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></td>
 						<td><span><p>this format asking the encoder for that much speed</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="DB" id="alphaQuality(int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">alphaQuality</code><code class="y">(<code>int</code><code class="parameterName">alphaQuality</code>)</code><i class="U"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="alphaQuality(int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">alphaQuality</code><code class="x">(<code>int</code><code class="parameterName">alphaQuality</code>)</code><i class="JB"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">alphaQuality</code></td>
 						<td><span><p>0 (worst) to 100 (every alpha value kept as it was given)</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></td>
 						<td><span><p>this format asking for that much alpha quality</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="DB" id="subsampling(imagify.ImageFormat.Avif.Subsampling)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">subsampling</code><code class="y">(<code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="U"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="subsampling(imagify.ImageFormat.Avif.Subsampling)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">subsampling</code><code class="x">(<code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="JB"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code></td>
 						<td><span><p>how finely to store the colour-difference channels, or <code>null</code> to
 leave it to the encoder</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></td>
 						<td><span><p>this format asking for that much colour detail</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="DB" id="chromaDownsampling(imagify.ImageFormat.Avif.ChromaDownsampling)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">chromaDownsampling</code><code class="y">(<code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code><code class="parameterName">chromaDownsampling</code>)</code><i class="U"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="chromaDownsampling(imagify.ImageFormat.Avif.ChromaDownsampling)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">chromaDownsampling</code><code class="x">(<code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code><code class="parameterName">chromaDownsampling</code>)</code><i class="JB"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code><code class="parameterName">chromaDownsampling</code></td>
 						<td><span><p>the filter to reduce the colour-difference channels with, or
 <code>null</code> to leave it to the encoder</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></td>
 						<td><span><p>this format asking for that filter</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="DB" id="equals(java.lang.Object)">
-				<h2 class="HB"><i class="OVERRIDE PUBLIC"></i><code class="J">equals</code><code class="y">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="U"><code>boolean</code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="equals(java.lang.Object)">
+				<h2 class="g"><i class="OVERRIDE PUBLIC"></i><code class="s">equals</code><code class="x">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="JB"><code>boolean</code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
@@ -168,37 +168,37 @@ leave it to the encoder</p></span></td>
  The settings are part of what an AVIF format is, so the same file asked for at two
  different speeds is not the same value.
  </p></span></section>
-			<section class="DB" id="hashCode()">
-				<h2 class="HB"><i class="OVERRIDE PUBLIC"></i><code class="J">hashCode</code><code class="y">()</code><i class="U"><code>int</code></i></h2>
-				<table class="N">
-					<tr class="R">
+			<section class="V" id="hashCode()">
+				<h2 class="g"><i class="OVERRIDE PUBLIC"></i><code class="s">hashCode</code><code class="x">()</code><i class="JB"><code>int</code></i></h2>
+				<table class="AB">
+					<tr class="b">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="u">
-			<div class="i">
-				<h5 class="LB">Fields</h5>
+		<aside class="P">
+			<div class="l">
+				<h5 class="J">Fields</h5>
 				<ul>
-					<li class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#speed">speed</a></code><i class="FB"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></li>
-					<li class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#alphaQuality">alphaQuality</a></code><i class="FB"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></li>
-					<li class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#subsampling">subsampling</a></code><i class="FB"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></li>
-					<li class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#chromaDownsampling">chromaDownsampling</a></code><i class="FB"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
+					<li class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#speed">speed</a></code><i class="u"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></li>
+					<li class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#alphaQuality">alphaQuality</a></code><i class="u"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></li>
+					<li class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#subsampling">subsampling</a></code><i class="u"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#chromaDownsampling">chromaDownsampling</a></code><i class="u"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
 				</ul>
-				<h5 class="LB">Methods</h5>
+				<h5 class="J">Methods</h5>
 				<ul>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#speed(int)">speed</a></code><code class="y">(<code>int</code><code class="parameterName">speed</code>)</code><i class="FB"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#alphaQuality(int)">alphaQuality</a></code><code class="y">(<code>int</code><code class="parameterName">alphaQuality</code>)</code><i class="FB"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#subsampling(imagify.ImageFormat.Avif.Subsampling)">subsampling</a></code><code class="y">(<code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="FB"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#chromaDownsampling(imagify.ImageFormat.Avif.ChromaDownsampling)">chromaDownsampling</a></code><code class="y">(<code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code><code class="parameterName">chromaDownsampling</code>)</code><i class="FB"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
-					<li class="X"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#equals(java.lang.Object)">equals</a></code><code class="y">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="FB"><code>boolean</code></i></li>
-					<li class="X"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#hashCode()">hashCode</a></code><code class="y">()</code><i class="FB"><code>int</code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#speed(int)">speed</a></code><code class="x">(<code>int</code><code class="parameterName">speed</code>)</code><i class="u"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#alphaQuality(int)">alphaQuality</a></code><code class="x">(<code>int</code><code class="parameterName">alphaQuality</code>)</code><i class="u"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#subsampling(imagify.ImageFormat.Avif.Subsampling)">subsampling</a></code><code class="x">(<code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="u"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#chromaDownsampling(imagify.ImageFormat.Avif.ChromaDownsampling)">chromaDownsampling</a></code><code class="x">(<code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code><code class="parameterName">chromaDownsampling</code>)</code><i class="u"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
+					<li class="X"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#equals(java.lang.Object)">equals</a></code><code class="x">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="u"><code>boolean</code></i></li>
+					<li class="X"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#hashCode()">hashCode</a></code><code class="x">()</code><i class="u"><code>int</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="s">
+		<footer class="N">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

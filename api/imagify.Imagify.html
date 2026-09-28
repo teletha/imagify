@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="p">
-		<header class="q" date="2026-09-26">
-			<h1 class="w"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="BB"><a href="api/main.html" id="API"><svg class="package">
+	<body class="K">
+		<header class="L" date="2026-09-26">
+			<h1 class="i"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="j"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="CB"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="d"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="t"></nav>
-		<article class="r" id="Article">
-			<section class="DB"><code class="P">imagify</code>
-				<h2 class="Class n"><code class="J">Imagify</code></h2>
-				<div class="v"></div><span class="A"><p>Fluent pipeline API for image processing.</p><p>
+		<nav class="O"></nav>
+		<article class="M" id="Article">
+			<section class="V"><code class="w">imagify</code>
+				<h2 class="Class GB"><code class="s">Imagify</code></h2>
+				<div class="BB"></div><span class="A"><p>Fluent pipeline API for image processing.</p><p>
  Supports chaining: <code>read → resize → write</code>.
  </p><p><code><a aria-label="imagify.ImageReader" href="api/imagify.ImageReader.html#read">ImageReader#read</a></code> always returns a <code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code>, which may
  contain a single frame (for JPEG, PNG, etc.) or multiple frames (for animated
@@ -81,278 +81,278 @@ BufferedImage img = Imagify.read(path).toBufferedImage();
  by
  cropping the overflow, and <code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html#padTo">#padTo</a></code> keeps it exact by adding the missing area.
  </p></span></section>
-			<section class="DB" id="read(byte[]...)">
-				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">read</code><code class="y">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="read(byte[]...)">
+				<h2 class="g"><i class="PUBLIC STATIC"></i><code class="s">read</code><code class="x">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code array="var">byte</code><code class="parameterName">datas</code></td>
 						<td><span><p>the encoded image data</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from one or more byte arrays.
 Format is auto-detected from magic bytes. Each array provides one frame.</p></span></section>
-			<section class="DB" id="read(java.nio.file.Path...)">
-				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">read</code><code class="y">(<code array="var"><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">paths</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="read(java.nio.file.Path...)">
+				<h2 class="g"><i class="PUBLIC STATIC"></i><code class="s">read</code><code class="x">(<code array="var"><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">paths</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code array="var"><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">paths</code></td>
 						<td><span><p>the file paths</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from one or more file paths.
 Format is auto-detected from extension or header. Each path provides one frame.</p></span></section>
-			<section class="DB" id="read(java.io.InputStream...)">
-				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">read</code><code class="y">(<code array="var"><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">inputs</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="read(java.io.InputStream...)">
+				<h2 class="g"><i class="PUBLIC STATIC"></i><code class="s">read</code><code class="x">(<code array="var"><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">inputs</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code array="var"><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">inputs</code></td>
 						<td><span><p>the input streams</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from one or more InputStreams.
 Format is auto-detected from magic bytes. Each stream provides one frame.</p></span></section>
-			<section class="DB" id="read(java.awt.image.BufferedImage...)">
-				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">read</code><code class="y">(<code array="var"><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">images</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="read(java.awt.image.BufferedImage...)">
+				<h2 class="g"><i class="PUBLIC STATIC"></i><code class="s">read</code><code class="x">(<code array="var"><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">images</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code array="var"><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">images</code></td>
 						<td><span><p>the images, not copied</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline from one or more already-decoded images, each as a frame.</p></span></section>
-			<section class="DB" id="readBytes(java.util.List)">
-				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">readBytes</code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code array="fix">byte</code></code></code><code class="parameterName">datas</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="readBytes(java.util.List)">
+				<h2 class="g"><i class="PUBLIC STATIC"></i><code class="s">readBytes</code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code array="fix">byte</code></code></code><code class="parameterName">datas</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code array="fix">byte</code></code></code><code class="parameterName">datas</code></td>
 						<td><span><p>the encoded image data</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from a list of byte arrays.
 Each array provides one frame.</p></span></section>
-			<section class="DB" id="readPaths(java.util.List)">
-				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">readPaths</code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="readPaths(java.util.List)">
+				<h2 class="g"><i class="PUBLIC STATIC"></i><code class="s">readPaths</code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code></td>
 						<td><span><p>the file paths</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from a list of file paths.
 Each path provides one frame.</p></span></section>
-			<section class="DB" id="readStreams(java.util.List)">
-				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">readStreams</code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code></code></code><code class="parameterName">inputs</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="readStreams(java.util.List)">
+				<h2 class="g"><i class="PUBLIC STATIC"></i><code class="s">readStreams</code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code></code></code><code class="parameterName">inputs</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code></code></code><code class="parameterName">inputs</code></td>
 						<td><span><p>the input streams</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline by reading from a list of InputStreams.
 Each stream provides one frame.</p></span></section>
-			<section class="DB" id="readImages(java.util.List)">
-				<h2 class="HB"><i class="STATIC PUBLIC"></i><code class="J">readImages</code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="readImages(java.util.List)">
+				<h2 class="g"><i class="PUBLIC STATIC"></i><code class="s">readImages</code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code></td>
 						<td><span><p>the images, not copied</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Starts a pipeline from a list of already-decoded images, each as a frame.</p></span></section>
-			<section class="DB" id="add(java.nio.file.Path...)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">add</code><code class="y">(<code array="var"><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">paths</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="add(java.nio.file.Path...)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">add</code><code class="x">(<code array="var"><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">paths</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code array="var"><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">paths</code></td>
 						<td><span><p>the file paths</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Adds frames from one or more file paths. Only the first frame of each file is taken.</p></span></section>
-			<section class="DB" id="add(byte[]...)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">add</code><code class="y">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="add(byte[]...)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">add</code><code class="x">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code array="var">byte</code><code class="parameterName">datas</code></td>
 						<td><span><p>the encoded image data</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Adds frames from one or more byte arrays. Only the first frame of each is taken.</p></span></section>
-			<section class="DB" id="add(java.awt.image.BufferedImage...)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">add</code><code class="y">(<code array="var"><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">images</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="add(java.awt.image.BufferedImage...)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">add</code><code class="x">(<code array="var"><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">images</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code array="var"><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">images</code></td>
 						<td><span><p>the frame images</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Adds frames from one or more BufferedImages.</p></span></section>
-			<section class="DB" id="add(java.io.InputStream...)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">add</code><code class="y">(<code array="var"><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">inputs</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="add(java.io.InputStream...)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">add</code><code class="x">(<code array="var"><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">inputs</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code array="var"><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">inputs</code></td>
 						<td><span><p>the input streams</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Adds frames from one or more InputStreams. Only the first frame of each is taken.</p></span></section>
-			<section class="DB" id="addPaths(java.util.List)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">addPaths</code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="addPaths(java.util.List)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">addPaths</code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code></td>
 						<td><span><p>the file paths</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Adds frames from a list of file paths. Only the first frame of each file is taken.</p></span></section>
-			<section class="DB" id="addBytes(java.util.List)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">addBytes</code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code array="fix">byte</code></code></code><code class="parameterName">datas</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="addBytes(java.util.List)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">addBytes</code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code array="fix">byte</code></code></code><code class="parameterName">datas</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code array="fix">byte</code></code></code><code class="parameterName">datas</code></td>
 						<td><span><p>the encoded image data</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Adds frames from a list of byte arrays. Auto-detects the format of each
 byte array and adds the first frame of each.</p></span></section>
-			<section class="DB" id="addImages(java.util.List)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">addImages</code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="addImages(java.util.List)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">addImages</code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code></td>
 						<td><span><p>the frame images</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Adds frames from a list of BufferedImages.</p></span></section>
-			<section class="DB" id="addStreams(java.util.List)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">addStreams</code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code></code></code><code class="parameterName">inputs</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="addStreams(java.util.List)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">addStreams</code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code></code></code><code class="parameterName">inputs</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code></code></code><code class="parameterName">inputs</code></td>
 						<td><span><p>the input streams</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
 				</table><span class="A"><p>Adds frames from a list of InputStreams. Auto-detects the format of each
 stream and adds the first frame of each.</p></span></section>
-			<section class="DB" id="resize(int,int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">resize</code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="resize(int,int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">resize</code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Resizes all frames to exact dimensions.</p></span></section>
-			<section class="DB" id="resize(int,int,imagify.ResizeAlgorithm)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">resize</code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="resize(int,int,imagify.ResizeAlgorithm)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">resize</code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Resizes all frames to exact dimensions using the specified algorithm.</p></span></section>
-			<section class="DB" id="resize(double)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">resize</code><code class="y">(<code>double</code><code class="parameterName">scale</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="resize(double)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">resize</code><code class="x">(<code>double</code><code class="parameterName">scale</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>double</code><code class="parameterName">scale</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Resizes by scale factor.</p></span></section>
-			<section class="DB" id="resize(double,imagify.ResizeAlgorithm)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">resize</code><code class="y">(<code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="resize(double,imagify.ResizeAlgorithm)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">resize</code><code class="x">(<code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>double</code><code class="parameterName">scale</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Resizes by scale factor using the specified algorithm.</p></span></section>
-			<section class="DB" id="resizeToFit(int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">resizeToFit</code><code class="y">(<code>int</code><code class="parameterName">maxDimension</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="resizeToFit(int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">resizeToFit</code><code class="x">(<code>int</code><code class="parameterName">maxDimension</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">maxDimension</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
@@ -362,34 +362,34 @@ stream and adds the first frame of each.</p></span></section>
  <code><a aria-label="imagify.ImageResizer" href="api/imagify.ImageResizer.html#resizeToFit(java.awt.image.BufferedImage,int)">ImageResizer#resizeToFit(BufferedImage, int)</a></code> does as well; use <code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html#resize">#resize</a></code> when
  only shrinking is wanted.
  </p></span></section>
-			<section class="DB" id="resizeToFit(int,imagify.ResizeAlgorithm)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">resizeToFit</code><code class="y">(<code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="resizeToFit(int,imagify.ResizeAlgorithm)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">resizeToFit</code><code class="x">(<code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">maxDimension</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Resizes so that the longest edge becomes <code>maxDimension</code>, keeping the aspect ratio.</p></span></section>
-			<section class="DB" id="resizeInside(int,int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">resizeInside</code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="resizeInside(int,int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">resizeInside</code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
@@ -399,38 +399,38 @@ stream and adds the first frame of each.</p></span></section>
  shape of the box. A source already smaller than the box is left at its own size rather than
  scaled up.
  </p></span></section>
-			<section class="DB" id="resizeInside(int,int,imagify.ResizeAlgorithm)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">resizeInside</code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="resizeInside(int,int,imagify.ResizeAlgorithm)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">resizeInside</code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Scales down to the largest size that fits inside the given box, keeping the aspect ratio.</p></span></section>
-			<section class="DB" id="resizeToFill(int,int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">resizeToFill</code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="resizeToFill(int,int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">resizeToFill</code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
@@ -439,38 +439,38 @@ stream and adds the first frame of each.</p></span></section>
  most callers mean by &quot;make it 800 by 600&quot; and is the counterpart of <code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html#padTo(int,int)">#padTo(int, int)</a></code>,
  which keeps the aspect ratio and adds the missing area instead.
  </p></span></section>
-			<section class="DB" id="resizeToFill(int,int,imagify.ResizeAlgorithm)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">resizeToFill</code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="resizeToFill(int,int,imagify.ResizeAlgorithm)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">resizeToFill</code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Scales and centre crops so the result is exactly the given size, filling the box completely.</p></span></section>
-			<section class="DB" id="padTo(int,int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">padTo</code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="padTo(int,int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">padTo</code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
@@ -479,46 +479,46 @@ stream and adds the first frame of each.</p></span></section>
  <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html#TYPE_INT_ARGB">BufferedImage#TYPE_INT_ARGB</a></code>. Pass a colour to <code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html#padTo(int,int,java.awt.Color)">#padTo(int, int, Color)</a></code> to fill
  it instead.
  </p></span></section>
-			<section class="DB" id="padTo(int,int,java.awt.Color)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">padTo</code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="java.awt.Color 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/Color.html">Color</a></code><code class="parameterName">background</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="padTo(int,int,java.awt.Color)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">padTo</code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="java.awt.Color 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/Color.html">Color</a></code><code class="parameterName">background</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code><a aria-label="java.awt.Color 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/Color.html">Color</a></code><code class="parameterName">background</code></td>
 						<td><span><p>what to fill the uncovered area with, <code>null</code> meaning transparent</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Scales to fit inside the given box and centres the result on a canvas of exactly that size.</p></span></section>
-			<section class="DB" id="crop(int,int,int,int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">crop</code><code class="y">(<code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="crop(int,int,int,int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">crop</code><code class="x">(<code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">x</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">y</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
@@ -526,83 +526,83 @@ stream and adds the first frame of each.</p></span></section>
  Each frame is cropped into an image of its own rather than being viewed, so a sequence
  survives the cut without every frame pinning a copy of the whole original.
  </p></span></section>
-			<section class="DB" id="rotate(double)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">rotate</code><code class="y">(<code>double</code><code class="parameterName">degrees</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="rotate(double)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">rotate</code><code class="x">(<code>double</code><code class="parameterName">degrees</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>double</code><code class="parameterName">degrees</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Rotates every frame clockwise, resampling bilinearly unless the angle is a multiple of 90.</p></span></section>
-			<section class="DB" id="rotate(double,imagify.ResizeAlgorithm)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">rotate</code><code class="y">(<code>double</code><code class="parameterName">degrees</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="rotate(double,imagify.ResizeAlgorithm)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">rotate</code><code class="x">(<code>double</code><code class="parameterName">degrees</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>double</code><code class="parameterName">degrees</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Rotates every frame clockwise.</p></span></section>
-			<section class="DB" id="flipHorizontal()">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">flipHorizontal</code><code class="y">()</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="R">
+			<section class="V" id="flipHorizontal()">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">flipHorizontal</code><code class="x">()</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Mirrors every frame left to right.</p></span></section>
-			<section class="DB" id="flipVertical()">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">flipVertical</code><code class="y">()</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="R">
+			<section class="V" id="flipVertical()">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">flipVertical</code><code class="x">()</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Mirrors every frame top to bottom.</p></span></section>
-			<section class="DB" id="map(java.util.function.Function)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">map</code><code class="y">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">operation</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="map(java.util.function.Function)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">map</code><code class="x">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">operation</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">operation</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Applies an operation to every frame, keeping the timing of the sequence untouched.</p></span></section>
-			<section class="DB" id="asSpriteSheet(int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">asSpriteSheet</code><code class="y">(<code>int</code><code class="parameterName">columns</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="asSpriteSheet(int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">asSpriteSheet</code><code class="x">(<code>int</code><code class="parameterName">columns</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">columns</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Lays out all frames in a grid with the given number of columns, turning the sequence into a
 single image.</p></span></section>
-			<section class="DB" id="asSpriteSheet(java.util.function.Consumer)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">asSpriteSheet</code><code class="y">(<code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></code></code><code class="parameterName">layout</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="asSpriteSheet(java.util.function.Consumer)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">asSpriteSheet</code><code class="x">(<code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></code></code><code class="parameterName">layout</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></code></code><code class="parameterName">layout</code></td>
 						<td><span><p>configures the grid, the cells, the spacing and so on</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
@@ -611,22 +611,22 @@ single image.</p></span></section>
  becomes a sheet of one cell. To learn where each frame ended up, build the sheet with
  <code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code> directly and ask it for its <a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html#layout()">layout</a>.
  </p></span></section>
-			<section class="DB" id="asAnimation(int,int,int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">asAnimation</code><code class="y">(<code>int</code><code class="parameterName">columns</code>, <code>int</code><code class="parameterName">rows</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="asAnimation(int,int,int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">asAnimation</code><code class="x">(<code>int</code><code class="parameterName">columns</code>, <code>int</code><code class="parameterName">rows</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">columns</code></td>
 						<td><span><p>the number of columns in the sheet</p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">rows</code></td>
 						<td><span><p>the number of rows in the sheet</p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">delayMs</code></td>
 						<td><span><p>how long each frame is shown, in milliseconds</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
@@ -635,43 +635,43 @@ single image.</p></span></section>
  right and bottom edges is dropped. The counterpart of <code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html#asSpriteSheet(int)">#asSpriteSheet(int)</a></code> for sheets
  without padding or spacing.
  </p></span></section>
-			<section class="DB" id="asAnimation(int,int,int,int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">asAnimation</code><code class="y">(<code>int</code><code class="parameterName">columns</code>, <code>int</code><code class="parameterName">rows</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="asAnimation(int,int,int,int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">asAnimation</code><code class="x">(<code>int</code><code class="parameterName">columns</code>, <code>int</code><code class="parameterName">rows</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">columns</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">rows</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">frameCount</code></td>
 						<td><span><p>how many pieces to take, at most <code>columns * rows</code></p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">delayMs</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Cuts the image into an even grid and makes the first <code>frameCount</code> pieces, row by row,
 the frames of an animation. Use it when the last row of the sheet is not full.</p></span></section>
-			<section class="DB" id="asAnimation(imagify.SpriteSheet.Layout,int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">asAnimation</code><code class="y">(<code><a aria-label="imagify.SpriteSheet.Layout" href="api/imagify.SpriteSheet.Layout.html">Layout</a></code><code class="parameterName">layout</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="asAnimation(imagify.SpriteSheet.Layout,int)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">asAnimation</code><code class="x">(<code><a aria-label="imagify.SpriteSheet.Layout" href="api/imagify.SpriteSheet.Layout.html">Layout</a></code><code class="parameterName">layout</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="imagify.SpriteSheet.Layout" href="api/imagify.SpriteSheet.Layout.html">Layout</a></code><code class="parameterName">layout</code></td>
 						<td><span><p>the layout the sheet was built with, see <code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html#layout()">SpriteSheet#layout()</a></code></p></span></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>int</code><code class="parameterName">delayMs</code></td>
 						<td><span><p>how long each frame is shown, in milliseconds</p></span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
@@ -679,10 +679,10 @@ the frames of an animation. Use it when the last row of the sheet is not full.</
  This undoes a sheet with padding and spacing exactly. Every frame is a whole cell, so a frame
  that was smaller than its cell comes back with the surrounding area attached.
  </p></span></section>
-			<section class="DB" id="toStillImage()">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">toStillImage</code><code class="y">()</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="R">
+			<section class="V" id="toStillImage()">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">toStillImage</code><code class="x">()</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td><span><p>this pipeline for chaining</p></span></td>
 					</tr>
@@ -696,14 +696,14 @@ the frames of an animation. Use it when the last row of the sheet is not full.</
  // Take the poster frame of an animated GIF
  Imagify.read(path).toStillImage().writeTo(posterPath);
  </code></pre></span></section>
-			<section class="DB" id="writeTo(java.nio.file.Path)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">writeTo</code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="writeTo(java.nio.file.Path)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">writeTo</code><code class="x">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
@@ -712,18 +712,18 @@ the frames of an animation. Use it when the last row of the sheet is not full.</
  format supports animation, it is written as an animated image;
  otherwise the first frame is written as a still image.
  </p></span></section>
-			<section class="DB" id="writeTo(java.nio.file.Path,double)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">writeTo</code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="writeTo(java.nio.file.Path,double)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">writeTo</code><code class="x">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>double</code><code class="parameterName">quality</code></td>
 						<td><span><code>0.0</code> (smallest) to <code>1.0</code> (largest)</span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
@@ -732,18 +732,18 @@ the frames of an animation. Use it when the last row of the sheet is not full.</
  format supports animation, it is written as an animated image;
  otherwise the first frame is written as a still image.
  </p></span></section>
-			<section class="DB" id="writeTo(java.nio.file.Path,imagify.ImageFormat)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">writeTo</code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="writeTo(java.nio.file.Path,imagify.ImageFormat)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">writeTo</code><code class="x">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
@@ -752,22 +752,22 @@ the frames of an animation. Use it when the last row of the sheet is not full.</
  supports animation, it is written as an animated image;
  otherwise the first frame is written as a still image.
  </p></span></section>
-			<section class="DB" id="writeTo(java.nio.file.Path,imagify.ImageFormat,double)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">writeTo</code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="writeTo(java.nio.file.Path,imagify.ImageFormat,double)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">writeTo</code><code class="x">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>double</code><code class="parameterName">quality</code></td>
 						<td><span><code>0.0</code> (smallest) to <code>1.0</code> (largest)</span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
@@ -776,18 +776,18 @@ the frames of an animation. Use it when the last row of the sheet is not full.</
  supports animation, it is written as an animated image;
  otherwise the first frame is written as a still image.
  </p></span></section>
-			<section class="DB" id="writeTo(java.io.OutputStream,imagify.ImageFormat)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">writeTo</code><code class="y">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="U"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="writeTo(java.io.OutputStream,imagify.ImageFormat)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">writeTo</code><code class="x">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="JB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></td>
 						<td></td>
 					</tr>
@@ -795,14 +795,14 @@ the frames of an animation. Use it when the last row of the sheet is not full.</
  If the data has multiple frames and the format supports animation,
  the animation is encoded; otherwise the first frame is written as a still image.
  </p></span></section>
-			<section class="DB" id="writeToBytes(imagify.ImageFormat)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">writeToBytes</code><code class="y">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="U"><code array="fix">byte</code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="writeToBytes(imagify.ImageFormat)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">writeToBytes</code><code class="x">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="JB"><code array="fix">byte</code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code array="fix">byte</code></td>
 						<td></td>
 					</tr>
@@ -811,18 +811,18 @@ the frames of an animation. Use it when the last row of the sheet is not full.</
  supports animation, the animation bytes are returned; otherwise the
  first frame is returned as a still image.
  </p></span></section>
-			<section class="DB" id="writeToBytes(imagify.ImageFormat,double)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">writeToBytes</code><code class="y">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="U"><code array="fix">byte</code></i></h2>
-				<table class="N">
-					<tr class="Y">
+			<section class="V" id="writeToBytes(imagify.ImageFormat,double)">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">writeToBytes</code><code class="x">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="JB"><code array="fix">byte</code></i></h2>
+				<table class="AB">
+					<tr class="y">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="y">
 						<td><code>double</code><code class="parameterName">quality</code></td>
 						<td><span><code>0.0</code> (smallest) to <code>1.0</code> (largest)</span></td>
 					</tr>
-					<tr class="R">
+					<tr class="b">
 						<td><code array="fix">byte</code></td>
 						<td></td>
 					</tr>
@@ -831,93 +831,93 @@ the frames of an animation. Use it when the last row of the sheet is not full.</
  supports animation, the animation bytes are returned; otherwise the
  first frame is returned as a still image.
  </p></span></section>
-			<section class="DB" id="toBufferedImage()">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">toBufferedImage</code><code class="y">()</code><i class="U"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="N">
-					<tr class="R">
+			<section class="V" id="toBufferedImage()">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">toBufferedImage</code><code class="x">()</code><i class="JB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="AB">
+					<tr class="b">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the first frame</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns the first frame as a <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>.</p></span></section>
-			<section class="DB" id="get()">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">get</code><code class="y">()</code><i class="U"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
-				<table class="N">
-					<tr class="R">
+			<section class="V" id="get()">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">get</code><code class="x">()</code><i class="JB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
+				<table class="AB">
+					<tr class="b">
 						<td><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></td>
 						<td><span><p>the frame sequence</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns the underlying <code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code>.</p></span></section>
-			<section class="DB" id="frameCount()">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="J">frameCount</code><code class="y">()</code><i class="U"><code>int</code></i></h2>
-				<table class="N">
-					<tr class="R">
+			<section class="V" id="frameCount()">
+				<h2 class="g"><i class="PUBLIC"></i><code class="s">frameCount</code><code class="x">()</code><i class="JB"><code>int</code></i></h2>
+				<table class="AB">
+					<tr class="b">
 						<td><code>int</code></td>
 						<td><span><p>the number of frames</p></span></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="u">
-			<div class="i">
-				<h5 class="LB">Static Methods</h5>
+		<aside class="P">
+			<div class="l">
+				<h5 class="J">Static Methods</h5>
 				<ul>
-					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.Imagify.html#read(byte[]...)">read</a></code><code class="y">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.Imagify.html#read(java.nio.file.Path...)">read</a></code><code class="y">(<code array="var"><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">paths</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.Imagify.html#read(java.io.InputStream...)">read</a></code><code class="y">(<code array="var"><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">inputs</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.Imagify.html#read(java.awt.image.BufferedImage...)">read</a></code><code class="y">(<code array="var"><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">images</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.Imagify.html#readBytes(java.util.List)">readBytes</a></code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code array="fix">byte</code></code></code><code class="parameterName">datas</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.Imagify.html#readPaths(java.util.List)">readPaths</a></code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.Imagify.html#readStreams(java.util.List)">readStreams</a></code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code></code></code><code class="parameterName">inputs</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.Imagify.html#readImages(java.util.List)">readImages</a></code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.Imagify.html#read(byte[]...)">read</a></code><code class="x">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.Imagify.html#read(java.nio.file.Path...)">read</a></code><code class="x">(<code array="var"><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">paths</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.Imagify.html#read(java.io.InputStream...)">read</a></code><code class="x">(<code array="var"><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">inputs</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.Imagify.html#read(java.awt.image.BufferedImage...)">read</a></code><code class="x">(<code array="var"><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">images</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.Imagify.html#readBytes(java.util.List)">readBytes</a></code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code array="fix">byte</code></code></code><code class="parameterName">datas</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.Imagify.html#readPaths(java.util.List)">readPaths</a></code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.Imagify.html#readStreams(java.util.List)">readStreams</a></code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code></code></code><code class="parameterName">inputs</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.Imagify.html#readImages(java.util.List)">readImages</a></code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
 				</ul>
-				<h5 class="LB">Methods</h5>
+				<h5 class="J">Methods</h5>
 				<ul>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#add(java.nio.file.Path...)">add</a></code><code class="y">(<code array="var"><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">paths</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#add(byte[]...)">add</a></code><code class="y">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#add(java.awt.image.BufferedImage...)">add</a></code><code class="y">(<code array="var"><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">images</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#add(java.io.InputStream...)">add</a></code><code class="y">(<code array="var"><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">inputs</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#addPaths(java.util.List)">addPaths</a></code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#addBytes(java.util.List)">addBytes</a></code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code array="fix">byte</code></code></code><code class="parameterName">datas</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#addImages(java.util.List)">addImages</a></code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#addStreams(java.util.List)">addStreams</a></code><code class="y">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code></code></code><code class="parameterName">inputs</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resize(int,int)">resize</a></code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resize(int,int,imagify.ResizeAlgorithm)">resize</a></code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resize(double)">resize</a></code><code class="y">(<code>double</code><code class="parameterName">scale</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resize(double,imagify.ResizeAlgorithm)">resize</a></code><code class="y">(<code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeToFit(int)">resizeToFit</a></code><code class="y">(<code>int</code><code class="parameterName">maxDimension</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeToFit(int,imagify.ResizeAlgorithm)">resizeToFit</a></code><code class="y">(<code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeInside(int,int)">resizeInside</a></code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeInside(int,int,imagify.ResizeAlgorithm)">resizeInside</a></code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeToFill(int,int)">resizeToFill</a></code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeToFill(int,int,imagify.ResizeAlgorithm)">resizeToFill</a></code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#padTo(int,int)">padTo</a></code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#padTo(int,int,java.awt.Color)">padTo</a></code><code class="y">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="java.awt.Color 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/Color.html">Color</a></code><code class="parameterName">background</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#crop(int,int,int,int)">crop</a></code><code class="y">(<code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#rotate(double)">rotate</a></code><code class="y">(<code>double</code><code class="parameterName">degrees</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#rotate(double,imagify.ResizeAlgorithm)">rotate</a></code><code class="y">(<code>double</code><code class="parameterName">degrees</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#flipHorizontal()">flipHorizontal</a></code><code class="y">()</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#flipVertical()">flipVertical</a></code><code class="y">()</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#map(java.util.function.Function)">map</a></code><code class="y">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">operation</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#asSpriteSheet(int)">asSpriteSheet</a></code><code class="y">(<code>int</code><code class="parameterName">columns</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#asSpriteSheet(java.util.function.Consumer)">asSpriteSheet</a></code><code class="y">(<code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></code></code><code class="parameterName">layout</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#asAnimation(int,int,int)">asAnimation</a></code><code class="y">(<code>int</code><code class="parameterName">columns</code>, <code>int</code><code class="parameterName">rows</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#asAnimation(int,int,int,int)">asAnimation</a></code><code class="y">(<code>int</code><code class="parameterName">columns</code>, <code>int</code><code class="parameterName">rows</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#asAnimation(imagify.SpriteSheet.Layout,int)">asAnimation</a></code><code class="y">(<code><a aria-label="imagify.SpriteSheet.Layout" href="api/imagify.SpriteSheet.Layout.html">Layout</a></code><code class="parameterName">layout</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#toStillImage()">toStillImage</a></code><code class="y">()</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeTo(java.nio.file.Path)">writeTo</a></code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeTo(java.nio.file.Path,double)">writeTo</a></code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeTo(java.nio.file.Path,imagify.ImageFormat)">writeTo</a></code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeTo(java.nio.file.Path,imagify.ImageFormat,double)">writeTo</a></code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeTo(java.io.OutputStream,imagify.ImageFormat)">writeTo</a></code><code class="y">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="FB"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeToBytes(imagify.ImageFormat)">writeToBytes</a></code><code class="y">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="FB"><code array="fix">byte</code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeToBytes(imagify.ImageFormat,double)">writeToBytes</a></code><code class="y">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="FB"><code array="fix">byte</code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#toBufferedImage()">toBufferedImage</a></code><code class="y">()</code><i class="FB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#get()">get</a></code><code class="y">()</code><i class="FB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#frameCount()">frameCount</a></code><code class="y">()</code><i class="FB"><code>int</code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#add(java.nio.file.Path...)">add</a></code><code class="x">(<code array="var"><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">paths</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#add(byte[]...)">add</a></code><code class="x">(<code array="var">byte</code><code class="parameterName">datas</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#add(java.awt.image.BufferedImage...)">add</a></code><code class="x">(<code array="var"><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">images</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#add(java.io.InputStream...)">add</a></code><code class="x">(<code array="var"><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">inputs</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#addPaths(java.util.List)">addPaths</a></code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></code></code><code class="parameterName">paths</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#addBytes(java.util.List)">addBytes</a></code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code array="fix">byte</code></code></code><code class="parameterName">datas</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#addImages(java.util.List)">addImages</a></code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">images</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#addStreams(java.util.List)">addStreams</a></code><code class="x">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code></code></code><code class="parameterName">inputs</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resize(int,int)">resize</a></code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resize(int,int,imagify.ResizeAlgorithm)">resize</a></code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resize(double)">resize</a></code><code class="x">(<code>double</code><code class="parameterName">scale</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resize(double,imagify.ResizeAlgorithm)">resize</a></code><code class="x">(<code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeToFit(int)">resizeToFit</a></code><code class="x">(<code>int</code><code class="parameterName">maxDimension</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeToFit(int,imagify.ResizeAlgorithm)">resizeToFit</a></code><code class="x">(<code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeInside(int,int)">resizeInside</a></code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeInside(int,int,imagify.ResizeAlgorithm)">resizeInside</a></code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeToFill(int,int)">resizeToFill</a></code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#resizeToFill(int,int,imagify.ResizeAlgorithm)">resizeToFill</a></code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#padTo(int,int)">padTo</a></code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#padTo(int,int,java.awt.Color)">padTo</a></code><code class="x">(<code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="java.awt.Color 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/Color.html">Color</a></code><code class="parameterName">background</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#crop(int,int,int,int)">crop</a></code><code class="x">(<code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#rotate(double)">rotate</a></code><code class="x">(<code>double</code><code class="parameterName">degrees</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#rotate(double,imagify.ResizeAlgorithm)">rotate</a></code><code class="x">(<code>double</code><code class="parameterName">degrees</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#flipHorizontal()">flipHorizontal</a></code><code class="x">()</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#flipVertical()">flipVertical</a></code><code class="x">()</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#map(java.util.function.Function)">map</a></code><code class="x">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">operation</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#asSpriteSheet(int)">asSpriteSheet</a></code><code class="x">(<code>int</code><code class="parameterName">columns</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#asSpriteSheet(java.util.function.Consumer)">asSpriteSheet</a></code><code class="x">(<code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="imagify.SpriteSheet" href="api/imagify.SpriteSheet.html">SpriteSheet</a></code></code></code><code class="parameterName">layout</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#asAnimation(int,int,int)">asAnimation</a></code><code class="x">(<code>int</code><code class="parameterName">columns</code>, <code>int</code><code class="parameterName">rows</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#asAnimation(int,int,int,int)">asAnimation</a></code><code class="x">(<code>int</code><code class="parameterName">columns</code>, <code>int</code><code class="parameterName">rows</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#asAnimation(imagify.SpriteSheet.Layout,int)">asAnimation</a></code><code class="x">(<code><a aria-label="imagify.SpriteSheet.Layout" href="api/imagify.SpriteSheet.Layout.html">Layout</a></code><code class="parameterName">layout</code>, <code>int</code><code class="parameterName">delayMs</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#toStillImage()">toStillImage</a></code><code class="x">()</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeTo(java.nio.file.Path)">writeTo</a></code><code class="x">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeTo(java.nio.file.Path,double)">writeTo</a></code><code class="x">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeTo(java.nio.file.Path,imagify.ImageFormat)">writeTo</a></code><code class="x">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeTo(java.nio.file.Path,imagify.ImageFormat,double)">writeTo</a></code><code class="x">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeTo(java.io.OutputStream,imagify.ImageFormat)">writeTo</a></code><code class="x">(<code><a aria-label="java.io.OutputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/OutputStream.html">OutputStream</a></code><code class="parameterName">out</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="u"><code><a aria-label="imagify.Imagify" href="api/imagify.Imagify.html">Imagify</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeToBytes(imagify.ImageFormat)">writeToBytes</a></code><code class="x">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="u"><code array="fix">byte</code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#writeToBytes(imagify.ImageFormat,double)">writeToBytes</a></code><code class="x">(<code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>, <code>double</code><code class="parameterName">quality</code>)</code><i class="u"><code array="fix">byte</code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#toBufferedImage()">toBufferedImage</a></code><code class="x">()</code><i class="u"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#get()">get</a></code><code class="x">()</code><i class="u"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
+					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.Imagify.html#frameCount()">frameCount</a></code><code class="x">()</code><i class="u"><code>int</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="s">
+		<footer class="N">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
