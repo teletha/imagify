@@ -9,6 +9,8 @@
  */
 package imagify;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -18,10 +20,22 @@ import java.util.List;
 /**
  * Creates sprite sheets from multiple image frames.
  *
- * <p>A sprite sheet is a single {@link BufferedImage} containing
- * multiple frames arranged in a grid pattern.</p>
+ * <p>
+ * A sprite sheet is a single {@link BufferedImage} containing multiple frames arranged in a grid.
+ * This class only holds the layout configuration; the same configuration is shared by
+ * {@link #layout()} (where does every frame go) and {@link #toImage()} (draw them there), so the
+ * coordinates handed to a stylesheet or an atlas file can never disagree with the picture.
+ * </p>
  *
- * <p>Usage:</p>
+ * <p>
+ * Every frame is placed in a cell. Unless {@link #cell(int, int, Fit)} says otherwise the cell is
+ * as
+ * large as the largest frame and smaller frames are centred in it untouched.
+ * </p>
+ *
+ * <p>
+ * Usage:
+ * </p>
  * <pre>{@code
  * // From file paths
  * BufferedImage sheet = SpriteSheet.of()
@@ -30,64 +44,126 @@ import java.util.List;
  *     .padding(2)
  *     .toImage();
  *
- * // From BufferedImages with uniform size
+ * // Frames of different shapes into 64x64 cells, cropping the overflow
  * BufferedImage sheet = SpriteSheet.of()
- *     .addFrames(images)
- *     .uniformSize(64, 64)
+ *     .addImages(images)
+ *     .cell(64, 64, Fit.FILL)
  *     .spacing(4)
+ *     .background(Color.WHITE)
  *     .toImage();
  *
- * // Just resize a single image into a grid of frames
- * BufferedImage sheet = SpriteSheet.of()
- *     .addFrame(singleImage)
- *     .grid(3, 4)  // 3 columns, 4 rows
- *     .toImage();
+ * // Every frame of an animation, and where each of them ended up
+ * SpriteSheet sheet = SpriteSheet.of().addFrames(Imagify.read(gif).get()).columns(8);
+ * SpriteSheet.Layout layout = sheet.layout();
+ * BufferedImage image = sheet.toImage();
  * }</pre>
  */
 public final class SpriteSheet {
 
-    private final List<BufferedImage> frames;
+    /**
+     * How a frame is made to fit its cell. The names follow the resizing methods of
+     * {@link Imagify}.
+     */
+    public enum Fit {
+        /** Stretches to the cell exactly, like {@link Imagify#resize(int, int)}. */
+        STRETCH,
+
+        /**
+         * Keeps the aspect ratio and scales down when the frame does not fit; a frame that already
+         * fits is left at its own size. Either way it is centred, so this is what
+         * {@link Imagify#padTo(int, int)} does per cell.
+         */
+        INSIDE,
+
+        /**
+         * Keeps the aspect ratio and crops the overflow, like
+         * {@link Imagify#resizeToFill(int, int)}.
+         */
+        FILL
+    }
+
+    /**
+     * Where one frame's cell lies in the sheet.
+     *
+     * @param x left edge in pixels
+     * @param y top edge in pixels
+     * @param width cell width in pixels
+     * @param height cell height in pixels
+     */
+    public record Cell(int x, int y, int width, int height) {
+    }
+
+    /**
+     * The resolved geometry of a sheet.
+     *
+     * @param columns number of columns
+     * @param rows number of rows
+     * @param cellWidth width of every cell
+     * @param cellHeight height of every cell
+     * @param width width of the whole sheet
+     * @param height height of the whole sheet
+     * @param cells one entry per frame, in the order the frames were added
+     */
+    public record Layout(int columns, int rows, int cellWidth, int cellHeight, int width, int height, List<Cell> cells) {
+    }
+
+    private final List<BufferedImage> frames = new ArrayList<>();
+
     private int columns;
+
     private int rows;
-    private int frameWidth;
-    private int frameHeight;
+
+    /** {@code 0} means as large as the largest frame. */
+    private int cellWidth;
+
+    private int cellHeight;
+
+    private Fit fit = Fit.INSIDE;
+
+    private ResizeAlgorithm algorithm = ResizeAlgorithm.DEFAULT;
+
+    private Color background;
+
     private int padding;
+
     private int spacing;
-    private boolean uniformSize;
-    private Integer targetWidth;
-    private Integer targetHeight;
 
     private SpriteSheet() {
-        this.frames = new ArrayList<>();
-        this.columns = 0;
-        this.rows = 0;
-        this.padding = 0;
-        this.spacing = 0;
-        this.uniformSize = false;
     }
 
     // ═══════════════════════════════════════════════════
-    //  Builder API
+    // Builder API
     // ═══════════════════════════════════════════════════
 
     /**
      * Creates a new builder instance.
      */
-    public static SpriteSheet of() {
+    public static SpriteSheet create() {
         return new SpriteSheet();
     }
 
     /**
      * Adds frames from a list of file paths. Auto-reads using ImageReader.
+     *
+     * <p>
+     * Only the first frame of each file is taken; use {@link #addFrames(FrameSequence)} to add
+     * every
+     * frame of an animation.
+     * </p>
      */
     public SpriteSheet addFrames(List<Path> paths) {
         for (Path p : paths) {
-            try {
-                frames.add(ImageReader.read(p).toBufferedImage());
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to read: " + p, e);
-            }
+            addFrame(p);
         }
+        return this;
+    }
+
+    /**
+     * Adds every frame of a sequence, e.g. the frames of an animated GIF. The timing of the
+     * sequence is not part of a sheet and is dropped.
+     */
+    public SpriteSheet addFrames(FrameSequence sequence) {
+        frames.addAll(sequence.frames());
         return this;
     }
 
@@ -134,7 +210,7 @@ public final class SpriteSheet {
     }
 
     // ═══════════════════════════════════════════════════
-    //  Layout configuration
+    // Layout configuration
     // ═══════════════════════════════════════════════════
 
     /**
@@ -142,7 +218,7 @@ public final class SpriteSheet {
      * Rows are auto-calculated from frame count.
      */
     public SpriteSheet columns(int cols) {
-        this.columns = cols;
+        this.columns = requirePositive("columns", cols);
         return this;
     }
 
@@ -151,27 +227,51 @@ public final class SpriteSheet {
      * Columns are auto-calculated from frame count.
      */
     public SpriteSheet rows(int rows) {
-        this.rows = rows;
+        this.rows = requirePositive("rows", rows);
         return this;
     }
 
     /**
-     * Sets the grid dimensions directly.
+     * Sets the grid dimensions directly. The grid must have room for every frame, which is checked
+     * when the sheet is laid out.
      */
     public SpriteSheet grid(int cols, int rows) {
-        this.columns = cols;
-        this.rows = rows;
+        this.columns = requirePositive("columns", cols);
+        this.rows = requirePositive("rows", rows);
         return this;
     }
 
     /**
-     * Forces all frames to a uniform size by resizing.
-     * Required when frames have different sizes.
+     * Gives every cell the same size and makes each frame fit it with {@link Fit#INSIDE}.
      */
-    public SpriteSheet uniformSize(int width, int height) {
-        this.uniformSize = true;
-        this.targetWidth = width;
-        this.targetHeight = height;
+    public SpriteSheet cell(int width, int height) {
+        return cell(width, height, Fit.INSIDE);
+    }
+
+    /**
+     * Gives every cell the same size and makes each frame fit it the given way.
+     */
+    public SpriteSheet cell(int width, int height, Fit fit) {
+        this.cellWidth = requirePositive("cell width", width);
+        this.cellHeight = requirePositive("cell height", height);
+        this.fit = java.util.Objects.requireNonNull(fit, "fit");
+        return this;
+    }
+
+    /**
+     * Sets the algorithm used when a frame has to be scaled.
+     */
+    public SpriteSheet algorithm(ResizeAlgorithm algorithm) {
+        this.algorithm = java.util.Objects.requireNonNull(algorithm, "algorithm");
+        return this;
+    }
+
+    /**
+     * Sets what the whole sheet, gaps and padding included, is filled with before the frames are
+     * drawn. {@code null}, the default, keeps it transparent.
+     */
+    public SpriteSheet background(Color color) {
+        this.background = color;
         return this;
     }
 
@@ -179,7 +279,7 @@ public final class SpriteSheet {
      * Sets padding around the entire sprite sheet.
      */
     public SpriteSheet padding(int pixels) {
-        this.padding = pixels;
+        this.padding = requireNotNegative("padding", pixels);
         return this;
     }
 
@@ -187,74 +287,99 @@ public final class SpriteSheet {
      * Sets spacing between frames.
      */
     public SpriteSheet spacing(int pixels) {
-        this.spacing = pixels;
+        this.spacing = requireNotNegative("spacing", pixels);
         return this;
     }
 
     // ═══════════════════════════════════════════════════
-    //  Build
+    // Build
     // ═══════════════════════════════════════════════════
+
+    /**
+     * Works out where every frame goes without drawing anything. Nothing on this builder is
+     * changed by the call, so it can be repeated after more frames were added.
+     *
+     * @return the geometry {@link #toImage()} draws to
+     * @throws IllegalStateException if no frames were added
+     * @throws IllegalArgumentException if the grid has no room for every frame
+     */
+    public Layout layout() {
+        if (frames.isEmpty()) {
+            throw new IllegalStateException("No frames added");
+        }
+        int count = frames.size();
+
+        // grid
+        int cols = columns;
+        int rws = rows;
+        if (cols <= 0 && rws <= 0) {
+            cols = count; // default: a single row
+        }
+        if (rws <= 0) {
+            rws = ceilDiv(count, cols);
+        } else if (cols <= 0) {
+            cols = ceilDiv(count, rws);
+        }
+        if ((long) cols * rws < count) {
+            throw new IllegalArgumentException("a " + cols + "x" + rws + " grid has no room for " + count + " frames");
+        }
+
+        // cell
+        int cw = cellWidth;
+        int ch = cellHeight;
+        if (cw <= 0) {
+            for (BufferedImage frame : frames) {
+                cw = Math.max(cw, frame.getWidth());
+                ch = Math.max(ch, frame.getHeight());
+            }
+        }
+
+        // placement
+        var cells = new ArrayList<Cell>(count);
+        for (int i = 0; i < count; i++) {
+            int x = padding + (i % cols) * (cw + spacing);
+            int y = padding + (i / cols) * (ch + spacing);
+            cells.add(new Cell(x, y, cw, ch));
+        }
+        int totalW = padding * 2 + cols * cw + (cols - 1) * spacing;
+        int totalH = padding * 2 + rws * ch + (rws - 1) * spacing;
+        return new Layout(cols, rws, cw, ch, totalW, totalH, List.copyOf(cells));
+    }
 
     /**
      * Builds the sprite sheet {@link BufferedImage}.
      *
      * @return the sprite sheet image (TYPE_INT_ARGB)
      * @throws IllegalStateException if no frames were added
+     * @throws IllegalArgumentException if the grid has no room for every frame
      */
     public BufferedImage toImage() {
-        if (frames.isEmpty()) {
-            throw new IllegalStateException("No frames added");
-        }
-
-        // Determine frame dimensions
-        int fw = frameWidth;
-        int fh = frameHeight;
-
-        if (uniformSize && targetWidth != null && targetHeight != null) {
-            fw = targetWidth;
-            fh = targetHeight;
-        } else if (!uniformSize) {
-            // Use the largest frame as reference
-            for (BufferedImage f : frames) {
-                if (fw < f.getWidth()) fw = f.getWidth();
-                if (fh < f.getHeight()) fh = f.getHeight();
+        Layout layout = layout();
+        BufferedImage sheet = new BufferedImage(layout.width(), layout.height(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = sheet.createGraphics();
+        try {
+            if (background != null) {
+                graphics.setColor(background);
+                graphics.fillRect(0, 0, layout.width(), layout.height());
             }
-        }
-
-        // Calculate grid dimensions
-        if (columns <= 0 && rows <= 0) {
-            // Default: single row
-            columns = frames.size();
-        }
-        if (rows <= 0) {
-            rows = (int) Math.ceil((double) frames.size() / columns);
-        }
-        if (columns <= 0) {
-            columns = (int) Math.ceil((double) frames.size() / rows);
-        }
-
-        // Calculate output dimensions
-        int totalW = padding * 2 + columns * fw + (columns - 1) * spacing;
-        int totalH = padding * 2 + rows * fh + (rows - 1) * spacing;
-
-        BufferedImage sheet = new BufferedImage(totalW, totalH, BufferedImage.TYPE_INT_ARGB);
-
-        // Draw frames
-        for (int i = 0; i < frames.size(); i++) {
-            int col = i % columns;
-            int row = i / columns;
-            int x = padding + col * (fw + spacing);
-            int y = padding + row * (fh + spacing);
-
-            BufferedImage frame = frames.get(i);
-            if (uniformSize && targetWidth != null && targetHeight != null) {
-                // Resize frame to uniform size
-                frame = BufferedImageResize.resize(frame, fw, fh, ResizeAlgorithm.BILINEAR);
+            for (int i = 0; i < frames.size(); i++) {
+                Cell cell = layout.cells().get(i);
+                BufferedImage frame = fit(frames.get(i), cell.width(), cell.height());
+                int x = cell.x() + (cell.width() - frame.getWidth()) / 2;
+                int y = cell.y() + (cell.height() - frame.getHeight()) / 2;
+                graphics.drawImage(frame, x, y, null);
             }
-            sheet.getGraphics().drawImage(frame, x, y, null);
+        } finally {
+            graphics.dispose();
         }
-
         return sheet;
+    }
+
+    /**
+     * Builds the sheet and continues in an {@link Imagify} pipeline, e.g. to resize or write it.
+     */
+    public Imagify toImagify() {
+        return Imagify.read(toImage());
     }
 
     /**
@@ -264,17 +389,60 @@ public final class SpriteSheet {
         return frames.size();
     }
 
-    /**
-     * Returns the calculated frame width.
-     */
-    public int getFrameWidth() {
-        return frameWidth;
-    }
+    // ═══════════════════════════════════════════════════
+    // Internals
+    // ═══════════════════════════════════════════════════
 
     /**
-     * Returns the calculated frame height.
+     * Makes a frame fit a cell. The result is never larger than the cell; it is smaller only for
+     * {@link Fit#INSIDE}, where the caller centres it.
      */
-    public int getFrameHeight() {
-        return frameHeight;
+    private BufferedImage fit(BufferedImage frame, int cw, int ch) {
+        int w = frame.getWidth();
+        int h = frame.getHeight();
+        switch (fit) {
+        case STRETCH:
+            return w == cw && h == ch ? frame : BufferedImageResize.resize(frame, cw, ch, algorithm);
+
+        case INSIDE: {
+            if (w <= cw && h <= ch) {
+                return frame;
+            }
+            double scale = Math.min((double) cw / w, (double) ch / h);
+            int scaledW = Math.min(cw, Math.max(1, (int) Math.round(w * scale)));
+            int scaledH = Math.min(ch, Math.max(1, (int) Math.round(h * scale)));
+            return BufferedImageResize.resize(frame, scaledW, scaledH, algorithm);
+        }
+
+        case FILL: {
+            double scale = Math.max((double) cw / w, (double) ch / h);
+            // Rounding up, and never below the cell, is what keeps the crop inside the image.
+            int scaledW = Math.max(cw, (int) Math.ceil(w * scale));
+            int scaledH = Math.max(ch, (int) Math.ceil(h * scale));
+            BufferedImage scaled = scaledW == w && scaledH == h ? frame : BufferedImageResize.resize(frame, scaledW, scaledH, algorithm);
+            return BufferedImageTransform.crop(scaled, (scaledW - cw) / 2, (scaledH - ch) / 2, cw, ch);
+        }
+
+        default:
+            throw new AssertionError(fit);
+        }
+    }
+
+    private static int ceilDiv(int dividend, int divisor) {
+        return (dividend + divisor - 1) / divisor;
+    }
+
+    private static int requirePositive(String name, int value) {
+        if (value <= 0) {
+            throw new IllegalArgumentException(name + " must be positive, got " + value);
+        }
+        return value;
+    }
+
+    private static int requireNotNegative(String name, int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException(name + " must not be negative, got " + value);
+        }
+        return value;
     }
 }

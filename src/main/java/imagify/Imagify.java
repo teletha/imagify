@@ -19,6 +19,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
 /**
@@ -138,6 +142,49 @@ public final class Imagify {
             throw new IOError(e);
         }
         return pipe;
+    }
+
+    /**
+     * Starts a pipeline from an image that is already decoded, as a single frame.
+     *
+     * @param image the image, not copied
+     * @return this pipeline for chaining
+     */
+    public static Imagify read(BufferedImage image) {
+        Imagify pipe = new Imagify();
+        pipe.frameSequence = singleFrame(Objects.requireNonNull(image, "image"));
+        return pipe;
+    }
+
+    /**
+     * Starts a pipeline with one sprite sheet made of the first frame of each file.
+     *
+     * @param paths the files, in the order they appear in the sheet
+     * @param columns the number of columns; the rows follow from the number of files
+     * @return this pipeline for chaining
+     * @see #spriteSheet(List, Consumer)
+     */
+    public static Imagify spriteSheet(List<Path> paths, int columns) {
+        return spriteSheet(paths, sheet -> sheet.columns(columns));
+    }
+
+    /**
+     * Starts a pipeline with one sprite sheet made of the first frame of each file.
+     *
+     * <p>
+     * The files are added to the sheet before {@code layout} runs, so the callback only has to say
+     * how they are arranged. Use {@link #asSpriteSheet(Consumer)} instead to lay out the frames of
+     * an animation.
+     * </p>
+     *
+     * @param paths the files, in the order they appear in the sheet
+     * @param layout configures the grid, the cells, the spacing and so on
+     * @return this pipeline for chaining
+     */
+    public static Imagify spriteSheet(List<Path> paths, Consumer<SpriteSheet> layout) {
+        SpriteSheet sheet = SpriteSheet.create().addFrames(paths);
+        layout.accept(sheet);
+        return read(sheet.toImage());
     }
 
     // ═══════════════════════════════════════════════════
@@ -363,6 +410,134 @@ public final class Imagify {
         if (targetW <= 0 || targetH <= 0) {
             throw new IllegalArgumentException("the target size must be positive, got " + targetW + "x" + targetH);
         }
+    }
+
+    private static int checkedGridSize(int columns, int rows) {
+        if (columns <= 0 || rows <= 0) {
+            throw new IllegalArgumentException("the grid must be positive, got " + columns + "x" + rows);
+        }
+        return Math.multiplyExact(columns, rows);
+    }
+
+    /**
+     * Replaces the whole sequence with one image.
+     */
+    private Imagify replaceWith(BufferedImage image) {
+        this.frameSequence = singleFrame(image);
+        return this;
+    }
+
+    private static FrameSequence singleFrame(BufferedImage image) {
+        return new FrameSequence(List.of(image), new int[] {0}, 0);
+    }
+
+    /**
+     * Lays out all frames in a grid with the given number of columns, turning the sequence into a
+     * single image.
+     *
+     * @see #asSpriteSheet(Consumer)
+     */
+    public Imagify asSpriteSheet(int columns) {
+        return asSpriteSheet(sheet -> sheet.columns(columns));
+    }
+
+    /**
+     * Lays out all frames on a sprite sheet, turning the sequence into a single image.
+     *
+     * <p>
+     * The timing of the sequence is dropped, since a sheet has no notion of it. A still image
+     * becomes a sheet of one cell. To learn where each frame ended up, build the sheet with
+     * {@link SpriteSheet} directly and ask it for its {@link SpriteSheet#layout() layout}.
+     * </p>
+     *
+     * @param layout configures the grid, the cells, the spacing and so on
+     * @return this pipeline for chaining
+     */
+    public Imagify asSpriteSheet(Consumer<SpriteSheet> layout) {
+        SpriteSheet sheet = SpriteSheet.create().addFrames(frameSequence);
+        layout.accept(sheet);
+        return replaceWith(sheet.toImage());
+    }
+
+    /**
+     * Cuts the image into an even grid and makes every piece a frame of an animation.
+     *
+     * <p>
+     * Pieces are taken row by row. When the image does not divide evenly, the remainder on the
+     * right and bottom edges is dropped. The counterpart of {@link #asSpriteSheet(int)} for sheets
+     * without padding or spacing.
+     * </p>
+     *
+     * @param columns the number of columns in the sheet
+     * @param rows the number of rows in the sheet
+     * @param delayMs how long each frame is shown, in milliseconds
+     * @return this pipeline for chaining
+     */
+    public Imagify splitGrid(int columns, int rows, int delayMs) {
+        return splitGrid(columns, rows, checkedGridSize(columns, rows), delayMs);
+    }
+
+    /**
+     * Cuts the image into an even grid and makes the first {@code frameCount} pieces, row by row,
+     * the frames of an animation. Use it when the last row of the sheet is not full.
+     *
+     * @param frameCount how many pieces to take, at most {@code columns * rows}
+     * @see #splitGrid(int, int, int)
+     */
+    public Imagify splitGrid(int columns, int rows, int frameCount, int delayMs) {
+        int capacity = checkedGridSize(columns, rows);
+        if (frameCount <= 0 || capacity < frameCount) {
+            throw new IllegalArgumentException("a " + columns + "x" + rows + " grid holds 1 to " + capacity + " frames, got " + frameCount);
+        }
+        BufferedImage sheet = frameSequence.toBufferedImage();
+        int cellW = sheet.getWidth() / columns;
+        int cellH = sheet.getHeight() / rows;
+        if (cellW == 0 || cellH == 0) {
+            throw new IllegalArgumentException("a " + sheet.getWidth() + "x" + sheet
+                    .getHeight() + " image cannot be cut into " + columns + "x" + rows);
+        }
+        var cells = new ArrayList<SpriteSheet.Cell>(frameCount);
+        for (int i = 0; i < frameCount; i++) {
+            cells.add(new SpriteSheet.Cell((i % columns) * cellW, (i / columns) * cellH, cellW, cellH));
+        }
+        return splitCells(cells, delayMs);
+    }
+
+    /**
+     * Cuts the image along the cells of a layout and makes every piece a frame of an animation.
+     *
+     * <p>
+     * This undoes a sheet with padding and spacing exactly. Every frame is a whole cell, so a frame
+     * that was smaller than its cell comes back with the surrounding area attached.
+     * </p>
+     *
+     * @param layout the layout the sheet was built with, see {@link SpriteSheet#layout()}
+     * @param delayMs how long each frame is shown, in milliseconds
+     * @return this pipeline for chaining
+     */
+    public Imagify split(SpriteSheet.Layout layout, int delayMs) {
+        return splitCells(layout.cells(), delayMs);
+    }
+
+    private Imagify splitCells(List<SpriteSheet.Cell> cells, int delayMs) {
+        if (delayMs < 0) {
+            throw new IllegalArgumentException("the delay must not be negative, got " + delayMs);
+        }
+        BufferedImage sheet = frameSequence.toBufferedImage();
+        var frames = new ArrayList<BufferedImage>(cells.size());
+        for (SpriteSheet.Cell cell : cells) {
+            if (cell.x() < 0 || cell.y() < 0 || sheet.getWidth() < cell.x() + cell.width() || sheet
+                    .getHeight() < cell.y() + cell.height()) {
+                throw new IllegalArgumentException("the cell " + cell + " lies outside the " + sheet.getWidth() + "x" + sheet
+                        .getHeight() + " image");
+            }
+            frames.add(BufferedImageTransform.crop(sheet, cell.x(), cell.y(), cell.width(), cell.height()));
+        }
+        // 0 loops for ever, the way a sheet cut into an animation is usually meant to play
+        int[] delays = new int[frames.size()];
+        Arrays.fill(delays, delayMs);
+        this.frameSequence = new FrameSequence(frames, delays, 0);
+        return this;
     }
 
     /**
