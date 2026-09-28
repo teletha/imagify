@@ -221,6 +221,11 @@ const root = {
 			"type": "Class"
 		},
 		{
+			"name": "ImageFormat.Jpeg.Subsampling",
+			"packageName": "imagify",
+			"type": "Enum"
+		},
+		{
 			"name": "ImageReader",
 			"packageName": "imagify",
 			"type": "Class"

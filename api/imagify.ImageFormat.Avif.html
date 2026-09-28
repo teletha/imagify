@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="d">
-		<header class="e" date="2026-09-26">
-			<h1 class="Y"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="W"><a href="api/main.html" id="API"><svg class="package">
+	<body class="S">
+		<header class="T" date="2026-09-26">
+			<h1 class="q"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="N"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,24 +35,25 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="P"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="u"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="g"></nav>
-		<article class="f" id="Article">
-			<section class="EB"><code class="IB">imagify</code>
-				<h2 class="Class y"><code class="q">ImageFormat.Avif</code></h2>
-				<div class="m">
+		<nav class="W"></nav>
+		<article class="U" id="Article">
+			<section class="v"><code class="BB">imagify</code>
+				<h2 class="Class e"><code class="f">ImageFormat.Avif</code></h2>
+				<div class="d">
 					<ul class="E G">
 						<li><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></li>
 					</ul>
 				</div><span class="A"><p>AVIF format (.avif). AV1-based. Alpha support.
 Magic bytes: &quot;ftyp&quot; box with &quot;avif&quot; brand</p><p>
- AVIF has no switch for lossless encoding: it is a quality of <code>AVIF_QUALITY_LOSSLESS</code> out
+ AVIF has no switch for lossless encoding: it is a quality of <code>AVIF_QUALITY_LOSSLESS</code>
+ out
  of <code>AVIF_QUALITY_BEST</code>, so the quality a write is asked for is what says whether the
  pixels are kept. The settings that have no other home are carried here instead:
  <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#speed">#speed</a></code>, how long the encoder may take, and <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#alphaQuality">#alphaQuality</a></code>, how hard the alpha
@@ -61,50 +62,50 @@ Magic bytes: &quot;ftyp&quot; box with &quot;avif&quot; brand</p><p>
  Both are left unset, which is not the same as a value: it means the encoder keeps its own
  choice, and that choice differs between a still image and an animation.
  </p></span></section>
-			<section class="EB" id="speed">
-				<h2 class="p"><i class="FINAL"><i class="PUBLIC"></i></i><code class="q">speed</code><i class="v"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></h2><span class="A"><p>How long the encoder may take, <code>0</code> being the slowest and most thorough and
+			<section class="v" id="speed">
+				<h2 class="Z"><i class="FINAL"><i class="PUBLIC"></i></i><code class="f">speed</code><i class="K"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></h2><span class="A"><p>How long the encoder may take, <code>0</code> being the slowest and most thorough and
 <code>10</code> the quickest. Unset means <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#DEFAULT_SPEED">AvifLibrary#DEFAULT_SPEED</a></code> for a still image
 and <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#DEFAULT_ANIMATION_SPEED">AvifLibrary#DEFAULT_ANIMATION_SPEED</a></code> for an animation, which pays the cost of
 a speed setting once per frame.</p></span></section>
-			<section class="EB" id="alphaQuality">
-				<h2 class="p"><i class="FINAL"><i class="PUBLIC"></i></i><code class="q">alphaQuality</code><i class="v"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></h2><span class="A"><p>How hard the alpha plane is compressed, <code>AVIF_QUALITY_WORST</code> being the worst and
+			<section class="v" id="alphaQuality">
+				<h2 class="Z"><i class="FINAL"><i class="PUBLIC"></i></i><code class="f">alphaQuality</code><i class="K"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></h2><span class="A"><p>How hard the alpha plane is compressed, <code>AVIF_QUALITY_WORST</code> being the worst and
 <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_BEST">AvifLibrary#AVIF_QUALITY_BEST</a></code> keeping every alpha value as it was given. Unset
 means <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#AVIF_QUALITY_LOSSLESS">AvifLibrary#AVIF_QUALITY_LOSSLESS</a></code>, because lossy alpha is the single most
 visible AVIF artefact and an alpha plane is cheap to store.</p></span></section>
-			<section class="EB" id="speed(int)">
-				<h2 class="p"><i class="PUBLIC"></i><code class="q">speed</code><code class="l">(<code>int</code><code class="parameterName">speed</code>)</code><i class="v"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
-				<table class="r">
-					<tr class="w">
+			<section class="v" id="speed(int)">
+				<h2 class="Z"><i class="PUBLIC"></i><code class="f">speed</code><code class="o">(<code>int</code><code class="parameterName">speed</code>)</code><i class="K"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
+				<table class="b">
+					<tr class="g">
 						<td><code>int</code><code class="parameterName">speed</code></td>
 						<td><span><p>0 (slowest, best quality) to 10 (fastest, worst quality)</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="J">
 						<td><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></td>
 						<td><span><p>this format asking the encoder for that much speed</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="EB" id="alphaQuality(int)">
-				<h2 class="p"><i class="PUBLIC"></i><code class="q">alphaQuality</code><code class="l">(<code>int</code><code class="parameterName">alphaQuality</code>)</code><i class="v"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
-				<table class="r">
-					<tr class="w">
+			<section class="v" id="alphaQuality(int)">
+				<h2 class="Z"><i class="PUBLIC"></i><code class="f">alphaQuality</code><code class="o">(<code>int</code><code class="parameterName">alphaQuality</code>)</code><i class="K"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
+				<table class="b">
+					<tr class="g">
 						<td><code>int</code><code class="parameterName">alphaQuality</code></td>
 						<td><span><p>0 (worst) to 100 (every alpha value kept as it was given)</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="J">
 						<td><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></td>
 						<td><span><p>this format asking for that much alpha quality</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="EB" id="equals(java.lang.Object)">
-				<h2 class="p"><i class="OVERRIDE PUBLIC"></i><code class="q">equals</code><code class="l">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="v"><code>boolean</code></i></h2>
-				<table class="r">
-					<tr class="w">
+			<section class="v" id="equals(java.lang.Object)">
+				<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="f">equals</code><code class="o">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="K"><code>boolean</code></i></h2>
+				<table class="b">
+					<tr class="g">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="J">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
@@ -112,33 +113,33 @@ visible AVIF artefact and an alpha plane is cheap to store.</p></span></section>
  The settings are part of what an AVIF format is, so the same file asked for at two
  different speeds is not the same value.
  </p></span></section>
-			<section class="EB" id="hashCode()">
-				<h2 class="p"><i class="OVERRIDE PUBLIC"></i><code class="q">hashCode</code><code class="l">()</code><i class="v"><code>int</code></i></h2>
-				<table class="r">
-					<tr class="U">
+			<section class="v" id="hashCode()">
+				<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="f">hashCode</code><code class="o">()</code><i class="K"><code>int</code></i></h2>
+				<table class="b">
+					<tr class="J">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="h">
-			<div class="CB">
+		<aside class="Q">
+			<div class="GB">
 				<h5 class="x">Fields</h5>
 				<ul>
-					<li class="z"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#speed">speed</a></code><i class="JB"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></li>
-					<li class="z"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#alphaQuality">alphaQuality</a></code><i class="JB"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></li>
+					<li class="HB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#speed">speed</a></code><i class="M"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></li>
+					<li class="HB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.html#alphaQuality">alphaQuality</a></code><i class="M"><code class="return"><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></i></li>
 				</ul>
 				<h5 class="x">Methods</h5>
 				<ul>
-					<li class="z"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#speed(int)">speed</a></code><code class="l">(<code>int</code><code class="parameterName">speed</code>)</code><i class="JB"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
-					<li class="z"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#alphaQuality(int)">alphaQuality</a></code><code class="l">(<code>int</code><code class="parameterName">alphaQuality</code>)</code><i class="JB"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
-					<li class="z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#equals(java.lang.Object)">equals</a></code><code class="l">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="JB"><code>boolean</code></i></li>
-					<li class="z"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#hashCode()">hashCode</a></code><code class="l">()</code><i class="JB"><code>int</code></i></li>
+					<li class="HB"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#speed(int)">speed</a></code><code class="o">(<code>int</code><code class="parameterName">speed</code>)</code><i class="M"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
+					<li class="HB"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#alphaQuality(int)">alphaQuality</a></code><code class="o">(<code>int</code><code class="parameterName">alphaQuality</code>)</code><i class="M"><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
+					<li class="HB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#equals(java.lang.Object)">equals</a></code><code class="o">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="M"><code>boolean</code></i></li>
+					<li class="HB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.html#hashCode()">hashCode</a></code><code class="o">()</code><i class="M"><code>int</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="S">
+		<footer class="V">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
