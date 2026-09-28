@@ -211,11 +211,6 @@ const root = {
 			"type": "Class"
 		},
 		{
-			"name": "ImageFormat.Gif89a",
-			"packageName": "imagify",
-			"type": "Class"
-		},
-		{
 			"name": "ImageFormat.Gif",
 			"packageName": "imagify",
 			"type": "Class"
