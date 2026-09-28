@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<meta content="Explains how to use Imagify and its API. " name="description"/>
+		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<title>Imagify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="S">
+		<header class="T" date="2026-09-26">
+			<h1 class="d"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="Y"><a href="api/main.html" id="API"><svg class="package">
+						<use href="main.svg#package"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify/discussions" id="Community" target="_blank"><svg class="user">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify" id="Repository" target="_blank"><svg class="github">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="e"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<nav class="V"></nav>
+		<article class="M" id="Article">
+			<section class="P"><code class="z">imagify</code>
+				<h2 class="Enum AB"><code class="FB">ImageFormat.Avif.Subsampling</code></h2>
+				<div class="i">
+					<ul class="E G">
+						<li><code><a aria-label="java.lang.Enum 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Enum.html">Enum</a><code class="parameters"><code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></code></code></li>
+					</ul>
+					<ul class="E H">
+						<li><code><a aria-label="java.lang.Comparable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Comparable.html">Comparable</a><code class="parameters"><code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></code></code></li>
+						<li><code><a aria-label="java.lang.constant.Constable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/constant/Constable.html">Constable</a></code></li>
+						<li><code><a aria-label="java.io.Serializable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></li>
+					</ul>
+				</div><span class="A"><p>How finely the colour-difference channels are stored, named the way the format&apos;s own pixel
+format enumeration writes it down.</p></span></section>
+			<section class="P" id="YUV444">
+				<h2 class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="FB">YUV444</code><i class="t"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>YUV444, the colour channels at full size: the most detail and the largest file.</p></span></section>
+			<section class="P" id="YUV422">
+				<h2 class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="FB">YUV422</code><i class="t"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>YUV422, the colour channels half the width: the usual choice for text and line art.</p></span></section>
+			<section class="P" id="YUV420">
+				<h2 class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="FB">YUV420</code><i class="t"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>YUV420, the colour channels half in both directions: the smallest, and what is written for an animation unless asked otherwise.</p></span></section>
+			<section class="P" id="YUV400">
+				<h2 class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="FB">YUV400</code><i class="t"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>YUV400, no colour channels at all: greyscale, the smallest of all.</p></span></section>
+			<section class="P" id="pixelFormat">
+				<h2 class="s"><i class="FINAL"><i class="PUBLIC"></i></i><code class="FB">pixelFormat</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>The underlying <code>AVIF_PIXEL_FORMAT_*</code> value.</p></span></section>
+			<section class="P" id="values()">
+				<h2 class="s"><i class="PUBLIC STATIC"></i><code class="FB">values</code><code class="r">()</code><i class="t"><code array="fix"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></h2>
+				<table class="CB">
+					<tr class="N">
+						<td><code array="fix"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="P" id="valueOf(java.lang.String)">
+				<h2 class="s"><i class="PUBLIC STATIC"></i><code class="FB">valueOf</code><code class="r">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="t"><code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></h2>
+				<table class="CB">
+					<tr class="h">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code></td>
+						<td></td>
+					</tr>
+					<tr class="N">
+						<td><code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+		</article>
+		<aside class="W">
+			<div class="k">
+				<h5 class="u">Static Fields</h5>
+				<ul>
+					<li class="L"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.Subsampling.html#YUV444">YUV444</a></code><i class="a"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="L"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.Subsampling.html#YUV422">YUV422</a></code><i class="a"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="L"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.Subsampling.html#YUV420">YUV420</a></code><i class="a"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="L"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.Subsampling.html#YUV400">YUV400</a></code><i class="a"><code class="return"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></li>
+				</ul>
+				<h5 class="u">Fields</h5>
+				<ul>
+					<li class="L"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.Subsampling.html#pixelFormat">pixelFormat</a></code><i class="a"><code class="return">int</code></i></li>
+				</ul>
+				<h5 class="u">Static Methods</h5>
+				<ul>
+					<li class="L"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageFormat.Avif.Subsampling.html#values()">values</a></code><code class="r">()</code><i class="a"><code array="fix"><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="L"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageFormat.Avif.Subsampling.html#valueOf(java.lang.String)">valueOf</a></code><code class="r">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="a"><code><a aria-label="imagify.ImageFormat.Avif.Subsampling" href="api/imagify.ImageFormat.Avif.Subsampling.html">Subsampling</a></code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="U">
+			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
+		</footer>
+	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
+</html>

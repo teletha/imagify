@@ -196,6 +196,16 @@ const root = {
 			"type": "Class"
 		},
 		{
+			"name": "ImageFormat.Avif.ChromaDownsampling",
+			"packageName": "imagify",
+			"type": "Enum"
+		},
+		{
+			"name": "ImageFormat.Avif.Subsampling",
+			"packageName": "imagify",
+			"type": "Enum"
+		},
+		{
 			"name": "ImageFormat.Webp",
 			"packageName": "imagify",
 			"type": "Class"
