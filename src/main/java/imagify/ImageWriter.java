@@ -47,12 +47,11 @@ import java.util.Iterator;
  * it.</p>
  *
  * <p>Settings a format carries rather than a write: the WebP encoder effort
- * ({@link ImageFormat.Webp#compressionMethod(int)}) and whether it may mix lossy and lossless
- * frames ({@link ImageFormat.Webp#allowMixed(boolean)}), and the AVIF encoder speed
+ * ({@link ImageFormat.Webp#compressionMethod(int)}), and the AVIF encoder speed
  * ({@link ImageFormat.Avif#speed(int)}) and alpha quality
  * ({@link ImageFormat.Avif#alphaQuality(int)}). They are handed to the encoder whatever the output
- * is, and the WebP ones are animation settings, because that is all the WebP binding this library
- * uses offers them for. An {@link ImageWriteParam} can carry neither, so an AVIF still image is
+ * is, and the WebP one is an animation setting, because that is all the WebP binding this library
+ * uses offers it for. An {@link ImageWriteParam} can carry none of them, so an AVIF still image is
  * encoded through {@link AvifCodec} rather than through the ImageIO plug-in that wraps the same
  * codec.</p>
  *
@@ -276,7 +275,7 @@ public final class ImageWriter {
         if (format instanceof ImageFormat.Webp webp) {
             try {
                 return WebpCodec.encodeAnimation(frames.frames(), frames.delaysMs(), encoderQuality,
-                        webp.lossless, frames.loopCount(), webp.compressionMethod, webp.allowMixed);
+                        webp.lossless, frames.loopCount(), webp.compressionMethod);
             } catch (WebpException e) {
                 throw new IOException("failed to encode WebP animation", e);
             }

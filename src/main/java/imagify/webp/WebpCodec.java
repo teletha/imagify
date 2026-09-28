@@ -331,13 +331,13 @@ public final class WebpCodec {
      * @param loopCount how often the animation repeats, 0 meaning forever
      * @return the complete animated WebP file
      * @throws WebpException when the library is unavailable or the frames cannot be encoded
-     * @see #encodeAnimation(List, int[], int, boolean, int, int, boolean)
+     * @see #encodeAnimation(List, int[], int, boolean, int, int)
      */
     public static byte[] encodeAnimation(List<BufferedImage> frames, int[] delaysMs,
             int quality, boolean lossless, int loopCount) throws WebpException {
-        // 4 and false are the defaults of libwebp and of the gif2webp tool, which is what this
-        // form has always encoded at.
-        return encodeAnimation(frames, delaysMs, quality, lossless, loopCount, 4, false);
+        // 4 is the default of both libwebp and the gif2webp tool, which is what this form has
+        // always encoded at.
+        return encodeAnimation(frames, delaysMs, quality, lossless, loopCount, 4);
     }
 
     /**
@@ -349,13 +349,11 @@ public final class WebpCodec {
      * @param lossless whether to store the pixels without loss
      * @param loopCount how often the animation repeats, 0 meaning forever
      * @param compressionMethod how hard the encoder tries, 0 (quickest) to 6 (most thorough)
-     * @param allowMixed whether the encoder may store some frames without loss and others with loss
      * @return the complete animated WebP file
      * @throws WebpException when the library is unavailable or the frames cannot be encoded
      */
     public static byte[] encodeAnimation(List<BufferedImage> frames, int[] delaysMs,
-            int quality, boolean lossless, int loopCount, int compressionMethod, boolean allowMixed)
-            throws WebpException {
+            int quality, boolean lossless, int loopCount, int compressionMethod) throws WebpException {
         if (frames == null || frames.size() < 2) {
             throw new WebpException("an animation needs at least two frames, got "
                     + (frames == null ? 0 : frames.size()));
@@ -377,12 +375,15 @@ public final class WebpCodec {
             }
             prepared.add(toArgbOrRgb(frame));
         }
+        // allow_mixed stays at webp4j's default of false. The binding offers it, but the only thing
+        // it does is let the encoder pick a bitstream per frame on its own, and a caller that
+        // cannot say which frame gets which bitstream has no use for a switch that turns that
+        // choice on for the whole animation.
         GifToWebPConfig config = new GifToWebPConfig()
                 .setQuality(quality)
                 .setLossless(lossless)
                 .setLoopCount(loopCount)
                 .setCompressionMethod(compressionMethod)
-                .setAllowMixed(allowMixed)
                 .setMultiThreaded(true);
         try {
             return AnimatedWebPEncoder.encode(prepared, delaysMs, config);

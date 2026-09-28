@@ -21,7 +21,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -218,32 +217,12 @@ class ImageFormatWebpTest {
     }
 
     @Test
-    @DisplayName("the format may leave it to the encoder to store a frame lossily or not")
-    void theMixedSettingReachesTheEncoder() throws Exception {
-        // Noise is the one thing a lossless encoder cannot make smaller, so an encoder that is
-        // allowed to choose per frame stores it lossily rather than pay for every pixel.
-        FrameSequence sequence = new FrameSequence(
-                List.of(noise(96, 96, 7L), gradient(96, 96, false)), new int[] {40, 60}, 0);
-
-        byte[] everyFrameLossless = ImageWriter.toBytes(sequence, ImageFormat.WEBP.lossless());
-        byte[] theEncodersChoice = ImageWriter.toBytes(sequence, ImageFormat.WEBP.lossless().allowMixed(true));
-
-        assertFalse(Arrays.equals(everyFrameLossless, theEncodersChoice),
-                "letting the encoder choose should have changed the file it wrote");
-        assertTrue(theEncodersChoice.length < everyFrameLossless.length,
-                "a frame that is smaller stored lossily should have been stored lossily: "
-                        + theEncodersChoice.length + " bytes against " + everyFrameLossless.length);
-        assertEquals(2, ImageReader.read(theEncodersChoice).frameCount(), "every frame should survive");
-    }
-
-    @Test
     @DisplayName("a setting hands back a new value that says what it asks for")
     void theSettingsAreValues() {
         ImageFormat.Webp thorough = ImageFormat.WEBP.compressionMethod(6);
         assertEquals(6, thorough.compressionMethod);
         assertEquals(ImageFormat.Webp.DEFAULT_COMPRESSION_METHOD, ImageFormat.WEBP.compressionMethod,
                 "the default effort is the one libwebp uses");
-        assertFalse(ImageFormat.WEBP.allowMixed, "frames are not mixed unless the format says so");
 
         assertNotEquals(ImageFormat.WEBP, thorough, "asking for more effort is a different request");
         assertNotSame(ImageFormat.WEBP, thorough, "a value the caller owns cannot change the constant");
@@ -252,12 +231,11 @@ class ImageFormatWebpTest {
         assertEquals(thorough.hashCode(), ImageFormat.WEBP.compressionMethod(6).hashCode());
 
         // A setting keeps the ones that came before it, whichever order they arrive in.
-        assertEquals(ImageFormat.WEBP.lossless().compressionMethod(6).allowMixed(true),
-                ImageFormat.WEBP.allowMixed(true).compressionMethod(6).lossless());
+        assertEquals(ImageFormat.WEBP.lossless().compressionMethod(6),
+                ImageFormat.WEBP.compressionMethod(6).lossless(),
+                "the flavour survives the effort, whichever order the two arrive in");
         assertTrue(ImageFormat.WEBP.lossless().compressionMethod(6).lossless,
                 "the lossless flavour survived the effort");
-        assertFalse(ImageFormat.WEBP.lossless().compressionMethod(6).allowMixed,
-                "and the setting was not turned on by the way");
 
         assertThrows(IllegalArgumentException.class, () -> ImageFormat.WEBP.compressionMethod(7));
         assertThrows(IllegalArgumentException.class, () -> ImageFormat.WEBP.compressionMethod(-1));
@@ -282,15 +260,4 @@ class ImageFormatWebpTest {
         return image;
     }
 
-    /** Random pixels, which is what a lossless encoder cannot make smaller and a lossy one can. */
-    private static BufferedImage noise(int width, int height, long seed) {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Random random = new Random(seed);
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                image.setRGB(x, y, 0xFF000000 | random.nextInt(0x1000000));
-            }
-        }
-        return image;
-    }
 }

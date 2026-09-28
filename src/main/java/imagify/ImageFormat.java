@@ -136,11 +136,10 @@ public abstract class ImageFormat {
      * </p>
      *
      * <p>
-     * The encoder has settings of its own besides the flavour, and the ones worth choosing are
-     * carried here too: {@link #compressionMethod}, how hard the encoder tries, and
-     * {@link #allowMixed}, whether it may store some frames without loss and others with loss.
-     * Both belong to an animation rather than to a single image, and the WebP binding this library
-     * uses wires only its animation encoder for them, so they say nothing about a still image.
+     * The encoder has settings of its own besides the flavour, and the one worth choosing is
+     * carried here too: {@link #compressionMethod}, how hard the encoder tries. It belongs to an
+     * animation rather than to a single image, and the WebP binding this library uses wires only
+     * its animation encoder for it, so it says nothing about a still image.
      * </p>
      */
     public static final class Webp extends ImageFormat {
@@ -150,12 +149,6 @@ public abstract class ImageFormat {
          * {@code libwebp} and the {@code gif2webp} tool use.
          */
         public static final int DEFAULT_COMPRESSION_METHOD = 4;
-
-        /**
-         * Whether the encoder may choose per frame when the format does not say, which is
-         * {@code false}: every frame is then stored in the flavour {@link #lossless} names.
-         */
-        public static final boolean DEFAULT_ALLOW_MIXED = false;
 
         /** Whether the pixels are stored without loss, which also means the quality is ignored. */
         public final boolean lossless;
@@ -172,23 +165,10 @@ public abstract class ImageFormat {
          */
         public final int compressionMethod;
 
-        /**
-         * Whether the encoder may store some frames of an animation without loss and others with
-         * loss, choosing per frame instead of following {@link #lossless} for all of them.
-         *
-         * <p>
-         * This is what {@code gif2webp} calls {@code -mixed}: a frame that does not change is
-         * stored losslessly and the ones that do are stored lossily, which is a smaller file than
-         * storing every frame losslessly. A single image has no such choice to make.
-         * </p>
-         */
-        public final boolean allowMixed;
-
-        private Webp(boolean lossless, int compressionMethod, boolean allowMixed) {
+        private Webp(boolean lossless, int compressionMethod) {
             super("WEBP", "webp", "image/webp", new byte[] {'R', 'I', 'F', 'F'}, false, true, 0.80);
             this.lossless = lossless;
             this.compressionMethod = compressionMethod;
-            this.allowMixed = allowMixed;
         }
 
         /**
@@ -196,7 +176,7 @@ public abstract class ImageFormat {
          *         pixel as it was given
          */
         public Webp lossless() {
-            return new Webp(true, compressionMethod, allowMixed);
+            return new Webp(true, compressionMethod);
         }
 
         /**
@@ -208,24 +188,15 @@ public abstract class ImageFormat {
             if (method < 0 || method > 6) {
                 throw new IllegalArgumentException("the compression method must be between 0 and 6, got " + method);
             }
-            return new Webp(lossless, method, allowMixed);
-        }
-
-        /**
-         * @param allowMixed whether the encoder may store some frames without loss and others with
-         *                   loss
-         * @return this format leaving that choice to the encoder
-         */
-        public Webp allowMixed(boolean allowMixed) {
-            return new Webp(lossless, compressionMethod, allowMixed);
+            return new Webp(lossless, method);
         }
 
         /**
          * {@inheritDoc}
          *
          * <p>
-         * The flavour and the settings are part of what a WebP format is, so a lossy animation
-         * written with more effort is not the same value as a lossy one written with less.
+         * The flavour and the effort are part of what a WebP format is, so a lossy animation written
+         * with more effort is not the same value as a lossy one written with less.
          * </p>
          */
         @Override
@@ -233,8 +204,7 @@ public abstract class ImageFormat {
             return object instanceof Webp other
                     && super.equals(object)
                     && lossless == other.lossless
-                    && compressionMethod == other.compressionMethod
-                    && allowMixed == other.allowMixed;
+                    && compressionMethod == other.compressionMethod;
         }
 
         /**
@@ -242,7 +212,7 @@ public abstract class ImageFormat {
          */
         @Override
         public int hashCode() {
-            return Objects.hash(super.hashCode(), lossless, compressionMethod, allowMixed);
+            return Objects.hash(super.hashCode(), lossless, compressionMethod);
         }
     }
 
@@ -366,7 +336,7 @@ public abstract class ImageFormat {
     public static final Gif89a GIF89A = new Gif89a();
 
     /** @see Webp */
-    public static final Webp WEBP = new Webp(false, Webp.DEFAULT_COMPRESSION_METHOD, Webp.DEFAULT_ALLOW_MIXED);
+    public static final Webp WEBP = new Webp(false, Webp.DEFAULT_COMPRESSION_METHOD);
 
     /** @see Avif */
     public static final Avif AVIF = new Avif();
