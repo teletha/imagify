@@ -666,7 +666,7 @@ public final class Imagify {
      * @param delayMs how long each frame is shown, in milliseconds
      * @return this pipeline for chaining
      */
-    public Imagify split(SpriteSheet.Layout layout, int delayMs) {
+    public Imagify asAnimation(SpriteSheet.Layout layout, int delayMs) {
         return splitCells(layout.cells(), delayMs);
     }
 
