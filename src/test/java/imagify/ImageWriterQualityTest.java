@@ -243,18 +243,18 @@ class ImageWriterQualityTest {
     }
 
     @Test
-    @DisplayName("both GIF versions are written as GIF, since they share one encoder")
-    void bothGifVersionsWriteGif() throws IOException {
+    @DisplayName("GIF is written as a GIF file, and either header revision is read back as one format")
+    void gifIsWrittenAndReadBackAsGif() throws IOException {
         BufferedImage image = sample(48, 32);
-        byte[] gif87 = ImageWriter.toBytes(image, ImageFormat.GIF, 0.8);
-        byte[] gif89 = ImageWriter.toBytes(image, ImageFormat.GIF89A, 0.8);
+        byte[] written = ImageWriter.toBytes(image, ImageFormat.GIF, 0.8);
 
-        // One encoder, so one file. The JDK writer always emits the 89a revision because it
-        // always needs the graphic control extension, which is the whole difference between the
-        // two constants. Before, GIF89A asked ImageIO for a writer named "gif89a", found none,
-        // and returned an empty array without complaining.
-        assertEquals("GIF89a", new String(gif87, 0, 6, "US-ASCII"), "not a GIF file");
-        assertArrayEquals(gif87, gif89, "the two GIF constants should share an encoder");
+        // The JDK writer emits the 89a revision, because it always needs the graphic control
+        // extension to say a frame is transparent, and that extension is the whole of the
+        // difference between the two revisions. So a GIF is written as an 89a whichever is asked
+        // for, and either revision in a header is this one format.
+        assertEquals("GIF89a", new String(written, 0, 6, StandardCharsets.US_ASCII), "not a GIF file");
+        assertEquals(ImageFormat.GIF, ImageFormat.fromHeader("GIF87a".getBytes(StandardCharsets.US_ASCII)));
+        assertEquals(ImageFormat.GIF, ImageFormat.fromHeader("GIF89a".getBytes(StandardCharsets.US_ASCII)));
     }
 
     // ------------------------------------------------------------------------------ helpers
@@ -274,7 +274,7 @@ class ImageWriterQualityTest {
 
     private static ImageFormat[] all() {
         return new ImageFormat[] {ImageFormat.JPEG, ImageFormat.PNG, ImageFormat.GIF,
-                ImageFormat.GIF89A, ImageFormat.BMP, ImageFormat.WEBP, ImageFormat.AVIF};
+                ImageFormat.BMP, ImageFormat.WEBP, ImageFormat.AVIF};
     }
 
     private static void assumeLibs() {

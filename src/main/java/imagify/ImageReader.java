@@ -227,9 +227,7 @@ public final class ImageReader {
         // application extension below, which is the only place it is recorded for GIF itself.
         int declared = readDeclaredAttribute(streamMetadata, "repetitionCount");
         if (declared > 0) return declared;
-        // Compared by value, because a format that carries settings is a value that a caller may
-        // have built rather than one of the constants.
-        if (!format.equals(ImageFormat.GIF) && !format.equals(ImageFormat.GIF89A)) return 0;
+        if (!format.equals(ImageFormat.GIF)) return 0;
         try {
             var node = streamMetadata.getAsTree(streamMetadata.getNativeMetadataFormatName());
             var nodeList = node.getChildNodes();

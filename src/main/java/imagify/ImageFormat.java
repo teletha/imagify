@@ -291,41 +291,21 @@ public abstract class ImageFormat {
 
     /**
      * GIF format (.gif). Lossless, indexed color. Alpha support (1-bit).
-     * Magic bytes: "GIF87a"
+     * Magic bytes: "GIF8", the four bytes every revision of the header begins with.
+     *
+     * <p>
+     * A GIF file names its revision in the header, GIF87a or GIF89a, and outside that number
+     * there is nothing here the two differ about that this library can act on. 89a is the revision
+     * that adds the graphic control extension, which is how a frame says it is transparent, and it
+     * is the revision every encoder here writes, because {@link #supportsAlpha()} promises a GIF
+     * can be transparent and 87a has no way to say so. So there is one format, and
+     * {@link #fromHeader(byte[])} answers with it whichever revision the bytes carry.
+     * </p>
      */
     public static final class Gif extends ImageFormat {
 
         private Gif() {
-            super("GIF", "gif", "image/gif", new byte[] {'G', 'I', 'F', '8', '7', 'a'}, true, true, 0.0);
-        }
-    }
-
-    /**
-     * GIF89a, the animated and interlaced flavour of {@link #GIF}.
-     *
-     * <p>
-     * It is a constant of its own because the version number in the header is the only thing
-     * that tells the two apart, and a caller that read a file back may want to write it in the
-     * same flavour. Both answer {@code "gif"} to {@link #getFormatName()}, because they share a
-     * single encoder, so writing either one produces a plain GIF file.
-     * </p>
-     */
-    public static final class Gif89a extends ImageFormat {
-
-        private Gif89a() {
-            super("GIF89A", "gif", "image/gif", new byte[] {'G', 'I', 'F', '8', '9', 'a'}, true, true, 0.0);
-        }
-
-        /**
-         * {@inheritDoc}
-         *
-         * <p>
-         * The encoder is the GIF one, which is registered as {@code "gif"}, not {@code "gif89a"}.
-         * </p>
-         */
-        @Override
-        public String getFormatName() {
-            return GIF.getExtension();
+            super("GIF", "gif", "image/gif", new byte[] {'G', 'I', 'F', '8'}, true, true, 0.0);
         }
     }
 
@@ -662,9 +642,6 @@ public abstract class ImageFormat {
     /** @see Gif */
     public static final Gif GIF = new Gif();
 
-    /** @see Gif89a */
-    public static final Gif89a GIF89A = new Gif89a();
-
     /** @see Webp */
     public static final Webp WEBP = new Webp(false, Webp.DEFAULT_COMPRESSION_METHOD);
 
@@ -674,7 +651,7 @@ public abstract class ImageFormat {
     /** @see Bmp */
     public static final Bmp BMP = new Bmp();
 
-    private static final List<ImageFormat> ALL = List.of(JPEG, PNG, GIF, GIF89A, WEBP, AVIF, BMP);
+    private static final List<ImageFormat> ALL = List.of(JPEG, PNG, GIF, WEBP, AVIF, BMP);
 
     /** The format name as an enum constant used to spell it, such as {@code "PNG"}. */
     private final String name;
@@ -702,7 +679,7 @@ public abstract class ImageFormat {
     }
 
     /**
-     * Returns the name of this format, in upper case, as {@code "PNG"} or {@code "GIF89A"}.
+     * Returns the name of this format, in upper case, as {@code "PNG"} or {@code "GIF"}.
      */
     String name() {
         return name;
@@ -758,9 +735,7 @@ public abstract class ImageFormat {
      *
      * <p>
      * Every constant is named after its format in lower case, which is exactly the name the
-     * {@code ImageIO} registry uses. {@link #GIF89A} is the one exception: GIF87a and GIF89a
-     * differ only in a version number in the header and share a single encoder, so both answer
-     * {@code "gif"} and writing one of them produces a plain GIF file.
+     * {@code ImageIO} registry uses.
      * </p>
      */
     String getFormatName() {
@@ -793,10 +768,11 @@ public abstract class ImageFormat {
         case "jpg":
         case "jpeg":
             return JPEG;
+        // The revision a GIF header names is not a format of its own, so both spellings of it
+        // land on the one GIF. See Gif.
         case "gif87a":
-            return GIF;
         case "gif89a":
-            return GIF89A;
+            return GIF;
         default:
             throw new IllegalArgumentException("Unknown extension: ." + ext);
         }
@@ -826,9 +802,9 @@ public abstract class ImageFormat {
         if (header.length >= 8 && header[0] == (byte) 0x89 && header[1] == 'P' && header[2] == 'N' && header[3] == 'G' && header[4] == 0x0D && header[5] == 0x0A && header[6] == 0x1A && header[7] == 0x0A)
             return PNG;
 
-        // Check GIF
+        // Check GIF, either revision
         if (header.length >= 6 && header[0] == 'G' && header[1] == 'I' && header[2] == 'F' && header[3] == '8' && (header[4] == '7' || header[4] == '9') && header[5] == 'a')
-            return header[4] == '7' ? GIF : GIF89A;
+            return GIF;
 
         // Check WEBP (RIFF....WEBP) - need at least 12 bytes for full detection
         if (header.length >= 4 && header[0] == 'R' && header[1] == 'I' && header[2] == 'F' && header[3] == 'F') {

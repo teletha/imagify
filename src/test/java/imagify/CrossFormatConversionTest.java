@@ -39,7 +39,7 @@ class CrossFormatConversionTest {
     /** All formats used as input and output. */
     private static final ImageFormat[] FORMATS = {
             ImageFormat.JPEG, ImageFormat.PNG, ImageFormat.GIF,
-            ImageFormat.GIF89A, ImageFormat.BMP, ImageFormat.WEBP, ImageFormat.AVIF
+            ImageFormat.BMP, ImageFormat.WEBP, ImageFormat.AVIF
     };
 
     /** AVIF/WebP require a native library. */
@@ -78,8 +78,6 @@ class CrossFormatConversionTest {
             }
 
             for (ImageFormat output : FORMATS) {
-                // GIF89A is identical to GIF, so skip
-                if (output == ImageFormat.GIF89A && input != ImageFormat.GIF89A) continue;
                 // Same-format conversions are covered by other tests
                 if (input == output) continue;
 
@@ -138,7 +136,6 @@ class CrossFormatConversionTest {
             if (decoded == null) continue;
 
             for (ImageFormat output : FORMATS) {
-                if (output == ImageFormat.GIF89A && input != ImageFormat.GIF89A) continue;
                 if (input == output) continue;
 
                 String msg = input + "→" + output + " (auto)";
