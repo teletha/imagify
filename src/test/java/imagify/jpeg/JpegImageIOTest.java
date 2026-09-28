@@ -17,7 +17,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import javax.imageio.IIOException;
@@ -165,22 +167,44 @@ class JpegImageIOTest {
     // ------------------------------------------------------------------------- the jpegli path
 
     @Test
-    @DisplayName("with jpegli, this library's providers are the ones ImageIO reaches for")
-    void providersTakeOverWithTheLibrary() throws IOException, JpegException {
+    @DisplayName("with jpegli, ImageIO offers this library's providers for the jpeg format name")
+    void providersAreOfferedToImageIoWithTheLibrary() throws IOException, JpegException {
         assumeTrue(JpegliCodec.isAvailable(), "skipped: no jpegli on this machine");
         BufferedImage image = gradient(32, 24);
         assertTrue(new JpegImageWriterSpi().canEncodeImage(image));
         assertTrue(new JpegImageReaderSpi().canDecodeInput(JpegliCodec.encode(image, 85)));
 
-        ImageWriter writer = ImageIO.getImageWriters(
-                ImageTypeSpecifier.createFromRenderedImage(image), "jpeg").next();
-        try {
-            assertInstanceOf(JpegImageWriterSpi.class, writer.getOriginatingProvider(),
-                    "both providers are registered and both accept the image, so this only says "
-                            + "which one ImageIO happened to reach first");
-        } finally {
-            writer.dispose();
+        // Membership, not position. The JDK registers its own JPEG provider from the boot class
+        // loader, which ImageIO enumerates before the application loader's, so a jar cannot get
+        // itself first in this list however it is registered, and nothing here relies on doing so:
+        // imagify.ImageWriter and imagify.ImageReader both name this library's provider outright
+        // rather than ask ImageIO to pick one. Asserting the order would only be asserting which
+        // loader the JDK put its plug-ins in.
+        List<String> writers = new ArrayList<>();
+        Iterator<ImageWriter> found = ImageIO.getImageWritersByFormatName("jpeg");
+        while (found.hasNext()) {
+            ImageWriter writer = found.next();
+            try {
+                writers.add(writer.getOriginatingProvider().getClass().getName());
+            } finally {
+                writer.dispose();
+            }
         }
+        assertTrue(writers.contains(JpegImageWriterSpi.class.getName()),
+                "the writer should be registered under the jpeg format name, got " + writers);
+
+        List<String> readers = new ArrayList<>();
+        Iterator<javax.imageio.ImageReader> foundReaders = ImageIO.getImageReadersByFormatName("jpeg");
+        while (foundReaders.hasNext()) {
+            javax.imageio.ImageReader reader = foundReaders.next();
+            try {
+                readers.add(reader.getOriginatingProvider().getClass().getName());
+            } finally {
+                reader.dispose();
+            }
+        }
+        assertTrue(readers.contains(JpegImageReaderSpi.class.getName()),
+                "the reader should be registered under the jpeg format name, got " + readers);
     }
 
     @Test
@@ -237,6 +261,11 @@ class JpegImageIOTest {
                     "4:2:0 is the resolution an encoder writes unless told otherwise");
             assertFalse(jpeg.getOptimizeHuffmanTables(),
                     "the standard tables are the ones used unless the caller asks for the work");
+            // Readable in the default mode, which is the point of the override: the runtime's own
+            // getter throws unless the mode is MODE_EXPLICIT, and the mode has to be switched
+            // before the quality can be set at all, so on a param nobody has touched the stock
+            // getter would throw on a param that is perfectly usable.
+            assertEquals(ImageWriteParam.MODE_DEFAULT, jpeg.getCompressionMode());
             assertEquals(JpegliLibrary.DEFAULT_QUALITY / 100f, jpeg.getCompressionQuality(), 1e-6f,
                     "the default quality is the one the format names, not the 0.5 the JDK plug-ins use");
             assertEquals("JPEG", jpeg.getCompressionType());
@@ -246,6 +275,14 @@ class JpegImageIOTest {
             jpeg.setOptimizeHuffmanTables(true);
             assertEquals(Subsampling.S444, jpeg.getSubsampling());
             assertTrue(jpeg.getOptimizeHuffmanTables());
+
+            jpeg.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            assertEquals("JPEG", jpeg.getCompressionType(),
+                    "switching to MODE_EXPLICIT clears the type on this runtime, and this setter "
+                            + "has to put it back or the mode is unusable");
+            jpeg.setCompressionQuality(0.5f);
+            assertEquals(0.5f, jpeg.getCompressionQuality(), 1e-6f,
+                    "and with the mode explicit the caller's own quality is what comes back");
 
             assertThrows(IllegalArgumentException.class, () -> jpeg.setSubsampling(null));
         } finally {

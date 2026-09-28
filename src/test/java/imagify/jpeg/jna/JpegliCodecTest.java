@@ -15,6 +15,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.lang.reflect.Proxy;
 import java.util.Arrays;
 
 import imagify.ImageFormat.Jpeg.Subsampling;
@@ -272,7 +274,37 @@ class JpegliCodecTest {
         assertThrows(JpegException.class, () -> JpegliCodec.encode(null, 85));
         assertThrows(JpegException.class, () -> JpegliCodec.decode(null));
         assertThrows(JpegException.class, () -> JpegliCodec.readHeader(null));
-        assertThrows(JpegException.class, () -> JpegliCodec.encode(new BufferedImage(0, 0, BufferedImage.TYPE_INT_RGB), 85));
+        // A zero by zero image is what the guard in encode() is there for, and the only way to hand
+        // it one is through the interface: BufferedImage's constructors reject those dimensions
+        // themselves, with an IllegalArgumentException raised before this class is ever entered, so
+        // the case has to be stated against a RenderedImage to reach the code under test at all.
+        assertThrows(JpegException.class, () -> JpegliCodec.encode(empty(), 85),
+                "an image with no pixels in it is not an image");
+    }
+
+    /**
+     * A {@link RenderedImage} that reports no pixels at all.
+     *
+     * <p>{@code encode()} asks for the width and the height before it asks for anything else and
+     * refuses a non-positive one, so the raster is never reached and none of the other nineteen
+     * methods of the interface is ever called. Writing them all out to throw would say no more than
+     * this does, and would say it nineteen times, so the double is a proxy that answers the two
+     * methods the code under test reads and refuses to pretend about the rest. Answering {@code
+     * toString} keeps a failing assertion readable instead of printing a proxy handler.
+     *
+     * @return an image whose width and height are both zero
+     */
+    private static RenderedImage empty() {
+        return (RenderedImage) Proxy.newProxyInstance(JpegliCodecTest.class.getClassLoader(),
+                new Class<?>[] {RenderedImage.class}, (proxy, method, argv) -> {
+                    return switch (method.getName()) {
+                        case "getWidth", "getHeight" -> 0;
+                        case "toString" -> "a 0x0 image";
+                        default -> throw new UnsupportedOperationException(
+                                "encode() is not meant to read the " + method.getName() + " of an image "
+                                        + "it has already refused");
+                    };
+                });
     }
 
     @Test

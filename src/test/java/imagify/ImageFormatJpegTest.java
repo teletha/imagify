@@ -65,11 +65,9 @@ class ImageFormatJpegTest {
     }
 
     @Test
-    @DisplayName("more colour detail is a bigger file that keeps more of the picture")
+    @DisplayName("more colour detail is a bigger file, and it is the colour detail that is kept")
     void moreSubsamplingKeepsMoreOfThePicture() throws IOException {
         BufferedImage source = gradient(96, 96);
-        int[] reference = pixels(ImageReader.read(
-                ImageWriter.toBytes(source, ImageFormat.PNG), ImageFormat.PNG).toBufferedImage());
 
         byte[] smallest = ImageWriter.toBytes(source, ImageFormat.JPEG.subsampling(Subsampling.S420),
                 DEFAULT_QUALITY);
@@ -82,14 +80,71 @@ class ImageFormatJpegTest {
                 "the three should be three sizes, got " + smallest.length + ", " + middle.length
                         + " and " + largest.length);
 
-        // The quality argument is the same in all three, so whatever separates them is the
-        // subsampling alone. A gradient is where chroma resolution shows, and the margins are wide.
-        double by420 = ImageMetrics.psnr(reference, decodedPixels(smallest));
-        double by422 = ImageMetrics.psnr(reference, decodedPixels(middle));
-        double by444 = ImageMetrics.psnr(reference, decodedPixels(largest));
-        assertTrue(by444 > by422 && by422 > by420, String.format(
-                "fidelity should rise with the colour detail: %.2f dB at 4:2:0, %.2f dB at 4:2:2, %.2f dB at 4:4:4",
-                by420, by422, by444));
+        // Fidelity is measured on a picture whose detail is entirely in the two colour difference
+        // channels, which is the only place a subsampling axis can show. On the diagonal gradient
+        // above it cannot: luma carries most of the energy there, so discarding the chroma barely
+        // moves the PSNR and the three files come out within a few hundredths of a dB of each other.
+        //
+        // What is deliberately not asserted is that the PSNR rises at every step from 4:2:0 to 4:4:4.
+        // That is a libjpeg property, and jpegli is not libjpeg: it maps the quality argument to a
+        // bit budget with its own rate control, so a 4:4:4 file spends the same budget over three
+        // full resolution channels and can land fractionally below a 4:2:2 file. That the colour is
+        // what is lost is the claim worth holding, and it holds by a wide margin.
+        BufferedImage chroma = chromaDetail(96, 96);
+        int[] chromaPixels = pixels(chroma);
+        double by420 = ImageMetrics.psnr(chromaPixels, decodedPixels(ImageWriter.toBytes(chroma,
+                ImageFormat.JPEG.subsampling(Subsampling.S420), DEFAULT_QUALITY)));
+        double by444 = ImageMetrics.psnr(chromaPixels, decodedPixels(ImageWriter.toBytes(chroma,
+                ImageFormat.JPEG.subsampling(Subsampling.S444), DEFAULT_QUALITY)));
+        assertTrue(by444 - by420 > 3, String.format(
+                "4:4:4 should keep colour detail that 4:2:0 averages away: %.2f dB at 4:2:0 against %.2f dB at 4:4:4",
+                by420, by444));
+
+        // And the other half of it, which is what would catch a luma factor being dropped along the
+        // way: subsampling the chroma is not supposed to cost the luma anything at all. All three
+        // land within a fraction of a dB of each other here, so the margin is a fraction of a dB too.
+        BufferedImage luma = lumaDetail(96, 96);
+        int[] lumaPixels = pixels(luma);
+        double luma420 = ImageMetrics.psnr(lumaPixels, decodedPixels(ImageWriter.toBytes(luma,
+                ImageFormat.JPEG.subsampling(Subsampling.S420), DEFAULT_QUALITY)));
+        double luma444 = ImageMetrics.psnr(lumaPixels, decodedPixels(ImageWriter.toBytes(luma,
+                ImageFormat.JPEG.subsampling(Subsampling.S444), DEFAULT_QUALITY)));
+        assertTrue(Math.abs(luma420 - luma444) < 1, String.format(
+                "luma detail is the same picture at either subsampling: %.2f dB at 4:2:0 against %.2f dB at 4:4:4",
+                luma420, luma444));
+    }
+
+    /**
+     * A picture with a flat luma channel and all of its detail in the two colour difference ones.
+     *
+     * <p>Red and blue move together and green does not move at all, so the luma stays put while the
+     * chroma varies on an eight pixel period in both directions. The period is chosen to be long
+     * enough that it survives the 8x8 block the coefficients are quantised in, and short enough that
+     * a 2x2 average of the chroma flattens it.
+     */
+    private static BufferedImage chromaDetail(int width, int height) {
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                double wave = Math.sin(2 * Math.PI * x / 8) * Math.sin(2 * Math.PI * y / 8);
+                int red = (int) Math.round(128 + 100 * wave);
+                int blue = (int) Math.round(128 - 100 * wave);
+                image.setRGB(x, y, red << 16 | 128 << 8 | blue);
+            }
+        }
+        return image;
+    }
+
+    /** The same eight pixel wave with all three channels moving together, so the luma carries it. */
+    private static BufferedImage lumaDetail(int width, int height) {
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int grey = (int) Math.round(128 + 100 * Math.sin(2 * Math.PI * x / 8) * Math.sin(2 * Math.PI * y / 8));
+                image.setRGB(x, y, grey << 16 | grey << 8 | grey);
+            }
+        }
+        return image;
     }
 
     @Test

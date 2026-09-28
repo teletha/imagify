@@ -87,6 +87,20 @@ public class JpegWriteParam extends javax.imageio.ImageWriteParam {
     }
 
     @Override
+    public float getCompressionQuality() {
+        // The runtime's own getter throws unless the mode is MODE_EXPLICIT, and the mode cannot be
+        // anything else until it has been switched, which on this build also clears the compression
+        // type. The result is that the constructor's default is stored and unreachable: a caller who
+        // wants to know what quality this provider writes at has to destroy the type to ask. Reading
+        // the field directly answers MODE_DEFAULT with the same value the writer uses, because
+        // qualityOf() takes its default from JpegliLibrary rather than from the field.
+        if (compressionMode != MODE_EXPLICIT) {
+            return compressionQuality;
+        }
+        return super.getCompressionQuality();
+    }
+
+    @Override
     public String getCompressionType() {
         // The runtime's ImageWriteParam.getCompressionType() additionally requires the mode to be
         // MODE_EXPLICIT, which is a stricter check than "a compression type has been chosen". Here
