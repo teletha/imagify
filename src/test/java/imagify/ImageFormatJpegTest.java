@@ -104,16 +104,25 @@ class ImageFormatJpegTest {
                 "4:4:4 should keep colour detail that 4:2:0 averages away: %.2f dB at 4:2:0 against %.2f dB at 4:4:4",
                 by420, by444));
 
-        // And the other half of it, which is what would catch a luma factor being dropped along the
-        // way: subsampling the chroma is not supposed to cost the luma anything at all. All three
-        // land within a fraction of a dB of each other here, so the margin is a fraction of a dB too.
+        // And the other half of it: subsampling the chroma is not supposed to cost the luma the
+        // picture. It does cost it a little, and how much is the encoder's to decide rather than
+        // the format's, for the reason given above, since a 4:4:4 file spends more of the budget on
+        // the two colour difference channels and leaves less for luma. That moves the figure by
+        // 0.41 dB on the Windows x64 build and by 1.28 dB on the Linux x64 one, both of which land
+        // well inside 5 dB, and the difference between them is in the 4:2:0 file: 4:4:4 measures
+        // 41.12 dB on both.
+        //
+        // What the margin is for is a luma sampling factor being dropped on the way to the frame
+        // header, which halves the luma resolution and costs about 30 dB rather than about one, so
+        // a build that got this wrong could not be anywhere near the tolerance. The check that
+        // names the factors themselves is theSubsamplingReachesTheFrameHeader.
         BufferedImage luma = lumaDetail(96, 96);
         int[] lumaPixels = pixels(luma);
         double luma420 = ImageMetrics.psnr(lumaPixels, decodedPixels(ImageWriter.toBytes(luma,
                 ImageFormat.JPEG.subsampling(Subsampling.S420), DEFAULT_QUALITY)));
         double luma444 = ImageMetrics.psnr(lumaPixels, decodedPixels(ImageWriter.toBytes(luma,
                 ImageFormat.JPEG.subsampling(Subsampling.S444), DEFAULT_QUALITY)));
-        assertTrue(Math.abs(luma420 - luma444) < 1, String.format(
+        assertTrue(Math.abs(luma420 - luma444) < 5, String.format(
                 "luma detail is the same picture at either subsampling: %.2f dB at 4:2:0 against %.2f dB at 4:4:4",
                 luma420, luma444));
     }
