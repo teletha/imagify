@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="g">
-		<header class="b" date="2026-09-26">
-			<h1 class="Q"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="c"><a href="api/main.html" id="API"><svg class="package">
+	<body class="y">
+		<header class="U" date="2026-09-28">
+			<h1 class="V"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="W"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="Z"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="X"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="K"></nav>
-		<article class="h" id="Article">
-			<section class="t"><code class="f">imagify</code>
-				<h2 class="Enum z"><code class="x">ImageFormat.Jpeg.Subsampling</code></h2>
-				<div class="LB">
+		<nav class="z"></nav>
+		<article class="n" id="Article">
+			<section class="o"><code class="e">imagify</code>
+				<h2 class="Enum l"><code class="BB">ImageFormat.Jpeg.Subsampling</code></h2>
+				<div class="K">
 					<ul class="E G">
 						<li><code><a aria-label="java.lang.Enum 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Enum.html">Enum</a><code class="parameters"><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></code></code></li>
 					</ul>
@@ -63,69 +63,69 @@ own sampling factors are usually written down.</p><p>
  JPEG can express; <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#S420">#S420</a></code> is the default because it is the smallest, and
  <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#S444">#S444</a></code> the only one that stores the whole picture.
  </p></span></section>
-			<section class="t" id="S444">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">S444</code><i class="w"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>4:4:4, the colour channels at full size: the most detail and the largest file.</p></span></section>
-			<section class="t" id="S422">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">S422</code><i class="w"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>4:2:2, the colour channels half the width: the usual choice for text and line art.</p></span></section>
-			<section class="t" id="S420">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">S420</code><i class="w"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>4:2:0, the colour channels half in both directions: the smallest, and what is written
+			<section class="o" id="S444">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">S444</code><i class="N"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>4:4:4, the colour channels at full size: the most detail and the largest file.</p></span></section>
+			<section class="o" id="S422">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">S422</code><i class="N"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>4:2:2, the colour channels half the width: the usual choice for text and line art.</p></span></section>
+			<section class="o" id="S420">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">S420</code><i class="N"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>4:2:0, the colour channels half in both directions: the smallest, and what is written
 unless asked otherwise.</p></span></section>
-			<section class="t" id="horizontalFactor">
-				<h2 class="v"><i class="FINAL"><i class="PUBLIC"></i></i><code class="x">horizontalFactor</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>The frame header&apos;s luma sampling factor along the width.</p></span></section>
-			<section class="t" id="verticalFactor">
-				<h2 class="v"><i class="FINAL"><i class="PUBLIC"></i></i><code class="x">verticalFactor</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>The frame header&apos;s luma sampling factor along the height.</p></span></section>
-			<section class="t" id="samp">
-				<h2 class="v"><i class="FINAL"><i class="PUBLIC"></i></i><code class="x">samp</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>The same choice as an <code>IMAGIFY_JPEG_SAMP_*</code> value, which is what the jpegli
+			<section class="o" id="horizontalFactor">
+				<h2 class="x"><i class="FINAL"><i class="PUBLIC"></i></i><code class="BB">horizontalFactor</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>The frame header&apos;s luma sampling factor along the width.</p></span></section>
+			<section class="o" id="verticalFactor">
+				<h2 class="x"><i class="FINAL"><i class="PUBLIC"></i></i><code class="BB">verticalFactor</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>The frame header&apos;s luma sampling factor along the height.</p></span></section>
+			<section class="o" id="samp">
+				<h2 class="x"><i class="FINAL"><i class="PUBLIC"></i></i><code class="BB">samp</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>The same choice as an <code>IMAGIFY_JPEG_SAMP_*</code> value, which is what the jpegli
 encoder is given.</p><p>
  Both spellings are kept because both are asked for somewhere: a caller reading a
  frame header thinks in sampling factors, and the encoder takes a single code. Deriving
  one from the other at every call site is how the two drift apart.
  </p></span></section>
-			<section class="t" id="values()">
-				<h2 class="v"><i class="STATIC PUBLIC"></i><code class="x">values</code><code class="W">()</code><i class="w"><code array="fix"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2>
-				<table class="k">
-					<tr class="Y">
+			<section class="o" id="values()">
+				<h2 class="x"><i class="STATIC PUBLIC"></i><code class="BB">values</code><code class="IB">()</code><i class="N"><code array="fix"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2>
+				<table class="CB">
+					<tr class="u">
 						<td><code array="fix"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="t" id="valueOf(java.lang.String)">
-				<h2 class="v"><i class="STATIC PUBLIC"></i><code class="x">valueOf</code><code class="W">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="w"><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2>
-				<table class="k">
-					<tr class="q">
+			<section class="o" id="valueOf(java.lang.String)">
+				<h2 class="x"><i class="STATIC PUBLIC"></i><code class="BB">valueOf</code><code class="IB">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="N"><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2>
+				<table class="CB">
+					<tr class="Z">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="u">
 						<td><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="j">
-			<div class="d">
-				<h5 class="o">Static Fields</h5>
+		<aside class="b">
+			<div class="t">
+				<h5 class="a">Static Fields</h5>
 				<ul>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#S444">S444</a></code><i class="HB"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#S422">S422</a></code><i class="HB"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#S420">S420</a></code><i class="HB"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#S444">S444</a></code><i class="Q"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#S422">S422</a></code><i class="Q"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#S420">S420</a></code><i class="Q"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
 				</ul>
-				<h5 class="o">Fields</h5>
+				<h5 class="a">Fields</h5>
 				<ul>
-					<li class="r"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#horizontalFactor">horizontalFactor</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#verticalFactor">verticalFactor</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#samp">samp</a></code><i class="HB"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#horizontalFactor">horizontalFactor</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#verticalFactor">verticalFactor</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#samp">samp</a></code><i class="Q"><code class="return">int</code></i></li>
 				</ul>
-				<h5 class="o">Static Methods</h5>
+				<h5 class="a">Static Methods</h5>
 				<ul>
-					<li class="r"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#values()">values</a></code><code class="W">()</code><i class="HB"><code array="fix"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
-					<li class="r"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#valueOf(java.lang.String)">valueOf</a></code><code class="W">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="HB"><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="L"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#values()">values</a></code><code class="IB">()</code><i class="Q"><code array="fix"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="L"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.Subsampling.html#valueOf(java.lang.String)">valueOf</a></code><code class="IB">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="Q"><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="i">
+		<footer class="v">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

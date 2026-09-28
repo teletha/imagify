@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="g">
-		<header class="b" date="2026-09-26">
-			<h1 class="Q"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="c"><a href="api/main.html" id="API"><svg class="package">
+	<body class="y">
+		<header class="U" date="2026-09-28">
+			<h1 class="V"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="W"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="Z"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="X"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="K"></nav>
-		<article class="h" id="Article">
-			<section class="t"><code class="f">imagify.jpeg.jna</code>
-				<h2 class="Interface z"><code class="x">JpegliLibrary</code></h2>
-				<div class="LB">
+		<nav class="z"></nav>
+		<article class="n" id="Article">
+			<section class="o"><code class="e">imagify.jpeg.jna</code>
+				<h2 class="Interface l"><code class="BB">JpegliLibrary</code></h2>
+				<div class="K">
 					<ul class="E H">
 						<li><code>com.sun.jna.Library</code></li>
 					</ul>
@@ -84,43 +84,43 @@
 						</p>
 					</p>
 				</span></section>
-			<section class="t" id="LIBRARY_NAME">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">LIBRARY_NAME</code><i class="w"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Name of the shared library as this jar builds it.</p><p>Deliberately not <code>jpeg</code>. jpegli&apos;s own libjpeg62 compatible library is named
+			<section class="o" id="LIBRARY_NAME">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">LIBRARY_NAME</code><i class="N"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Name of the shared library as this jar builds it.</p><p>Deliberately not <code>jpeg</code>. jpegli&apos;s own libjpeg62 compatible library is named
  <code>libjpeg.so.62</code>, which is also the name of every system libjpeg on Linux, and two of
  those can end up mapped in one process. This jar has no reason to interoperate with a system
  libjpeg, so the bundled library is given a name of its own.
 </p>
 				</span></section>
-			<section class="t" id="ABI_VERSION">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">ABI_VERSION</code><i class="w"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>The version of the C ABI this binding was written against, as <code>IMAGIFY_JPEGLI_ABI_VERSION</code>
+			<section class="o" id="ABI_VERSION">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">ABI_VERSION</code><i class="N"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>The version of the C ABI this binding was written against, as <code>IMAGIFY_JPEGLI_ABI_VERSION</code>
 in <code>src/main/native/imagify_jpegli.h</code> spells it.</p><p>It is checked once when the library is loaded and nothing else depends on it, because the
  only way it could ever be wrong is a library built against a different revision of the header,
  and that has to be caught before the first call rather than after it has read a size from the
  wrong offset.
 </p>
 				</span></section>
-			<section class="t" id="IMAGIFY_JPEG_OK">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_JPEG_OK</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>The operation completed.</p></span></section>
-			<section class="t" id="IMAGIFY_JPEG_ERR_ARGUMENT">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_JPEG_ERR_ARGUMENT</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>A parameter was out of range.</p></span></section>
-			<section class="t" id="IMAGIFY_JPEG_ERR_CORRUPT">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_JPEG_ERR_CORRUPT</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>The input is not a JPEG, or is a damaged one.</p></span></section>
-			<section class="t" id="IMAGIFY_JPEG_ERR_MEMORY">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_JPEG_ERR_MEMORY</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>An allocation failed.</p></span></section>
-			<section class="t" id="IMAGIFY_JPEG_ERR_INTERNAL">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_JPEG_ERR_INTERNAL</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>jpegli failed in a way its own error text does not explain.</p></span></section>
-			<section class="t" id="IMAGIFY_JPEG_SAMP_444">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_JPEG_SAMP_444</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>No subsampling at all, the largest file.</p></span></section>
-			<section class="t" id="IMAGIFY_JPEG_SAMP_422">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_JPEG_SAMP_422</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>The colour channels half the width.</p></span></section>
-			<section class="t" id="IMAGIFY_JPEG_SAMP_420">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_JPEG_SAMP_420</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>The colour channels half in both directions, the smallest file.</p></span></section>
-			<section class="t" id="IMAGIFY_JPEG_MIN_QUALITY">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_JPEG_MIN_QUALITY</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>The lowest quality the encoder accepts.</p></span></section>
-			<section class="t" id="IMAGIFY_JPEG_MAX_QUALITY">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_JPEG_MAX_QUALITY</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>The highest quality the encoder accepts.</p></span></section>
-			<section class="t" id="DEFAULT_QUALITY">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">DEFAULT_QUALITY</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>Quality the <code><a aria-label="imagify.jpeg.jna.JpegImageWriter" href="api/imagify.jpeg.jna.JpegImageWriter.html">JpegImageWriter</a></code> and <code><a aria-label="imagify.jpeg.jna.JpegWriteParam" href="api/imagify.jpeg.jna.JpegWriteParam.html">JpegWriteParam</a></code> use when a caller does not
+			<section class="o" id="IMAGIFY_JPEG_OK">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">IMAGIFY_JPEG_OK</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>The operation completed.</p></span></section>
+			<section class="o" id="IMAGIFY_JPEG_ERR_ARGUMENT">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">IMAGIFY_JPEG_ERR_ARGUMENT</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>A parameter was out of range.</p></span></section>
+			<section class="o" id="IMAGIFY_JPEG_ERR_CORRUPT">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">IMAGIFY_JPEG_ERR_CORRUPT</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>The input is not a JPEG, or is a damaged one.</p></span></section>
+			<section class="o" id="IMAGIFY_JPEG_ERR_MEMORY">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">IMAGIFY_JPEG_ERR_MEMORY</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>An allocation failed.</p></span></section>
+			<section class="o" id="IMAGIFY_JPEG_ERR_INTERNAL">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">IMAGIFY_JPEG_ERR_INTERNAL</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>jpegli failed in a way its own error text does not explain.</p></span></section>
+			<section class="o" id="IMAGIFY_JPEG_SAMP_444">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">IMAGIFY_JPEG_SAMP_444</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>No subsampling at all, the largest file.</p></span></section>
+			<section class="o" id="IMAGIFY_JPEG_SAMP_422">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">IMAGIFY_JPEG_SAMP_422</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>The colour channels half the width.</p></span></section>
+			<section class="o" id="IMAGIFY_JPEG_SAMP_420">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">IMAGIFY_JPEG_SAMP_420</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>The colour channels half in both directions, the smallest file.</p></span></section>
+			<section class="o" id="IMAGIFY_JPEG_MIN_QUALITY">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">IMAGIFY_JPEG_MIN_QUALITY</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>The lowest quality the encoder accepts.</p></span></section>
+			<section class="o" id="IMAGIFY_JPEG_MAX_QUALITY">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">IMAGIFY_JPEG_MAX_QUALITY</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>The highest quality the encoder accepts.</p></span></section>
+			<section class="o" id="DEFAULT_QUALITY">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">DEFAULT_QUALITY</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>Quality the <code><a aria-label="imagify.jpeg.jna.JpegImageWriter" href="api/imagify.jpeg.jna.JpegImageWriter.html">JpegImageWriter</a></code> and <code><a aria-label="imagify.jpeg.jna.JpegWriteParam" href="api/imagify.jpeg.jna.JpegWriteParam.html">JpegWriteParam</a></code> use when a caller does not
 ask for one.</p><p>The number is the one <code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">imagify.ImageFormat.Jpeg</a></code> carries as its 0.0 to 1.0
  <code>defaultQuality</code>, restated on the encoder&apos;s own 1 to 100 scale. That is the same thing
  <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#DEFAULT_QUALITY">imagify.avif.jna.AvifLibrary#DEFAULT_QUALITY</a></code> and
@@ -130,90 +130,90 @@ ask for one.</p><p>The number is the one <code><a aria-label="imagify.ImageForma
  what keeps the two from drifting apart.
 </p>
 				</span></section>
-			<section class="t" id="MESSAGE_LENGTH">
-				<h2 class="v"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">MESSAGE_LENGTH</code><i class="w"><code class="return">int</code></i></h2><span class="A"><p>Size of the buffer every entry point writes its failure description into.</p><p>Matches <code>JMSG_LENGTH_MAX</code> in <code>jpeglib.h</code>, which is what bounds the text
+			<section class="o" id="MESSAGE_LENGTH">
+				<h2 class="x"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">MESSAGE_LENGTH</code><i class="N"><code class="return">int</code></i></h2><span class="A"><p>Size of the buffer every entry point writes its failure description into.</p><p>Matches <code>JMSG_LENGTH_MAX</code> in <code>jpeglib.h</code>, which is what bounds the text
  libjpeg has formatted before it reports the error.
 </p>
 				</span></section>
-			<section class="t" id="imagify_jpegli_abi_version()">
-				<h2 class="v"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="x">imagify_jpegli_abi_version</code><code class="W">()</code><i class="w"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="k">
-					<tr class="Y">
+			<section class="o" id="imagify_jpegli_abi_version()">
+				<h2 class="x"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_jpegli_abi_version</code><code class="IB">()</code><i class="N"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="CB">
+					<tr class="u">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the version of the C ABI, as a decimal string, for example <code>&quot;1&quot;</code></p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="t" id="imagify_jpegli_jpegli_version()">
-				<h2 class="v"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="x">imagify_jpegli_jpegli_version</code><code class="W">()</code><i class="w"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="k">
-					<tr class="Y">
+			<section class="o" id="imagify_jpegli_jpegli_version()">
+				<h2 class="x"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_jpegli_jpegli_version</code><code class="IB">()</code><i class="N"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="CB">
+					<tr class="u">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the jpegli version the library was built from, for example <code>&quot;0.12.0&quot;</code></p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="t" id="imagify_jpegli_read_header(com.sun.jna.Pointer,long,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.Pointer,long)">
-				<h2 class="v"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="x">imagify_jpegli_read_header</code><code class="W">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">width</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">height</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">components</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">progressive</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">horizontalFactor</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">verticalFactor</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">densityUnit</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">horizontalDensity</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">verticalDensity</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">precision</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="w"><code>int</code></i></h2>
-				<table class="k">
-					<tr class="q">
+			<section class="o" id="imagify_jpegli_read_header(com.sun.jna.Pointer,long,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.Pointer,long)">
+				<h2 class="x"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_jpegli_read_header</code><code class="IB">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">width</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">height</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">components</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">progressive</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">horizontalFactor</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">verticalFactor</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">densityUnit</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">horizontalDensity</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">verticalDensity</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">precision</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="N"><code>int</code></i></h2>
+				<table class="CB">
+					<tr class="Z">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">data</code></td>
 						<td><span><p>the encoded JPEG</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td><span><p>the number of bytes at <code>data</code></p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">width</code></td>
 						<td><span><p>receives the image width</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">height</code></td>
 						<td><span><p>receives the image height</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">components</code></td>
 						<td><span><p>receives the channel count, which is 1 for a greyscale file</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">progressive</code></td>
 						<td><span><p>receives 1 for a progressive file and 0 for a sequential one, or null</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">horizontalFactor</code></td>
 						<td><span><p>receives the luma sampling factor along the width, or null</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">verticalFactor</code></td>
 						<td><span><p>receives the luma sampling factor along the height, or null</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">densityUnit</code></td>
 						<td><span><p>receives 0 for an aspect ratio, 1 for dots per inch or 2 for dots per
 centimetre, or null</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">horizontalDensity</code></td>
 						<td><span><p>receives the horizontal density, or null</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">verticalDensity</code></td>
 						<td><span><p>receives the vertical density, or null</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">precision</code></td>
 						<td><span><p>receives the bits per channel, which is 8 for anything jpegli reads, or null</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">message</code></td>
 						<td><span><p>receives the description of a failure</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="u">
 						<td><code>int</code></td>
 						<td><span><code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_OK">#IMAGIFY_JPEG_OK</a></code>, or a status saying what went wrong</span></td>
 					</tr>
@@ -221,90 +221,90 @@ centimetre, or null</p></span></td>
  size of a file says so. The first three may not.
 </p>
 				</span></section>
-			<section class="t" id="imagify_jpegli_decode(com.sun.jna.Pointer,long,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.Pointer,long)">
-				<h2 class="v"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="x">imagify_jpegli_decode</code><code class="W">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">out</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">outLength</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">width</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">height</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="w"><code>int</code></i></h2>
-				<table class="k">
-					<tr class="q">
+			<section class="o" id="imagify_jpegli_decode(com.sun.jna.Pointer,long,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.Pointer,long)">
+				<h2 class="x"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_jpegli_decode</code><code class="IB">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">out</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">outLength</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">width</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">height</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="N"><code>int</code></i></h2>
+				<table class="CB">
+					<tr class="Z">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">data</code></td>
 						<td><span><p>the encoded JPEG</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td><span><p>the number of bytes at <code>data</code></p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">out</code></td>
 						<td><span><p>receives the new buffer, or a null pointer on failure</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">outLength</code></td>
 						<td><span><p>receives the buffer size in bytes, which is <code>width * height * 4</code></p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">width</code></td>
 						<td><span><p>receives the image width</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">height</code></td>
 						<td><span><p>receives the image height</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">message</code></td>
 						<td><span><p>receives the description of a failure</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="u">
 						<td><code>int</code></td>
 						<td><span><code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_OK">#IMAGIFY_JPEG_OK</a></code>, or a status saying what went wrong</span></td>
 					</tr>
 				</table><span class="A"><p>Decodes into a buffer the caller owns, and must hand back to <code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_free">#imagify_jpegli_free</a></code>.</p></span></section>
-			<section class="t" id="imagify_jpegli_encode(com.sun.jna.Pointer,int,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">
-				<h2 class="v"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="x">imagify_jpegli_encode</code><code class="W">(<code>com.sun.jna.Pointer</code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">subsampling</code>, <code>int</code><code class="parameterName">optimizeCoding</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="w"><code>int</code></i></h2>
-				<table class="k">
-					<tr class="q">
+			<section class="o" id="imagify_jpegli_encode(com.sun.jna.Pointer,int,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">
+				<h2 class="x"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_jpegli_encode</code><code class="IB">(<code>com.sun.jna.Pointer</code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">subsampling</code>, <code>int</code><code class="parameterName">optimizeCoding</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="N"><code>int</code></i></h2>
+				<table class="CB">
+					<tr class="Z">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">pixels</code></td>
 						<td><span><p>the image, tightly packed <code>A, B, G, R</code></p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td><span><p>the image width, at least 1</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td><span><p>the image height, at least 1</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_MIN_QUALITY">#IMAGIFY_JPEG_MIN_QUALITY</a></code> to <code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_MAX_QUALITY">#IMAGIFY_JPEG_MAX_QUALITY</a></code></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>int</code><code class="parameterName">subsampling</code></td>
 						<td><span><p>an <code>IMAGIFY_JPEG_SAMP_*</code> value</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>int</code><code class="parameterName">optimizeCoding</code></td>
 						<td><span><p>nonzero to compute the entropy coder tables from the image</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code></td>
 						<td><span><p>receives the new buffer, or a null pointer on failure</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code></td>
 						<td><span><p>receives the buffer size in bytes</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">message</code></td>
 						<td><span><p>receives the description of a failure</p></span></td>
 					</tr>
-					<tr class="q">
+					<tr class="Z">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="Y">
+					<tr class="u">
 						<td><code>int</code></td>
 						<td><span><code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_OK">#IMAGIFY_JPEG_OK</a></code>, or a status saying what went wrong</span></td>
 					</tr>
@@ -312,47 +312,47 @@ centimetre, or null</p></span></td>
  <code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_free">#imagify_jpegli_free</a></code>. The alpha byte is discarded, since a JPEG cannot store one.
 </p>
 				</span></section>
-			<section class="t" id="imagify_jpegli_free(com.sun.jna.Pointer)">
-				<h2 class="v"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="x">imagify_jpegli_free</code><code class="W">(<code>com.sun.jna.Pointer</code><code class="parameterName">buffer</code>)</code><i class="w"><code>void</code></i></h2>
-				<table class="k">
-					<tr class="q">
+			<section class="o" id="imagify_jpegli_free(com.sun.jna.Pointer)">
+				<h2 class="x"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_jpegli_free</code><code class="IB">(<code>com.sun.jna.Pointer</code><code class="parameterName">buffer</code>)</code><i class="N"><code>void</code></i></h2>
+				<table class="CB">
+					<tr class="Z">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">buffer</code></td>
 						<td><span><p>the buffer to free</p></span></td>
 					</tr>
 				</table><span class="A"><p>Frees a buffer handed out by <code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_decode">#imagify_jpegli_decode</a></code> or <code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_encode">#imagify_jpegli_encode</a></code>.
 Accepts a null pointer.</p></span></section>
 		</article>
-		<aside class="j">
-			<div class="d">
-				<h5 class="o">Static Fields</h5>
+		<aside class="b">
+			<div class="t">
+				<h5 class="a">Static Fields</h5>
 				<ul>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#LIBRARY_NAME">LIBRARY_NAME</a></code><i class="HB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#ABI_VERSION">ABI_VERSION</a></code><i class="HB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_OK">IMAGIFY_JPEG_OK</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_ERR_ARGUMENT">IMAGIFY_JPEG_ERR_ARGUMENT</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_ERR_CORRUPT">IMAGIFY_JPEG_ERR_CORRUPT</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_ERR_MEMORY">IMAGIFY_JPEG_ERR_MEMORY</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_ERR_INTERNAL">IMAGIFY_JPEG_ERR_INTERNAL</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_SAMP_444">IMAGIFY_JPEG_SAMP_444</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_SAMP_422">IMAGIFY_JPEG_SAMP_422</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_SAMP_420">IMAGIFY_JPEG_SAMP_420</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_MIN_QUALITY">IMAGIFY_JPEG_MIN_QUALITY</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_MAX_QUALITY">IMAGIFY_JPEG_MAX_QUALITY</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#DEFAULT_QUALITY">DEFAULT_QUALITY</a></code><i class="HB"><code class="return">int</code></i></li>
-					<li class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#MESSAGE_LENGTH">MESSAGE_LENGTH</a></code><i class="HB"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#LIBRARY_NAME">LIBRARY_NAME</a></code><i class="Q"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#ABI_VERSION">ABI_VERSION</a></code><i class="Q"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_OK">IMAGIFY_JPEG_OK</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_ERR_ARGUMENT">IMAGIFY_JPEG_ERR_ARGUMENT</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_ERR_CORRUPT">IMAGIFY_JPEG_ERR_CORRUPT</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_ERR_MEMORY">IMAGIFY_JPEG_ERR_MEMORY</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_ERR_INTERNAL">IMAGIFY_JPEG_ERR_INTERNAL</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_SAMP_444">IMAGIFY_JPEG_SAMP_444</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_SAMP_422">IMAGIFY_JPEG_SAMP_422</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_SAMP_420">IMAGIFY_JPEG_SAMP_420</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_MIN_QUALITY">IMAGIFY_JPEG_MIN_QUALITY</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#IMAGIFY_JPEG_MAX_QUALITY">IMAGIFY_JPEG_MAX_QUALITY</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#DEFAULT_QUALITY">DEFAULT_QUALITY</a></code><i class="Q"><code class="return">int</code></i></li>
+					<li class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#MESSAGE_LENGTH">MESSAGE_LENGTH</a></code><i class="Q"><code class="return">int</code></i></li>
 				</ul>
-				<h5 class="o">Methods</h5>
+				<h5 class="a">Methods</h5>
 				<ul>
-					<li class="r"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_abi_version()">imagify_jpegli_abi_version</a></code><code class="W">()</code><i class="HB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="r"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_jpegli_version()">imagify_jpegli_jpegli_version</a></code><code class="W">()</code><i class="HB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="r"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_read_header(com.sun.jna.Pointer,long,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.Pointer,long)">imagify_jpegli_read_header</a></code><code class="W">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">width</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">height</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">components</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">progressive</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">horizontalFactor</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">verticalFactor</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">densityUnit</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">horizontalDensity</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">verticalDensity</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">precision</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="HB"><code>int</code></i></li>
-					<li class="r"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_decode(com.sun.jna.Pointer,long,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.Pointer,long)">imagify_jpegli_decode</a></code><code class="W">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">out</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">outLength</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">width</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">height</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="HB"><code>int</code></i></li>
-					<li class="r"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_encode(com.sun.jna.Pointer,int,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">imagify_jpegli_encode</a></code><code class="W">(<code>com.sun.jna.Pointer</code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">subsampling</code>, <code>int</code><code class="parameterName">optimizeCoding</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="HB"><code>int</code></i></li>
-					<li class="r"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_free(com.sun.jna.Pointer)">imagify_jpegli_free</a></code><code class="W">(<code>com.sun.jna.Pointer</code><code class="parameterName">buffer</code>)</code><i class="HB"><code>void</code></i></li>
+					<li class="L"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_abi_version()">imagify_jpegli_abi_version</a></code><code class="IB">()</code><i class="Q"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="L"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_jpegli_version()">imagify_jpegli_jpegli_version</a></code><code class="IB">()</code><i class="Q"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="L"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_read_header(com.sun.jna.Pointer,long,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.Pointer,long)">imagify_jpegli_read_header</a></code><code class="IB">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">width</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">height</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">components</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">progressive</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">horizontalFactor</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">verticalFactor</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">densityUnit</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">horizontalDensity</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">verticalDensity</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">precision</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="Q"><code>int</code></i></li>
+					<li class="L"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_decode(com.sun.jna.Pointer,long,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.ptr.IntByReference,com.sun.jna.Pointer,long)">imagify_jpegli_decode</a></code><code class="IB">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">out</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">outLength</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">width</code>, <code>com.sun.jna.ptr.IntByReference</code><code class="parameterName">height</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="Q"><code>int</code></i></li>
+					<li class="L"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_encode(com.sun.jna.Pointer,int,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">imagify_jpegli_encode</a></code><code class="IB">(<code>com.sun.jna.Pointer</code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">subsampling</code>, <code>int</code><code class="parameterName">optimizeCoding</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="Q"><code>int</code></i></li>
+					<li class="L"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html#imagify_jpegli_free(com.sun.jna.Pointer)">imagify_jpegli_free</a></code><code class="IB">(<code>com.sun.jna.Pointer</code><code class="parameterName">buffer</code>)</code><i class="Q"><code>void</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="i">
+		<footer class="v">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
