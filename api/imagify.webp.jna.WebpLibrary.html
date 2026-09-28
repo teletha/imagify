@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="a">
-		<header class="b" date="2026-09-28">
-			<h1 class="e"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="M"><a href="api/main.html" id="API"><svg class="package">
+	<body class="V">
+		<header class="W" date="2026-09-28">
+			<h1 class="f"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="x"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="R"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="b"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="N"></nav>
-		<article class="c" id="Article">
-			<section class="DB"><code class="HB">imagify.webp.jna</code>
-				<h2 class="Interface k"><code class="IB">WebpLibrary</code></h2>
-				<div class="U">
+		<nav class="Y"></nav>
+		<article class="L" id="Article">
+			<section class="u"><code class="AB">imagify.webp.jna</code>
+				<h2 class="Interface S"><code class="BB">WebpLibrary</code></h2>
+				<div class="p">
 					<ul class="E H">
 						<li><code>com.sun.jna.Library</code></li>
 					</ul>
@@ -84,49 +84,49 @@
 						</p>
 					</p>
 				</span></section>
-			<section class="DB" id="LIBRARY_NAME">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">LIBRARY_NAME</code><i class="W"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Name of the shared library as this jar builds it.</p><p>Deliberately not <code>webp</code>. libwebp builds <code>libwebp.so</code>, which is also the name
+			<section class="u" id="LIBRARY_NAME">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">LIBRARY_NAME</code><i class="s"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Name of the shared library as this jar builds it.</p><p>Deliberately not <code>webp</code>. libwebp builds <code>libwebp.so</code>, which is also the name
  of every system <code>libwebp</code> on Linux, and two of those can end up mapped in one process.
  This jar has no reason to interoperate with a system libwebp, so the bundled library is given
  a name of its own.
 </p>
 				</span></section>
-			<section class="DB" id="ABI_VERSION">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">ABI_VERSION</code><i class="W"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>The version of the C ABI this binding was written against, as
+			<section class="u" id="ABI_VERSION">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">ABI_VERSION</code><i class="s"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>The version of the C ABI this binding was written against, as
 <code>IMAGIFY_WEBP_ABI_VERSION</code> in <code>src/main/native/webp/imagify_webp.h</code> spells it.</p><p>It is checked once when the library is loaded and nothing else depends on it, because the
  only way it could ever be wrong is a library built against a different revision of the
  header, and that has to be caught before the first call rather than after it has written
  through a pointer read from the wrong offset.
 </p>
 				</span></section>
-			<section class="DB" id="IMAGIFY_WEBP_OK">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">IMAGIFY_WEBP_OK</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>The operation completed.</p></span></section>
-			<section class="DB" id="IMAGIFY_WEBP_ERR_ARGUMENT">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">IMAGIFY_WEBP_ERR_ARGUMENT</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>A parameter was out of range, before any work was done.</p></span></section>
-			<section class="DB" id="IMAGIFY_WEBP_ERR_CORRUPT">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">IMAGIFY_WEBP_ERR_CORRUPT</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>The input is not a WebP file, or is a damaged one.</p></span></section>
-			<section class="DB" id="IMAGIFY_WEBP_ERR_MEMORY">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">IMAGIFY_WEBP_ERR_MEMORY</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>An allocation failed.</p></span></section>
-			<section class="DB" id="IMAGIFY_WEBP_ERR_UNSUPPORTED">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">IMAGIFY_WEBP_ERR_UNSUPPORTED</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>libwebp will not do this, for instance a dimension too large.</p></span></section>
-			<section class="DB" id="IMAGIFY_WEBP_ERR_INTERNAL">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">IMAGIFY_WEBP_ERR_INTERNAL</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>libwebp failed in a way its own error text does not explain.</p></span></section>
-			<section class="DB" id="FORMAT_VP8">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">FORMAT_VP8</code><i class="W"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossy <code>VP8</code> bitstream with this format code.</span></section>
-			<section class="DB" id="FORMAT_VP8L">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">FORMAT_VP8L</code><i class="W"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossless <code>VP8L</code> bitstream with this format code.</span></section>
-			<section class="DB" id="FORMAT_VP8X">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">FORMAT_VP8X</code><i class="W"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports the <code>VP8X</code> container, which is what an animation uses.</span></section>
-			<section class="DB" id="MIN_QUALITY">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">MIN_QUALITY</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>The lowest quality the encoder accepts.</p></span></section>
-			<section class="DB" id="MAX_QUALITY">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">MAX_QUALITY</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>The highest quality the encoder accepts.</p></span></section>
-			<section class="DB" id="MIN_METHOD">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">MIN_METHOD</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>The quickest encoding effort the encoder accepts.</p></span></section>
-			<section class="DB" id="MAX_METHOD">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">MAX_METHOD</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>The most thorough encoding effort the encoder accepts.</p></span></section>
-			<section class="DB" id="DEFAULT_QUALITY">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">DEFAULT_QUALITY</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>Quality used when the caller does not ask for one: <code>75</code>, the <code>libwebp</code> default.</p><p>The number is the one <code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">imagify.ImageFormat.Webp</a></code> carries as its 0.0 to 1.0
+			<section class="u" id="IMAGIFY_WEBP_OK">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">IMAGIFY_WEBP_OK</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>The operation completed.</p></span></section>
+			<section class="u" id="IMAGIFY_WEBP_ERR_ARGUMENT">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">IMAGIFY_WEBP_ERR_ARGUMENT</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>A parameter was out of range, before any work was done.</p></span></section>
+			<section class="u" id="IMAGIFY_WEBP_ERR_CORRUPT">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">IMAGIFY_WEBP_ERR_CORRUPT</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>The input is not a WebP file, or is a damaged one.</p></span></section>
+			<section class="u" id="IMAGIFY_WEBP_ERR_MEMORY">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">IMAGIFY_WEBP_ERR_MEMORY</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>An allocation failed.</p></span></section>
+			<section class="u" id="IMAGIFY_WEBP_ERR_UNSUPPORTED">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">IMAGIFY_WEBP_ERR_UNSUPPORTED</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>libwebp will not do this, for instance a dimension too large.</p></span></section>
+			<section class="u" id="IMAGIFY_WEBP_ERR_INTERNAL">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">IMAGIFY_WEBP_ERR_INTERNAL</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>libwebp failed in a way its own error text does not explain.</p></span></section>
+			<section class="u" id="FORMAT_VP8">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">FORMAT_VP8</code><i class="s"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossy <code>VP8</code> bitstream with this format code.</span></section>
+			<section class="u" id="FORMAT_VP8L">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">FORMAT_VP8L</code><i class="s"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossless <code>VP8L</code> bitstream with this format code.</span></section>
+			<section class="u" id="FORMAT_VP8X">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">FORMAT_VP8X</code><i class="s"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports the <code>VP8X</code> container, which is what an animation uses.</span></section>
+			<section class="u" id="MIN_QUALITY">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">MIN_QUALITY</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>The lowest quality the encoder accepts.</p></span></section>
+			<section class="u" id="MAX_QUALITY">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">MAX_QUALITY</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>The highest quality the encoder accepts.</p></span></section>
+			<section class="u" id="MIN_METHOD">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">MIN_METHOD</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>The quickest encoding effort the encoder accepts.</p></span></section>
+			<section class="u" id="MAX_METHOD">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">MAX_METHOD</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>The most thorough encoding effort the encoder accepts.</p></span></section>
+			<section class="u" id="DEFAULT_QUALITY">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">DEFAULT_QUALITY</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>Quality used when the caller does not ask for one: <code>75</code>, the <code>libwebp</code> default.</p><p>The number is the one <code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">imagify.ImageFormat.Webp</a></code> carries as its 0.0 to 1.0
  <code>defaultQuality</code>, restated on the encoder&apos;s own 0 to 100 scale. That is the same thing
  <code><a aria-label="imagify.avif.jna.AvifLibrary" href="api/imagify.avif.jna.AvifLibrary.html#DEFAULT_QUALITY">imagify.avif.jna.AvifLibrary#DEFAULT_QUALITY</a></code> and
  <code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html#DEFAULT_QUALITY">imagify.jpeg.jna.JpegliLibrary#DEFAULT_QUALITY</a></code> do: a codec cannot read a package
@@ -135,89 +135,89 @@
  what keeps the two from drifting apart.
 </p>
 				</span></section>
-			<section class="DB" id="MESSAGE_LENGTH">
-				<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="IB">MESSAGE_LENGTH</code><i class="W"><code class="return">int</code></i></h2><span class="A"><p>Size of the buffer every entry point writes its failure description into.</p><p>Matches <code>IMAGIFY_WEBP_MESSAGE_LENGTH</code> in <code>imagify_webp.h</code>.
+			<section class="u" id="MESSAGE_LENGTH">
+				<h2 class="z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="BB">MESSAGE_LENGTH</code><i class="s"><code class="return">int</code></i></h2><span class="A"><p>Size of the buffer every entry point writes its failure description into.</p><p>Matches <code>IMAGIFY_WEBP_MESSAGE_LENGTH</code> in <code>imagify_webp.h</code>.
 </p>
 				</span></section>
-			<section class="DB" id="imagify_webp_abi_version()">
-				<h2 class="d"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="IB">imagify_webp_abi_version</code><code class="v">()</code><i class="W"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="CB">
-					<tr class="t">
+			<section class="u" id="imagify_webp_abi_version()">
+				<h2 class="z"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_webp_abi_version</code><code class="U">()</code><i class="s"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="R">
+					<tr class="r">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the version of the C ABI, as a decimal string, for example <code>&quot;1&quot;</code></p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="DB" id="imagify_webp_webp_version()">
-				<h2 class="d"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="IB">imagify_webp_webp_version</code><code class="v">()</code><i class="W"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="CB">
-					<tr class="t">
+			<section class="u" id="imagify_webp_webp_version()">
+				<h2 class="z"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_webp_webp_version</code><code class="U">()</code><i class="s"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="R">
+					<tr class="r">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the libwebp version the library was built from, for example <code>&quot;1.6.0&quot;</code></p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="DB" id="imagify_webp_read_features(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpFeatures,com.sun.jna.Pointer,long)">
-				<h2 class="d"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="IB">imagify_webp_read_features</code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpFeatures" href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpFeatures</a></code><code class="parameterName">features</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="W"><code>int</code></i></h2>
-				<table class="CB">
-					<tr class="KB">
+			<section class="u" id="imagify_webp_read_features(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpFeatures,com.sun.jna.Pointer,long)">
+				<h2 class="z"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_webp_read_features</code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpFeatures" href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpFeatures</a></code><code class="parameterName">features</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="s"><code>int</code></i></h2>
+				<table class="R">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">data</code></td>
 						<td><span><p>the encoded WebP file</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td><span><p>the number of bytes at <code>data</code></p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code><a aria-label="imagify.webp.jna.WebpLibrary.WebpFeatures" href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpFeatures</a></code><code class="parameterName">features</code></td>
 						<td><span><p>receives what the headers say</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">message</code></td>
 						<td><span><p>receives the description of a failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="t">
+					<tr class="r">
 						<td><code>int</code></td>
 						<td><span><code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_OK">#IMAGIFY_WEBP_OK</a></code>, or a status saying what went wrong</span></td>
 					</tr>
 				</table><span class="A"><p>Parses the container headers of a WebP file and reports what they say, without decoding a
 pixel.</p></span></section>
-			<section class="DB" id="imagify_webp_decode(com.sun.jna.Pointer,long,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,imagify.webp.jna.WebpLibrary.WebpFeatures,com.sun.jna.Pointer,long)">
-				<h2 class="d"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="IB">imagify_webp_decode</code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">out</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">outLength</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpFeatures" href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpFeatures</a></code><code class="parameterName">features</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="W"><code>int</code></i></h2>
-				<table class="CB">
-					<tr class="KB">
+			<section class="u" id="imagify_webp_decode(com.sun.jna.Pointer,long,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,imagify.webp.jna.WebpLibrary.WebpFeatures,com.sun.jna.Pointer,long)">
+				<h2 class="z"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_webp_decode</code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">out</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">outLength</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpFeatures" href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpFeatures</a></code><code class="parameterName">features</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="s"><code>int</code></i></h2>
+				<table class="R">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">data</code></td>
 						<td><span><p>the encoded WebP file</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td><span><p>the number of bytes at <code>data</code></p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">out</code></td>
 						<td><span><p>receives the new buffer, or a null pointer on failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">outLength</code></td>
 						<td><span><p>receives the buffer size in bytes, which is <code>width * height * 4</code></p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code><a aria-label="imagify.webp.jna.WebpLibrary.WebpFeatures" href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpFeatures</a></code><code class="parameterName">features</code></td>
 						<td><span><p>receives what the headers say, including the size the pixels were decoded at</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">message</code></td>
 						<td><span><p>receives the description of a failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="t">
+					<tr class="r">
 						<td><code>int</code></td>
 						<td><span><code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_OK">#IMAGIFY_WEBP_OK</a></code>, or a status saying what went wrong</span></td>
 					</tr>
@@ -226,50 +226,50 @@ pixel.</p></span></section>
  handed to <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_free">#imagify_webp_free</a></code>.
 </p>
 				</span></section>
-			<section class="DB" id="imagify_webp_encode(com.sun.jna.Pointer,int,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">
-				<h2 class="d"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="IB">imagify_webp_encode</code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="W"><code>int</code></i></h2>
-				<table class="CB">
-					<tr class="KB">
+			<section class="u" id="imagify_webp_encode(com.sun.jna.Pointer,int,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">
+				<h2 class="z"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_webp_encode</code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="s"><code>int</code></i></h2>
+				<table class="R">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">pixels</code></td>
 						<td><span><p>the image, tightly packed <code>A, B, G, R</code></p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td><span><p>the image width, at least 1</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td><span><p>the image height, at least 1</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#MIN_QUALITY">#MIN_QUALITY</a></code> to <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#MAX_QUALITY">#MAX_QUALITY</a></code>, ignored when <code>lossless</code></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">lossless</code></td>
 						<td><span><p>nonzero to store the pixels without loss</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">method</code></td>
 						<td><span><code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#MIN_METHOD">#MIN_METHOD</a></code> to <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#MAX_METHOD">#MAX_METHOD</a></code>, how hard the encoder tries</span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code></td>
 						<td><span><p>receives the new buffer, or a null pointer on failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code></td>
 						<td><span><p>receives the buffer size in bytes</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">message</code></td>
 						<td><span><p>receives the description of a failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="t">
+					<tr class="r">
 						<td><code>int</code></td>
 						<td><span><code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_OK">#IMAGIFY_WEBP_OK</a></code>, or a status saying what went wrong</span></td>
 					</tr>
@@ -277,34 +277,34 @@ pixel.</p></span></section>
  <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_free">#imagify_webp_free</a></code>. Quality is ignored when <code>lossless</code> is nonzero.
 </p>
 				</span></section>
-			<section class="DB" id="imagify_webp_read_animation(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpAnimation,com.sun.jna.ptr.PointerByReference,com.sun.jna.Pointer,long)">
-				<h2 class="d"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="IB">imagify_webp_read_animation</code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpAnimation" href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpAnimation</a></code><code class="parameterName">animation</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">delays</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="W"><code>int</code></i></h2>
-				<table class="CB">
-					<tr class="KB">
+			<section class="u" id="imagify_webp_read_animation(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpAnimation,com.sun.jna.ptr.PointerByReference,com.sun.jna.Pointer,long)">
+				<h2 class="z"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_webp_read_animation</code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpAnimation" href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpAnimation</a></code><code class="parameterName">animation</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">delays</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="s"><code>int</code></i></h2>
+				<table class="R">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">data</code></td>
 						<td><span><p>the encoded animated WebP file</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td><span><p>the number of bytes at <code>data</code></p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code><a aria-label="imagify.webp.jna.WebpLibrary.WebpAnimation" href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpAnimation</a></code><code class="parameterName">animation</code></td>
 						<td><span><p>receives the canvas size, the frame count and the loop count</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">delays</code></td>
 						<td><span><p>receives the frame count delays in milliseconds, or a null pointer on failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">message</code></td>
 						<td><span><p>receives the description of a failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="t">
+					<tr class="r">
 						<td><code>int</code></td>
 						<td><span><code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_OK">#IMAGIFY_WEBP_OK</a></code>, or a status saying what went wrong</span></td>
 					</tr>
@@ -313,39 +313,39 @@ decoding a pixel.</p><p>The buffer of frame count integers that comes back is ow
  handed to <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_free">#imagify_webp_free</a></code>.
 </p>
 				</span></section>
-			<section class="DB" id="imagify_webp_decode_animation(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpAnimation,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.PointerByReference,com.sun.jna.Pointer,long)">
-				<h2 class="d"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="IB">imagify_webp_decode_animation</code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpAnimation" href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpAnimation</a></code><code class="parameterName">animation</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">frames</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">delays</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="W"><code>int</code></i></h2>
-				<table class="CB">
-					<tr class="KB">
+			<section class="u" id="imagify_webp_decode_animation(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpAnimation,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.PointerByReference,com.sun.jna.Pointer,long)">
+				<h2 class="z"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_webp_decode_animation</code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpAnimation" href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpAnimation</a></code><code class="parameterName">animation</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">frames</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">delays</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="s"><code>int</code></i></h2>
+				<table class="R">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">data</code></td>
 						<td><span><p>the encoded animated WebP file</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td><span><p>the number of bytes at <code>data</code></p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code><a aria-label="imagify.webp.jna.WebpLibrary.WebpAnimation" href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpAnimation</a></code><code class="parameterName">animation</code></td>
 						<td><span><p>receives the canvas size, the frame count and the loop count</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">frames</code></td>
 						<td><span><p>receives the buffer of <code>frameCount * width * height * 4</code> bytes, or a null
 pointer on failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">delays</code></td>
 						<td><span><p>receives the frame count delays in milliseconds, or a null pointer on failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">message</code></td>
 						<td><span><p>receives the description of a failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="t">
+					<tr class="r">
 						<td><code>int</code></td>
 						<td><span><code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_OK">#IMAGIFY_WEBP_OK</a></code>, or a status saying what went wrong</span></td>
 					</tr>
@@ -354,62 +354,62 @@ pointer on failure</p></span></td>
  are owned by the caller and must be handed to <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_free">#imagify_webp_free</a></code>.
 </p>
 				</span></section>
-			<section class="DB" id="imagify_webp_encode_animation(com.sun.jna.Pointer,int,int,int,com.sun.jna.Pointer,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">
-				<h2 class="d"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="IB">imagify_webp_encode_animation</code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="W"><code>int</code></i></h2>
-				<table class="CB">
-					<tr class="KB">
+			<section class="u" id="imagify_webp_encode_animation(com.sun.jna.Pointer,int,int,int,com.sun.jna.Pointer,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">
+				<h2 class="z"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_webp_encode_animation</code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="s"><code>int</code></i></h2>
+				<table class="R">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">frames</code></td>
 						<td><span><code>frameCount * width * height * 4</code> bytes, tightly packed <code>A, B, G, R</code></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">frameCount</code></td>
 						<td><span><p>the number of frames, at least 1</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td><span><p>the canvas width, at least 1</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td><span><p>the canvas height, at least 1</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">delays</code></td>
 						<td><span><code>frameCount</code> integers, how long each frame is shown in milliseconds</span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#MIN_QUALITY">#MIN_QUALITY</a></code> to <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#MAX_QUALITY">#MAX_QUALITY</a></code>, ignored when <code>lossless</code></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">lossless</code></td>
 						<td><span><p>nonzero to store the pixels without loss</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">loopCount</code></td>
 						<td><span><p>how often the animation repeats, 0 meaning forever</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>int</code><code class="parameterName">method</code></td>
 						<td><span><code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#MIN_METHOD">#MIN_METHOD</a></code> to <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#MAX_METHOD">#MAX_METHOD</a></code>, how hard the encoder tries</span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code></td>
 						<td><span><p>receives the new buffer, or a null pointer on failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code></td>
 						<td><span><p>receives the buffer size in bytes</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">message</code></td>
 						<td><span><p>receives the description of a failure</p></span></td>
 					</tr>
-					<tr class="KB">
+					<tr class="k">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="t">
+					<tr class="r">
 						<td><code>int</code></td>
 						<td><span><code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_OK">#IMAGIFY_WEBP_OK</a></code>, or a status saying what went wrong</span></td>
 					</tr>
@@ -419,53 +419,53 @@ pointer on failure</p></span></td>
  back is owned by the caller and must be handed to <code><a aria-label="imagify.webp.jna.WebpLibrary" href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_free">#imagify_webp_free</a></code>.
 </p>
 				</span></section>
-			<section class="DB" id="imagify_webp_free(com.sun.jna.Pointer)">
-				<h2 class="d"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="IB">imagify_webp_free</code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">buffer</code>)</code><i class="W"><code>void</code></i></h2>
-				<table class="CB">
-					<tr class="KB">
+			<section class="u" id="imagify_webp_free(com.sun.jna.Pointer)">
+				<h2 class="z"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="BB">imagify_webp_free</code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">buffer</code>)</code><i class="s"><code>void</code></i></h2>
+				<table class="R">
+					<tr class="k">
 						<td><code>com.sun.jna.Pointer</code><code class="parameterName">buffer</code></td>
 						<td><span><p>the buffer to free</p></span></td>
 					</tr>
 				</table><span class="A"><p>Frees a buffer handed out by any of the entry points above that allocates one.
 Accepts a null pointer.</p></span></section>
 		</article>
-		<aside class="V">
-			<div class="AB">
-				<h5 class="g">Static Fields</h5>
+		<aside class="Z">
+			<div class="DB">
+				<h5 class="HB">Static Fields</h5>
 				<ul>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#LIBRARY_NAME">LIBRARY_NAME</a></code><i class="m"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#ABI_VERSION">ABI_VERSION</a></code><i class="m"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_OK">IMAGIFY_WEBP_OK</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_ERR_ARGUMENT">IMAGIFY_WEBP_ERR_ARGUMENT</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_ERR_CORRUPT">IMAGIFY_WEBP_ERR_CORRUPT</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_ERR_MEMORY">IMAGIFY_WEBP_ERR_MEMORY</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_ERR_UNSUPPORTED">IMAGIFY_WEBP_ERR_UNSUPPORTED</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_ERR_INTERNAL">IMAGIFY_WEBP_ERR_INTERNAL</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#FORMAT_VP8">FORMAT_VP8</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#FORMAT_VP8L">FORMAT_VP8L</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#FORMAT_VP8X">FORMAT_VP8X</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#MIN_QUALITY">MIN_QUALITY</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#MAX_QUALITY">MAX_QUALITY</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#MIN_METHOD">MIN_METHOD</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#MAX_METHOD">MAX_METHOD</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#DEFAULT_QUALITY">DEFAULT_QUALITY</a></code><i class="m"><code class="return">int</code></i></li>
-					<li class="s"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#MESSAGE_LENGTH">MESSAGE_LENGTH</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#LIBRARY_NAME">LIBRARY_NAME</a></code><i class="a"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#ABI_VERSION">ABI_VERSION</a></code><i class="a"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_OK">IMAGIFY_WEBP_OK</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_ERR_ARGUMENT">IMAGIFY_WEBP_ERR_ARGUMENT</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_ERR_CORRUPT">IMAGIFY_WEBP_ERR_CORRUPT</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_ERR_MEMORY">IMAGIFY_WEBP_ERR_MEMORY</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_ERR_UNSUPPORTED">IMAGIFY_WEBP_ERR_UNSUPPORTED</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#IMAGIFY_WEBP_ERR_INTERNAL">IMAGIFY_WEBP_ERR_INTERNAL</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#FORMAT_VP8">FORMAT_VP8</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#FORMAT_VP8L">FORMAT_VP8L</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#FORMAT_VP8X">FORMAT_VP8X</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#MIN_QUALITY">MIN_QUALITY</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#MAX_QUALITY">MAX_QUALITY</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#MIN_METHOD">MIN_METHOD</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#MAX_METHOD">MAX_METHOD</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#DEFAULT_QUALITY">DEFAULT_QUALITY</a></code><i class="a"><code class="return">int</code></i></li>
+					<li class="N"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#MESSAGE_LENGTH">MESSAGE_LENGTH</a></code><i class="a"><code class="return">int</code></i></li>
 				</ul>
-				<h5 class="g">Methods</h5>
+				<h5 class="HB">Methods</h5>
 				<ul>
-					<li class="s"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_abi_version()">imagify_webp_abi_version</a></code><code class="v">()</code><i class="m"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="s"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_webp_version()">imagify_webp_webp_version</a></code><code class="v">()</code><i class="m"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="s"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_read_features(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpFeatures,com.sun.jna.Pointer,long)">imagify_webp_read_features</a></code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpFeatures" href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpFeatures</a></code><code class="parameterName">features</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
-					<li class="s"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_decode(com.sun.jna.Pointer,long,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,imagify.webp.jna.WebpLibrary.WebpFeatures,com.sun.jna.Pointer,long)">imagify_webp_decode</a></code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">out</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">outLength</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpFeatures" href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpFeatures</a></code><code class="parameterName">features</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
-					<li class="s"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_encode(com.sun.jna.Pointer,int,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">imagify_webp_encode</a></code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
-					<li class="s"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_read_animation(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpAnimation,com.sun.jna.ptr.PointerByReference,com.sun.jna.Pointer,long)">imagify_webp_read_animation</a></code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpAnimation" href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpAnimation</a></code><code class="parameterName">animation</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">delays</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
-					<li class="s"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_decode_animation(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpAnimation,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.PointerByReference,com.sun.jna.Pointer,long)">imagify_webp_decode_animation</a></code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpAnimation" href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpAnimation</a></code><code class="parameterName">animation</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">frames</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">delays</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
-					<li class="s"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_encode_animation(com.sun.jna.Pointer,int,int,int,com.sun.jna.Pointer,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">imagify_webp_encode_animation</a></code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
-					<li class="s"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_free(com.sun.jna.Pointer)">imagify_webp_free</a></code><code class="v">(<code>com.sun.jna.Pointer</code><code class="parameterName">buffer</code>)</code><i class="m"><code>void</code></i></li>
+					<li class="N"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_abi_version()">imagify_webp_abi_version</a></code><code class="U">()</code><i class="a"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="N"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_webp_version()">imagify_webp_webp_version</a></code><code class="U">()</code><i class="a"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="N"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_read_features(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpFeatures,com.sun.jna.Pointer,long)">imagify_webp_read_features</a></code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpFeatures" href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpFeatures</a></code><code class="parameterName">features</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="a"><code>int</code></i></li>
+					<li class="N"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_decode(com.sun.jna.Pointer,long,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,imagify.webp.jna.WebpLibrary.WebpFeatures,com.sun.jna.Pointer,long)">imagify_webp_decode</a></code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">out</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">outLength</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpFeatures" href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpFeatures</a></code><code class="parameterName">features</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="a"><code>int</code></i></li>
+					<li class="N"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_encode(com.sun.jna.Pointer,int,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">imagify_webp_encode</a></code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="a"><code>int</code></i></li>
+					<li class="N"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_read_animation(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpAnimation,com.sun.jna.ptr.PointerByReference,com.sun.jna.Pointer,long)">imagify_webp_read_animation</a></code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpAnimation" href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpAnimation</a></code><code class="parameterName">animation</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">delays</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="a"><code>int</code></i></li>
+					<li class="N"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_decode_animation(com.sun.jna.Pointer,long,imagify.webp.jna.WebpLibrary.WebpAnimation,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.PointerByReference,com.sun.jna.Pointer,long)">imagify_webp_decode_animation</a></code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="imagify.webp.jna.WebpLibrary.WebpAnimation" href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpAnimation</a></code><code class="parameterName">animation</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">frames</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">delays</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="a"><code>int</code></i></li>
+					<li class="N"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_encode_animation(com.sun.jna.Pointer,int,int,int,com.sun.jna.Pointer,int,int,int,int,com.sun.jna.ptr.PointerByReference,com.sun.jna.ptr.LongByReference,com.sun.jna.Pointer,long)">imagify_webp_encode_animation</a></code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code>com.sun.jna.ptr.PointerByReference</code><code class="parameterName">encoded</code>, <code>com.sun.jna.ptr.LongByReference</code><code class="parameterName">encodedLength</code>, <code>com.sun.jna.Pointer</code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="a"><code>int</code></i></li>
+					<li class="N"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.jna.WebpLibrary.html#imagify_webp_free(com.sun.jna.Pointer)">imagify_webp_free</a></code><code class="U">(<code>com.sun.jna.Pointer</code><code class="parameterName">buffer</code>)</code><i class="a"><code>void</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="P">
+		<footer class="X">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
