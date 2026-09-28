@@ -1,0 +1,167 @@
+name: jpegli-natives
+
+# Builds the jpegli shared libraries that ship inside the jar and attaches them to a rolling
+# release named "jpegli-natives". See src/main/resources/imagify/jpeg/native/README.md.
+#
+#   gh workflow run jpegli-natives.yml
+#
+# Then drop the downloaded files into src/main/resources/imagify/jpeg/native/ and commit them.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Rebuild monthly so the bundled jpegli tracks upstream security fixes.
+    - cron: "11 5 1 * *"
+
+permissions:
+  contents: write
+
+env:
+  JPEGLI_VERSION: v0.5.0
+
+jobs:
+  build:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: windows-x64,  os: windows-2022,      ext: dll,   arch: x64 }
+          - { target: windows-arm64, os: windows-11-arm,    ext: dll,   arch: arm64 }
+          - { target: linux-x64,    os: ubuntu-24.04,      ext: so }
+          - { target: linux-arm64,  os: ubuntu-24.04-arm,  ext: so }
+          - { target: macos-x64,    os: macos-15-intel,    ext: dylib }
+          - { target: macos-arm64,  os: macos-14,          ext: dylib }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Check out jpegli
+        # submodules: highway is jpegli's own dependency and is fetched by the jpegli build itself,
+        # so a checkout without it fails the configure step rather than the link.
+        uses: actions/checkout@v4
+        with:
+          repository: google/jpegli
+          ref: ${{ env.JPEGLI_VERSION }}
+          path: jpegli
+          submodules: recursive
+
+      - name: Install CMake and Ninja (Windows)
+        # Chocolatey updates only the machine PATH while every step runs with the PATH the job
+        # started with, so re-read the machine PATH to make either tool visible to the next step.
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install --no-progress -y cmake ninja
+          $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + $env:Path
+          cmake --version
+          ninja --version
+
+      - name: Set up the MSVC environment (Windows)
+        # Without a developer command prompt, CMake picks the MinGW GCC that ships in the runner
+        # image, and a MinGW DLL imports libwinpthread-1.dll, which is not part of Windows. MSVC
+        # with the static CRT below matches what the libavif build ships: KERNEL32 plus the C
+        # runtime that Windows itself provides, and nothing else.
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.arch }}
+
+      - name: Pin cl as the compiler (Windows)
+        # msvc-dev-cmd puts cl on the PATH, but CMake would still prefer the cc or gcc it finds
+        # first, which is MinGW here. Naming the compiler is the only portable way to say so.
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          echo "CC=cl" >> "$GITHUB_ENV"
+          echo "CXX=cl" >> "$GITHUB_ENV"
+          cl 2>&1 | head -1
+
+      - name: Install Ninja (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+
+      - name: Install Ninja (macOS)
+        if: runner.os == 'macOS'
+        run: brew install ninja
+
+      - name: Configure
+        # src/main/native is an overlay rather than a fork of jpegli's build: jpegli only declares
+        # its libjpeg62 compatible target where the linker understands a version script, which
+        # excludes Windows and macOS, and the overlay re-declares it for all three with whatever the
+        # local linker does understand. See the comments in that CMakeLists.txt.
+        #
+        # Everything else is jpegli's own configure, with its own libjpeg target turned off because
+        # that is the one being replaced, and highway linked in statically: a shared library loaded
+        # by absolute path out of a temporary directory cannot be counted on to find a sibling.
+        #
+        # CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded is /MT rather than /MD. The default would leave
+        # the library importing VCRUNTIME140.dll and MSVCP140.dll, which come from the Visual C++
+        # redistributable rather than from Windows, so a user who has installed nothing would be
+        # missing them. CMake ignores the variable on the Unix targets.
+        run: >
+          cmake -S src/main/native -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DIMAGIFY_JPEGLI_SOURCE_DIR=${{ github.workspace }}/jpegli
+          -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+
+      - name: Build
+        # imagify_jpegli is the shim plus the static jpegli and highway behind it. There is no
+        # install step and no prefix: the result is loaded by absolute path, so nothing has to be
+        # arranged around it.
+        run: cmake --build build --target imagify_jpegli
+
+      - name: Collect
+        # One name pattern for every platform. CMake's lib prefix applies to DLLs too, so the
+        # Windows output is libjpegli.dll and the others libjpegli.so and libjpegli.dylib.
+        # -type f skips the libjpegli.so.1.0.0 symlinks and copies the real file.
+        shell: bash
+        run: |
+          mkdir -p dist
+          src=$(find build -type f \( -name 'jpegli.dll' -o -name 'libjpegli.dll' \
+            -o -name 'libjpegli.so' -o -name 'libjpegli.so.*' \
+            -o -name 'libjpegli*.dylib' \) | head -1)
+          test -n "$src" || { echo "::error::no jpegli shared library was produced under build/"; exit 1; }
+          cp "$src" "dist/libjpegli-${{ matrix.target }}.${{ matrix.ext }}"
+          ls -l dist
+
+      - name: Reject a build with unfilled dependencies
+        # The script reads the PE, ELF and Mach-O containers directly, so the same check runs
+        # everywhere. objdump and otool are not present on the Windows runners and dumpbin needs an
+        # MSVC environment, which used to make this step pass without ever looking at the library.
+        run: python .github/scripts/check-self-contained.py "dist/libjpegli-${{ matrix.target }}.${{ matrix.ext }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: libjpegli-${{ matrix.target }}
+          path: dist/
+          if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Publish
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: jpegli-natives
+          name: jpegli-natives
+          body: |
+            Rolling build of the `jpegli` shared libraries bundled in `imagify`, built from
+            `${{ env.JPEGLI_VERSION }}`.
+
+            Drop these files into `src/main/resources/imagify/jpeg/native/`.
+          files: dist/*

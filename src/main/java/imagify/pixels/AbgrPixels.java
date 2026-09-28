@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package imagify.avif.jna;
+package imagify.pixels;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -17,21 +17,27 @@ import java.awt.image.RenderedImage;
 
 /**
  * Moves pixels between {@code BufferedImage} and the tightly packed {@code A, B, G, R} byte order
- * {@code libavif} uses for {@code AVIF_RGB_FORMAT_ABGR}.
+ * this library's native codecs want on both sides of the boundary.
  *
- * <p>That byte order is exactly the order in which a {@link BufferedImage#TYPE_4BYTE_ABGR} raster
- * holds its banks, so an image of that exact type can be handed to and from the native code without
- * touching a single byte. The correspondence is worth stating because it is easy to assume the
- * opposite: the raster declares band offsets of {@code 3, 2, 1, 0}, so the byte at offset 0 of a
- * pixel really is its alpha, while {@link Raster#getDataElements} reports the very same sample as
- * {@code R, G, B, A}. Reading that array as if it were the in-memory layout swaps red and blue in
- * both directions without ever failing, and {@link #toBufferedImage} and
- * {@link #toAbgrBytes} are therefore the only two places allowed to touch raw bytes.
+ * <p>That byte order is what {@code libavif} calls {@code AVIF_RGB_FORMAT_ABGR}, what the jpegli
+ * shim in {@code src/main/native/imagify_jpegli.c} is given, and what a
+ * {@link BufferedImage#TYPE_4BYTE_ABGR} raster holds in memory, so an image of that exact type can
+ * be handed to and from the native code without touching a single byte. The correspondence is worth
+ * stating because it is easy to assume the opposite: the raster declares band offsets of
+ * {@code 3, 2, 1, 0}, so the byte at offset 0 of a pixel really is its alpha, while
+ * {@link Raster#getDataElements} reports the very same sample as {@code R, G, B, A}. Reading that
+ * array as if it were the in-memory layout swaps red and blue in both directions without ever
+ * failing, and {@link #toBufferedImage} and {@link #toAbgrBytes} are therefore the only two places
+ * allowed to touch raw bytes.
+ *
+ * <p>It lives outside the codec packages so that both {@link imagify.avif.jna.AvifCodec} and
+ * {@link imagify.jpeg.jna.JpegliCodec} share one conversion rather than keeping two that are only
+ * ever going to disagree.
  *
  * <p>Every other layout is converted through the source {@link ColorModel}, which always yields
  * unassociated alpha, so that no premultiplication ever happens.
  */
-final class AbgrPixels {
+public final class AbgrPixels {
 
     private AbgrPixels() {
         // utility class
@@ -46,7 +52,7 @@ final class AbgrPixels {
      * @return a {@link BufferedImage#TYPE_4BYTE_ABGR} image
      * @throws IllegalArgumentException when {@code abgr} is too short
      */
-    static BufferedImage toBufferedImage(byte[] abgr, int width, int height) {
+    public static BufferedImage toBufferedImage(byte[] abgr, int width, int height) {
         int expected = bytes(width, height);
         if (abgr.length < expected) {
             throw new IllegalArgumentException("expected " + expected
@@ -79,7 +85,7 @@ final class AbgrPixels {
      * @return {@code width * height * 4} bytes in A, B, G, R order
      * @throws IllegalArgumentException when a sub sampling factor is not positive
      */
-    static byte[] toAbgrBytes(RenderedImage source, int x, int y, int width, int height, int subX, int subY) {
+    public static byte[] toAbgrBytes(RenderedImage source, int x, int y, int width, int height, int subX, int subY) {
         if (subX < 1 || subY < 1) {
             throw new IllegalArgumentException("sub sampling factors must be positive: " + subX + "x" + subY);
         }

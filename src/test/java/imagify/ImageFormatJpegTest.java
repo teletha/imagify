@@ -10,14 +10,17 @@
 package imagify;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import imagify.ImageFormat.Jpeg.Subsampling;
+import imagify.jpeg.jna.JpegliCodec;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.stream.ImageOutputStream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -94,17 +97,25 @@ class ImageFormatJpegTest {
     void aPlainFormatIsTheOneTheWriterWouldHaveWritten() throws IOException {
         BufferedImage source = gradient(96, 96);
 
-        // The default subsampling travels as no metadata at all, so the write is byte for byte the
-        // one that was produced before there was anything to ask for.
-        assertArrayEquals(throughImageIo(source, DEFAULT_QUALITY),
-                ImageWriter.toBytes(source, ImageFormat.JPEG, DEFAULT_QUALITY),
-                "a plain JPEG format should be encoded exactly as ImageIO encodes it");
-        assertArrayEquals(throughImageIo(source, DEFAULT_QUALITY),
+        // Asking for the settings by name is the same request as not asking for them at all, and
+        // that holds whichever encoder ends up answering it.
+        assertArrayEquals(ImageWriter.toBytes(source, ImageFormat.JPEG, DEFAULT_QUALITY),
                 ImageWriter.toBytes(source,
                         ImageFormat.JPEG.subsampling(ImageFormat.Jpeg.DEFAULT_SUBSAMPLING)
                                 .optimizeHuffmanTables(ImageFormat.Jpeg.DEFAULT_OPTIMIZE_HUFFMAN_TABLES),
                         DEFAULT_QUALITY),
                 "asking for the defaults should be the same as not asking at all");
+
+        // The default subsampling travels as no metadata at all, so the write is byte for byte the
+        // one that was produced before there was anything to ask for. That is a claim about the JDK's
+        // writer though, and this jar encodes JPEG itself out of jpegli whenever the native library
+        // is there — at which point there is no JDK write left to be identical to, which is rather
+        // the point of shipping it.
+        assumeFalse(JpegliCodec.isAvailable(),
+                "skipped: jpegli encodes JPEG directly, so there is no JDK write to be byte identical to");
+        assertArrayEquals(throughImageIo(source, DEFAULT_QUALITY),
+                ImageWriter.toBytes(source, ImageFormat.JPEG, DEFAULT_QUALITY),
+                "a plain JPEG format should be encoded exactly as ImageIO encodes it");
     }
 
     @Test
@@ -202,7 +213,13 @@ class ImageFormatJpegTest {
     private static byte[] throughImageIo(BufferedImage source, double quality) throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         try (ImageOutputStream output = ImageIO.createImageOutputStream(bytes)) {
-            javax.imageio.ImageWriter writer = ImageIO.getImageWritersByFormatName("jpeg").next();
+            // Ask ImageTypeSpecifier rather than the name alone so that the provider is one that has
+            // already said it can encode this image. The name alone answers with every provider
+            // registered under it, and this jar registers a JPEG provider of its own that declines
+            // whenever its native library is missing, which is precisely not what is being compared
+            // here: this asks what the JDK's own writer produces.
+            javax.imageio.ImageWriter writer = ImageIO.getImageWriters(
+                    ImageTypeSpecifier.createFromRenderedImage(source), "jpeg").next();
             try {
                 writer.setOutput(output);
                 javax.imageio.ImageWriteParam param = writer.getDefaultWriteParam();

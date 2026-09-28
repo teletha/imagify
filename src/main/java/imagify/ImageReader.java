@@ -9,6 +9,9 @@
  */
 package imagify;
 
+import imagify.jpeg.JpegImageReader;
+import imagify.jpeg.JpegImageReaderSpi;
+import imagify.jpeg.jna.JpegliCodec;
 import imagify.webp.WebpCodec;
 
 import javax.imageio.ImageIO;
@@ -152,11 +155,24 @@ public final class ImageReader {
 
     private static FrameSequence readFromStream(ImageInputStream stream, ImageFormat format)
             throws IOException {
+        if (format instanceof ImageFormat.Jpeg && JpegliCodec.isAvailable()) {
+            // JPEG is the one format the JDK already has a reader for, so the provider this library
+            // registers is not the first one ImageIO answers with. Asking for ours by class is the
+            // only way to be sure a JPEG decoded here went through jpegli rather than through
+            // com.sun.imageio by accident.
+            return readJpeg(stream);
+        }
+        // getImageReadersByFormatName answers with every provider registered under a name and never
+        // asks canDecodeInput, so its order is registration order rather than suitability. A JPEG
+        // provider backed by jpegli is exactly the provider that declines the file whenever its
+        // native library is missing, and it is registered before the JDK's own, so taking the first
+        // entry would replace a working decoder with one that throws. Asking each of them leaves the
+        // JDK's reader in place, which is what happened before this jar claimed JPEG at all.
         Iterator<javax.imageio.ImageReader> readers = ImageIO.getImageReadersByFormatName(format.getFormatName());
-        if (!readers.hasNext()) {
+        javax.imageio.ImageReader reader = firstDecoding(readers, stream);
+        if (reader == null) {
             throw new IOException("no ImageReader for format: " + format.getFormatName());
         }
-        javax.imageio.ImageReader reader = readers.next();
         try {
             reader.setInput(stream, false, true);
             int numFrames;
@@ -175,6 +191,55 @@ public final class ImageReader {
             }
             int loopCount = readLoopCount(format, reader.getStreamMetadata());
             return new FrameSequence(frames, delaysMs, loopCount);
+        } finally {
+            reader.dispose();
+        }
+    }
+
+    /**
+     * Takes the first reader that accepts the file, and disposes of the ones that do not.
+     *
+     * <p>{@code ImageIO} has no {@code getImageReaders(Object, String)}, so there is nothing that
+     * filters the providers by {@code canDecodeInput} for a stream that has not been decoded yet; the
+     * question has to be put to them directly.
+     *
+     * @param readers the providers registered for a format name, consumed by this method
+     * @param stream the encoded file every provider is asked about
+     * @return a reader that accepts {@code stream}, or {@code null} when none of them does
+     */
+    private static javax.imageio.ImageReader firstDecoding(
+            Iterator<javax.imageio.ImageReader> readers, ImageInputStream stream) {
+        while (readers.hasNext()) {
+            javax.imageio.ImageReader reader = readers.next();
+            try {
+                if (reader.getOriginatingProvider().canDecodeInput(stream)) {
+                    return reader;
+                }
+            } catch (IOException e) {
+                // A provider that cannot even look at the file is not one to hand it to.
+            }
+            reader.dispose();
+        }
+        return null;
+    }
+
+    /**
+     * Reads a JPEG through jpegli, asking this library's own provider for the reader.
+     *
+     * <p>A JPEG is one image with no timing and no repetition count, so the sequence handed back is
+     * the single frame with the default delay, which is what every other single image format here
+     * answers with too.
+     *
+     * @param stream the encoded JPEG
+     * @return the one frame of the file
+     * @throws IOException when the file cannot be read
+     */
+    private static FrameSequence readJpeg(ImageInputStream stream) throws IOException {
+        javax.imageio.ImageReader reader = new JpegImageReader(
+                new JpegImageReaderSpi());
+        try {
+            reader.setInput(stream, false, true);
+            return new FrameSequence(List.of(reader.read(0)), new int[] {1000}, 0);
         } finally {
             reader.dispose();
         }

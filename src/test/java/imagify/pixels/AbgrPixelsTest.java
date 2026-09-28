@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package imagify.avif.jna;
+package imagify.pixels;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,8 +31,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * Tests the conversion between {@code BufferedImage} and the A, B, G, R byte order {@code libavif}
- * uses for {@code AVIF_RGB_FORMAT_ABGR}.
+ * Tests the conversion between {@code BufferedImage} and the A, B, G, R byte order the native
+ * codecs are given on both sides of the boundary.
  *
  * <p>These are the only tests that run on every machine: they need no native library, and they
  * cover the one place where this library could silently swap a colour channel.

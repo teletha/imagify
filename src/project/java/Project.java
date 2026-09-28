@@ -27,6 +27,9 @@ public class Project extends bee.api.Project {
         describe("""
                 AVIF encoding and decoding for Java, backed by libavif.
 
+                JPEG encoding and decoding for Java, backed by
+                [jpegli](https://github.com/google/jpegli).
+
                 Also provides an `ImageIO` plug-in for ICO files, one for WebP
                 backed by libwebp, and a read-only `ImageIO` plug-in that
                 rasterises SVG through JSVG.
@@ -40,8 +43,18 @@ public class Project extends bee.api.Project {
                     -Dimagify.avif.bundled=false   # ignore the bundled library,
                                                     # use a system libavif instead
 
+                The `jpegli` library is bundled and unpacked the same way.
+
+                    -Dimagify.jpeg.bundled=false   # ignore the bundled library,
+                                                    # use a system jpegli instead
+
                 The native `libwebp` library is bundled the same way, inside
                 `webp4j`.
+
+                Neither is required for JPEG to work. When one of them is
+                missing for the running platform, the `ImageIO` plug-in steps
+                aside and the JDK's own JPEG reader and writer take over, so
+                `ImageIO.read()` of a JPEG never fails because of it.
 
                 ## Decode
 
@@ -61,6 +74,42 @@ public class Project extends bee.api.Project {
 
                     BufferedImage image = ImageIO.read(new File("photo.avif"));
                     ImageIO.write(image, "avif", new File("out.avif"));
+
+                ## JPEG
+
+                    BufferedImage image = ImageIO.read(new File("photo.jpg"));
+                    ImageIO.write(image, "jpeg", new File("out.jpg"));
+
+                    byte[] jpeg = JpegliCodec.encode(image, 85);
+                    // quality 1 (smallest) to 100 (most detail)
+
+                jpegli produces a smaller file than the JDK's encoder at the
+                same visual quality, which is why it is here at all.
+
+                A JPEG has two settings an `ImageWriteParam` has nowhere to
+                put, and both are on the format rather than on a single write:
+
+                    ImageFormat.JPEG.subsampling(Subsampling.S444)
+                    ImageFormat.JPEG.optimizeHuffmanTables(true)
+                    ImageWriter.toBytes(image, format, 0.9);
+
+                `subsampling` is how finely the two colour-difference channels
+                are stored, and it costs nothing in the quality argument.
+                `optimizeHuffmanTables` computes the entropy coder tables from
+                the image, which is a smaller file for the very same pixels.
+
+                A caller driving `ImageIO` directly reaches both through
+                `JpegWriteParam`, which is what `getDefaultWriteParam()`
+                answers:
+
+                    JpegWriteParam param = (JpegWriteParam)
+                        writer.getDefaultWriteParam();
+                    param.setSubsampling(Subsampling.S444);
+
+                JPEG has no alpha channel. An encode discards the alpha byte,
+                so a transparent image is written against whatever colour sits
+                behind it, and a decode comes back fully opaque. A caller that
+                needs the picture has to flatten the image first.
 
                 ## ICO
 
@@ -97,11 +146,15 @@ public class Project extends bee.api.Project {
 
                     AvifImageInfo info = AvifCodec.readHeader(avif);
                     WebpImageInfo info = WebpCodec.readHeader(webp);
+                    JpegImageInfo info = JpegliCodec.readHeader(jpeg);
 
                 ## Availability
 
                     if (!AvifCodec.isAvailable()) {
                         System.err.println(AvifCodec.getUnavailableReason());
+                    }
+                    if (!JpegliCodec.isAvailable()) {
+                        System.err.println(JpegliCodec.getUnavailableReason());
                     }
                     if (!WebpCodec.isAvailable()) {
                         System.err.println(WebpCodec.getUnavailableReason());
@@ -109,7 +162,9 @@ public class Project extends bee.api.Project {
 
                 ## Version
 
-                Supported `libavif` versions: `1.0.0` to `1.4.x`.
+                Supported `libavif` versions: `1.0.0` to `1.4.x`. `JpegliCodec`
+                binds a flat C ABI of its own rather than jpegli's, and refuses
+                a library built against another revision of it.
                 """);
     }
 }

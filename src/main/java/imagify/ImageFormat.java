@@ -18,6 +18,7 @@ import java.util.Objects;
 
 import imagify.ImageFormat.Jpeg.Subsampling;
 import imagify.avif.jna.AvifLibrary;
+import imagify.jpeg.jna.JpegliLibrary;
 import imagify.webp.WebpCodec;
 
 /**
@@ -177,18 +178,18 @@ public abstract class ImageFormat {
         public enum Subsampling {
 
             /** 4:4:4, the colour channels at full size: the most detail and the largest file. */
-            S444(1, 1),
+            S444(1, 1, JpegliLibrary.IMAGIFY_JPEG_SAMP_444),
 
             /**
              * 4:2:2, the colour channels half the width: the usual choice for text and line art.
              */
-            S422(2, 1),
+            S422(2, 1, JpegliLibrary.IMAGIFY_JPEG_SAMP_422),
 
             /**
              * 4:2:0, the colour channels half in both directions: the smallest, and what is written
              * unless asked otherwise.
              */
-            S420(2, 2);
+            S420(2, 2, JpegliLibrary.IMAGIFY_JPEG_SAMP_420);
 
             /** The frame header's luma sampling factor along the width. */
             public final int horizontalFactor;
@@ -196,9 +197,22 @@ public abstract class ImageFormat {
             /** The frame header's luma sampling factor along the height. */
             public final int verticalFactor;
 
-            Subsampling(int horizontalFactor, int verticalFactor) {
+            /**
+             * The same choice as an {@code IMAGIFY_JPEG_SAMP_*} value, which is what the jpegli
+             * encoder is given.
+             *
+             * <p>
+             * Both spellings are kept because both are asked for somewhere: a caller reading a
+             * frame header thinks in sampling factors, and the encoder takes a single code. Deriving
+             * one from the other at every call site is how the two drift apart.
+             * </p>
+             */
+            public final int samp;
+
+            Subsampling(int horizontalFactor, int verticalFactor, int samp) {
                 this.horizontalFactor = horizontalFactor;
                 this.verticalFactor = verticalFactor;
+                this.samp = samp;
             }
         }
     }

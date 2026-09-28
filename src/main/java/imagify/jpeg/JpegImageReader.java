@@ -7,10 +7,9 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package imagify.avif;
+package imagify.jpeg;
 
-import imagify.avif.jna.AvifAnimationDecoder;
-import imagify.avif.jna.AvifCodec;
+import imagify.jpeg.jna.JpegliCodec;
 import imagify.pixels.StillImageRead;
 
 import javax.imageio.IIOException;
@@ -28,33 +27,32 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * {@link ImageReader} for AVIF images, backed by {@code libavif}.
+ * {@link ImageReader} for JPEG images, backed by <a href="https://github.com/google/jpegli">jpegli</a>.
  *
- * <p>An AVIF file holds either a single still image or an image sequence, and this reader reports
- * whichever it finds: {@link #getNumImages(boolean)} answers 1 for a still and the frame count for an
- * animation, and {@link #read(int, ImageReadParam)} decodes the frame asked for. The pixels arrive as
- * a {@link BufferedImage#TYPE_4BYTE_ABGR} image, whose banks are the very {@code A, B, G, R} layout
- * {@code libavif} fills in for {@code AVIF_RGB_FORMAT_ABGR}, and are then converted to the requested
- * type when the caller asked for something else.
+ * <p>A JPEG file holds exactly one image, so {@link #getNumImages(boolean)} always answers 1 and
+ * {@link #read(int, ImageReadParam)} decodes that one. The pixels arrive as a
+ * {@link BufferedImage#TYPE_4BYTE_ABGR} image, whose banks are the very {@code A, B, G, R} layout the
+ * jpegli shim fills in, and are then converted to the requested type when the caller asked for
+ * something else.
  *
- * <p>How long each frame is shown, and how often the sequence repeats, are reported through
- * {@link #getImageMetadata(int)} and {@link #getStreamMetadata()} rather than through the standard
- * metadata format, which has no notion of animation.
+ * <p>A greyscale file is upsampled to the same three channel layout rather than handed back as
+ * {@link BufferedImage#TYPE_BYTE_GRAY}, so that a caller sees one shape for every JPEG. The alpha
+ * channel is fully opaque either way, because a JPEG cannot carry a real one.
  *
  * <p>Of the {@link ImageReadParam} settings, the source region, the source sub sampling factors and
  * the destination are honoured, by {@link StillImageRead} rather than here. Band selection and the
  * sub sampling offsets are not; the reader produces all four channels and starts every sub sampling
  * block at its own top left corner.
  *
- * <p>See {@link AvifCodec} for how the native library is located. When it is missing, this reader
- * still accepts its input, but any request that needs {@code libavif} fails with an
- * {@link IIOException} that spells out what went wrong.
+ * <p>See {@link JpegliCodec} for how the native library is located. When it is missing, this reader
+ * is not offered to {@code ImageIO} at all, which is what leaves the JDK's own JPEG reader in place
+ * rather than failing every read.
  *
  * <p>Instances are stateful and, as mandated by {@link ImageReader}, not thread safe.
  */
-public class AvifImageReader extends ImageReader {
+public class JpegImageReader extends ImageReader {
 
-    /** The index of the first frame, which for a still image is the only one. */
+    /** The index of the only frame a JPEG holds. */
     public static final int IMAGE_INDEX = 0;
 
     /** The number of channels the decoder produces, which is what a band selection is measured in. */
@@ -66,19 +64,17 @@ public class AvifImageReader extends ImageReader {
     private ImageInputStream stream;
     private long start = -1;
     private byte[] encoded;
-    private AvifAnimationDecoder animation;
 
     /**
      * @param originatingProvider the provider that created this reader
      */
-    public AvifImageReader(ImageReaderSpi originatingProvider) {
+    public JpegImageReader(ImageReaderSpi originatingProvider) {
         super(originatingProvider);
     }
 
     @Override
     public void setInput(Object input, boolean seekForwardOnly, boolean ignoreMetadata) {
         super.setInput(input, seekForwardOnly, ignoreMetadata);
-        closeAnimation();
         stream = (ImageInputStream) getInput();
         start = -1;
         encoded = null;
@@ -87,7 +83,6 @@ public class AvifImageReader extends ImageReader {
     @Override
     public void reset() {
         super.reset();
-        closeAnimation();
         stream = null;
         start = -1;
         encoded = null;
@@ -96,43 +91,41 @@ public class AvifImageReader extends ImageReader {
     @Override
     public int getNumImages(boolean allowSearch) throws IIOException {
         checkInput();
-        return animation().frameCount();
+        return 1;
     }
 
     @Override
     public int getWidth(int imageIndex) throws IIOException {
-        return size(imageIndex, true);
+        return header(imageIndex).width();
     }
 
     @Override
     public int getHeight(int imageIndex) throws IIOException {
-        return size(imageIndex, false);
+        return header(imageIndex).height();
     }
 
     @Override
     public Iterator<ImageTypeSpecifier> getImageTypes(int imageIndex) throws IIOException {
         checkIndex(imageIndex);
-        return types();
+        return TYPES.stream().map(ImageTypeSpecifier::createFromBufferedImageType).iterator();
     }
 
     @Override
     public IIOMetadata getStreamMetadata() throws IIOException {
-        checkInput();
-        // The loop count belongs to the file rather than to any one frame, and the frame timing that
-        // goes with it is not what a caller of stream metadata is after.
-        AvifAnimationDecoder decoder = animation();
-        return new AvifMetadata(decoder.info(), 0, decoder.loopCount());
+        // A JPEG is a single image with no stream level structure, so what a caller asking about the
+        // stream wants is the one image it holds.
+        return getImageMetadata(IMAGE_INDEX);
     }
 
     @Override
     public IIOMetadata getImageMetadata(int imageIndex) throws IIOException {
-        return metadataOf(imageIndex);
+        return new JpegMetadata(header(imageIndex));
     }
 
     @Override
     public IIOMetadata getImageMetadata(int imageIndex, String metadataFormat, Set<String> extraMetadataFormats)
             throws IIOException {
-        AvifMetadata metadata = (AvifMetadata) metadataOf(imageIndex);
+        JpegMetadata metadata = (JpegMetadata) getImageMetadata(imageIndex);
         // Fail fast, with a useful message, on an unsupported format name.
         metadata.getAsTree(metadataFormat);
         return metadata;
@@ -140,7 +133,8 @@ public class AvifImageReader extends ImageReader {
 
     @Override
     public boolean canReadRaster() {
-        // Reading a raw Raster would bypass the colour conversion that makes AVIF usable from Java.
+        // Reading a raw Raster would bypass the colour conversion that makes JPEG usable from Java,
+        // and the decoder is told to output RGB rather than the file's own colour space.
         return false;
     }
 
@@ -148,19 +142,30 @@ public class AvifImageReader extends ImageReader {
     public BufferedImage read(int imageIndex, ImageReadParam param) throws IIOException {
         checkIndex(imageIndex);
         StillImageRead.checkBands(param, CHANNELS);
-        BufferedImage source = frame(imageIndex);
+        BufferedImage source = decode();
         StillImageRead.Sample sample = StillImageRead.sampleOf(source.getWidth(), source.getHeight(), param);
         BufferedImage target = StillImageRead.targetOf(param, sample, TYPES);
         StillImageRead.transfer(source, sample, param, target);
         return target;
     }
 
-    // ---------------------------------------------------------------------------- pixel transfer
-
     // -------------------------------------------------------------------------------- internals
 
-    private static Iterator<ImageTypeSpecifier> types() {
-        return TYPES.stream().map(ImageTypeSpecifier::createFromBufferedImageType).iterator();
+    private JpegImageInfo header(int imageIndex) throws IIOException {
+        checkIndex(imageIndex);
+        try {
+            return JpegliCodec.readHeader(encoded());
+        } catch (JpegException e) {
+            throw new IIOException("cannot read the JPEG frame header: " + e.getMessage(), e);
+        }
+    }
+
+    private BufferedImage decode() throws IIOException {
+        try {
+            return JpegliCodec.decode(encoded());
+        } catch (JpegException e) {
+            throw new IIOException("cannot decode the JPEG image: " + e.getMessage(), e);
+        }
     }
 
     private void checkInput() throws IIOException {
@@ -170,70 +175,14 @@ public class AvifImageReader extends ImageReader {
     }
 
     /**
-     * The decoder over the whole file, opened on first use and kept until the input is replaced.
-     */
-    private AvifAnimationDecoder animation() throws IIOException {
-        if (animation == null) {
-            try {
-                animation = AvifAnimationDecoder.open(encoded());
-            } catch (AvifException e) {
-                throw new IIOException("cannot read the AVIF file: " + e.getMessage(), e);
-            }
-        }
-        return animation;
-    }
-
-    private void closeAnimation() {
-        if (animation != null) {
-            animation.close();
-            animation = null;
-        }
-    }
-
-    private BufferedImage frame(int imageIndex) throws IIOException {
-        try {
-            return animation().frame(imageIndex);
-        } catch (AvifException e) {
-            throw new IIOException("cannot decode frame " + imageIndex + " of the AVIF file: "
-                    + e.getMessage(), e);
-        }
-    }
-
-    private int size(int imageIndex, boolean width) throws IIOException {
-        checkIndex(imageIndex);
-        try {
-            AvifAnimationDecoder decoder = animation();
-            return width ? decoder.width(imageIndex) : decoder.height(imageIndex);
-        } catch (AvifException e) {
-            throw new IIOException("cannot read the size of frame " + imageIndex + ": "
-                    + e.getMessage(), e);
-        }
-    }
-
-    private IIOMetadata metadataOf(int imageIndex) throws IIOException {
-        checkIndex(imageIndex);
-        try {
-            AvifAnimationDecoder decoder = animation();
-            // A file with a single frame is a still image, not a one frame animation, so there is
-            // nothing to say about how long it is shown and no duration is published.
-            int durationMs = decoder.frameCount() > 1 ? decoder.durationMs(imageIndex) : 0;
-            return new AvifMetadata(decoder.info(), durationMs, decoder.loopCount());
-        } catch (AvifException e) {
-            throw new IIOException("cannot read the metadata of frame " + imageIndex + ": "
-                    + e.getMessage(), e);
-        }
-    }
-
-    /**
-     * @param imageIndex the frame the caller asked for
-     * @throws IIOException when there is no input, or when the index names no frame of the file
+     * @param imageIndex the image the caller asked for
+     * @throws IIOException when there is no input, or when the index names no image of the file
      */
     private void checkIndex(int imageIndex) throws IIOException {
         checkInput();
-        int frameCount = animation().frameCount();
-        if (imageIndex < 0 || imageIndex >= frameCount) {
+        if (imageIndex != IMAGE_INDEX) {
             throw new IndexOutOfBoundsException("image index " + imageIndex
-                    + " is out of bounds: the AVIF file holds " + frameCount + " frame(s)");
+                    + " is out of bounds: a JPEG file holds exactly one image");
         }
     }
 
@@ -253,7 +202,7 @@ public class AvifImageReader extends ImageReader {
                 long length = length();
                 encoded = length < 0 ? readToEnd() : readFully(length - start);
             } catch (IOException | OutOfMemoryError e) {
-                throw new IIOException("cannot read the AVIF input", e);
+                throw new IIOException("cannot read the JPEG input", e);
             }
         }
         return encoded;

@@ -166,7 +166,7 @@ public interface AvifLibrary extends Library {
      * <p>That raster declares band offsets of {@code 3, 2, 1, 0}, so the byte at offset 0 of a pixel
      * is its alpha and the byte at offset 3 is its red. Passing the raster to libavif under
      * {@link #AVIF_RGB_FORMAT_RGBA} therefore swaps red and blue in both directions without ever
-     * failing; see {@code AbgrPixels}.
+     * failing; see {@link imagify.pixels.AbgrPixels}.
      */
     int AVIF_RGB_FORMAT_ABGR = 5;
     int AVIF_RGB_FORMAT_RGB_565 = 6;

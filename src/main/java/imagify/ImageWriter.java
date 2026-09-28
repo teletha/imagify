@@ -12,6 +12,9 @@ package imagify;
 import imagify.avif.AvifException;
 import imagify.avif.jna.AvifCodec;
 import imagify.avif.jna.AvifLibrary;
+import imagify.jpeg.JpegException;
+import imagify.jpeg.jna.JpegliCodec;
+import imagify.jpeg.jna.JpegliLibrary;
 import imagify.webp.WebpCodec;
 import imagify.webp.WebpException;
 import imagify.webp.WebpImageWriterSpi;
@@ -313,8 +316,26 @@ public final class ImageWriter {
             return;
         }
 
+        if (format instanceof ImageFormat.Jpeg jpeg && JpegliCodec.isAvailable()) {
+            // The same reasoning as AVIF, and more of it: the subsampling and the entropy coder
+            // tables are both off the write param, and the jpegli encoder is reached directly
+            // rather than through whichever provider ImageIO hands back first, which for JPEG is not
+            // this library's at all. A plain JPEG format therefore comes out of jpegli rather than
+            // out of com.sun.imageio, which is the point of shipping the library.
+            stream.write(encodeJpeg(image, jpeg, quality));
+            return;
+        }
+
         String formatName = format.getFormatName();
-        Iterator<javax.imageio.ImageWriter> writers = ImageIO.getImageWritersByFormatName(formatName);
+        // getImageWriters(type, name) rather than getImageWritersByFormatName(name): the latter
+        // answers with every provider registered under a name and never asks canEncodeImage, so its
+        // order is registration order rather than suitability. A JPEG provider backed by jpegli is
+        // exactly the provider that declines the image whenever its native library is missing, and it
+        // is registered before the JDK's own, so taking the first entry would replace a working
+        // codec with one that throws. Filtering leaves the JDK's writer in place, which is what
+        // happened before this jar claimed JPEG at all.
+        Iterator<javax.imageio.ImageWriter> writers =
+                ImageIO.getImageWriters(ImageTypeSpecifier.createFromRenderedImage(image), formatName);
         if (!writers.hasNext()) {
             ImageIO.write(image, formatName, stream);
             return;
@@ -339,12 +360,12 @@ public final class ImageWriter {
      * The image metadata a format asks for, or {@code null} when it asks for none.
      *
      * <p>
-     * Only JPEG has anything to say here: the colour-difference channels are laid down at the
-     * sampling rates its frame header names, and those are not an {@link ImageWriteParam} but
-     * image metadata. A JPEG written at {@link ImageFormat.Jpeg#DEFAULT_SUBSAMPLING} says nothing,
-     * which is the point of answering {@code null} for it: the write then carries no metadata at
-     * all, exactly as it did before, and the file it produces is the file the writer would have
-     * written on its own.
+     * Only JPEG has anything to say here, and only when the jpegli codec is not the one writing it:
+     * the colour-difference channels are laid down at the sampling rates its frame header names, and
+     * those are not an {@link ImageWriteParam} but image metadata. A JPEG written at
+     * {@link ImageFormat.Jpeg#DEFAULT_SUBSAMPLING} says nothing, which is the point of answering
+     * {@code null} for it: the write then carries no metadata at all, exactly as it did before, and
+     * the file it produces is the file the writer would have written on its own.
      * </p>
      */
     private static IIOMetadata jpegMetadata(javax.imageio.ImageWriter writer, BufferedImage image,
@@ -376,6 +397,15 @@ public final class ImageWriter {
             // that failed, so the caller is told the request cannot be honoured.
             throw new IOException("the JPEG writer would not accept " + jpeg.subsampling
                     + " subsampling: " + e.getMessage(), e);
+        }
+    }
+
+    private static byte[] encodeJpeg(BufferedImage image, ImageFormat.Jpeg jpeg, double quality) throws IOException {
+        try {
+            return JpegliCodec.encode(image, Math.round((float) quality * JpegliLibrary.IMAGIFY_JPEG_MAX_QUALITY),
+                    jpeg.subsampling.samp, jpeg.optimizeHuffmanTables);
+        } catch (JpegException e) {
+            throw new IOException("failed to encode a JPEG image: " + e.getMessage(), e);
         }
     }
 
@@ -416,6 +446,8 @@ public final class ImageWriter {
         if (format instanceof ImageFormat.Jpeg jpeg && jpeg.optimizeHuffmanTables) {
             // The entropy coder tables are this one's own extension of the write param, so the
             // switch is only there to be asked for and the format is the only place a caller can.
+            // This is the JDK writer's extension and is only ever reached when jpegli is absent, in
+            // which case the JDK writer is the one that is going to honour it.
             if (param instanceof JPEGImageWriteParam jpegParam) {
                 jpegParam.setOptimizeHuffmanTables(true);
             }

@@ -13,6 +13,7 @@ import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import imagify.avif.AvifException;
 import imagify.avif.AvifImageInfo;
+import imagify.pixels.AbgrPixels;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;

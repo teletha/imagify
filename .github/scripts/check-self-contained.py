@@ -4,10 +4,10 @@
 The libraries bundled into the imagify jar are loaded by absolute path out of a temporary
 directory. On Windows the loader resolves the dependencies of the module it loads against the
 directory of the *executable* and against PATH, never against the directory of the module
-itself, so a libavif that links aom.dll next to it would fail to load for every user. A
-distribution build such as MSYS2's, which is only 326 KB precisely because it links aom, dav1d,
-rav1e, SvtAv1Enc, libyuv, libjpeg, libpng, libxml2 and zlib dynamically, cannot be shipped
-this way.
+itself, so a libavif that links aom.dll next to it, or a jpegli that links highway.dll next
+to it, would fail to load for every user. A distribution build such as MSYS2's libavif, which
+is only 326 KB precisely because it links aom, dav1d, rav1e, SvtAv1Enc, libyuv, libjpeg,
+libpng, libxml2 and zlib dynamically, cannot be shipped this way.
 
 Hence the bundled binaries must be self contained: whatever they link may only be the C runtime
 and the operating system. This script reads the dependency list straight out of the PE, ELF and
@@ -32,7 +32,7 @@ WINDOWS_ALLOWED = [
     # Universal CRT, which Windows 10 and later ship as api-ms-win-crt-* forwarders. This is what a
     # /MT build imports once the static C runtime is linked in.
     "api-ms-*", "ext-ms-*", "ucrtbase.dll", "ucrtbased.dll", "ucrt*.dll", "msvcrt*.dll",
-    # The kernel and the handful of system libraries libavif and aom actually touch.
+    # The kernel and the handful of system libraries libavif, aom, jpegli and highway actually touch.
     "kernel32.dll", "kernelbase.dll", "ntdll.dll", "user32.dll", "gdi32.dll",
     "advapi32.dll", "ole32.dll", "oleaut32.dll", "shell32.dll", "shlwapi.dll",
     "ws2_32.dll", "mswsock.dll", "bcrypt.dll", "ncrypt.dll", "rpcrt4.dll",
@@ -42,7 +42,7 @@ WINDOWS_ALLOWED = [
 ]
 # VCRUNTIME140.dll and MSVCP140.dll are deliberately absent. They ship with the Visual C++
 # redistributable, not with Windows, so a library that imports them needs something installed that
-# this project does not install. The Windows job builds with /MT to avoid them, and webp4j's own
+# this project does not install. The Windows jobs build with /MT to avoid them, and webp4j's own
 # bundled DLL is in the same position, depending on nothing but KERNEL32 and msvcrt.
 
 LINUX_ALLOWED = [
