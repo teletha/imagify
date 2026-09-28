@@ -5,7 +5,8 @@ The libraries bundled into the imagify jar are loaded by absolute path out of a 
 directory. On Windows the loader resolves the dependencies of the module it loads against the
 directory of the *executable* and against PATH, never against the directory of the module
 itself, so a libavif that links aom.dll next to it, or a jpegli that links highway.dll next
-to it, would fail to load for every user. A distribution build such as MSYS2's libavif, which
+to it, or a libwebp that links pthread.dll next to it, would fail to load for every user. A
+distribution build such as MSYS2's libavif, which
 is only 326 KB precisely because it links aom, dav1d, rav1e, SvtAv1Enc, libyuv, libjpeg,
 libpng, libxml2 and zlib dynamically, cannot be shipped this way.
 
@@ -42,8 +43,8 @@ WINDOWS_ALLOWED = [
 ]
 # VCRUNTIME140.dll and MSVCP140.dll are deliberately absent. They ship with the Visual C++
 # redistributable, not with Windows, so a library that imports them needs something installed that
-# this project does not install. The Windows jobs build with /MT to avoid them, and webp4j's own
-# bundled DLL is in the same position, depending on nothing but KERNEL32 and msvcrt.
+# this project does not install. The Windows jobs build with /MT to avoid them, and the bundled
+# libwebp shim is in the same position, depending on nothing but KERNEL32 and ucrtbase.
 
 LINUX_ALLOWED = [
     "libc.so.6", "libm.so.6", "libdl.so.2", "librt.so.1", "libpthread.so.0",

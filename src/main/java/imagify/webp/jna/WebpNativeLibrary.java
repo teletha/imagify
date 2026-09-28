@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package imagify.avif.jna;
+package imagify.webp.jna;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,54 +24,56 @@ import java.util.Locale;
 import static java.lang.System.getLogger;
 
 /**
- * Locates the {@code libavif} shared library that ships inside this jar and unpacks it so that the
- * platform dynamic linker can load it.
+ * Locates the {@code libwebp} based shared library that ships inside this jar and unpacks it so
+ * that the platform dynamic linker can load it.
  *
  * <p>A shared library cannot be mapped straight out of a jar, so the resource is copied to a
- * temporary directory and {@code System.load}ed from there by its absolute path. The same trick is
- * used by the sibling codec shims of this library, which is where the layout below comes from.
+ * temporary directory and loaded from there by its absolute path, which is the same trick
+ * {@code imagify.avif.jna.AvifNativeLibrary} uses for {@code libavif} and
+ * {@code imagify.jpeg.jna.JpegliNativeLibrary} uses for {@code jpegli}, and which is where the
+ * layout below comes from.
  *
  * <p>The bundled binaries live under {@value #RESOURCE_ROOT} and are named after the platform they
  * were built for:
  *
  * <pre>
- * libavif-windows-x64.dll
- * libavif-windows-arm64.dll
- * libavif-linux-x64.so
- * libavif-linux-arm64.so
- * libavif-macos-x64.dylib
- * libavif-macos-arm64.dylib
+ * imagifywebp-windows-x64.dll
+ * imagifywebp-windows-arm64.dll
+ * imagifywebp-linux-x64.so
+ * imagifywebp-linux-arm64.so
+ * imagifywebp-macos-x64.dylib
+ * imagifywebp-macos-arm64.dylib
  * </pre>
  *
- * <p>They are built with {@code -DBUILD_SHARED_LIBS=ON -DAVIF_BUILD_APPS=OFF -DAVIF_CODEC_AOM=LOCAL}
- * so that aom is linked in statically and the library has no further dependencies. That matters on
- * Windows, where the loader resolves the dependencies of a {@code LoadLibrary}ed module against the
+ * <p>See {@code src/main/native/webp/CMakeLists.txt} for how they are built. The short version is that
+ * they are statically linked against libwebp, so that they have no further dependencies at all: on
+ * Windows the loader resolves the dependencies of a {@code LoadLibrary}ed module against the
  * directory of the executable and against {@code PATH} only, never against the directory of the
  * module itself.
  *
  * <p>Nothing here ever throws. A platform without a bundled library, a missing resource and a full
- * temporary directory all simply mean "not bundled", which leaves {@link AvifCodec} free to fall back
- * to a {@code libavif} installed on the system.
+ * temporary directory all simply mean "not bundled", which leaves {@link WebpCodec} free to fall
+ * back to a library installed on the system.
  */
-final class AvifNativeLibrary {
+final class WebpNativeLibrary {
 
-    private static final Logger log = getLogger(AvifNativeLibrary.class.getName());
+    private static final Logger log = getLogger(WebpNativeLibrary.class.getName());
 
     /** Classpath directory that holds the per platform shared libraries. */
-    static final String RESOURCE_ROOT = "/imagify/avif/native/";
+    static final String RESOURCE_ROOT = "/imagify/webp/native/";
 
     /**
      * Set this system property to {@code false} to ignore the bundled library and always look for a
-     * {@code libavif} installed on the system.
+     * {@code libwebp} based one installed on the system.
      */
-    static final String BUNDLED_PROPERTY = "imagify.avif.bundled";
+    static final String BUNDLED_PROPERTY = "imagify.webp.bundled";
 
     private static final Object LOCK = new Object();
 
     private static volatile boolean resolved;
     private static volatile Path extracted;
 
-    private AvifNativeLibrary() {
+    private WebpNativeLibrary() {
         // utility class
     }
 
@@ -93,7 +95,7 @@ final class AvifNativeLibrary {
             try {
                 extracted = unpack();
             } catch (Throwable t) {
-                log.log(Level.DEBUG, "cannot unpack the bundled libavif", t);
+                log.log(Level.DEBUG, "cannot unpack the bundled WebP library", t);
             }
             resolved = true;
             return extracted;
@@ -102,7 +104,7 @@ final class AvifNativeLibrary {
 
     private static Path unpack() {
         if (!Boolean.parseBoolean(System.getProperty(BUNDLED_PROPERTY, "true"))) {
-            log.log(Level.DEBUG, "the bundled libavif is disabled by -D{0}=false", BUNDLED_PROPERTY);
+            log.log(Level.DEBUG, "the bundled WebP library is disabled by -D{0}=false", BUNDLED_PROPERTY);
             return null;
         }
         String osName = System.getProperty("os.name");
@@ -110,7 +112,7 @@ final class AvifNativeLibrary {
         String platform = platform(osName);
         String cpu = cpu(arch);
         if (platform == null || cpu == null) {
-            log.log(Level.DEBUG, "no bundled libavif for {0}/{1}", osName, arch);
+            log.log(Level.DEBUG, "no bundled WebP library for {0}/{1}", osName, arch);
             return null;
         }
         return unpack(resourceNameOf(platform, cpu), fileName(platform));
@@ -125,28 +127,28 @@ final class AvifNativeLibrary {
      * could not be written
      */
     static Path unpack(String resource, String fileName) {
-        try (InputStream in = AvifNativeLibrary.class.getResourceAsStream(RESOURCE_ROOT + resource)) {
+        try (InputStream in = WebpNativeLibrary.class.getResourceAsStream(RESOURCE_ROOT + resource)) {
             if (in == null) {
-                log.log(Level.DEBUG, "the bundled libavif {0} is not in this jar", RESOURCE_ROOT + resource);
+                log.log(Level.DEBUG, "the bundled WebP library {0} is not in this jar", RESOURCE_ROOT + resource);
                 return null;
             }
-            Path directory = Files.createTempDirectory("imagify-avif-");
+            Path directory = Files.createTempDirectory("imagify-webp-");
             Path file = directory.resolve(fileName);
             try (OutputStream out = Files.newOutputStream(file)) {
                 in.transferTo(out);
             }
             deleteOnExit(directory);
-            log.log(Level.DEBUG, "unpacked the bundled libavif to {0}", file);
+            log.log(Level.DEBUG, "unpacked the bundled WebP library to {0}", file);
             return file.toAbsolutePath();
         } catch (IOException e) {
-            log.log(Level.DEBUG, "cannot unpack the bundled libavif " + resource, e);
+            log.log(Level.DEBUG, "cannot unpack the bundled WebP library " + resource, e);
             return null;
         }
     }
 
     /**
      * Returns the name of the classpath resource that holds the shared library for the given
-     * platform, for example {@code libavif-linux-x64.so}.
+     * platform, for example {@code imagifywebp-linux-x64.so}.
      *
      * @param osName the value of the {@code os.name} system property
      * @param arch the value of the {@code os.arch} system property
@@ -166,7 +168,7 @@ final class AvifNativeLibrary {
      * @return the resource name
      */
     private static String resourceNameOf(String platform, String cpu) {
-        return "libavif-" + platform + "-" + cpu + extension(platform);
+        return "imagifywebp-" + platform + "-" + cpu + extension(platform);
     }
 
     /**
@@ -225,7 +227,9 @@ final class AvifNativeLibrary {
      * @return the plain file name
      */
     static String fileName(String platform) {
-        return "windows".equals(platform) ? "avif" + extension(platform) : "libavif" + extension(platform);
+        return "windows".equals(platform)
+                ? "imagifywebp" + extension(platform)
+                : "libimagifywebp" + extension(platform);
     }
 
     private static void deleteOnExit(Path directory) {
@@ -249,6 +253,6 @@ final class AvifNativeLibrary {
                 // Leaving the temporary directory behind is the lesser evil.
                 log.log(Level.DEBUG, "cannot delete " + directory, e);
             }
-        }, "imagify-avif-cleanup"));
+        }, "imagify-webp-cleanup"));
     }
 }

@@ -19,7 +19,7 @@ import java.util.Objects;
 import imagify.ImageFormat.Jpeg.Subsampling;
 import imagify.avif.jna.AvifLibrary;
 import imagify.jpeg.jna.JpegliLibrary;
-import imagify.webp.WebpCodec;
+import imagify.webp.jna.WebpCodec;
 
 /**
  * Supported image formats with auto-detection capabilities.

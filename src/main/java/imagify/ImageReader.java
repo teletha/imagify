@@ -12,7 +12,7 @@ package imagify;
 import imagify.jpeg.JpegImageReader;
 import imagify.jpeg.JpegImageReaderSpi;
 import imagify.jpeg.jna.JpegliCodec;
-import imagify.webp.WebpCodec;
+import imagify.webp.jna.WebpCodec;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;

@@ -1,0 +1,176 @@
+name: webp-natives
+
+# Builds the WebP shared libraries that ship inside the jar and attaches them to a rolling release
+# named "webp-natives". See src/main/resources/imagify/webp/native/README.md.
+#
+#   gh workflow run webp-natives.yml
+#
+# Then drop the downloaded files into src/main/resources/imagify/webp/native/ and commit them.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Rebuild monthly so the bundled libwebp tracks upstream fixes.
+    - cron: "17 5 1 * *"
+
+permissions:
+  contents: write
+
+env:
+  # libwebp's releases are plain tags, and libwebp is pinned to a tag rather than to a commit
+  # because that is what upstream publishes and what a bug report can name. The version beside the
+  # tag is what WebpCodec.getVersion() reports. The two belong together: the tag says which code
+  # was built and the version says how the library that came out of it introduces itself.
+  WEBP_TAG: v1.6.0
+  WEBP_VERSION: 1.6.0
+
+jobs:
+  build:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: windows-x64,  os: windows-2022,      ext: dll,   arch: x64 }
+          - { target: windows-arm64, os: windows-11-arm,    ext: dll,   arch: arm64 }
+          - { target: linux-x64,    os: ubuntu-24.04,      ext: so }
+          - { target: linux-arm64,  os: ubuntu-24.04-arm,  ext: so }
+          - { target: macos-x64,    os: macos-15-intel,    ext: dylib }
+          - { target: macos-arm64,  os: macos-14,          ext: dylib }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Check out libwebp
+        # Everything the build needs is in the tag, so the submodules, which only serve libwebp's
+        # own tools and tests, are not pulled in. The tools they would serve are configured off
+        # below, and the codec itself depends on nothing beyond the C runtime.
+        uses: actions/checkout@v4
+        with:
+          repository: webmproject/libwebp
+          ref: ${{ env.WEBP_TAG }}
+          path: libwebp
+
+      - name: Install CMake and Ninja (Windows)
+        # Chocolatey updates only the machine PATH while every step runs with the PATH the job
+        # started with, so re-read the machine PATH to make either tool visible to the next step.
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install --no-progress -y cmake ninja
+          $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + $env:Path
+          cmake --version
+          ninja --version
+
+      - name: Set up the MSVC environment (Windows)
+        # Without a developer command prompt, CMake picks the MinGW GCC that ships in the runner
+        # image, and a MinGW DLL imports libwinpthread-1.dll, which is not part of Windows. MSVC
+        # with the static CRT below matches what the other codecs in this jar ship: KERNEL32 plus
+        # the C runtime that Windows itself provides, and nothing else.
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.arch }}
+
+      - name: Pin cl as the compiler (Windows)
+        # msvc-dev-cmd puts cl on the PATH, but CMake would still prefer the cc or gcc it finds
+        # first, which is MinGW here. Naming the compiler is the only portable way to say so.
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          echo "CC=cl" >> "$GITHUB_ENV"
+          echo "CXX=cl" >> "$GITHUB_ENV"
+          cl 2>&1 | head -1
+
+      - name: Install Ninja (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+
+      - name: Install Ninja (macOS)
+        # brew install exits non-zero on a runner that already has ninja, so the failure is expected
+        # on some images and must not fail the step. Asking the binary for its version is what
+        # actually decides, since `|| true` would swallow a genuine install failure as well.
+        if: runner.os == 'macOS'
+        run: |
+          brew install ninja || true
+          ninja --version
+
+      - name: Configure
+        # src/main/native/webp overlays libwebp's own build: everything libwebp builds besides the
+        # codec is configured off, its four static libraries are linked into the one shared object,
+        # and symbols are restricted to the imagify_webp_* interface. See the comments in that
+        # CMakeLists.txt.
+        #
+        # The version is passed in rather than derived, because libwebp's own build settles on its
+        # library version (1.0.6 at tag v1.6.0) rather than the release version, and a checkout of
+        # an archive has no git tag to describe. WEBP_USE_THREAD stays on, which is what the
+        # webp4j this replaces used too (multiThreaded(true) in that API); the shim links the
+        # threading library itself because libwebp's libraries do not.
+        run: >
+          cmake -S src/main/native/webp -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DIMAGIFY_WEBP_SOURCE_DIR=${{ github.workspace }}/libwebp
+          -DIMAGIFY_WEBP_VERSION=${{ env.WEBP_VERSION }}
+
+      - name: Build
+        # imagify_webp is the shim plus the static webp, webpdemux and libwebpmux behind it. There
+        # is no install step and no prefix: the result is loaded by absolute path, so nothing has to
+        # be arranged around it.
+        run: cmake --build build --target imagify_webp
+
+      - name: Collect
+        # One name pattern for every platform. CMake puts no prefix on a DLL, so the Windows output
+        # is imagifywebp.dll and the others libimagifywebp.so and libimagifywebp.1.dylib; both
+        # spellings of the Windows one are matched so that a change of prefix cannot turn into an
+        # empty result.
+        # -type f skips the libimagifywebp.so.1 symlinks and copies the real file.
+        shell: bash
+        run: |
+          mkdir -p dist
+          src=$(find build -type f \( -name 'imagifywebp.dll' -o -name 'libimagifywebp.dll' \
+            -o -name 'libimagifywebp.so' -o -name 'libimagifywebp.so.*' \
+            -o -name 'libimagifywebp*.dylib' \) | head -1)
+          test -n "$src" || { echo "::error::no WebP shared library was produced under build/"; exit 1; }
+          cp "$src" "dist/imagifywebp-${{ matrix.target }}.${{ matrix.ext }}"
+          ls -l dist
+
+      - name: Reject a build with unfilled dependencies
+        # The script reads the PE, ELF and Mach-O containers directly, so the same check runs
+        # everywhere. objdump and otool are not present on the Windows runners and dumpbin needs an
+        # MSVC environment, which used to make this step pass without ever looking at the library.
+        run: python .github/scripts/check-self-contained.py "dist/imagifywebp-${{ matrix.target }}.${{ matrix.ext }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: imagifywebp-${{ matrix.target }}
+          path: dist/
+          if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Publish
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: webp-natives
+          name: webp-natives
+          body: |
+            Rolling build of the `libwebp` shared libraries bundled in `imagify`, built from libwebp
+            at tag `${{ env.WEBP_TAG }}`.
+
+            Drop these files into `src/main/resources/imagify/webp/native/`.
+          files: dist/*

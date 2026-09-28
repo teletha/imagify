@@ -9,6 +9,8 @@
  */
 package imagify.webp;
 
+import imagify.webp.jna.WebpCodec;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
@@ -438,8 +440,8 @@ class WebpImageIOTest {
         requireLibwebp();
         byte[] webp = WebpCodec.encode(sample(16, 16, true), 0, true);
         assertFalse(WebpCodec.readHeader(webp).hasAnimation());
-        // webp4j's single image decoder rejects an animation outright, so the still path has to
-        // stay on it rather than reach for the animation decoder.
+        // The still decoder refuses an animation outright, so the still path has to stay on it
+        // rather than reach for the animation decoder.
         assertNotNull(WebpCodec.decode(webp));
     }
 

@@ -10,7 +10,7 @@
 package imagify.avif;
 
 import imagify.avif.jna.AvifCodec;
-import imagify.webp.WebpCodec;
+import imagify.webp.jna.WebpCodec;
 import imagify.webp.WebpException;
 
 import org.junit.jupiter.api.Assumptions;

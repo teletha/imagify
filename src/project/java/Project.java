@@ -20,7 +20,6 @@ public class Project extends bee.api.Project {
         require(SourceVersion.latest(), SourceVersion.RELEASE_24);
 
         require("net.java.dev.jna", "jna");
-        require("dev.matrixlab.webp4j", "webp4j-core");
         require("com.github.weisj", "jsvg");
         require("com.github.teletha", "antibug").atTest();
 
@@ -48,8 +47,10 @@ public class Project extends bee.api.Project {
                     -Dimagify.jpeg.bundled=false   # ignore the bundled library,
                                                     # use a system jpegli instead
 
-                The native `libwebp` library is bundled the same way, inside
-                `webp4j`.
+                The native `libwebp` library is bundled the same way.
+
+                    -Dimagify.webp.bundled=false  # ignore the bundled library,
+                                                    # use a system libwebp instead
 
                 Neither is required for JPEG to work. When one of them is
                 missing for the running platform, the `ImageIO` plug-in steps
@@ -130,10 +131,12 @@ public class Project extends bee.api.Project {
                     List<BufferedImage> frames =
                         WebpCodec.decodeAnimation(animated);
 
-                Lossless `VP8L` output is selected by choosing the
-                `WebP Lossless` compression type of the write parameter, or by
-                passing `true` to `WebpCodec.encode`. An animated file is read
-                as one image per frame, each already composited onto the canvas.
+                The direct API lives in `imagify.webp.jna.WebpCodec`, alongside
+                the `imagify.webp` ImageIO plug-in it backs. Lossless `VP8L`
+                output is selected by choosing the `WebP Lossless` compression
+                type of the write parameter, or by passing `true` to
+                `WebpCodec.encode`. An animated file is read as one image per
+                frame, each already composited onto the canvas.
 
                 ## SVG
 
@@ -163,8 +166,9 @@ public class Project extends bee.api.Project {
                 ## Version
 
                 Supported `libavif` versions: `1.0.0` to `1.4.x`. `JpegliCodec`
-                binds a flat C ABI of its own rather than jpegli's, and refuses
-                a library built against another revision of it.
+                and `WebpCodec` bind a flat C ABI of their own rather than
+                jpegli's or libwebp's, and refuse a library built against
+                another revision of it.
                 """);
     }
 }

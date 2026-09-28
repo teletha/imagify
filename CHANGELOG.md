@@ -1,5 +1,19 @@
 # Changelog
 
+## [Unreleased]
+
+### Features
+
+* encode and decode WebP with a bundled `libwebp`, dropped `webp4j`
+
+### ⚠ Breaking change
+
+* `imagify.webp.WebpCodec` moved to `imagify.webp.jna.WebpCodec`, alongside `AvifCodec` and
+  `JpegliCodec`. The public API of the class is unchanged; the import is what changed. The
+  `webp4j-core` dependency is gone, replaced by a bundled `libwebp` shim built for the same six
+  platforms the other codecs ship for. Update the import and, if one was declared, drop the
+  `webp4j-core` dependency.
+
 ## [1.0.3](https://github.com/teletha/imagify/compare/1.0.2...1.0.3) (2026-09-26)
 
 

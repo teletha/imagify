@@ -9,6 +9,8 @@
  */
 package imagify.webp;
 
+import imagify.webp.jna.WebpCodec;
+
 import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.util.Locale;
@@ -23,7 +25,7 @@ import javax.imageio.spi.ImageWriterSpi;
 import javax.imageio.stream.ImageOutputStream;
 
 /**
- * {@link ImageWriter} that encodes images as WebP using {@code libwebp} through {@code webp4j}.
+ * {@link ImageWriter} that encodes images as WebP using a bundled {@code libwebp}.
  *
  * <p>
  * Any non empty {@link RenderedImage} can be encoded. The quality comes from the compression

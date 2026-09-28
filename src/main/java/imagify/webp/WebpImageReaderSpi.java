@@ -9,6 +9,8 @@
  */
 package imagify.webp;
 
+import imagify.webp.jna.WebpCodec;
+
 import javax.imageio.ImageReader;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
@@ -22,8 +24,8 @@ import java.util.Locale;
 /**
  * Registers {@link WebpImageReader} with {@code ImageIO}.
  *
- * <p>Decoding needs the native {@code libwebp} library, which {@code webp4j} bundles and unpacks on
- * first use. To keep {@code ImageIO} usable when that library is absent,
+ * <p>Decoding needs the native {@code libwebp} library, which this jar bundles and unpacks on first
+ * use. To keep {@code ImageIO} usable when that library is absent,
  * {@link #canDecodeInput(Object)} answers {@code false} in that case, which makes {@code ImageIO.read()}
  * fall through to the other providers instead of failing hard.
  */

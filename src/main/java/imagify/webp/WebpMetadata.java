@@ -9,6 +9,8 @@
  */
 package imagify.webp;
 
+import imagify.webp.jna.WebpCodec;
+
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import org.w3c.dom.Node;

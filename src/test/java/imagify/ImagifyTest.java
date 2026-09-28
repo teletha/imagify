@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import imagify.avif.jna.AvifCodec;
-import imagify.webp.WebpCodec;
+import imagify.webp.jna.WebpCodec;
 
 /**
  * Tests the fluent {@link Imagify} API end-to-end.

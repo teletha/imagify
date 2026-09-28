@@ -9,6 +9,8 @@
  */
 package imagify.webp;
 
+import imagify.webp.jna.WebpCodec;
+
 import javax.imageio.IIOException;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -28,7 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * {@link ImageReader} for WebP images, backed by {@code libwebp} through {@code webp4j}.
+ * {@link ImageReader} for WebP images, backed by a bundled {@code libwebp}.
  *
  * <p>A still image is reported as one image. An animation is reported as one image per frame, with
  * every frame already composited onto the canvas, so frame {@code n} is a full size picture rather

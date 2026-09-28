@@ -19,7 +19,7 @@ import imagify.jpeg.JpegImageWriter;
 import imagify.jpeg.JpegWriteParam;
 
 /**
- * JNA binding for the C ABI in {@code src/main/native/imagify_jpegli.h}.
+ * JNA binding for the C ABI in {@code src/main/native/jpegli/imagify_jpegli.h}.
  *
  * <p>It is a binding for that header and not for jpegli itself. jpegli implements the whole of
  * libjpeg's public interface, so a binding could in principle name {@code jpeg_start_compress} and
@@ -68,7 +68,7 @@ public interface JpegliLibrary extends Library {
     /**
      * The version of the C ABI this binding was written against, as
      * {@code IMAGIFY_JPEGLI_ABI_VERSION}
-     * in {@code src/main/native/imagify_jpegli.h} spells it.
+     * in {@code src/main/native/jpegli/imagify_jpegli.h} spells it.
      *
      * <p>It is checked once when the library is loaded and nothing else depends on it, because the
      * only way it could ever be wrong is a library built against a different revision of the
@@ -119,7 +119,7 @@ public interface JpegliLibrary extends Library {
      * <p>The number is the one {@link imagify.ImageFormat.Jpeg} carries as its 0.0 to 1.0
      * {@code defaultQuality}, restated on the encoder's own 1 to 100 scale. That is the same thing
      * {@link imagify.avif.jna.AvifLibrary#DEFAULT_QUALITY} and
-     * {@link imagify.webp.WebpCodec#DEFAULT_QUALITY} do: a codec cannot read a package private
+     * {@link imagify.webp.jna.WebpCodec#DEFAULT_QUALITY} do: a codec cannot read a package private
      * member of the format that describes it, so each one says what it does by default and the
      * format's own value follows it. Restating it rather than copying it into two call sites is
      * what keeps the two from drifting apart.
