@@ -274,18 +274,19 @@ public final class AvifCodec {
     // ---------------------------------------------------------------------------------- encode
 
     /**
-     * Encodes an image as AVIF using the default quality and speed.
+     * Encodes an image as AVIF using the default quality and the encoder's own speed and alpha
+     * quality.
      *
      * @param source the image to encode
      * @return the complete AVIF file
      * @throws AvifException when the library is unavailable or the image cannot be encoded
      */
     public static byte[] encode(RenderedImage source) throws AvifException {
-        return encode(source, AvifLibrary.DEFAULT_QUALITY, AvifLibrary.DEFAULT_SPEED);
+        return encode(source, AvifLibrary.DEFAULT_QUALITY, null, null);
     }
 
     /**
-     * Encodes an image as AVIF.
+     * Encodes an image as AVIF at the default alpha quality.
      *
      * @param source the image to encode; any {@link RenderedImage} is accepted
      * @param quality 0 (smallest) to 100 (lossless)
@@ -294,6 +295,27 @@ public final class AvifCodec {
      * @throws AvifException when the library is unavailable or the image cannot be encoded
      */
     public static byte[] encode(RenderedImage source, int quality, int speed) throws AvifException {
+        return encode(source, quality, Integer.valueOf(speed), null);
+    }
+
+    /**
+     * Encodes an image as AVIF.
+     *
+     * <p>A setting that is {@code null} is not a value but an absence of one, and the encoder's own
+     * choice is made in its place: {@link AvifLibrary#DEFAULT_SPEED} for the speed and
+     * {@link AvifLibrary#AVIF_QUALITY_LOSSLESS} for the alpha quality.
+     *
+     * @param source the image to encode; any {@link RenderedImage} is accepted
+     * @param quality 0 (smallest) to 100 (lossless)
+     * @param speed 0 (slowest, best quality) to 10 (fastest, worst quality), or {@code null} for
+     *        {@link AvifLibrary#DEFAULT_SPEED}
+     * @param alphaQuality 0 (worst) to {@link AvifLibrary#AVIF_QUALITY_BEST} (every alpha value kept
+     *        as it was given), or {@code null} for {@link AvifLibrary#AVIF_QUALITY_LOSSLESS}
+     * @return the complete AVIF file
+     * @throws AvifException when the library is unavailable or the image cannot be encoded
+     */
+    public static byte[] encode(RenderedImage source, int quality, Integer speed, Integer alphaQuality)
+            throws AvifException {
         AvifLibrary lib = requireLibrary();
         if (source == null) {
             throw new AvifException("no image to encode");
@@ -316,7 +338,11 @@ public final class AvifCodec {
         try {
             image.read();
             toYuv(lib, image, pixels);
-            return finish(lib, image, quality, speed);
+            return finish(lib, image, quality,
+                    speed != null ? speed : AvifLibrary.DEFAULT_SPEED,
+                    // Alpha planes are cheap, and lossy alpha is the single most visible AVIF
+                    // artefact, so the plane is kept exactly unless a caller says otherwise.
+                    alphaQuality != null ? alphaQuality : AvifLibrary.AVIF_QUALITY_LOSSLESS);
         } finally {
             lib.avifImageDestroy(image);
         }
@@ -342,7 +368,8 @@ public final class AvifCodec {
         }
     }
 
-    private static byte[] finish(AvifLibrary lib, AvifImage image, int quality, int speed) throws AvifException {
+    private static byte[] finish(AvifLibrary lib, AvifImage image, int quality, int speed, int alphaQuality)
+            throws AvifException {
         AvifEncoder encoder = lib.avifEncoderCreate();
         if (encoder == null) {
             throw new AvifException("avifEncoderCreate() returned NULL");
@@ -351,8 +378,7 @@ public final class AvifCodec {
             encoder.maxThreads = defaultThreads();
             encoder.speed = speed;
             encoder.quality = quality;
-            // Alpha planes are cheap, and lossy alpha is the single most visible AVIF artefact.
-            encoder.qualityAlpha = AvifLibrary.AVIF_QUALITY_LOSSLESS;
+            encoder.qualityAlpha = alphaQuality;
             encoder.timescale = 1;
             encoder.write();
 
@@ -378,7 +404,8 @@ public final class AvifCodec {
     // ------------------------------------------------------------------------- encode
 
     /**
-     * Encodes a sequence of frames as an animated AVIF file.
+     * Encodes a sequence of frames as an animated AVIF file at the encoder's own speed and alpha
+     * quality.
      *
      * @param frames       the frames, all of the same size, at least two
      * @param durationsMs  how long each frame is shown, in milliseconds, one entry per frame
@@ -386,9 +413,35 @@ public final class AvifCodec {
      * @param loopCount    how often the animation repeats, 0 meaning forever
      * @return the complete animated AVIF file
      * @throws AvifException when the library is unavailable or the frames cannot be encoded
+     * @see #encodeAnimation(List, int[], int, int, Integer, Integer)
      */
     public static byte[] encodeAnimation(List<BufferedImage> frames, int[] durationsMs,
             int quality, int loopCount) throws AvifException {
+        return encodeAnimation(frames, durationsMs, quality, loopCount, null, null);
+    }
+
+    /**
+     * Encodes a sequence of frames as an animated AVIF file.
+     *
+     * <p>A setting that is {@code null} is not a value but an absence of one, and the encoder's own
+     * choice is made in its place: {@link AvifLibrary#DEFAULT_ANIMATION_SPEED} for the speed, which
+     * is faster than the one for a single image because every frame is encoded, and
+     * {@link AvifLibrary#AVIF_QUALITY_LOSSLESS} for the alpha quality.
+     *
+     * @param frames       the frames, all of the same size, at least two
+     * @param durationsMs  how long each frame is shown, in milliseconds, one entry per frame
+     * @param quality      0 (smallest) to 100 (lossless)
+     * @param loopCount    how often the animation repeats, 0 meaning forever
+     * @param speed        0 (slowest, best quality) to 10 (fastest, worst quality), or {@code null}
+     *                     for {@link AvifLibrary#DEFAULT_ANIMATION_SPEED}
+     * @param alphaQuality 0 (worst) to {@link AvifLibrary#AVIF_QUALITY_BEST} (every alpha value kept
+     *                     as it was given), or {@code null} for
+     *                     {@link AvifLibrary#AVIF_QUALITY_LOSSLESS}
+     * @return the complete animated AVIF file
+     * @throws AvifException when the library is unavailable or the frames cannot be encoded
+     */
+    public static byte[] encodeAnimation(List<BufferedImage> frames, int[] durationsMs,
+            int quality, int loopCount, Integer speed, Integer alphaQuality) throws AvifException {
         AvifLibrary lib = requireLibrary();
         if (frames == null || frames.size() < 2) {
             throw new AvifException("an animation needs at least two frames, got "
@@ -416,9 +469,10 @@ public final class AvifCodec {
         try {
             encoder.maxThreads = defaultThreads();
             // Every frame is encoded, so the cost of a slow speed setting is paid N times over.
-            encoder.speed = AvifLibrary.DEFAULT_ANIMATION_SPEED;
+            encoder.speed = speed != null ? speed : AvifLibrary.DEFAULT_ANIMATION_SPEED;
             encoder.quality = quality;
-            encoder.qualityAlpha = AvifLibrary.AVIF_QUALITY_LOSSLESS;
+            // Alpha planes are cheap, and lossy alpha is the single most visible AVIF artefact.
+            encoder.qualityAlpha = alphaQuality != null ? alphaQuality : AvifLibrary.AVIF_QUALITY_LOSSLESS;
             encoder.timescale = 1000;
             encoder.repetitionCount = loopCount;
             encoder.write();

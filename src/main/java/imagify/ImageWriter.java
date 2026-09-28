@@ -11,6 +11,7 @@ package imagify;
 
 import imagify.avif.AvifException;
 import imagify.avif.jna.AvifCodec;
+import imagify.avif.jna.AvifLibrary;
 import imagify.webp.WebpCodec;
 import imagify.webp.WebpException;
 import imagify.webp.WebpImageWriterSpi;
@@ -44,6 +45,16 @@ import java.util.Iterator;
  * {@link ImageFormat.Webp#lossless()} the lossless {@code VP8L} one, for a still image as well as
  * for an animation. The quality is ignored by the lossless one, exactly as {@code libwebp} ignores
  * it.</p>
+ *
+ * <p>Settings a format carries rather than a write: the WebP encoder effort
+ * ({@link ImageFormat.Webp#compressionMethod(int)}) and whether it may mix lossy and lossless
+ * frames ({@link ImageFormat.Webp#allowMixed(boolean)}), and the AVIF encoder speed
+ * ({@link ImageFormat.Avif#speed(int)}) and alpha quality
+ * ({@link ImageFormat.Avif#alphaQuality(int)}). They are handed to the encoder whatever the output
+ * is, and the WebP ones are animation settings, because that is all the WebP binding this library
+ * uses offers them for. An {@link ImageWriteParam} can carry neither, so an AVIF still image is
+ * encoded through {@link AvifCodec} rather than through the ImageIO plug-in that wraps the same
+ * codec.</p>
  *
  * <p>{@link FrameSequence} handling: if the sequence has more than one frame and the target
  * format supports animation, the frames are encoded as an animation. Otherwise the first
@@ -253,16 +264,19 @@ public final class ImageWriter {
      * Only called when the format supports animation and the sequence has multiple frames.
      */
     private static byte[] encodeAnimation(FrameSequence frames, ImageFormat format, double quality) throws IOException {
-        if (format instanceof ImageFormat.Avif) {
+        int encoderQuality = (int) Math.round(quality * 100);
+        if (format instanceof ImageFormat.Avif avif) {
             try {
-                return AvifCodec.encodeAnimation(frames.frames(), frames.delaysMs(), (int) Math.round(quality * 100), frames.loopCount());
+                return AvifCodec.encodeAnimation(frames.frames(), frames.delaysMs(), encoderQuality,
+                        frames.loopCount(), avif.speed, avif.alphaQuality);
             } catch (AvifException e) {
                 throw new IOException("failed to encode AVIF animation", e);
             }
         }
         if (format instanceof ImageFormat.Webp webp) {
             try {
-                return WebpCodec.encodeAnimation(frames.frames(), frames.delaysMs(), (int) Math.round(quality * 100), webp.lossless, frames.loopCount());
+                return WebpCodec.encodeAnimation(frames.frames(), frames.delaysMs(), encoderQuality,
+                        webp.lossless, frames.loopCount(), webp.compressionMethod, webp.allowMixed);
             } catch (WebpException e) {
                 throw new IOException("failed to encode WebP animation", e);
             }
@@ -274,6 +288,15 @@ public final class ImageWriter {
 
     private static void writeToStream(BufferedImage image, ImageFormat format, double quality, ImageOutputStream stream) throws IOException {
         checkQuality(quality);
+
+        if (format instanceof ImageFormat.Avif avif) {
+            // An ImageWriteParam has room for a quality and a compression type and for nothing else,
+            // so the AVIF encoder settings the format carries cannot be handed to the plug-in. This
+            // goes through the codec itself instead, which is also what the plug-in does, so a plain
+            // AVIF format is encoded exactly as it was before.
+            stream.write(encodeAvif(image, avif, quality));
+            return;
+        }
 
         String formatName = format.getFormatName();
         Iterator<javax.imageio.ImageWriter> writers = ImageIO.getImageWritersByFormatName(formatName);
@@ -293,6 +316,15 @@ public final class ImageWriter {
             }
         } finally {
             writer.dispose();
+        }
+    }
+
+    private static byte[] encodeAvif(BufferedImage image, ImageFormat.Avif avif, double quality) throws IOException {
+        try {
+            return AvifCodec.encode(image, (int) Math.round(quality * AvifLibrary.AVIF_QUALITY_BEST),
+                    avif.speed, avif.alphaQuality);
+        } catch (AvifException e) {
+            throw new IOException("failed to encode an AVIF image: " + e.getMessage(), e);
         }
     }
 

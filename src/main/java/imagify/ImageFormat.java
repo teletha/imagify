@@ -9,6 +9,7 @@
  */
 package imagify;
 
+import imagify.avif.jna.AvifLibrary;
 import imagify.webp.WebpCodec;
 
 import java.io.IOException;
@@ -26,6 +27,15 @@ import java.util.Objects;
  * {@link #PNG} is a {@link Png}, and so on. The subclass is the natural home for whatever only
  * that one format does, so a format whose name, encoder or quirks differ from the others keeps
  * that difference next to its own name rather than in a switch somewhere else.
+ * </p>
+ *
+ * <p>
+ * A format whose encoder has settings of its own carries them as well, and a format asking for
+ * something other than the default is a value rather than a constant:
+ * {@link #WEBP} is the lossy bitstream at the usual encoder effort and {@link Webp#lossless()} the
+ * lossless one, {@link AVIF} is the encoder's own speed and alpha quality and
+ * {@link Avif#speed(int)} is another. Each method answers with a new value, leaving the one it was
+ * called on untouched.
  * </p>
  *
  * <p>
@@ -124,15 +134,61 @@ public abstract class ImageFormat {
      * settings than this one, and a value that answers to its settings is the one that can. Two
      * flavours holding the same settings are equal without being the same object.
      * </p>
+     *
+     * <p>
+     * The encoder has settings of its own besides the flavour, and the ones worth choosing are
+     * carried here too: {@link #compressionMethod}, how hard the encoder tries, and
+     * {@link #allowMixed}, whether it may store some frames without loss and others with loss.
+     * Both belong to an animation rather than to a single image, and the WebP binding this library
+     * uses wires only its animation encoder for them, so they say nothing about a still image.
+     * </p>
      */
     public static final class Webp extends ImageFormat {
+
+        /**
+         * The effort the encoder puts in when the format does not name one, which is what
+         * {@code libwebp} and the {@code gif2webp} tool use.
+         */
+        public static final int DEFAULT_COMPRESSION_METHOD = 4;
+
+        /**
+         * Whether the encoder may choose per frame when the format does not say, which is
+         * {@code false}: every frame is then stored in the flavour {@link #lossless} names.
+         */
+        public static final boolean DEFAULT_ALLOW_MIXED = false;
 
         /** Whether the pixels are stored without loss, which also means the quality is ignored. */
         public final boolean lossless;
 
-        private Webp(boolean lossless) {
+        /**
+         * How hard the encoder tries, {@code 0} being the quickest and {@code 6} the most thorough.
+         *
+         * <p>
+         * More effort buys a smaller file for the same quality at the cost of a slower encode. This
+         * is {@code libwebp}'s {@code method}, and it is honoured for an animation; the binding this
+         * library uses does not offer it to its single image encoder, so a still image is always
+         * written at {@link #DEFAULT_COMPRESSION_METHOD}.
+         * </p>
+         */
+        public final int compressionMethod;
+
+        /**
+         * Whether the encoder may store some frames of an animation without loss and others with
+         * loss, choosing per frame instead of following {@link #lossless} for all of them.
+         *
+         * <p>
+         * This is what {@code gif2webp} calls {@code -mixed}: a frame that does not change is
+         * stored losslessly and the ones that do are stored lossily, which is a smaller file than
+         * storing every frame losslessly. A single image has no such choice to make.
+         * </p>
+         */
+        public final boolean allowMixed;
+
+        private Webp(boolean lossless, int compressionMethod, boolean allowMixed) {
             super("WEBP", "webp", "image/webp", new byte[] {'R', 'I', 'F', 'F'}, false, true, 0.80);
             this.lossless = lossless;
+            this.compressionMethod = compressionMethod;
+            this.allowMixed = allowMixed;
         }
 
         /**
@@ -140,20 +196,45 @@ public abstract class ImageFormat {
          *         pixel as it was given
          */
         public Webp lossless() {
-            return new Webp(true);
+            return new Webp(true, compressionMethod, allowMixed);
+        }
+
+        /**
+         * @param method how hard the encoder tries, 0 (quickest) to 6 (most thorough)
+         * @return this format asking the encoder for that much effort
+         * @throws IllegalArgumentException if the effort is outside what {@code libwebp} accepts
+         */
+        public Webp compressionMethod(int method) {
+            if (method < 0 || method > 6) {
+                throw new IllegalArgumentException("the compression method must be between 0 and 6, got " + method);
+            }
+            return new Webp(lossless, method, allowMixed);
+        }
+
+        /**
+         * @param allowMixed whether the encoder may store some frames without loss and others with
+         *                   loss
+         * @return this format leaving that choice to the encoder
+         */
+        public Webp allowMixed(boolean allowMixed) {
+            return new Webp(lossless, compressionMethod, allowMixed);
         }
 
         /**
          * {@inheritDoc}
          *
          * <p>
-         * The flavour is part of what a WebP format is, so the lossy and the lossless one are not
-         * the same value.
+         * The flavour and the settings are part of what a WebP format is, so a lossy animation
+         * written with more effort is not the same value as a lossy one written with less.
          * </p>
          */
         @Override
         public boolean equals(Object object) {
-            return object instanceof Webp other && super.equals(object) && lossless == other.lossless;
+            return object instanceof Webp other
+                    && super.equals(object)
+                    && lossless == other.lossless
+                    && compressionMethod == other.compressionMethod
+                    && allowMixed == other.allowMixed;
         }
 
         /**
@@ -161,18 +242,103 @@ public abstract class ImageFormat {
          */
         @Override
         public int hashCode() {
-            return super.hashCode() * 31 + Boolean.hashCode(lossless);
+            return Objects.hash(super.hashCode(), lossless, compressionMethod, allowMixed);
         }
     }
 
     /**
      * AVIF format (.avif). AV1-based. Alpha support.
      * Magic bytes: "ftyp" box with "avif" brand
+     *
+     * <p>
+     * AVIF has no switch for lossless encoding: it is a quality of {@code AVIF_QUALITY_LOSSLESS} out
+     * of {@code AVIF_QUALITY_BEST}, so the quality a write is asked for is what says whether the
+     * pixels are kept. The settings that have no other home are carried here instead:
+     * {@link #speed}, how long the encoder may take, and {@link #alphaQuality}, how hard the alpha
+     * plane is compressed. Both are honoured for a still image as well as for an animation.
+     * </p>
+     *
+     * <p>
+     * Both are left unset, which is not the same as a value: it means the encoder keeps its own
+     * choice, and that choice differs between a still image and an animation.
+     * </p>
      */
     public static final class Avif extends ImageFormat {
 
+        /**
+         * How long the encoder may take, {@code 0} being the slowest and most thorough and
+         * {@code 10} the quickest. Unset means {@link AvifLibrary#DEFAULT_SPEED} for a still image
+         * and {@link AvifLibrary#DEFAULT_ANIMATION_SPEED} for an animation, which pays the cost of
+         * a speed setting once per frame.
+         */
+        public final Integer speed;
+
+        /**
+         * How hard the alpha plane is compressed, {@code AVIF_QUALITY_WORST} being the worst and
+         * {@link AvifLibrary#AVIF_QUALITY_BEST} keeping every alpha value as it was given. Unset
+         * means {@link AvifLibrary#AVIF_QUALITY_LOSSLESS}, because lossy alpha is the single most
+         * visible AVIF artefact and an alpha plane is cheap to store.
+         */
+        public final Integer alphaQuality;
+
         private Avif() {
+            this(null, null);
+        }
+
+        private Avif(Integer speed, Integer alphaQuality) {
             super("AVIF", "avif", "image/avif", null, true, true, 0.70);
+            this.speed = speed;
+            this.alphaQuality = alphaQuality;
+        }
+
+        /**
+         * @param speed 0 (slowest, best quality) to 10 (fastest, worst quality)
+         * @return this format asking the encoder for that much speed
+         * @throws IllegalArgumentException if the speed is outside what {@code libavif} accepts
+         */
+        public Avif speed(int speed) {
+            if (speed < 0 || speed > 10) {
+                throw new IllegalArgumentException("the encoder speed must be between 0 and 10, got " + speed);
+            }
+            return new Avif(speed, alphaQuality);
+        }
+
+        /**
+         * @param alphaQuality 0 (worst) to 100 (every alpha value kept as it was given)
+         * @return this format asking for that much alpha quality
+         * @throws IllegalArgumentException if the quality is outside what {@code libavif} accepts
+         */
+        public Avif alphaQuality(int alphaQuality) {
+            if (alphaQuality < AvifLibrary.AVIF_QUALITY_WORST || alphaQuality > AvifLibrary.AVIF_QUALITY_BEST) {
+                throw new IllegalArgumentException("the alpha quality must be between "
+                        + AvifLibrary.AVIF_QUALITY_WORST + " and " + AvifLibrary.AVIF_QUALITY_BEST
+                        + ", got " + alphaQuality);
+            }
+            return new Avif(speed, alphaQuality);
+        }
+
+        /**
+         * {@inheritDoc}
+         *
+         * <p>
+         * The settings are part of what an AVIF format is, so the same file asked for at two
+         * different speeds is not the same value.
+         * </p>
+         */
+        @Override
+        public boolean equals(Object object) {
+            return object instanceof Avif other
+                    && super.equals(object)
+                    && Objects.equals(speed, other.speed)
+                    && Objects.equals(alphaQuality, other.alphaQuality);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int hashCode() {
+            return Objects.hash(super.hashCode(), speed, alphaQuality);
         }
     }
 
@@ -200,7 +366,7 @@ public abstract class ImageFormat {
     public static final Gif89a GIF89A = new Gif89a();
 
     /** @see Webp */
-    public static final Webp WEBP = new Webp(false);
+    public static final Webp WEBP = new Webp(false, Webp.DEFAULT_COMPRESSION_METHOD, Webp.DEFAULT_ALLOW_MIXED);
 
     /** @see Avif */
     public static final Avif AVIF = new Avif();

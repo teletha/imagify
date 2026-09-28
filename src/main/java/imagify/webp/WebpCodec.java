@@ -322,7 +322,7 @@ public final class WebpCodec {
     }
 
     /**
-     * Encodes a sequence of frames as an animated WebP file.
+     * Encodes a sequence of frames as an animated WebP file at the default encoder effort.
      *
      * @param frames the frames, all of the same size, at least two
      * @param delaysMs how long each frame is shown, in milliseconds, one entry per frame
@@ -331,9 +331,31 @@ public final class WebpCodec {
      * @param loopCount how often the animation repeats, 0 meaning forever
      * @return the complete animated WebP file
      * @throws WebpException when the library is unavailable or the frames cannot be encoded
+     * @see #encodeAnimation(List, int[], int, boolean, int, int, boolean)
      */
     public static byte[] encodeAnimation(List<BufferedImage> frames, int[] delaysMs,
             int quality, boolean lossless, int loopCount) throws WebpException {
+        // 4 and false are the defaults of libwebp and of the gif2webp tool, which is what this
+        // form has always encoded at.
+        return encodeAnimation(frames, delaysMs, quality, lossless, loopCount, 4, false);
+    }
+
+    /**
+     * Encodes a sequence of frames as an animated WebP file.
+     *
+     * @param frames the frames, all of the same size, at least two
+     * @param delaysMs how long each frame is shown, in milliseconds, one entry per frame
+     * @param quality 0 (smallest) to 100, ignored when {@code lossless} is {@code true}
+     * @param lossless whether to store the pixels without loss
+     * @param loopCount how often the animation repeats, 0 meaning forever
+     * @param compressionMethod how hard the encoder tries, 0 (quickest) to 6 (most thorough)
+     * @param allowMixed whether the encoder may store some frames without loss and others with loss
+     * @return the complete animated WebP file
+     * @throws WebpException when the library is unavailable or the frames cannot be encoded
+     */
+    public static byte[] encodeAnimation(List<BufferedImage> frames, int[] delaysMs,
+            int quality, boolean lossless, int loopCount, int compressionMethod, boolean allowMixed)
+            throws WebpException {
         if (frames == null || frames.size() < 2) {
             throw new WebpException("an animation needs at least two frames, got "
                     + (frames == null ? 0 : frames.size()));
@@ -359,6 +381,8 @@ public final class WebpCodec {
                 .setQuality(quality)
                 .setLossless(lossless)
                 .setLoopCount(loopCount)
+                .setCompressionMethod(compressionMethod)
+                .setAllowMixed(allowMixed)
                 .setMultiThreaded(true);
         try {
             return AnimatedWebPEncoder.encode(prepared, delaysMs, config);

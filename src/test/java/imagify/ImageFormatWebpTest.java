@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -199,6 +200,69 @@ class ImageFormatWebpTest {
                 "twelve bytes name the format and nothing more");
     }
 
+    @Test
+    @DisplayName("the effort the format asks for reaches the animation encoder")
+    void theCompressionMethodReachesTheEncoder() throws Exception {
+        FrameSequence sequence = new FrameSequence(
+                List.of(gradient(48, 32, false), gradient(48, 32, true)), new int[] {40, 60}, 0);
+
+        byte[] quickest = ImageWriter.toBytes(sequence, ImageFormat.WEBP.compressionMethod(0));
+        byte[] thorough = ImageWriter.toBytes(sequence, ImageFormat.WEBP.compressionMethod(6));
+
+        // Which of the two is the smaller file depends on the content, so what is pinned here is
+        // that the setting arrives and changes the encoding.
+        assertFalse(Arrays.equals(quickest, thorough),
+                "the same frames at two efforts should not have produced the same file");
+        assertEquals(2, ImageReader.read(quickest).frameCount(), "both frames should survive");
+        assertEquals(2, ImageReader.read(thorough).frameCount(), "both frames should survive");
+    }
+
+    @Test
+    @DisplayName("the format may leave it to the encoder to store a frame lossily or not")
+    void theMixedSettingReachesTheEncoder() throws Exception {
+        // Noise is the one thing a lossless encoder cannot make smaller, so an encoder that is
+        // allowed to choose per frame stores it lossily rather than pay for every pixel.
+        FrameSequence sequence = new FrameSequence(
+                List.of(noise(96, 96, 7L), gradient(96, 96, false)), new int[] {40, 60}, 0);
+
+        byte[] everyFrameLossless = ImageWriter.toBytes(sequence, ImageFormat.WEBP.lossless());
+        byte[] theEncodersChoice = ImageWriter.toBytes(sequence, ImageFormat.WEBP.lossless().allowMixed(true));
+
+        assertFalse(Arrays.equals(everyFrameLossless, theEncodersChoice),
+                "letting the encoder choose should have changed the file it wrote");
+        assertTrue(theEncodersChoice.length < everyFrameLossless.length,
+                "a frame that is smaller stored lossily should have been stored lossily: "
+                        + theEncodersChoice.length + " bytes against " + everyFrameLossless.length);
+        assertEquals(2, ImageReader.read(theEncodersChoice).frameCount(), "every frame should survive");
+    }
+
+    @Test
+    @DisplayName("a setting hands back a new value that says what it asks for")
+    void theSettingsAreValues() {
+        ImageFormat.Webp thorough = ImageFormat.WEBP.compressionMethod(6);
+        assertEquals(6, thorough.compressionMethod);
+        assertEquals(ImageFormat.Webp.DEFAULT_COMPRESSION_METHOD, ImageFormat.WEBP.compressionMethod,
+                "the default effort is the one libwebp uses");
+        assertFalse(ImageFormat.WEBP.allowMixed, "frames are not mixed unless the format says so");
+
+        assertNotEquals(ImageFormat.WEBP, thorough, "asking for more effort is a different request");
+        assertNotSame(ImageFormat.WEBP, thorough, "a value the caller owns cannot change the constant");
+        assertEquals(thorough, ImageFormat.WEBP.compressionMethod(6),
+                "two values asking for the same thing are equal");
+        assertEquals(thorough.hashCode(), ImageFormat.WEBP.compressionMethod(6).hashCode());
+
+        // A setting keeps the ones that came before it, whichever order they arrive in.
+        assertEquals(ImageFormat.WEBP.lossless().compressionMethod(6).allowMixed(true),
+                ImageFormat.WEBP.allowMixed(true).compressionMethod(6).lossless());
+        assertTrue(ImageFormat.WEBP.lossless().compressionMethod(6).lossless,
+                "the lossless flavour survived the effort");
+        assertFalse(ImageFormat.WEBP.lossless().compressionMethod(6).allowMixed,
+                "and the setting was not turned on by the way");
+
+        assertThrows(IllegalArgumentException.class, () -> ImageFormat.WEBP.compressionMethod(7));
+        assertThrows(IllegalArgumentException.class, () -> ImageFormat.WEBP.compressionMethod(-1));
+    }
+
     private static int[] pixels(BufferedImage image) {
         return image.getRGB(0, 0, image.getWidth(), image.getHeight(), null, 0, image.getWidth());
     }
@@ -213,6 +277,18 @@ class ImageFormatWebpTest {
                         | (x * 255 / (width - 1)) << 16
                         | (y * 255 / (height - 1)) << 8
                         | 64);
+            }
+        }
+        return image;
+    }
+
+    /** Random pixels, which is what a lossless encoder cannot make smaller and a lossy one can. */
+    private static BufferedImage noise(int width, int height, long seed) {
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Random random = new Random(seed);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                image.setRGB(x, y, 0xFF000000 | random.nextInt(0x1000000));
             }
         }
         return image;
