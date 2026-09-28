@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="LB">
-		<header class="O" date="2026-09-26">
-			<h1 class="P"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="Q"><a href="api/main.html" id="API"><svg class="package">
+	<body class="KB">
+		<header class="J" date="2026-09-26">
+			<h1 class="K"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="L"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,21 +35,22 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="R"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="M"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="GB"></nav>
-		<article class="HB" id="Article">
-			<section class="s"><code class="e">imagify</code>
-				<h2 class="Class EB"><code class="b">BufferedImageTransform</code></h2>
-				<div class="t"></div><span class="A"><p>Pixel rearrangement operations on a single <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>: cropping, rotating and flipping.</p><p>Every method returns a new image of <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html#TYPE_INT_ARGB">BufferedImage#TYPE_INT_ARGB</a></code> and leaves the source
- untouched. That is the same normalisation <code><a aria-label="imagify.BufferedImageResize" href="api/imagify.BufferedImageResize.html">BufferedImageResize</a></code> applies, so the result of one
- of these can be handed straight to the other, and a frame of a <code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code> can be moved
- around without its neighbours noticing a difference.
+		<nav class="Z"></nav>
+		<article class="N" id="Article">
+			<section class="V"><code class="Q">imagify</code>
+				<h2 class="Class P"><code class="JB">BufferedImageTransform</code></h2>
+				<div class="r"></div><span class="A"><p>Pixel rearrangement operations on a single <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>: cropping, rotating and flipping.</p><p>Every operation returns a <code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a></code> that produces a new image of
+ <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html#TYPE_INT_ARGB">BufferedImage#TYPE_INT_ARGB</a></code> and leaves the source untouched. That is the same
+ normalisation <code><a aria-label="imagify.BufferedImageResize" href="api/imagify.BufferedImageResize.html">BufferedImageResize</a></code> applies, so the result of one of these can be
+ handed straight to the other, and a frame of a <code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code> can be moved around
+ without its neighbours noticing a difference.
  
 						<p>Rotating by a multiple of 90 degrees moves whole pixels and is therefore exact. Any other angle
  has to resample, and of the <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code>s only <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html#NEAREST">ResizeAlgorithm#NEAREST</a></code> and
@@ -60,119 +61,103 @@
  
 							<p>Usage:</p>
 							<pre><code>
- BufferedImage icon = BufferedImageTransform.crop(sheet, 0, 0, 32, 32);
- BufferedImage upright = BufferedImageTransform.rotate(photo, -90);
- BufferedImage mirrored = BufferedImageTransform.flipHorizontal(portrait);
+ Function&lt;BufferedImage, BufferedImage&gt; crop = BufferedImageTransform.crop(0, 0, 32, 32);
+ BufferedImage icon = crop.apply(sheet);
+ Function&lt;BufferedImage, BufferedImage&gt; rotate = BufferedImageTransform.rotate(photo, -90);
+ BufferedImage upright = rotate.apply(photo);
+ Function&lt;BufferedImage, BufferedImage&gt; mirror = BufferedImageTransform.flipHorizontal();
+ BufferedImage mirrored = mirror.apply(portrait);
  </code></pre>
 						</p>
 					</p>
 				</span></section>
-			<section class="s" id="crop(java.awt.image.BufferedImage,int,int,int,int)">
-				<h2 class="g"><i class="STATIC PUBLIC"></i><code class="b">crop</code><code class="IB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="u"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="CB">
-					<tr class="j">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
-						<td><span><p>the image to cut from</p></span></td>
-					</tr>
-					<tr class="j">
+			<section class="V" id="crop(int,int,int,int)">
+				<h2 class="n"><i class="STATIC PUBLIC"></i><code class="JB">crop</code><code class="l">(<code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="e"><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></h2>
+				<table class="BB">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">x</code></td>
 						<td><span><p>left edge, in source pixels</p></span></td>
 					</tr>
-					<tr class="j">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">y</code></td>
 						<td><span><p>top edge, in source pixels</p></span></td>
 					</tr>
-					<tr class="j">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td><span><p>width of the region, in pixels</p></span></td>
 					</tr>
-					<tr class="j">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td><span><p>height of the region, in pixels</p></span></td>
 					</tr>
-					<tr class="V">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
-						<td><span><p>the extracted region</p></span></td>
+					<tr class="HB">
+						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></td>
+						<td><span><p>a function that extracts the requested region</p></span></td>
 					</tr>
-				</table><span class="A"><p>Extracts a rectangle as a new image.</p><p>The region is copied rather than viewed, so the result shares no raster with the source.
+				</table><span class="A"><p>Returns a function that extracts a rectangle from an image as a new image.</p><p>The region is copied rather than viewed, so the result shares no raster with the source.
  That matters here: <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html#getSubimage">BufferedImage#getSubimage</a></code> hands back a view onto the parent, which
  keeps the whole parent alive and leaves the copy off the plain image types the encoders expect.
 </p>
 				</span></section>
-			<section class="s" id="rotate(java.awt.image.BufferedImage,double)">
-				<h2 class="g"><i class="STATIC PUBLIC"></i><code class="b">rotate</code><code class="IB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">degrees</code>)</code><i class="u"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="CB">
-					<tr class="j">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
-						<td><span><p>the image to rotate</p></span></td>
-					</tr>
-					<tr class="j">
+			<section class="V" id="rotate(double)">
+				<h2 class="n"><i class="STATIC PUBLIC"></i><code class="JB">rotate</code><code class="l">(<code>double</code><code class="parameterName">degrees</code>)</code><i class="e"><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></h2>
+				<table class="BB">
+					<tr class="b">
 						<td><code>double</code><code class="parameterName">degrees</code></td>
 						<td><span><p>the angle, clockwise, any finite value</p></span></td>
 					</tr>
-					<tr class="V">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
-						<td><span><p>the rotated image</p></span></td>
+					<tr class="HB">
+						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></td>
+						<td><span><p>a function that produces the rotated image</p></span></td>
 					</tr>
-				</table><span class="A"><p>Rotates an image, resampling bilinearly when the angle is not a multiple of 90 degrees.</p></span></section>
-			<section class="s" id="rotate(java.awt.image.BufferedImage,double,imagify.ResizeAlgorithm)">
-				<h2 class="g"><i class="STATIC PUBLIC"></i><code class="b">rotate</code><code class="IB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">degrees</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="u"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="CB">
-					<tr class="j">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
-						<td><span><p>the image to rotate</p></span></td>
-					</tr>
-					<tr class="j">
+				</table><span class="A"><p>Returns a function that rotates an image, resampling bilinearly when the angle is not
+a multiple of 90 degrees.</p></span></section>
+			<section class="V" id="rotate(double,imagify.ResizeAlgorithm)">
+				<h2 class="n"><i class="STATIC PUBLIC"></i><code class="JB">rotate</code><code class="l">(<code>double</code><code class="parameterName">degrees</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="e"><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></h2>
+				<table class="BB">
+					<tr class="b">
 						<td><code>double</code><code class="parameterName">degrees</code></td>
 						<td><span><p>the angle, clockwise, any finite value</p></span></td>
 					</tr>
-					<tr class="j">
+					<tr class="b">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td><span><p>how to resample, honoured only for angles that are not a multiple of 90 degrees</p></span></td>
 					</tr>
-					<tr class="V">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
-						<td><span><p>the rotated image</p></span></td>
+					<tr class="HB">
+						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></td>
+						<td><span><p>a function that produces the rotated image</p></span></td>
 					</tr>
-				</table><span class="A"><p>Rotates an image.</p></span></section>
-			<section class="s" id="flipHorizontal(java.awt.image.BufferedImage)">
-				<h2 class="g"><i class="STATIC PUBLIC"></i><code class="b">flipHorizontal</code><code class="IB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>)</code><i class="u"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="CB">
-					<tr class="j">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
-						<td><span><p>the image to mirror</p></span></td>
+				</table><span class="A"><p>Returns a function that rotates an image.</p></span></section>
+			<section class="V" id="flipHorizontal()">
+				<h2 class="n"><i class="STATIC PUBLIC"></i><code class="JB">flipHorizontal</code><code class="l">()</code><i class="e"><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></h2>
+				<table class="BB">
+					<tr class="HB">
+						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></td>
+						<td><span><p>a function that produces the mirrored image</p></span></td>
 					</tr>
-					<tr class="V">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
-						<td><span><p>the mirrored image</p></span></td>
+				</table><span class="A"><p>Returns a function that mirrors an image left to right.</p></span></section>
+			<section class="V" id="flipVertical()">
+				<h2 class="n"><i class="STATIC PUBLIC"></i><code class="JB">flipVertical</code><code class="l">()</code><i class="e"><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></h2>
+				<table class="BB">
+					<tr class="HB">
+						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></td>
+						<td><span><p>a function that produces the mirrored image</p></span></td>
 					</tr>
-				</table><span class="A"><p>Mirrors an image left to right.</p></span></section>
-			<section class="s" id="flipVertical(java.awt.image.BufferedImage)">
-				<h2 class="g"><i class="STATIC PUBLIC"></i><code class="b">flipVertical</code><code class="IB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>)</code><i class="u"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="CB">
-					<tr class="j">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
-						<td><span><p>the image to mirror</p></span></td>
-					</tr>
-					<tr class="V">
-						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
-						<td><span><p>the mirrored image</p></span></td>
-					</tr>
-				</table><span class="A"><p>Mirrors an image top to bottom.</p></span></section>
+				</table><span class="A"><p>Returns a function that mirrors an image top to bottom.</p></span></section>
 		</article>
-		<aside class="h">
-			<div class="KB">
-				<h5 class="n">Static Methods</h5>
+		<aside class="p">
+			<div class="u">
+				<h5 class="o">Static Methods</h5>
 				<ul>
-					<li class="y"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.BufferedImageTransform.html#crop(java.awt.image.BufferedImage,int,int,int,int)">crop</a></code><code class="IB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="BB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="y"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.BufferedImageTransform.html#rotate(java.awt.image.BufferedImage,double)">rotate</a></code><code class="IB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">degrees</code>)</code><i class="BB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="y"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.BufferedImageTransform.html#rotate(java.awt.image.BufferedImage,double,imagify.ResizeAlgorithm)">rotate</a></code><code class="IB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">degrees</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="BB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="y"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.BufferedImageTransform.html#flipHorizontal(java.awt.image.BufferedImage)">flipHorizontal</a></code><code class="IB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>)</code><i class="BB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="y"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.BufferedImageTransform.html#flipVertical(java.awt.image.BufferedImage)">flipVertical</a></code><code class="IB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>)</code><i class="BB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="t"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.BufferedImageTransform.html#crop(int,int,int,int)">crop</a></code><code class="l">(<code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code><i class="q"><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></li>
+					<li class="t"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.BufferedImageTransform.html#rotate(double)">rotate</a></code><code class="l">(<code>double</code><code class="parameterName">degrees</code>)</code><i class="q"><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></li>
+					<li class="t"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.BufferedImageTransform.html#rotate(double,imagify.ResizeAlgorithm)">rotate</a></code><code class="l">(<code>double</code><code class="parameterName">degrees</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="q"><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></li>
+					<li class="t"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.BufferedImageTransform.html#flipHorizontal()">flipHorizontal</a></code><code class="l">()</code><i class="q"><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></li>
+					<li class="t"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.BufferedImageTransform.html#flipVertical()">flipVertical</a></code><code class="l">()</code><i class="q"><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="r">
+		<footer class="U">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
