@@ -9,84 +9,209 @@
  */
 package imagify;
 
+import imagify.webp.WebpCodec;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
-import java.util.function.UnaryOperator;
+import java.util.Objects;
 
 /**
  * Supported image formats with auto-detection capabilities.
  *
- * <p>Each format provides file extension, MIME type, magic byte headers,
- * and whether alpha channel is supported.</p>
+ * <p>
+ * Each format is a singleton whose own class describes it: {@link #JPEG} is a {@link Jpeg},
+ * {@link #PNG} is a {@link Png}, and so on. The subclass is the natural home for whatever only
+ * that one format does, so a format whose name, encoder or quirks differ from the others keeps
+ * that difference next to its own name rather than in a switch somewhere else.
+ * </p>
  *
- * <p>Auto-detection can be performed via:
+ * <p>
+ * Each format provides file extension, MIME type, magic byte headers,
+ * and whether alpha channel is supported.
+ * </p>
+ *
+ * <p>
+ * Auto-detection can be performed via:
  * <ul>
  * <li>{@link #fromExtension(String)} - by file extension</li>
  * <li>{@link #fromHeader(byte[])} - by magic byte header</li>
  * <li>{@link #fromPath(Path)} - by file extension + header fallback</li>
- * </ul></p>
+ * </ul>
+ * </p>
  */
-public enum ImageFormat implements ImageOption {
+public abstract class ImageFormat {
 
     /**
      * JPEG format (.jpg, .jpeg). Lossy compression. No alpha support.
      * Magic bytes: no reliable header (starts with 0xFF 0xD8).
      */
-    JPEG("jpg", "image/jpeg", new byte[] {(byte) 0xFF, (byte) 0xD8}, false, 0.85),
+    public static final class Jpeg extends ImageFormat {
+
+        private Jpeg() {
+            super("JPEG", "jpg", "image/jpeg", new byte[] {(byte) 0xFF, (byte) 0xD8}, false, false, 0.85);
+        }
+    }
 
     /**
      * PNG format (.png). Lossless compression. Alpha support.
      * Magic bytes: 0x89 0x50 0x4E 0x47 0x0D 0x0A 0x1A 0x0A
      */
-    PNG("png", "image/png", new byte[] {(byte) 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A}, true, 0.0),
+    public static final class Png extends ImageFormat {
+
+        private Png() {
+            super("PNG", "png", "image/png", new byte[] {(byte) 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A}, true, false, 0.0);
+        }
+    }
 
     /**
      * GIF format (.gif). Lossless, indexed color. Alpha support (1-bit).
-     * Magic bytes: "GIF87a" or "GIF89a"
+     * Magic bytes: "GIF87a"
      */
-    GIF("gif", "image/gif", new byte[] {'G', 'I', 'F', '8', '7', 'a'}, true, 0.0), GIF89A("gif", "image/gif",
-            new byte[] {'G', 'I', 'F', '8', '9', 'a'}, true, 0.0),
+    public static final class Gif extends ImageFormat {
+
+        private Gif() {
+            super("GIF", "gif", "image/gif", new byte[] {'G', 'I', 'F', '8', '7', 'a'}, true, true, 0.0);
+        }
+    }
+
+    /**
+     * GIF89a, the animated and interlaced flavour of {@link #GIF}.
+     *
+     * <p>
+     * It is a constant of its own because the version number in the header is the only thing
+     * that tells the two apart, and a caller that read a file back may want to write it in the
+     * same flavour. Both answer {@code "gif"} to {@link #getFormatName()}, because they share a
+     * single encoder, so writing either one produces a plain GIF file.
+     * </p>
+     */
+    public static final class Gif89a extends ImageFormat {
+
+        private Gif89a() {
+            super("GIF89A", "gif", "image/gif", new byte[] {'G', 'I', 'F', '8', '9', 'a'}, true, true, 0.0);
+        }
+
+        /**
+         * {@inheritDoc}
+         *
+         * <p>
+         * The encoder is the GIF one, which is registered as {@code "gif"}, not {@code "gif89a"}.
+         * </p>
+         */
+        @Override
+        public String getFormatName() {
+            return GIF.getExtension();
+        }
+    }
 
     /**
      * WebP format (.webp). Lossy/lossless. Alpha support.
      * Magic bytes: "RIFF...." + "WEBP"
+     *
+     * <p>
+     * WebP is the one format that comes in more than one flavour: {@link #WEBP} is the lossy
+     * {@code VP8} bitstream and {@link #lossless()} the lossless {@code VP8L} one. They are separate
+     * values because the choice belongs to the encoder, and because a caller that has just read a
+     * file back wants to write it in the flavour it was read in: {@link #fromHeader(byte[])} answers
+     * with whichever of the two the bytes say, so a file that survives a read and a write still holds
+     * every pixel it held before.
+     * </p>
+     *
+     * <p>
+     * A flavour is a value rather than a constant, because a format may well come to carry more
+     * settings than this one, and a value that answers to its settings is the one that can. Two
+     * flavours holding the same settings are equal without being the same object.
+     * </p>
      */
-    WEBP("webp", "image/webp", new byte[] {'R', 'I', 'F', 'F'}, false, 0.80) {
+    public static final class Webp extends ImageFormat {
 
-        public ImageOption lossless() {
-            return new ImageOption<Object>() {
+        /** Whether the pixels are stored without loss, which also means the quality is ignored. */
+        public final boolean lossless;
 
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                public ImageFormat format() {
-                    return WEBP;
-                }
-
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                public void option(UnaryOperator<Object> option) {
-                }
-            };
+        private Webp(boolean lossless) {
+            super("WEBP", "webp", "image/webp", new byte[] {'R', 'I', 'F', 'F'}, false, true, 0.80);
+            this.lossless = lossless;
         }
-    },
+
+        /**
+         * @return the lossless flavour of this format, whose {@code VP8L} bitstream keeps every
+         *         pixel as it was given
+         */
+        public Webp lossless() {
+            return new Webp(true);
+        }
+
+        /**
+         * {@inheritDoc}
+         *
+         * <p>
+         * The flavour is part of what a WebP format is, so the lossy and the lossless one are not
+         * the same value.
+         * </p>
+         */
+        @Override
+        public boolean equals(Object object) {
+            return object instanceof Webp other && super.equals(object) && lossless == other.lossless;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int hashCode() {
+            return super.hashCode() * 31 + Boolean.hashCode(lossless);
+        }
+    }
 
     /**
      * AVIF format (.avif). AV1-based. Alpha support.
      * Magic bytes: "ftyp" box with "avif" brand
      */
-    AVIF("avif", "image/avif", null, true, 0.70),
+    public static final class Avif extends ImageFormat {
+
+        private Avif() {
+            super("AVIF", "avif", "image/avif", null, true, true, 0.70);
+        }
+    }
 
     /**
      * BMP format (.bmp). Uncompressed. Alpha support varies.
      * Magic bytes: "BM"
      */
-    BMP("bmp", "image/bmp", new byte[] {'B', 'M'}, false, 0.0);
+    public static final class Bmp extends ImageFormat {
+
+        private Bmp() {
+            super("BMP", "bmp", "image/bmp", new byte[] {'B', 'M'}, false, false, 0.0);
+        }
+    }
+
+    /** @see Jpeg */
+    public static final Jpeg JPEG = new Jpeg();
+
+    /** @see Png */
+    public static final Png PNG = new Png();
+
+    /** @see Gif */
+    public static final Gif GIF = new Gif();
+
+    /** @see Gif89a */
+    public static final Gif89a GIF89A = new Gif89a();
+
+    /** @see Webp */
+    public static final Webp WEBP = new Webp(false);
+
+    /** @see Avif */
+    public static final Avif AVIF = new Avif();
+
+    /** @see Bmp */
+    public static final Bmp BMP = new Bmp();
+
+    private static final List<ImageFormat> ALL = List.of(JPEG, PNG, GIF, GIF89A, WEBP, AVIF, BMP);
+
+    /** The format name as an enum constant used to spell it, such as {@code "PNG"}. */
+    private final String name;
 
     private final String extension;
 
@@ -96,35 +221,38 @@ public enum ImageFormat implements ImageOption {
 
     private final boolean supportsAlpha;
 
+    private final boolean supportsAnimation;
+
     private final double defaultQuality;
 
-    ImageFormat(String extension, String mimeType, byte[] magicBytes, boolean supportsAlpha, double defaultQuality) {
+    ImageFormat(String name, String extension, String mimeType, byte[] magicBytes, boolean supportsAlpha, boolean supportsAnimation, double defaultQuality) {
+        this.name = name;
         this.extension = extension;
         this.mimeType = mimeType;
         this.magicBytes = magicBytes;
         this.supportsAlpha = supportsAlpha;
+        this.supportsAnimation = supportsAnimation;
         this.defaultQuality = defaultQuality;
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the name of this format, in upper case, as {@code "PNG"} or {@code "GIF89A"}.
      */
-    @Override
-    public ImageFormat format() {
-        return this;
+    String name() {
+        return name;
     }
 
     /**
      * Returns the primary file extension for this format.
      */
-    public String getExtension() {
+    String getExtension() {
         return extension;
     }
 
     /**
      * Returns the MIME type for this format.
      */
-    public String getMimeType() {
+    String getMimeType() {
         return mimeType;
     }
 
@@ -133,17 +261,14 @@ public enum ImageFormat implements ImageOption {
      *
      * @return {@code true} for GIF, WebP, and AVIF
      */
-    public boolean supportsAnimation() {
-        return switch (this) {
-        case GIF, GIF89A, WEBP, AVIF -> true;
-        default -> false;
-        };
+    boolean supportsAnimation() {
+        return supportsAnimation;
     }
 
     /**
      * Returns whether this format supports alpha channels.
      */
-    public boolean supportsAlpha() {
+    boolean supportsAlpha() {
         return supportsAlpha;
     }
 
@@ -151,27 +276,38 @@ public enum ImageFormat implements ImageOption {
      * Returns the default quality value (0.0-1.0) for lossy formats.
      * Lossless formats return 0.0.
      */
-    public double getDefaultQuality() {
+    double getDefaultQuality() {
         return defaultQuality;
     }
 
     /**
      * Returns the magic byte header for this format, or null if not applicable.
      */
-    public byte[] getMagicBytes() {
+    byte[] getMagicBytes() {
         return magicBytes != null ? magicBytes.clone() : null;
     }
 
     /**
      * Returns the name {@code ImageIO} registers readers and writers under.
      *
-     * <p>Every constant is named after its format in lower case, which is exactly the name the
+     * <p>
+     * Every constant is named after its format in lower case, which is exactly the name the
      * {@code ImageIO} registry uses. {@link #GIF89A} is the one exception: GIF87a and GIF89a
      * differ only in a version number in the header and share a single encoder, so both answer
-     * {@code "gif"} and writing one of them produces a plain GIF file.</p>
+     * {@code "gif"} and writing one of them produces a plain GIF file.
+     * </p>
      */
-    public String getFormatName() {
-        return this == GIF89A ? GIF.extension : name().toLowerCase(Locale.ROOT);
+    String getFormatName() {
+        return name.toLowerCase(Locale.ROOT);
+    }
+
+    /**
+     * Returns every format, in declaration order.
+     *
+     * @return an unmodifiable list of all formats
+     */
+    public static List<ImageFormat> all() {
+        return ALL;
     }
 
     /**
@@ -183,7 +319,7 @@ public enum ImageFormat implements ImageOption {
      */
     public static ImageFormat fromExtension(String extension) {
         String ext = extension.toLowerCase().replaceFirst("^\\.", "");
-        for (ImageFormat format : values()) {
+        for (ImageFormat format : ALL) {
             if (format.extension.equals(ext)) return format;
         }
         // Handle aliases
@@ -202,6 +338,12 @@ public enum ImageFormat implements ImageOption {
 
     /**
      * Resolves the format by inspecting the magic byte header of the data.
+     *
+     * <p>WebP is the one format that comes in more than one flavour, and a header long enough to
+     * hold the chunk that names the image bitstream says which one this is, so the answer is
+     * {@link #WEBP} or {@link Webp#lossless()} rather than always the lossy one. As many leading
+     * bytes as the caller has are all that is needed to decide, and the ones that are missing are
+     * simply not able to change the answer.
      *
      * @param header the first few bytes of the file/data
      * @return the matching ImageFormat
@@ -225,7 +367,9 @@ public enum ImageFormat implements ImageOption {
         if (header.length >= 4 && header[0] == 'R' && header[1] == 'I' && header[2] == 'F' && header[3] == 'F') {
             // Need to check WEBP at offset 8-11
             if (header.length >= 12) {
-                if (header[8] == 'W' && header[9] == 'E' && header[10] == 'B' && header[11] == 'P') return WEBP;
+                if (header[8] == 'W' && header[9] == 'E' && header[10] == 'B' && header[11] == 'P') {
+                    return webp(header);
+                }
             }
             // Partial match, assume WEBP if RIFF
             return WEBP;
@@ -247,7 +391,25 @@ public enum ImageFormat implements ImageOption {
     }
 
     /**
+     * Resolves which flavour of WebP the data is in, which is the one thing a file name cannot say.
+     *
+     * <p>Only the bytes can tell a {@code VP8L} file from a {@code VP8 } one, and the chunk that
+     * names the bitstream is a little way into the file, so a caller that passes a shorter prefix
+     * than {@link WebpCodec#losslessHeaderLength()} gets the lossy flavour. That is the right way
+     * round to be wrong in: a file read as lossy still decodes, a file read as lossless would only
+     * ever be a guess about something the encoder is asked for anyway.
+     */
+    private static ImageFormat webp(byte[] header) {
+        return WebpCodec.isLossless(header) ? WEBP.lossless() : WEBP;
+    }
+
+    /**
      * Resolves the format from a file path (extension-based), with header fallback.
+     *
+     * <p>The name alone decides here, which is deliberate: this is what a writer resolves the
+     * format of a destination from, and a file that is already sitting at that path must not
+     * decide what is written over it. A reader that wants the flavour of a file rather than the
+     * format of a name hands its bytes to {@link #fromHeader(byte[])} instead.
      *
      * @param path the file path
      * @return the detected ImageFormat
@@ -258,9 +420,10 @@ public enum ImageFormat implements ImageOption {
         try {
             return fromExtension(ext);
         } catch (IllegalArgumentException e) {
-            // Fall back to header detection
+            // Fall back to header detection. The buffer is long enough for the container to say
+            // which flavour of a format it holds, not merely which format that is.
             java.io.InputStream in = java.nio.file.Files.newInputStream(path);
-            byte[] header = new byte[12];
+            byte[] header = new byte[WebpCodec.losslessHeaderLength()];
             int bytesRead = in.read(header);
             in.close();
             if (bytesRead > 0) {
@@ -288,8 +451,41 @@ public enum ImageFormat implements ImageOption {
         return dot >= 0 ? name.substring(dot + 1) : "";
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * <p>
+     * A format is a value: a subclass that carries settings of its own is expected to add them here,
+     * since {@link #WEBP} and the lossless WebP that {@link Webp#lossless()} hands out are two
+     * requests rather than two constants, and a caller comparing them with {@code equals} is asking
+     * whether they ask for the same thing.
+     * </p>
+     */
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        ImageFormat other = (ImageFormat) object;
+        return name.equals(other.name)
+                && extension.equals(other.extension)
+                && mimeType.equals(other.mimeType)
+                && supportsAlpha == other.supportsAlpha
+                && supportsAnimation == other.supportsAnimation
+                && Double.compare(defaultQuality, other.defaultQuality) == 0
+                && Arrays.equals(magicBytes, other.magicBytes);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        int hash = Objects.hash(name, extension, mimeType, supportsAlpha, supportsAnimation, defaultQuality);
+        return hash * 31 + Arrays.hashCode(magicBytes);
+    }
+
     @Override
     public String toString() {
-        return extension.toUpperCase();
+        return extension.toUpperCase(Locale.ROOT);
     }
 }

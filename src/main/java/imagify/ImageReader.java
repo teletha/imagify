@@ -9,6 +9,8 @@
  */
 package imagify;
 
+import imagify.webp.WebpCodec;
+
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.metadata.IIOMetadata;
@@ -225,7 +227,9 @@ public final class ImageReader {
         // application extension below, which is the only place it is recorded for GIF itself.
         int declared = readDeclaredAttribute(streamMetadata, "repetitionCount");
         if (declared > 0) return declared;
-        if (format != ImageFormat.GIF && format != ImageFormat.GIF89A) return 0;
+        // Compared by value, because a format that carries settings is a value that a caller may
+        // have built rather than one of the constants.
+        if (!format.equals(ImageFormat.GIF) && !format.equals(ImageFormat.GIF89A)) return 0;
         try {
             var node = streamMetadata.getAsTree(streamMetadata.getNativeMetadataFormatName());
             var nodeList = node.getChildNodes();
@@ -274,9 +278,19 @@ public final class ImageReader {
         return 0;
     }
 
+    /**
+     * Reads as many leading bytes of a WebP file as are needed to tell a lossless one from a lossy
+     * one, which is more than the twelve that name the format: the chunk holding the image bitstream
+     * follows the container header, and in an animation it follows the animation control chunk as
+     * well.
+     */
+    private static final int DETECTION_LENGTH = WebpCodec.losslessHeaderLength();
+
     private static ImageFormat detectFormat(byte[] data) {
-        int headerLen = Math.min(data.length, 12);
-        ImageFormat format = ImageFormat.detect(Arrays.copyOf(data, headerLen));
+        // The bytes decide which format this is, and for a format that comes in more than one
+        // flavour, which flavour: a WebP file read as the lossy one and written back out would lose
+        // every pixel the lossless bitstream was there to keep.
+        ImageFormat format = ImageFormat.detect(Arrays.copyOf(data, Math.min(data.length, DETECTION_LENGTH)));
         if (format != null) return format;
         return ImageFormat.PNG;
     }

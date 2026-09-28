@@ -62,6 +62,30 @@ public final class WebpCodec {
 
     private static final int HEADER_LENGTH = 30;
 
+    /** Where the first chunk of a {@code RIFF} container starts, after {@code RIFF}, size, {@code WEBP}. */
+    private static final int FIRST_CHUNK = 12;
+
+    /** A chunk header is its four character name and its size, which is what is stepped over. */
+    private static final int CHUNK_HEADER_LENGTH = 8;
+
+    /**
+     * Where the bitstream of an animation frame starts: the frame header of the {@code ANMF} chunk
+     * names the rectangle the frame covers and how long it is shown for, and the bitstream follows.
+     */
+    private static final int ANMF_FRAME_HEADER_LENGTH = CHUNK_HEADER_LENGTH + 16;
+
+    private static final String CHUNK_VP8L = "VP8L";
+
+    private static final String CHUNK_VP8 = "VP8 ";
+
+    private static final String CHUNK_ANMF = "ANMF";
+
+    /**
+     * How far into a file the bitstream that decides the flavour can sit. An animation that
+     * carries nothing but its frames puts the first one at byte 68, so this is generous.
+     */
+    private static final int LOSSLESS_HEADER_LENGTH = 128;
+
     private WebpCodec() {
         // utility class
     }
@@ -192,6 +216,83 @@ public final class WebpCodec {
      */
     public static int headerLength() {
         return HEADER_LENGTH;
+    }
+
+    /**
+     * Reports which of the two bitstreams a WebP file stores its pixels in, from the container
+     * alone.
+     *
+     * <p>A still image names its bitstream in the first chunk of the file, {@code VP8L} when it is
+     * lossless and {@code VP8 } when it is lossy. An animation is an extended file whose frames
+     * carry a bitstream of their own, so the first frame is the one that is looked at; a file that
+     * mixes the two is reported as its first frame has it. A container that says neither before the
+     * data runs out is reported as lossy, which is what {@link #FORMAT_VP8L} is not.
+     *
+     * <p>Unlike {@link #readHeader(byte[])} this needs no native library and decodes nothing, which
+     * is what makes it usable while only a format is being detected, before any pixel has been
+     * looked at. Only the first {@link #losslessHeaderLength()} bytes are read, so a caller that
+     * has a shorter prefix than that is answered from what it has.
+     *
+     * @param data a complete WebP file, or as many of its leading bytes as are to hand
+     * @return whether the image inside is stored without loss
+     */
+    public static boolean isLossless(byte[] data) {
+        if (!isWebP(data)) {
+            return false;
+        }
+        return lossless(data, FIRST_CHUNK);
+    }
+
+    /**
+     * Walks the chunks of a {@code RIFF} container until it meets the one that holds the image.
+     *
+     * <p>The chunks that are not the image, which is nearly all of them, are stepped over by their
+     * declared size: {@code VP8X} and {@code ANIM} for an animation, {@code ALPH} for an alpha
+     * plane, and whatever metadata chunks a file chooses to carry.
+     *
+     * @param offset where the next chunk header starts
+     * @return whether the image bitstream that was found is the lossless one
+     */
+    private static boolean lossless(byte[] data, int offset) {
+        while (offset + CHUNK_HEADER_LENGTH <= data.length) {
+            if (matches(data, offset, CHUNK_VP8L)) {
+                return true;
+            }
+            if (matches(data, offset, CHUNK_VP8)) {
+                return false;
+            }
+            if (matches(data, offset, CHUNK_ANMF)) {
+                // A frame of an animation: its own bitstream follows the frame header, which is the
+                // rectangle the frame covers plus how long it is shown for.
+                return lossless(data, offset + ANMF_FRAME_HEADER_LENGTH);
+            }
+            int size = chunkSize(data, offset);
+            if (size < 0) {
+                // The size field does not fit in a signed int, so the walk cannot go on from here.
+                return false;
+            }
+            // Chunks are padded to an even number of bytes, and the arithmetic stays in a long so
+            // that a size that runs past the data ends the walk instead of wrapping around.
+            long next = (long) offset + CHUNK_HEADER_LENGTH + size + (size & 1);
+            if (next >= data.length) {
+                return false;
+            }
+            offset = (int) next;
+        }
+        return false;
+    }
+
+    private static int chunkSize(byte[] data, int offset) {
+        return (data[offset + 4] & 0xFF) | (data[offset + 5] & 0xFF) << 8
+                | (data[offset + 6] & 0xFF) << 16 | (data[offset + 7] & 0xFF) << 24;
+    }
+
+    /**
+     * @return how many leading bytes {@link #isLossless(byte[])} reads at most, which is how many a
+     *         caller should hand it for the answer to be the one the file gives
+     */
+    public static int losslessHeaderLength() {
+        return LOSSLESS_HEADER_LENGTH;
     }
 
     // ----------------------------------------------------------------------------------- encoding

@@ -17,11 +17,14 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -270,6 +273,83 @@ class WebpImageIOTest {
         WebpImageInfo lossless = WebpCodec.readHeader(WebpCodec.encode(sample(16, 16, false), 0, true));
         assertEquals(WebpCodec.FORMAT_VP8L, lossless.format());
         assertEquals("VP8L", WebpCodec.formatName(lossless.format()));
+    }
+
+    // ----------------------------------------------------------------- which bitstream a file has
+
+    @Test
+    @DisplayName("a still says which bitstream it holds, with or without an alpha channel")
+    void losslessStill() throws Exception {
+        requireLibwebp();
+        for (boolean alpha : new boolean[] {false, true}) {
+            String kind = alpha ? "with alpha" : "without alpha";
+            assertFalse(WebpCodec.isLossless(WebpCodec.encode(sample(16, 16, alpha), 80, false)),
+                    "a VP8 file is not lossless, " + kind);
+            assertTrue(WebpCodec.isLossless(WebpCodec.encode(sample(16, 16, alpha), 0, true)),
+                    "a VP8L file is lossless, " + kind);
+        }
+    }
+
+    @Test
+    @DisplayName("an animation is lossless when the bitstream of its frames is")
+    void losslessAnimation() throws Exception {
+        requireLibwebp();
+        List<BufferedImage> frames = List.of(sample(16, 16, false), sample(16, 16, true));
+        assertFalse(WebpCodec.isLossless(WebpCodec.encodeAnimation(frames, new int[] {40, 40}, 80, false, 0)),
+                "a lossy animation stores its frames as VP8");
+        assertTrue(WebpCodec.isLossless(WebpCodec.encodeAnimation(frames, new int[] {40, 40}, 0, true, 0)),
+                "a lossless animation stores its frames as VP8L");
+    }
+
+    @Test
+    @DisplayName("a header too short to hold the bitstream answers the lossy default")
+    void losslessFromAShortHeader() throws Exception {
+        requireLibwebp();
+        byte[] lossless = WebpCodec.encode(sample(16, 16, true), 0, true);
+        assertTrue(WebpCodec.losslessHeaderLength() > 16,
+                "the header has to reach past the container to be worth anything");
+        assertTrue(WebpCodec.isLossless(Arrays.copyOf(lossless, WebpCodec.losslessHeaderLength())),
+                WebpCodec.losslessHeaderLength() + " bytes should be enough to see the bitstream");
+        assertFalse(WebpCodec.isLossless(Arrays.copyOf(lossless, 16)),
+                "sixteen bytes stop at the container header, so there is nothing to go on");
+    }
+
+    @Test
+    @DisplayName("data that is not a WebP file is not a lossless one either")
+    void losslessOfOtherData() throws Exception {
+        assertFalse(WebpCodec.isLossless(null));
+        assertFalse(WebpCodec.isLossless(new byte[0]));
+        assertFalse(WebpCodec.isLossless("RIFF".getBytes(StandardCharsets.US_ASCII)));
+        assertFalse(WebpCodec.isLossless("not a webp file at all".getBytes(StandardCharsets.US_ASCII)));
+        ByteArrayOutputStream png = new ByteArrayOutputStream();
+        assertTrue(ImageIO.write(sample(4, 4, false), "png", png));
+        assertFalse(WebpCodec.isLossless(png.toByteArray()));
+    }
+
+    @Test
+    @DisplayName("a container that claims a size it does not have ends the walk instead of looping")
+    void losslessOfATruncatedContainer() {
+        // A container whose first chunk claims a size that runs past the end of the data, one whose
+        // size does not fit in a signed int, and one that is empty. None of them may walk off the
+        // end of the array, and all three answer the lossy default.
+        assertFalse(WebpCodec.isLossless(container("VP8X", 0x7F, 0xFF, 0xFF, 0xFF)));
+        assertFalse(WebpCodec.isLossless(container("ABCD", 0xFF, 0xFF, 0xFF, 0xFF)));
+        assertFalse(WebpCodec.isLossless(container("ABCD", 0, 0, 0, 0)), "an empty chunk steps over itself");
+    }
+
+    /**
+     * A {@code RIFF} container holding one chunk header and no payload, whose size is given as four
+     * bytes, most significant first.
+     */
+    private static byte[] container(String firstChunk, int... chunkSize) {
+        byte[] data = new byte[24];
+        System.arraycopy("RIFF".getBytes(StandardCharsets.ISO_8859_1), 0, data, 0, 4);
+        System.arraycopy("WEBP".getBytes(StandardCharsets.ISO_8859_1), 0, data, 8, 4);
+        System.arraycopy(firstChunk.getBytes(StandardCharsets.ISO_8859_1), 0, data, 12, 4);
+        for (int i = 0; i < 4; i++) {
+            data[16 + i] = (byte) (chunkSize[i] >> 8 * (3 - i));
+        }
+        return data;
     }
 
     @Test

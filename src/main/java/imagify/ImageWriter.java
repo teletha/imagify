@@ -13,6 +13,7 @@ import imagify.avif.AvifException;
 import imagify.avif.jna.AvifCodec;
 import imagify.webp.WebpCodec;
 import imagify.webp.WebpException;
+import imagify.webp.WebpImageWriterSpi;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -37,6 +38,12 @@ import java.util.Iterator;
  * <p>Quality is a {@code 0.0} to {@code 1.0} value that is handed to the encoder through the
  * compression quality of an {@link ImageWriteParam}, so a smaller number means a smaller file and
  * more loss. Formats without a quality axis, such as GIF and BMP, ignore it.</p>
+ *
+ * <p>WebP is written in whichever of its two flavours the format asks for:
+ * {@link ImageFormat#WEBP} produces the lossy {@code VP8} bitstream and
+ * {@link ImageFormat.Webp#lossless()} the lossless {@code VP8L} one, for a still image as well as
+ * for an animation. The quality is ignored by the lossless one, exactly as {@code libwebp} ignores
+ * it.</p>
  *
  * <p>{@link FrameSequence} handling: if the sequence has more than one frame and the target
  * format supports animation, the frames are encoded as an animation. Otherwise the first
@@ -246,23 +253,21 @@ public final class ImageWriter {
      * Only called when the format supports animation and the sequence has multiple frames.
      */
     private static byte[] encodeAnimation(FrameSequence frames, ImageFormat format, double quality) throws IOException {
-        return switch (format) {
-            case AVIF -> {
-                try {
-                    yield AvifCodec.encodeAnimation(frames.frames(), frames.delaysMs(), (int) Math.round(quality * 100), frames.loopCount());
-                } catch (AvifException e) {
-                    throw new IOException("failed to encode AVIF animation", e);
-                }
+        if (format instanceof ImageFormat.Avif) {
+            try {
+                return AvifCodec.encodeAnimation(frames.frames(), frames.delaysMs(), (int) Math.round(quality * 100), frames.loopCount());
+            } catch (AvifException e) {
+                throw new IOException("failed to encode AVIF animation", e);
             }
-            case WEBP -> {
-                try {
-                    yield WebpCodec.encodeAnimation(frames.frames(), frames.delaysMs(), (int) Math.round(quality * 100), false, frames.loopCount());
-                } catch (WebpException e) {
-                    throw new IOException("failed to encode WebP animation", e);
-                }
+        }
+        if (format instanceof ImageFormat.Webp webp) {
+            try {
+                return WebpCodec.encodeAnimation(frames.frames(), frames.delaysMs(), (int) Math.round(quality * 100), webp.lossless, frames.loopCount());
+            } catch (WebpException e) {
+                throw new IOException("failed to encode WebP animation", e);
             }
-            default -> throw new IOException("animation encoding not supported for: " + format.name());
-        };
+        }
+        throw new IOException("animation encoding not supported for: " + format.name());
     }
 
     // ------------------------------------------------------------------ internal
@@ -280,7 +285,7 @@ public final class ImageWriter {
         javax.imageio.ImageWriter writer = writers.next();
         try {
             writer.setOutput(stream);
-            ImageWriteParam param = writeParam(writer, quality);
+            ImageWriteParam param = writeParam(writer, format, quality);
             if (param == null) {
                 writer.write(image);
             } else {
@@ -291,7 +296,7 @@ public final class ImageWriter {
         }
     }
 
-    private static ImageWriteParam writeParam(javax.imageio.ImageWriter writer, double quality) {
+    private static ImageWriteParam writeParam(javax.imageio.ImageWriter writer, ImageFormat format, double quality) throws IOException {
         ImageWriteParam param = writer.getDefaultWriteParam();
         if (param == null || !param.canWriteCompressed()) return null;
         try {
@@ -299,6 +304,20 @@ public final class ImageWriter {
             param.setCompressionQuality((float) quality);
         } catch (IllegalStateException | UnsupportedOperationException e) {
             return null;
+        }
+        if (format instanceof ImageFormat.Webp webp && webp.lossless) {
+            // WebP has no separate switch for the two bitstreams, the lossy VP8 and the lossless
+            // VP8L: the choice is made by the compression type, so that is where the flag the
+            // format carries has to be handed over. It is set after the mode, because switching to
+            // MODE_EXPLICIT clears the type again.
+            try {
+                param.setCompressionType(WebpImageWriterSpi.COMPRESSION_TYPE_LOSSLESS);
+            } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
+                // Silently writing a lossy file where a lossless one was asked for would be worse
+                // than failing, so the caller is told the request cannot be honoured.
+                throw new IOException("the WebP writer does not accept the "
+                        + WebpImageWriterSpi.COMPRESSION_TYPE_LOSSLESS + " compression type: " + e.getMessage(), e);
+            }
         }
         return param;
     }
