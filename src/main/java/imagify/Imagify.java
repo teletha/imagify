@@ -349,7 +349,7 @@ public final class Imagify {
      * Resizes all frames to exact dimensions using the specified algorithm.
      */
     public Imagify resize(int targetW, int targetH, ResizeAlgorithm algorithm) {
-        return mapFrames(frame -> BufferedImageResize.resize(frame, targetW, targetH, algorithm));
+        return map(frame -> BufferedImageResize.resize(frame, targetW, targetH, algorithm));
     }
 
     /**
@@ -482,7 +482,7 @@ public final class Imagify {
         int atX = (targetW - width) / 2;
         int atY = (targetH - height) / 2;
         Color fill = background == null ? new Color(0, 0, 0, 0) : background;
-        return mapFrames(frame -> {
+        return map(frame -> {
             BufferedImage canvas = new BufferedImage(targetW, targetH, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = canvas.createGraphics();
             try {
@@ -506,7 +506,7 @@ public final class Imagify {
      * </p>
      */
     public Imagify crop(int x, int y, int width, int height) {
-        return mapFrames(frame -> BufferedImageTransform.crop(frame, x, y, width, height));
+        return map(frame -> BufferedImageTransform.crop(frame, x, y, width, height));
     }
 
     /**
@@ -524,27 +524,27 @@ public final class Imagify {
      * @see BufferedImageTransform#rotate(BufferedImage, double, ResizeAlgorithm)
      */
     public Imagify rotate(double degrees, ResizeAlgorithm algorithm) {
-        return mapFrames(frame -> BufferedImageTransform.rotate(frame, degrees, algorithm));
+        return map(frame -> BufferedImageTransform.rotate(frame, degrees, algorithm));
     }
 
     /**
      * Mirrors every frame left to right.
      */
     public Imagify flipHorizontal() {
-        return mapFrames(BufferedImageTransform::flipHorizontal);
+        return map(BufferedImageTransform::flipHorizontal);
     }
 
     /**
      * Mirrors every frame top to bottom.
      */
     public Imagify flipVertical() {
-        return mapFrames(BufferedImageTransform::flipVertical);
+        return map(BufferedImageTransform::flipVertical);
     }
 
     /**
      * Applies an operation to every frame, keeping the timing of the sequence untouched.
      */
-    private Imagify mapFrames(UnaryOperator<BufferedImage> operation) {
+    public Imagify map(UnaryOperator<BufferedImage> operation) {
         var frames = new ArrayList<BufferedImage>(frameSequence.frameCount());
         for (BufferedImage frame : frameSequence.frames()) {
             frames.add(operation.apply(frame));
