@@ -204,13 +204,20 @@ static int imagify_encode_options_valid(int quality, int method) {
  * produced. Method is left alone, so a caller that has said how hard the encoder should try has
  * still been heard.
  *
- * thread_level stays at libwebp's own zero, which is not an oversight. It was measured both ways on
- * 24 cores and made no image faster and most of them slower, and reading libwebp says why: of the
- * encoder's passes only VP8EncAnalyze reads the flag, and it splits a frame into two unequal row
- * ranges rather than across as many threads as it has, which caps the gain at about a quarter and
- * spends a thread launch and a join to collect it. The entropy coding that the webp4j this replaces
- * was built to parallelise is in the token loop, and the token loop does not read the flag. So the
- * capability is compiled in, as the build file says it is on purpose, and nothing asks for it.
+ * thread_level is set to 1, and this is a change of mind from what the file used to say here, which
+ * was that it stays at libwebp's own zero because a measurement on 24 cores had found the flag not
+ * worth setting. That measurement generalised from one host, and it does not hold: on the test
+ * images this binding was about twice as slow as the webp4j one it replaced, on the same libwebp
+ * and with the same method, and this flag is the one setting the two did not agree on. webp4j's
+ * still image entry point takes multiThreaded(true) and so runs at thread_level 1.
+ *
+ * The argument it used to rest on was that of the encoder's passes only VP8EncAnalyze reads the
+ * flag, that it splits a frame into two unequal row ranges rather than across as many threads as it
+ * has, which caps the gain at about a quarter, and that the entropy coding is in a token loop that
+ * does not read the flag. All of that describes libwebp correctly and none of it says the flag is
+ * worthless, because a cap on the gain is not a zero gain. Level 1 rather than more because that is
+ * what level 1 buys and what webp4j uses: past it, work is split that is not worth splitting, and a
+ * thread launch and a join are spent to collect it.
  *
  * Nothing here changes for a lossy encode, and the reason is worth writing down, because it is not a
  * defect in this binding and there is no setting waiting to be found. A lossy VP8 encode is a search:
@@ -249,6 +256,7 @@ static int imagify_make_config(WebPConfig* config, int quality, int lossless, in
   config->lossless = lossless ? 1 : 0;
   config->method = method;
   config->exact = 1;
+  config->thread_level = 1;
   return WebPValidateConfig(config) ? 1 : 0;
 }
 
