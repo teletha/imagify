@@ -19,9 +19,9 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="l">
-		<header class="m" date="2026-09-29">
-			<h1 class="o"><a href="index.html"><code>Imagify</code></a></h1>
+	<body class="v">
+		<header class="P" date="2026-09-29">
+			<h1 class="Q"><a href="index.html"><code>Imagify</code></a></h1>
 			<nav class="R"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="p"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="L"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="J"></nav>
-		<article class="X" id="Article">
-			<section class="b"><code class="HB">imagify</code>
-				<h2 class="Class n"><code class="w">ImageFormat.Jpeg</code></h2>
-				<div class="t">
+		<nav class="w"></nav>
+		<article class="e" id="Article">
+			<section class="m"><code class="n">imagify</code>
+				<h2 class="Class K"><code class="x">ImageFormat.Jpeg</code></h2>
+				<div class="CB">
 					<ul class="E G">
 						<li><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></li>
 					</ul>
@@ -64,15 +64,15 @@ Magic bytes: no reliable header (starts with 0xFF 0xD8).</p><p>
  compression type and for nothing else. They describe the file a caller wants, not one
  particular write.
  </p></span></section>
-			<section class="b" id="DEFAULT_SUBSAMPLING">
-				<h2 class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="w">DEFAULT_SUBSAMPLING</code><i class="AB"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>The colour-difference resolution a JPEG is written at when the format does not say,
+			<section class="m" id="DEFAULT_SUBSAMPLING">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">DEFAULT_SUBSAMPLING</code><i class="b"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>The colour-difference resolution a JPEG is written at when the format does not say,
 which is the one <code>libjpeg</code> and every other encoder writes by default.</p></span></section>
-			<section class="b" id="DEFAULT_OPTIMIZE_HUFFMAN_TABLES">
-				<h2 class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="w">DEFAULT_OPTIMIZE_HUFFMAN_TABLES</code><i class="AB"><code class="return">boolean</code></i></h2><span class="A"><p>Whether the entropy coder tables are computed from the image when the format does not
+			<section class="m" id="DEFAULT_OPTIMIZE_HUFFMAN_TABLES">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">DEFAULT_OPTIMIZE_HUFFMAN_TABLES</code><i class="b"><code class="return">boolean</code></i></h2><span class="A"><p>Whether the entropy coder tables are computed from the image when the format does not
 say, which they are not: the standard tables are used, because a caller has to ask for
 the extra encode and the extra memory that computing them costs.</p></span></section>
-			<section class="b" id="subsampling">
-				<h2 class="EB"><i class="FINAL"><i class="PUBLIC"></i></i><code class="w">subsampling</code><i class="AB"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>How finely the two colour-difference channels are stored, which is what decides the
+			<section class="m" id="subsampling">
+				<h2 class="U"><i class="FINAL"><i class="PUBLIC"></i></i><code class="x">subsampling</code><i class="b"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2><span class="A"><p>How finely the two colour-difference channels are stored, which is what decides the
 sharpness of the edges between areas of colour.</p><p>
  It costs nothing in the quality argument and shows plainly at the same quality: the
  three are three different files of three different sizes holding three different
@@ -80,45 +80,45 @@ sharpness of the edges between areas of colour.</p><p>
  which is what a screenshot of text wants; <code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html#S420">Subsampling#S420</a></code> is the default and the
  smallest.
  </p></span></section>
-			<section class="b" id="optimizeHuffmanTables">
-				<h2 class="EB"><i class="FINAL"><i class="PUBLIC"></i></i><code class="w">optimizeHuffmanTables</code><i class="AB"><code class="return">boolean</code></i></h2><span class="A"><p>Whether the entropy coder tables are computed from the image rather than taken from the
+			<section class="m" id="optimizeHuffmanTables">
+				<h2 class="U"><i class="FINAL"><i class="PUBLIC"></i></i><code class="x">optimizeHuffmanTables</code><i class="b"><code class="return">boolean</code></i></h2><span class="A"><p>Whether the entropy coder tables are computed from the image rather than taken from the
 standard set, which makes a smaller file for the same pixels at the cost of a slower
 encode and a table the decoder has to read rather than one it already knows.</p></span></section>
-			<section class="b" id="subsampling(imagify.ImageFormat.Jpeg.Subsampling)">
-				<h2 class="EB"><i class="PUBLIC"></i><code class="w">subsampling</code><code class="FB">(<code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="AB"><code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></h2>
-				<table class="P">
-					<tr class="d">
+			<section class="m" id="subsampling(imagify.ImageFormat.Jpeg.Subsampling)">
+				<h2 class="U"><i class="PUBLIC"></i><code class="x">subsampling</code><code class="DB">(<code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="b"><code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></h2>
+				<table class="V">
+					<tr class="BB">
 						<td><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code></td>
 						<td><span><p>how finely the colour-difference channels are stored</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="AB">
 						<td><code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></td>
 						<td><span><p>this format asking for that much colour detail</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="b" id="optimizeHuffmanTables(boolean)">
-				<h2 class="EB"><i class="PUBLIC"></i><code class="w">optimizeHuffmanTables</code><code class="FB">(<code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="AB"><code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></h2>
-				<table class="P">
-					<tr class="d">
+			<section class="m" id="optimizeHuffmanTables(boolean)">
+				<h2 class="U"><i class="PUBLIC"></i><code class="x">optimizeHuffmanTables</code><code class="DB">(<code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="b"><code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></h2>
+				<table class="V">
+					<tr class="BB">
 						<td><code>boolean</code><code class="parameterName">optimizeHuffmanTables</code></td>
 						<td><span><p>whether the encoder may compute entropy coder tables from
 the image it is writing</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="AB">
 						<td><code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></td>
 						<td><span><p>this format leaving that choice to the encoder</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="b" id="equals(java.lang.Object)">
-				<h2 class="EB"><i class="OVERRIDE PUBLIC"></i><code class="w">equals</code><code class="FB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="AB"><code>boolean</code></i></h2>
-				<table class="P">
-					<tr class="d">
+			<section class="m" id="equals(java.lang.Object)">
+				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="x">equals</code><code class="DB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="b"><code>boolean</code></i></h2>
+				<table class="V">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="AB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
@@ -126,38 +126,38 @@ the image it is writing</p></span></td>
  The settings are part of what a JPEG format is, so the same picture asked for as 4:4:4
  is not the same value as the same picture asked for as 4:2:0.
  </p></span></section>
-			<section class="b" id="hashCode()">
-				<h2 class="EB"><i class="OVERRIDE PUBLIC"></i><code class="w">hashCode</code><code class="FB">()</code><i class="AB"><code>int</code></i></h2>
-				<table class="P">
-					<tr class="N">
+			<section class="m" id="hashCode()">
+				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="x">hashCode</code><code class="DB">()</code><i class="b"><code>int</code></i></h2>
+				<table class="V">
+					<tr class="AB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="e">
-			<div class="j">
-				<h5 class="y">Static Fields</h5>
+		<aside class="p">
+			<div class="t">
+				<h5 class="r">Static Fields</h5>
 				<ul>
-					<li class="DB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.html#DEFAULT_SUBSAMPLING">DEFAULT_SUBSAMPLING</a></code><i class="CB"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
-					<li class="DB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.html#DEFAULT_OPTIMIZE_HUFFMAN_TABLES">DEFAULT_OPTIMIZE_HUFFMAN_TABLES</a></code><i class="CB"><code class="return">boolean</code></i></li>
+					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.html#DEFAULT_SUBSAMPLING">DEFAULT_SUBSAMPLING</a></code><i class="y"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.html#DEFAULT_OPTIMIZE_HUFFMAN_TABLES">DEFAULT_OPTIMIZE_HUFFMAN_TABLES</a></code><i class="y"><code class="return">boolean</code></i></li>
 				</ul>
-				<h5 class="y">Fields</h5>
+				<h5 class="r">Fields</h5>
 				<ul>
-					<li class="DB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.html#subsampling">subsampling</a></code><i class="CB"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
-					<li class="DB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.html#optimizeHuffmanTables">optimizeHuffmanTables</a></code><i class="CB"><code class="return">boolean</code></i></li>
+					<li class="l"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.html#subsampling">subsampling</a></code><i class="y"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="l"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Jpeg.html#optimizeHuffmanTables">optimizeHuffmanTables</a></code><i class="y"><code class="return">boolean</code></i></li>
 				</ul>
-				<h5 class="y">Methods</h5>
+				<h5 class="r">Methods</h5>
 				<ul>
-					<li class="DB"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.html#subsampling(imagify.ImageFormat.Jpeg.Subsampling)">subsampling</a></code><code class="FB">(<code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="CB"><code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></li>
-					<li class="DB"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.html#optimizeHuffmanTables(boolean)">optimizeHuffmanTables</a></code><code class="FB">(<code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="CB"><code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></li>
-					<li class="DB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.html#equals(java.lang.Object)">equals</a></code><code class="FB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="CB"><code>boolean</code></i></li>
-					<li class="DB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.html#hashCode()">hashCode</a></code><code class="FB">()</code><i class="CB"><code>int</code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.html#subsampling(imagify.ImageFormat.Jpeg.Subsampling)">subsampling</a></code><code class="DB">(<code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="y"><code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></li>
+					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.html#optimizeHuffmanTables(boolean)">optimizeHuffmanTables</a></code><code class="DB">(<code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="y"><code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></li>
+					<li class="l"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.html#equals(java.lang.Object)">equals</a></code><code class="DB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="y"><code>boolean</code></i></li>
+					<li class="l"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Jpeg.html#hashCode()">hashCode</a></code><code class="DB">()</code><i class="y"><code>int</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="c">
+		<footer class="W">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
