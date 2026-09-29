@@ -247,15 +247,16 @@ else()
   # hand-built on.
   #
   # IMAGIFY_AVIF_SONAME_C_FLAG is how that is fixed from the outside. libavif is configured with
-  # -DCMAKE_SHARED_LIBRARY_SONAME_C_FLAG pointing at the bundled name, which is what the caller has
-  # to do; this variable is only how the flag reaches it. The workflow passes:
+  # CMAKE_SHARED_LIBRARY_SONAME_C_FLAG and its CXX twin pointing at the bundled name, which is what
+  # the caller has to do; the C++ one is the one that matters, because avif.h is a C header but the
+  # library behind it is C++, and the C flag on its own is handed to nothing. The workflow passes
+  # for the two Unix targets:
   #   Linux   -Wl,-soname,libavif-linux-x64.so
   #   macOS   -install_name,@loader_path/libavif-macos-x64.dylib
   # macOS needs no rpath because @loader_path is the directory of the loading module, which is the
   # unpacked directory holding both files. Linux does, because a bare DT_NEEDED name is searched in
   # RUNPATH, then LD_LIBRARY_PATH, then the loader's cache, and never beside the shim, so $ORIGIN is
-  # what puts it there. The two dollars and the backslash keep CMake from expanding $ORIGIN as one
-  # of its own variables.
+  # what puts it there.
   target_link_libraries(imagify_avif PRIVATE "${IMAGIFY_AVIF_LIBRARY}")
   if(NOT APPLE)
     # Setting BUILD_RPATH replaces the absolute build tree path CMake would otherwise put in the

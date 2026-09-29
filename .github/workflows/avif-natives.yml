@@ -144,15 +144,21 @@ jobs:
         # redistributable rather than from Windows, so a user who has installed nothing would be
         # missing them. CMake ignores the variable on the Unix targets.
         #
-        # CMAKE_SHARED_LIBRARY_SONAME_C_FLAG is set on the two Unix targets so that libavif records
-        # the name the jar stores it under rather than the conventional libavif.so.16 or
-        # libavif.16.dylib. The shim records whatever SONAME the library it links against has, and
-        # the two Unix loaders resolve a dependency by that name rather than against the directory
-        # the loading module sits in, so a stock soname here is a shim that loads and then cannot
-        # find avifVersion. Windows needs nothing: it resolves a module's imports against the
-        # directory of the module being loaded, and the import library's name is set separately.
-        # macOS wants @loader_path rather than @rpath because that already means "beside the shim",
-        # and both files are unpacked into one directory.
+        # CMAKE_SHARED_LIBRARY_SONAME_C_FLAG and its CXX twin are set on the two Unix targets so
+        # that libavif records the name the jar stores it under rather than the conventional
+        # libavif.so.16 or libavif.16.dylib. The shim records whatever SONAME the library it links
+        # against has, and the two Unix loaders resolve a dependency by that name rather than
+        # against the directory the loading module sits in, so a stock soname here is a shim that
+        # loads and then cannot find avifVersion. Windows needs nothing: it resolves a module's
+        # imports against the directory of the module being loaded, and the import library's name is
+        # set separately. macOS wants @loader_path rather than @rpath because that already means
+        # "beside the shim", and both files are unpacked into one directory.
+        #
+        # Both language variants are passed, and the C++ one is the one that matters: avif.h is a C
+        # header but the library behind it is C++, so CMAKE_SHARED_LIBRARY_SONAME_C_FLAG on its own
+        # is a flag CMake never hands to anything and the soname stays libavif.so.16. That is not
+        # a guess: the first run of this produced a shim importing libavif.so.16 on Linux and
+        # @rpath/libavif.16.dylib on macOS, and the self-contained check below is what caught it.
         #
         # AOM_TARGET_CPU is passed rather than left to libaom's own detection, which reads
         # CMAKE_SYSTEM_PROCESSOR. On Windows that comes from the environment, and the steps here
@@ -180,6 +186,7 @@ jobs:
           )
           if [ -n "${{ matrix.soname }}" ]; then
             args+=("-DCMAKE_SHARED_LIBRARY_SONAME_C_FLAG=${{ matrix.soname }}")
+            args+=("-DCMAKE_SHARED_LIBRARY_SONAME_CXX_FLAG=${{ matrix.soname }}")
           fi
           cmake "${args[@]}"
 
