@@ -7,8 +7,8 @@ const root = {
 		"imagify",
 		"imagify.svg",
 		"imagify.ico",
+		"imagify.jpeg.ffm",
 		"imagify.jpeg",
-		"imagify.jpeg.jna",
 		"imagify.webp",
 		"imagify.webp.ffm",
 		"imagify.pixels"
@@ -200,6 +200,16 @@ const root = {
 			"type": "Class"
 		},
 		{
+			"name": "JpegliCodec",
+			"packageName": "imagify.jpeg.ffm",
+			"type": "Class"
+		},
+		{
+			"name": "JpegliLibrary",
+			"packageName": "imagify.jpeg.ffm",
+			"type": "Class"
+		},
+		{
 			"name": "JpegException",
 			"packageName": "imagify.jpeg",
 			"type": "Exception"
@@ -208,16 +218,6 @@ const root = {
 			"name": "JpegWriteParam",
 			"packageName": "imagify.jpeg",
 			"type": "Class"
-		},
-		{
-			"name": "JpegliCodec",
-			"packageName": "imagify.jpeg.jna",
-			"type": "Class"
-		},
-		{
-			"name": "JpegliLibrary",
-			"packageName": "imagify.jpeg.jna",
-			"type": "Interface"
 		},
 		{
 			"name": "JpegImageReaderSpi",

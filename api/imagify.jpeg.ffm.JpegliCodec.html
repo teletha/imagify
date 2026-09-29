@@ -19,9 +19,9 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="v">
-		<header class="P" date="2026-09-29">
-			<h1 class="Q"><a href="index.html"><code>Imagify</code></a></h1>
+	<body class="J">
+		<header class="K" date="2026-09-29">
+			<h1 class="a"><a href="index.html"><code>Imagify</code></a></h1>
 			<nav class="R"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
@@ -35,18 +35,19 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="L"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="b"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="w"></nav>
-		<article class="e" id="Article">
-			<section class="m"><code class="n">imagify.jpeg.jna</code>
-				<h2 class="Class K"><code class="x">JpegliCodec</code></h2>
-				<div class="CB"></div><span class="A"><p>Entry point to the <code>jpegli</code> based JPEG codec.</p><p>This is the encoder and decoder behind both the ImageIO service providers in
+		<nav class="N"></nav>
+		<article class="L" id="Article">
+			<section class="r"><code class="s">imagify.jpeg.ffm</code>
+				<h2 class="Class d"><code class="f">JpegliCodec</code></h2>
+				<div class="T"></div><span class="A"><p>Entry point to the <code>jpegli</code> based JPEG codec using Java&apos;s Foreign Function &amp; Memory API
+(JEP 454).</p><p>This is the encoder and decoder behind both the ImageIO service providers in
  <code>imagify.jpeg</code> and the direct calls <code><a aria-label="imagify.ImageWriter" href="api/imagify.ImageWriter.html">imagify.ImageWriter</a></code> and
  <code><a aria-label="imagify.ImageReader" href="api/imagify.ImageReader.html">imagify.ImageReader</a></code> make, so a JPEG written through any of them comes out of the same
  encoder with the same settings.
@@ -54,96 +55,102 @@
 						<p>The native library is loaded lazily, on first use, and failing to load it is never fatal: the
  ImageIO service providers of this library then stay inert instead of breaking <code>ImageIO</code> for
  every other format, and the facade falls back to the JDK&apos;s own JPEG support. Use
- <code><a aria-label="imagify.jpeg.jna.JpegliCodec" href="api/imagify.jpeg.jna.JpegliCodec.html#isAvailable()">#isAvailable()</a></code> to find out which of the two a given call will use.
+ <code><a aria-label="imagify.jpeg.ffm.JpegliCodec" href="api/imagify.jpeg.ffm.JpegliCodec.html#isAvailable()">#isAvailable()</a></code> to find out which of the two a given call will use.
  
 							<p>Prebuilt shared libraries for Windows, macOS and Linux, in both 64 bit flavours, ship inside
  this jar and are unpacked on demand, so installing anything is not required. Should this jar hold
  no library for the current platform, a jpegli based one found the usual way is used instead: point
- the <code>jna.library.path</code> system property (or the platform specific <code>PATH</code> /
+ the <code>java.library.path</code> system property (or the platform specific <code>PATH</code> /
  <code>LD_LIBRARY_PATH</code>) at the directory that holds it.
  
 								<pre>
- java -Djna.library.path=/usr/local/lib -cp ... YourApp
+ java -Djava.library.path=/usr/local/lib -cp ... YourApp
  </pre>
 								<p>Set <code>-Dimagify.jpeg.bundled=false</code> to ignore the bundled library and always look for one
  installed on the system.
+ 
+									<p>An encode whose source is already a <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html#TYPE_4BYTE_ABGR">BufferedImage#TYPE_4BYTE_ABGR</a></code> image hands its own
+ backing array to the shim, which reads it in place, so the pixels are not copied into native
+ memory on the way in. Anything else is converted to that layout once, through the shared
+ <code><a aria-label="imagify.pixels.AbgrPixels" href="api/imagify.pixels.AbgrPixels.html">AbgrPixels</a></code>.
 </p>
+								</p>
 							</p>
 						</p>
 					</p>
 				</span></section>
-			<section class="m" id="isAvailable()">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="x">isAvailable</code><code class="DB">()</code><i class="b"><code>boolean</code></i></h2>
-				<table class="V">
-					<tr class="AB">
+			<section class="r" id="isAvailable()">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="f">isAvailable</code><code class="p">()</code><i class="t"><code>boolean</code></i></h2>
+				<table class="EB">
+					<tr class="JB">
 						<td><code>boolean</code></td>
 						<td><span><code>true</code> when the native library was loaded and its ABI is one this jar speaks</span></td>
 					</tr>
 				</table><span class="A"><p>Returns whether JPEG encoding and decoding through jpegli can be used in this JVM.</p></span></section>
-			<section class="m" id="getUnavailableReason()">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="x">getUnavailableReason</code><code class="DB">()</code><i class="b"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="V">
-					<tr class="AB">
+			<section class="r" id="getUnavailableReason()">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="f">getUnavailableReason</code><code class="p">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="EB">
+					<tr class="JB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>a human readable description of the problem</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns why the native library cannot be used, or <code>null</code> when everything is fine.</p></span></section>
-			<section class="m" id="getVersion()">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="x">getVersion</code><code class="DB">()</code><i class="b"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="V">
-					<tr class="AB">
+			<section class="r" id="getVersion()">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="f">getVersion</code><code class="p">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="EB">
+					<tr class="JB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the reported version, or <code>null</code> when the library is unavailable</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns the version of the loaded jpegli, for example <code>&quot;0.12.0&quot;</code>.</p></span></section>
-			<section class="m" id="library()">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="x">library</code><code class="DB">()</code><i class="b"><code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html">JpegliLibrary</a></code></i></h2>
-				<table class="V">
-					<tr class="AB">
-						<td><code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html">JpegliLibrary</a></code></td>
+			<section class="r" id="library()">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="f">library</code><code class="p">()</code><i class="t"><code><a aria-label="imagify.jpeg.ffm.JpegliLibrary" href="api/imagify.jpeg.ffm.JpegliLibrary.html">JpegliLibrary</a></code></i></h2>
+				<table class="EB">
+					<tr class="JB">
+						<td><code><a aria-label="imagify.jpeg.ffm.JpegliLibrary" href="api/imagify.jpeg.ffm.JpegliLibrary.html">JpegliLibrary</a></code></td>
 						<td><span><p>the library, or <code>null</code> when it is unavailable</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns the shared handle to the native library, loading it on first use.</p></span></section>
-			<section class="m" id="requireLibrary()">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="x">requireLibrary</code><code class="DB">()</code><i class="b"><code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html">JpegliLibrary</a></code></i></h2>
-				<table class="V">
-					<tr class="AB">
-						<td><code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html">JpegliLibrary</a></code></td>
+			<section class="r" id="requireLibrary()">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="f">requireLibrary</code><code class="p">()</code><i class="t"><code><a aria-label="imagify.jpeg.ffm.JpegliLibrary" href="api/imagify.jpeg.ffm.JpegliLibrary.html">JpegliLibrary</a></code></i></h2>
+				<table class="EB">
+					<tr class="JB">
+						<td><code><a aria-label="imagify.jpeg.ffm.JpegliLibrary" href="api/imagify.jpeg.ffm.JpegliLibrary.html">JpegliLibrary</a></code></td>
 						<td><span><p>the library, never <code>null</code></p></span></td>
 					</tr>
-					<tr class="z">
+					<tr class="u">
 						<td><code><a aria-label="imagify.jpeg.JpegException" href="api/imagify.jpeg.JpegException.html">JpegException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Returns the shared handle to the native library or fails.</p></span></section>
-			<section class="m" id="readHeader(byte[])">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="x">readHeader</code><code class="DB">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="b"><code><a aria-label="imagify.jpeg.JpegImageInfo" href="api/imagify.jpeg.JpegImageInfo.html">JpegImageInfo</a></code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="readHeader(byte[])">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="f">readHeader</code><code class="p">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="t"><code><a aria-label="imagify.jpeg.JpegImageInfo" href="api/imagify.jpeg.JpegImageInfo.html">JpegImageInfo</a></code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code array="fix">byte</code><code class="parameterName">encoded</code></td>
 						<td><span><p>the complete JPEG file</p></span></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code><a aria-label="imagify.jpeg.JpegImageInfo" href="api/imagify.jpeg.JpegImageInfo.html">JpegImageInfo</a></code></td>
 						<td><span><p>the image properties</p></span></td>
 					</tr>
-					<tr class="z">
+					<tr class="u">
 						<td><code><a aria-label="imagify.jpeg.JpegException" href="api/imagify.jpeg.JpegException.html">JpegException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Parses the frame header of a JPEG and reports what it says, without decoding a pixel.</p></span></section>
-			<section class="m" id="decode(byte[])">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="x">decode</code><code class="DB">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="b"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="decode(byte[])">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="f">decode</code><code class="p">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="t"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code array="fix">byte</code><code class="parameterName">encoded</code></td>
 						<td><span><p>the complete JPEG file</p></span></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the decoded image</p></span></td>
 					</tr>
-					<tr class="z">
+					<tr class="u">
 						<td><code><a aria-label="imagify.jpeg.JpegException" href="api/imagify.jpeg.JpegException.html">JpegException</a></code></td>
 						<td></td>
 					</tr>
@@ -154,53 +161,53 @@
  goes on to compare.
 </p>
 				</span></section>
-			<section class="m" id="encode(java.awt.image.RenderedImage,int)">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="x">encode</code><code class="DB">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>)</code><i class="b"><code array="fix">byte</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="encode(java.awt.image.RenderedImage,int)">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="f">encode</code><code class="p">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>)</code><i class="t"><code array="fix">byte</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the image to encode; any <code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code> is accepted</p></span></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><p>1 (smallest) to 100 (most detail)</p></span></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>the complete JPEG file</p></span></td>
 					</tr>
-					<tr class="z">
+					<tr class="u">
 						<td><code><a aria-label="imagify.jpeg.JpegException" href="api/imagify.jpeg.JpegException.html">JpegException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Encodes an image as a JPEG at 4:2:0 with the standard entropy coder tables, which is what
 <code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">imagify.ImageFormat.Jpeg</a></code> names.</p></span></section>
-			<section class="m" id="encode(java.awt.image.RenderedImage,int,int,boolean)">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="x">encode</code><code class="DB">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">subsampling</code>, <code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="b"><code array="fix">byte</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="encode(java.awt.image.RenderedImage,int,int,boolean)">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="f">encode</code><code class="p">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">subsampling</code>, <code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="t"><code array="fix">byte</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the image to encode; any <code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code> is accepted</p></span></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><p>1 (smallest) to 100 (most detail)</p></span></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">subsampling</code></td>
 						<td><span><p>an <code>IMAGIFY_JPEG_SAMP_*</code> value, which is what
 <code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">imagify.ImageFormat.Jpeg.Subsampling</a></code> carries</p></span></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>boolean</code><code class="parameterName">optimizeHuffmanTables</code></td>
 						<td><span><p>whether the entropy coder tables are computed from this image
 rather than taken from the standard set</p></span></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code array="fix">byte</code></td>
 						<td><span><p>the complete JPEG file</p></span></td>
 					</tr>
-					<tr class="z">
+					<tr class="u">
 						<td><code><a aria-label="imagify.jpeg.JpegException" href="api/imagify.jpeg.JpegException.html">JpegException</a></code></td>
 						<td></td>
 					</tr>
@@ -212,41 +219,45 @@ rather than taken from the standard set</p></span></td>
 						<p>The alpha channel is discarded, since a JPEG cannot store one. An image with transparency
  is therefore written against whatever colour sits behind it rather than losing the picture; a
  caller that needs the picture has to flatten it first.
+ 
+							<p>An image already in <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html#TYPE_4BYTE_ABGR">BufferedImage#TYPE_4BYTE_ABGR</a></code> hands its own backing array to
+ the shim, which reads it where it lies; every other layout is converted to that one first.
 </p>
+						</p>
 					</p>
 				</span></section>
-			<section class="m" id="statusName(int)">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="x">statusName</code><code class="DB">(<code>int</code><code class="parameterName">status</code>)</code><i class="b"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="statusName(int)">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="f">statusName</code><code class="p">(<code>int</code><code class="parameterName">status</code>)</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">status</code></td>
 						<td><span><p>one of the <code>IMAGIFY_JPEG_*</code> values</p></span></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>a description for the ones the shim does not always put a message beside</p></span></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="p">
-			<div class="t">
-				<h5 class="r">Static Methods</h5>
+		<aside class="O">
+			<div class="AB">
+				<h5 class="DB">Static Methods</h5>
 				<ul>
-					<li class="l"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.jpeg.jna.JpegliCodec.html#isAvailable()">isAvailable</a></code><code class="DB">()</code><i class="y"><code>boolean</code></i></li>
-					<li class="l"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.jpeg.jna.JpegliCodec.html#getUnavailableReason()">getUnavailableReason</a></code><code class="DB">()</code><i class="y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="l"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.jpeg.jna.JpegliCodec.html#getVersion()">getVersion</a></code><code class="DB">()</code><i class="y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="l"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.jpeg.jna.JpegliCodec.html#library()">library</a></code><code class="DB">()</code><i class="y"><code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html">JpegliLibrary</a></code></i></li>
-					<li class="l"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.jpeg.jna.JpegliCodec.html#requireLibrary()">requireLibrary</a></code><code class="DB">()</code><i class="y"><code><a aria-label="imagify.jpeg.jna.JpegliLibrary" href="api/imagify.jpeg.jna.JpegliLibrary.html">JpegliLibrary</a></code></i></li>
-					<li class="l"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.jpeg.jna.JpegliCodec.html#readHeader(byte[])">readHeader</a></code><code class="DB">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="y"><code><a aria-label="imagify.jpeg.JpegImageInfo" href="api/imagify.jpeg.JpegImageInfo.html">JpegImageInfo</a></code></i></li>
-					<li class="l"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.jpeg.jna.JpegliCodec.html#decode(byte[])">decode</a></code><code class="DB">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="y"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="l"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.jpeg.jna.JpegliCodec.html#encode(java.awt.image.RenderedImage,int)">encode</a></code><code class="DB">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>)</code><i class="y"><code array="fix">byte</code></i></li>
-					<li class="l"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.jpeg.jna.JpegliCodec.html#encode(java.awt.image.RenderedImage,int,int,boolean)">encode</a></code><code class="DB">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">subsampling</code>, <code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="y"><code array="fix">byte</code></i></li>
-					<li class="l"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.jpeg.jna.JpegliCodec.html#statusName(int)">statusName</a></code><code class="DB">(<code>int</code><code class="parameterName">status</code>)</code><i class="y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="q"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.jpeg.ffm.JpegliCodec.html#isAvailable()">isAvailable</a></code><code class="p">()</code><i class="m"><code>boolean</code></i></li>
+					<li class="q"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.jpeg.ffm.JpegliCodec.html#getUnavailableReason()">getUnavailableReason</a></code><code class="p">()</code><i class="m"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="q"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.jpeg.ffm.JpegliCodec.html#getVersion()">getVersion</a></code><code class="p">()</code><i class="m"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="q"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.jpeg.ffm.JpegliCodec.html#library()">library</a></code><code class="p">()</code><i class="m"><code><a aria-label="imagify.jpeg.ffm.JpegliLibrary" href="api/imagify.jpeg.ffm.JpegliLibrary.html">JpegliLibrary</a></code></i></li>
+					<li class="q"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.jpeg.ffm.JpegliCodec.html#requireLibrary()">requireLibrary</a></code><code class="p">()</code><i class="m"><code><a aria-label="imagify.jpeg.ffm.JpegliLibrary" href="api/imagify.jpeg.ffm.JpegliLibrary.html">JpegliLibrary</a></code></i></li>
+					<li class="q"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.jpeg.ffm.JpegliCodec.html#readHeader(byte[])">readHeader</a></code><code class="p">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="m"><code><a aria-label="imagify.jpeg.JpegImageInfo" href="api/imagify.jpeg.JpegImageInfo.html">JpegImageInfo</a></code></i></li>
+					<li class="q"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.jpeg.ffm.JpegliCodec.html#decode(byte[])">decode</a></code><code class="p">(<code array="fix">byte</code><code class="parameterName">encoded</code>)</code><i class="m"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="q"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.jpeg.ffm.JpegliCodec.html#encode(java.awt.image.RenderedImage,int)">encode</a></code><code class="p">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>)</code><i class="m"><code array="fix">byte</code></i></li>
+					<li class="q"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.jpeg.ffm.JpegliCodec.html#encode(java.awt.image.RenderedImage,int,int,boolean)">encode</a></code><code class="p">(<code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">subsampling</code>, <code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="m"><code array="fix">byte</code></i></li>
+					<li class="q"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.jpeg.ffm.JpegliCodec.html#statusName(int)">statusName</a></code><code class="p">(<code>int</code><code class="parameterName">status</code>)</code><i class="m"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="W">
+		<footer class="M">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

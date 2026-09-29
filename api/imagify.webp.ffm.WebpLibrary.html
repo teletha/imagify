@@ -19,9 +19,9 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="v">
-		<header class="P" date="2026-09-29">
-			<h1 class="Q"><a href="index.html"><code>Imagify</code></a></h1>
+	<body class="J">
+		<header class="K" date="2026-09-29">
+			<h1 class="a"><a href="index.html"><code>Imagify</code></a></h1>
 			<nav class="R"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="L"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="b"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="w"></nav>
-		<article class="e" id="Article">
-			<section class="m"><code class="n">imagify.webp.ffm</code>
-				<h2 class="Class K"><code class="x">WebpLibrary</code></h2>
-				<div class="CB"></div><span class="A"><p>FFM binding for the C ABI in <code>src/main/native/webp/imagify_webp.h</code>.</p><p>This is the Foreign Function &amp; Memory API (JEP 454) counterpart to the JNA binding.
+		<nav class="N"></nav>
+		<article class="L" id="Article">
+			<section class="r"><code class="s">imagify.webp.ffm</code>
+				<h2 class="Class d"><code class="f">WebpLibrary</code></h2>
+				<div class="T"></div><span class="A"><p>FFM binding for the C ABI in <code>src/main/native/webp/imagify_webp.h</code>.</p><p>This is the Foreign Function &amp; Memory API (JEP 454) counterpart to the JNA binding.
  It describes the function signatures and structure layouts needed to call the native
  <code>libwebp</code>-based shared library through Java&apos;s standard <code>java.lang.foreign</code> API.
  
@@ -54,110 +54,110 @@
 </p>
 					</p>
 				</span></section>
-			<section class="m" id="LIBRARY_NAME">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">LIBRARY_NAME</code><i class="b"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Name of the shared library as this jar builds it.</p><p>Deliberately not <code>webp</code>. libwebp builds <code>libwebp.so</code>, which is also the name
+			<section class="r" id="LIBRARY_NAME">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">LIBRARY_NAME</code><i class="t"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Name of the shared library as this jar builds it.</p><p>Deliberately not <code>webp</code>. libwebp builds <code>libwebp.so</code>, which is also the name
  of every system <code>libwebp</code> on Linux, so two of those can end up mapped in one process.
  This jar has no reason to interoperate with a system libwebp, so the bundled library is given
  a name of its own.
 </p>
 				</span></section>
-			<section class="m" id="ABI_VERSION">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">ABI_VERSION</code><i class="b"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>The version of the C ABI this binding was written against, as
+			<section class="r" id="ABI_VERSION">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">ABI_VERSION</code><i class="t"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>The version of the C ABI this binding was written against, as
 <code>IMAGIFY_WEBP_ABI_VERSION</code> in <code>src/main/native/webp/imagify_webp.h</code> spells it.</p></span></section>
-			<section class="m" id="IMAGIFY_WEBP_OK">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_WEBP_OK</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>The operation completed.</p></span></section>
-			<section class="m" id="IMAGIFY_WEBP_ERR_ARGUMENT">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_WEBP_ERR_ARGUMENT</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>A parameter was out of range, before any work was done.</p></span></section>
-			<section class="m" id="IMAGIFY_WEBP_ERR_CORRUPT">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_WEBP_ERR_CORRUPT</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>The input is not a WebP file, or is a damaged one.</p></span></section>
-			<section class="m" id="IMAGIFY_WEBP_ERR_MEMORY">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_WEBP_ERR_MEMORY</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>An allocation failed.</p></span></section>
-			<section class="m" id="IMAGIFY_WEBP_ERR_UNSUPPORTED">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_WEBP_ERR_UNSUPPORTED</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>libwebp will not do this, for instance a dimension too large.</p></span></section>
-			<section class="m" id="IMAGIFY_WEBP_ERR_INTERNAL">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">IMAGIFY_WEBP_ERR_INTERNAL</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>libwebp failed in a way its own error text does not explain.</p></span></section>
-			<section class="m" id="FORMAT_VP8">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">FORMAT_VP8</code><i class="b"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossy <code>VP8</code> bitstream with this format code.</span></section>
-			<section class="m" id="FORMAT_VP8L">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">FORMAT_VP8L</code><i class="b"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossless <code>VP8L</code> bitstream with this format code.</span></section>
-			<section class="m" id="FORMAT_VP8X">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">FORMAT_VP8X</code><i class="b"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports the <code>VP8X</code> container, which is what an animation uses.</span></section>
-			<section class="m" id="MIN_QUALITY">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">MIN_QUALITY</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>The lowest quality the encoder accepts.</p></span></section>
-			<section class="m" id="MAX_QUALITY">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">MAX_QUALITY</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>The highest quality the encoder accepts.</p></span></section>
-			<section class="m" id="MIN_METHOD">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">MIN_METHOD</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>The quickest encoding effort the encoder accepts.</p></span></section>
-			<section class="m" id="MAX_METHOD">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">MAX_METHOD</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>The most thorough encoding effort the encoder accepts.</p></span></section>
-			<section class="m" id="DEFAULT_QUALITY">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">DEFAULT_QUALITY</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>Quality used when the caller does not ask for one: <code>75</code>, the <code>libwebp</code> default.</p></span></section>
-			<section class="m" id="MESSAGE_LENGTH">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">MESSAGE_LENGTH</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>Size of the buffer every entry point writes its failure description into.</p><p>Matches <code>IMAGIFY_WEBP_MESSAGE_LENGTH</code> in <code>imagify_webp.h</code>.
+			<section class="r" id="IMAGIFY_WEBP_OK">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">IMAGIFY_WEBP_OK</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>The operation completed.</p></span></section>
+			<section class="r" id="IMAGIFY_WEBP_ERR_ARGUMENT">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">IMAGIFY_WEBP_ERR_ARGUMENT</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>A parameter was out of range, before any work was done.</p></span></section>
+			<section class="r" id="IMAGIFY_WEBP_ERR_CORRUPT">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">IMAGIFY_WEBP_ERR_CORRUPT</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>The input is not a WebP file, or is a damaged one.</p></span></section>
+			<section class="r" id="IMAGIFY_WEBP_ERR_MEMORY">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">IMAGIFY_WEBP_ERR_MEMORY</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>An allocation failed.</p></span></section>
+			<section class="r" id="IMAGIFY_WEBP_ERR_UNSUPPORTED">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">IMAGIFY_WEBP_ERR_UNSUPPORTED</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>libwebp will not do this, for instance a dimension too large.</p></span></section>
+			<section class="r" id="IMAGIFY_WEBP_ERR_INTERNAL">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">IMAGIFY_WEBP_ERR_INTERNAL</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>libwebp failed in a way its own error text does not explain.</p></span></section>
+			<section class="r" id="FORMAT_VP8">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">FORMAT_VP8</code><i class="t"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossy <code>VP8</code> bitstream with this format code.</span></section>
+			<section class="r" id="FORMAT_VP8L">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">FORMAT_VP8L</code><i class="t"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports a lossless <code>VP8L</code> bitstream with this format code.</span></section>
+			<section class="r" id="FORMAT_VP8X">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">FORMAT_VP8X</code><i class="t"><code class="return">int</code></i></h2><span class="A"><code>libwebp</code> reports the <code>VP8X</code> container, which is what an animation uses.</span></section>
+			<section class="r" id="MIN_QUALITY">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">MIN_QUALITY</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>The lowest quality the encoder accepts.</p></span></section>
+			<section class="r" id="MAX_QUALITY">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">MAX_QUALITY</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>The highest quality the encoder accepts.</p></span></section>
+			<section class="r" id="MIN_METHOD">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">MIN_METHOD</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>The quickest encoding effort the encoder accepts.</p></span></section>
+			<section class="r" id="MAX_METHOD">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">MAX_METHOD</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>The most thorough encoding effort the encoder accepts.</p></span></section>
+			<section class="r" id="DEFAULT_QUALITY">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">DEFAULT_QUALITY</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>Quality used when the caller does not ask for one: <code>75</code>, the <code>libwebp</code> default.</p></span></section>
+			<section class="r" id="MESSAGE_LENGTH">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">MESSAGE_LENGTH</code><i class="t"><code class="return">int</code></i></h2><span class="A"><p>Size of the buffer every entry point writes its failure description into.</p><p>Matches <code>IMAGIFY_WEBP_MESSAGE_LENGTH</code> in <code>imagify_webp.h</code>.
 </p>
 				</span></section>
-			<section class="m" id="WEBP_FEATURES_LAYOUT">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">WEBP_FEATURES_LAYOUT</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.StructLayout 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/StructLayout.html">StructLayout</a></code></i></h2><span class="A"><p>Layout of <code>imagify_webp_features</code>, matching the C struct in <code>imagify_webp.h</code>.
+			<section class="r" id="WEBP_FEATURES_LAYOUT">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">WEBP_FEATURES_LAYOUT</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.StructLayout 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/StructLayout.html">StructLayout</a></code></i></h2><span class="A"><p>Layout of <code>imagify_webp_features</code>, matching the C struct in <code>imagify_webp.h</code>.
 Fields are laid out in declaration order with no padding (all are <code>int</code>, 4 bytes each).</p></span></section>
-			<section class="m" id="WEBP_ANIMATION_LAYOUT">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">WEBP_ANIMATION_LAYOUT</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.StructLayout 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/StructLayout.html">StructLayout</a></code></i></h2><span class="A"><p>Layout of <code>imagify_webp_animation</code>, matching the C struct in <code>imagify_webp.h</code>.</p></span></section>
-			<section class="m" id="WEBP_FEATURES_SIZE">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">WEBP_FEATURES_SIZE</code><i class="b"><code class="return">long</code></i></h2><span class="A"><p>The byte size of the <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code> struct.</p></span></section>
-			<section class="m" id="WEBP_ANIMATION_SIZE">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">WEBP_ANIMATION_SIZE</code><i class="b"><code class="return">long</code></i></h2><span class="A"><p>The byte size of the <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">#WEBP_ANIMATION_LAYOUT</a></code> struct.</p></span></section>
-			<section class="m" id="OFFSET_WIDTH">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">OFFSET_WIDTH</code><i class="b"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>width</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code>.</p></span></section>
-			<section class="m" id="OFFSET_HEIGHT">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">OFFSET_HEIGHT</code><i class="b"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>height</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code>.</p></span></section>
-			<section class="m" id="OFFSET_HAS_ALPHA">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">OFFSET_HAS_ALPHA</code><i class="b"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>hasAlpha</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code>.</p></span></section>
-			<section class="m" id="OFFSET_HAS_ANIMATION">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">OFFSET_HAS_ANIMATION</code><i class="b"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>hasAnimation</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code>.</p></span></section>
-			<section class="m" id="OFFSET_FORMAT">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">OFFSET_FORMAT</code><i class="b"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>format</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code>.</p></span></section>
-			<section class="m" id="OFFSET_FRAME_COUNT">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">OFFSET_FRAME_COUNT</code><i class="b"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>frameCount</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">#WEBP_ANIMATION_LAYOUT</a></code>.</p></span></section>
-			<section class="m" id="OFFSET_LOOP_COUNT">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">OFFSET_LOOP_COUNT</code><i class="b"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>loopCount</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">#WEBP_ANIMATION_LAYOUT</a></code>.</p></span></section>
-			<section class="m" id="OFFSET_ANIMATION_WIDTH">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">OFFSET_ANIMATION_WIDTH</code><i class="b"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>width</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">#WEBP_ANIMATION_LAYOUT</a></code>.</p><p>Not <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_WIDTH">#OFFSET_WIDTH</a></code>: that one is where the width sits in
+			<section class="r" id="WEBP_ANIMATION_LAYOUT">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">WEBP_ANIMATION_LAYOUT</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.StructLayout 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/StructLayout.html">StructLayout</a></code></i></h2><span class="A"><p>Layout of <code>imagify_webp_animation</code>, matching the C struct in <code>imagify_webp.h</code>.</p></span></section>
+			<section class="r" id="WEBP_FEATURES_SIZE">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">WEBP_FEATURES_SIZE</code><i class="t"><code class="return">long</code></i></h2><span class="A"><p>The byte size of the <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code> struct.</p></span></section>
+			<section class="r" id="WEBP_ANIMATION_SIZE">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">WEBP_ANIMATION_SIZE</code><i class="t"><code class="return">long</code></i></h2><span class="A"><p>The byte size of the <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">#WEBP_ANIMATION_LAYOUT</a></code> struct.</p></span></section>
+			<section class="r" id="OFFSET_WIDTH">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">OFFSET_WIDTH</code><i class="t"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>width</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code>.</p></span></section>
+			<section class="r" id="OFFSET_HEIGHT">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">OFFSET_HEIGHT</code><i class="t"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>height</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code>.</p></span></section>
+			<section class="r" id="OFFSET_HAS_ALPHA">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">OFFSET_HAS_ALPHA</code><i class="t"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>hasAlpha</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code>.</p></span></section>
+			<section class="r" id="OFFSET_HAS_ANIMATION">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">OFFSET_HAS_ANIMATION</code><i class="t"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>hasAnimation</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code>.</p></span></section>
+			<section class="r" id="OFFSET_FORMAT">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">OFFSET_FORMAT</code><i class="t"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>format</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code>.</p></span></section>
+			<section class="r" id="OFFSET_FRAME_COUNT">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">OFFSET_FRAME_COUNT</code><i class="t"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>frameCount</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">#WEBP_ANIMATION_LAYOUT</a></code>.</p></span></section>
+			<section class="r" id="OFFSET_LOOP_COUNT">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">OFFSET_LOOP_COUNT</code><i class="t"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>loopCount</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">#WEBP_ANIMATION_LAYOUT</a></code>.</p></span></section>
+			<section class="r" id="OFFSET_ANIMATION_WIDTH">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">OFFSET_ANIMATION_WIDTH</code><i class="t"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>width</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">#WEBP_ANIMATION_LAYOUT</a></code>.</p><p>Not <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_WIDTH">#OFFSET_WIDTH</a></code>: that one is where the width sits in
  <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">#WEBP_FEATURES_LAYOUT</a></code>, and the two structures do not put it in the same place.
 </p>
 				</span></section>
-			<section class="m" id="OFFSET_ANIMATION_HEIGHT">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">OFFSET_ANIMATION_HEIGHT</code><i class="b"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>height</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">#WEBP_ANIMATION_LAYOUT</a></code>.</p><p>Not <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_HEIGHT">#OFFSET_HEIGHT</a></code>, for the reason given on <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_ANIMATION_WIDTH">#OFFSET_ANIMATION_WIDTH</a></code>.
+			<section class="r" id="OFFSET_ANIMATION_HEIGHT">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">OFFSET_ANIMATION_HEIGHT</code><i class="t"><code class="return">long</code></i></h2><span class="A"><p>Offset of <code>height</code> in <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">#WEBP_ANIMATION_LAYOUT</a></code>.</p><p>Not <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_HEIGHT">#OFFSET_HEIGHT</a></code>, for the reason given on <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_ANIMATION_WIDTH">#OFFSET_ANIMATION_WIDTH</a></code>.
 </p>
 				</span></section>
-			<section class="m" id="ABI_VERSION_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">ABI_VERSION_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_abi_version()</code>.</p></span></section>
-			<section class="m" id="WEBP_VERSION_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">WEBP_VERSION_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_webp_version()</code>.</p></span></section>
-			<section class="m" id="READ_FEATURES_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">READ_FEATURES_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_read_features</code>.</p></span></section>
-			<section class="m" id="DECODE_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">DECODE_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_decode</code>.</p></span></section>
-			<section class="m" id="ENCODE_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">ENCODE_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_encode</code>.</p></span></section>
-			<section class="m" id="ENCODE_BGR_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">ENCODE_BGR_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_encode_bgr</code>.</p></span></section>
-			<section class="m" id="READ_ANIMATION_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">READ_ANIMATION_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_read_animation</code>.</p></span></section>
-			<section class="m" id="DECODE_ANIMATION_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">DECODE_ANIMATION_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_decode_animation</code>.</p></span></section>
-			<section class="m" id="ENCODE_ANIMATION_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">ENCODE_ANIMATION_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_encode_animation</code>.</p></span></section>
-			<section class="m" id="ENCODE_ARGB_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">ENCODE_ARGB_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_encode_argb</code>.</p></span></section>
-			<section class="m" id="ENCODE_ANIMATION_ARGB_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">ENCODE_ANIMATION_ARGB_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_encode_animation_argb</code>.</p></span></section>
-			<section class="m" id="DECODE_INTO_ARGB_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">DECODE_INTO_ARGB_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_decode_into_argb</code>.</p></span></section>
-			<section class="m" id="FREE_DESC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="x">FREE_DESC</code><i class="b"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_free</code>.</p></span></section>
-			<section class="m" id="WebpLibrary(java.lang.foreign.SymbolLookup)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">WebpLibrary</code><code class="DB">(<code><a aria-label="java.lang.foreign.SymbolLookup 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/SymbolLookup.html">SymbolLookup</a></code><code class="parameterName">lookup</code>)</code></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="ABI_VERSION_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">ABI_VERSION_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_abi_version()</code>.</p></span></section>
+			<section class="r" id="WEBP_VERSION_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">WEBP_VERSION_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_webp_version()</code>.</p></span></section>
+			<section class="r" id="READ_FEATURES_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">READ_FEATURES_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_read_features</code>.</p></span></section>
+			<section class="r" id="DECODE_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">DECODE_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_decode</code>.</p></span></section>
+			<section class="r" id="ENCODE_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">ENCODE_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_encode</code>.</p></span></section>
+			<section class="r" id="ENCODE_BGR_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">ENCODE_BGR_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_encode_bgr</code>.</p></span></section>
+			<section class="r" id="READ_ANIMATION_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">READ_ANIMATION_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_read_animation</code>.</p></span></section>
+			<section class="r" id="DECODE_ANIMATION_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">DECODE_ANIMATION_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_decode_animation</code>.</p></span></section>
+			<section class="r" id="ENCODE_ANIMATION_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">ENCODE_ANIMATION_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_encode_animation</code>.</p></span></section>
+			<section class="r" id="ENCODE_ARGB_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">ENCODE_ARGB_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_encode_argb</code>.</p></span></section>
+			<section class="r" id="ENCODE_ANIMATION_ARGB_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">ENCODE_ANIMATION_ARGB_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_encode_animation_argb</code>.</p></span></section>
+			<section class="r" id="DECODE_INTO_ARGB_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">DECODE_INTO_ARGB_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_decode_into_argb</code>.</p></span></section>
+			<section class="r" id="FREE_DESC">
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="f">FREE_DESC</code><i class="t"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></h2><span class="A"><p>Function descriptor for <code>imagify_webp_free</code>.</p></span></section>
+			<section class="r" id="WebpLibrary(java.lang.foreign.SymbolLookup)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">WebpLibrary</code><code class="p">(<code><a aria-label="java.lang.foreign.SymbolLookup 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/SymbolLookup.html">SymbolLookup</a></code><code class="parameterName">lookup</code>)</code></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.SymbolLookup 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/SymbolLookup.html">SymbolLookup</a></code><code class="parameterName">lookup</code></td>
 						<td><span><p>a symbol lookup that can resolve the <code>imagify_webp_*</code> symbols</p></span></td>
 					</tr>
@@ -166,10 +166,10 @@ Fields are laid out in declaration order with no padding (all are <code>int</cod
  symbols are visible to the default symbol lookup.
 </p>
 				</span></section>
-			<section class="m" id="hasArgbEntryPoints()">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">hasArgbEntryPoints</code><code class="DB">()</code><i class="b"><code>boolean</code></i></h2>
-				<table class="V">
-					<tr class="AB">
+			<section class="r" id="hasArgbEntryPoints()">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">hasArgbEntryPoints</code><code class="p">()</code><i class="t"><code>boolean</code></i></h2>
+				<table class="EB">
+					<tr class="JB">
 						<td><code>boolean</code></td>
 						<td><span><code>true</code> when the direct word entry points can be called</span></td>
 					</tr>
@@ -180,544 +180,544 @@ wrapped without a shuffle of the pixels in between.</p><p>All three or none: the
  treating it as though it has none is the answer that still works.
 </p>
 				</span></section>
-			<section class="m" id="hasBgrEntryPoint()">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">hasBgrEntryPoint</code><code class="DB">()</code><i class="b"><code>boolean</code></i></h2>
-				<table class="V">
-					<tr class="AB">
+			<section class="r" id="hasBgrEntryPoint()">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">hasBgrEntryPoint</code><code class="p">()</code><i class="t"><code>boolean</code></i></h2>
+				<table class="EB">
+					<tr class="JB">
 						<td><code>boolean</code></td>
 						<td><span><code>true</code> when <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_encode_bgr">#imagify_webp_encode_bgr</a></code> can be called</span></td>
 					</tr>
 				</table><span class="A"><p>Whether the loaded library has the BGR byte encode entry point.</p></span></section>
-			<section class="m" id="imagify_webp_abi_version()">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_abi_version</code><code class="DB">()</code><i class="b"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="V">
-					<tr class="AB">
+			<section class="r" id="imagify_webp_abi_version()">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_abi_version</code><code class="p">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="EB">
+					<tr class="JB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the ABI version string</p></span></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_abi_version()</code>.</p></span></section>
-			<section class="m" id="imagify_webp_webp_version()">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_webp_version</code><code class="DB">()</code><i class="b"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="V">
-					<tr class="AB">
+			<section class="r" id="imagify_webp_webp_version()">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_webp_version</code><code class="p">()</code><i class="t"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="EB">
+					<tr class="JB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the libwebp version string</p></span></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_webp_version()</code>.</p></span></section>
-			<section class="m" id="imagify_webp_read_features(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_read_features</code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="b"><code>int</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="imagify_webp_read_features(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_read_features</code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="t"><code>int</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_read_features</code>.</p></span></section>
-			<section class="m" id="imagify_webp_decode(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_decode</code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">outLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="b"><code>int</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="imagify_webp_decode(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_decode</code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">outLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="t"><code>int</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">outLength</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_decode</code>.</p></span></section>
-			<section class="m" id="imagify_webp_encode(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_encode</code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="b"><code>int</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="imagify_webp_encode(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_encode</code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="t"><code>int</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">lossless</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">method</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_encode</code>.</p></span></section>
-			<section class="m" id="imagify_webp_decode_into_argb(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_decode_into_argb</code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code>int</code><code class="parameterName">outStride</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="b"><code>int</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="imagify_webp_decode_into_argb(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_decode_into_argb</code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code>int</code><code class="parameterName">outStride</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="t"><code>int</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">outStride</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_decode_into_argb</code>.</p></span></section>
-			<section class="m" id="imagify_webp_encode_argb(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_encode_argb</code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="b"><code>int</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="imagify_webp_encode_argb(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_encode_argb</code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="t"><code>int</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">lossless</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">method</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_encode_argb</code>.</p></span></section>
-			<section class="m" id="imagify_webp_encode_animation_argb(java.lang.foreign.MemorySegment,int,int,int,java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_encode_animation_argb</code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="b"><code>int</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="imagify_webp_encode_animation_argb(java.lang.foreign.MemorySegment,int,int,int,java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_encode_animation_argb</code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="t"><code>int</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">frameCount</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">lossless</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">loopCount</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">method</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_encode_animation_argb</code>.</p></span></section>
-			<section class="m" id="imagify_webp_encode_bgr(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_encode_bgr</code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="b"><code>int</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="imagify_webp_encode_bgr(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_encode_bgr</code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="t"><code>int</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">lossless</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">method</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_encode_bgr</code>.</p></span></section>
-			<section class="m" id="imagify_webp_read_animation(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_read_animation</code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">animation</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="b"><code>int</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="imagify_webp_read_animation(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_read_animation</code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">animation</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="t"><code>int</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">animation</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_read_animation</code>.</p></span></section>
-			<section class="m" id="imagify_webp_decode_animation(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_decode_animation</code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">animation</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="b"><code>int</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="imagify_webp_decode_animation(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_decode_animation</code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">animation</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="t"><code>int</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">animation</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_decode_animation</code>.</p></span></section>
-			<section class="m" id="imagify_webp_encode_animation(java.lang.foreign.MemorySegment,int,int,int,java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_encode_animation</code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="b"><code>int</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="imagify_webp_encode_animation(java.lang.foreign.MemorySegment,int,int,int,java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_encode_animation</code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="t"><code>int</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">frameCount</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">lossless</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">loopCount</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">method</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="IB">
 						<td><code>long</code><code class="parameterName">messageCapacity</code></td>
 						<td></td>
 					</tr>
-					<tr class="AB">
+					<tr class="JB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_encode_animation</code>.</p></span></section>
-			<section class="m" id="imagify_webp_free(java.lang.foreign.MemorySegment)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="x">imagify_webp_free</code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">buffer</code>)</code><i class="b"><code>void</code></i></h2>
-				<table class="V">
-					<tr class="BB">
+			<section class="r" id="imagify_webp_free(java.lang.foreign.MemorySegment)">
+				<h2 class="n"><i class="PUBLIC"></i><code class="f">imagify_webp_free</code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">buffer</code>)</code><i class="t"><code>void</code></i></h2>
+				<table class="EB">
+					<tr class="IB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">buffer</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Calls <code>imagify_webp_free</code>.</p></span></section>
 		</article>
-		<aside class="p">
-			<div class="t">
-				<h5 class="r">Constructors</h5>
+		<aside class="O">
+			<div class="AB">
+				<h5 class="DB">Constructors</h5>
 				<ul>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WebpLibrary(java.lang.foreign.SymbolLookup)">WebpLibrary</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.SymbolLookup 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/SymbolLookup.html">SymbolLookup</a></code><code class="parameterName">lookup</code>)</code></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WebpLibrary(java.lang.foreign.SymbolLookup)">WebpLibrary</a></code><code class="p">(<code><a aria-label="java.lang.foreign.SymbolLookup 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/SymbolLookup.html">SymbolLookup</a></code><code class="parameterName">lookup</code>)</code></li>
 				</ul>
-				<h5 class="r">Static Fields</h5>
+				<h5 class="DB">Static Fields</h5>
 				<ul>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#LIBRARY_NAME">LIBRARY_NAME</a></code><i class="y"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ABI_VERSION">ABI_VERSION</a></code><i class="y"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_OK">IMAGIFY_WEBP_OK</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_ERR_ARGUMENT">IMAGIFY_WEBP_ERR_ARGUMENT</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_ERR_CORRUPT">IMAGIFY_WEBP_ERR_CORRUPT</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_ERR_MEMORY">IMAGIFY_WEBP_ERR_MEMORY</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_ERR_UNSUPPORTED">IMAGIFY_WEBP_ERR_UNSUPPORTED</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_ERR_INTERNAL">IMAGIFY_WEBP_ERR_INTERNAL</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#FORMAT_VP8">FORMAT_VP8</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#FORMAT_VP8L">FORMAT_VP8L</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#FORMAT_VP8X">FORMAT_VP8X</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#MIN_QUALITY">MIN_QUALITY</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#MAX_QUALITY">MAX_QUALITY</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#MIN_METHOD">MIN_METHOD</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#MAX_METHOD">MAX_METHOD</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#DEFAULT_QUALITY">DEFAULT_QUALITY</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#MESSAGE_LENGTH">MESSAGE_LENGTH</a></code><i class="y"><code class="return">int</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">WEBP_FEATURES_LAYOUT</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.StructLayout 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/StructLayout.html">StructLayout</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">WEBP_ANIMATION_LAYOUT</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.StructLayout 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/StructLayout.html">StructLayout</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_SIZE">WEBP_FEATURES_SIZE</a></code><i class="y"><code class="return">long</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_SIZE">WEBP_ANIMATION_SIZE</a></code><i class="y"><code class="return">long</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_WIDTH">OFFSET_WIDTH</a></code><i class="y"><code class="return">long</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_HEIGHT">OFFSET_HEIGHT</a></code><i class="y"><code class="return">long</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_HAS_ALPHA">OFFSET_HAS_ALPHA</a></code><i class="y"><code class="return">long</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_HAS_ANIMATION">OFFSET_HAS_ANIMATION</a></code><i class="y"><code class="return">long</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_FORMAT">OFFSET_FORMAT</a></code><i class="y"><code class="return">long</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_FRAME_COUNT">OFFSET_FRAME_COUNT</a></code><i class="y"><code class="return">long</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_LOOP_COUNT">OFFSET_LOOP_COUNT</a></code><i class="y"><code class="return">long</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_ANIMATION_WIDTH">OFFSET_ANIMATION_WIDTH</a></code><i class="y"><code class="return">long</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_ANIMATION_HEIGHT">OFFSET_ANIMATION_HEIGHT</a></code><i class="y"><code class="return">long</code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ABI_VERSION_DESC">ABI_VERSION_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_VERSION_DESC">WEBP_VERSION_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#READ_FEATURES_DESC">READ_FEATURES_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#DECODE_DESC">DECODE_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ENCODE_DESC">ENCODE_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ENCODE_BGR_DESC">ENCODE_BGR_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#READ_ANIMATION_DESC">READ_ANIMATION_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#DECODE_ANIMATION_DESC">DECODE_ANIMATION_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ENCODE_ANIMATION_DESC">ENCODE_ANIMATION_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ENCODE_ARGB_DESC">ENCODE_ARGB_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ENCODE_ANIMATION_ARGB_DESC">ENCODE_ANIMATION_ARGB_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#DECODE_INTO_ARGB_DESC">DECODE_INTO_ARGB_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
-					<li class="l"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#FREE_DESC">FREE_DESC</a></code><i class="y"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#LIBRARY_NAME">LIBRARY_NAME</a></code><i class="m"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ABI_VERSION">ABI_VERSION</a></code><i class="m"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_OK">IMAGIFY_WEBP_OK</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_ERR_ARGUMENT">IMAGIFY_WEBP_ERR_ARGUMENT</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_ERR_CORRUPT">IMAGIFY_WEBP_ERR_CORRUPT</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_ERR_MEMORY">IMAGIFY_WEBP_ERR_MEMORY</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_ERR_UNSUPPORTED">IMAGIFY_WEBP_ERR_UNSUPPORTED</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#IMAGIFY_WEBP_ERR_INTERNAL">IMAGIFY_WEBP_ERR_INTERNAL</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#FORMAT_VP8">FORMAT_VP8</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#FORMAT_VP8L">FORMAT_VP8L</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#FORMAT_VP8X">FORMAT_VP8X</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#MIN_QUALITY">MIN_QUALITY</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#MAX_QUALITY">MAX_QUALITY</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#MIN_METHOD">MIN_METHOD</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#MAX_METHOD">MAX_METHOD</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#DEFAULT_QUALITY">DEFAULT_QUALITY</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#MESSAGE_LENGTH">MESSAGE_LENGTH</a></code><i class="m"><code class="return">int</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_LAYOUT">WEBP_FEATURES_LAYOUT</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.StructLayout 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/StructLayout.html">StructLayout</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_LAYOUT">WEBP_ANIMATION_LAYOUT</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.StructLayout 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/StructLayout.html">StructLayout</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_FEATURES_SIZE">WEBP_FEATURES_SIZE</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_ANIMATION_SIZE">WEBP_ANIMATION_SIZE</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_WIDTH">OFFSET_WIDTH</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_HEIGHT">OFFSET_HEIGHT</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_HAS_ALPHA">OFFSET_HAS_ALPHA</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_HAS_ANIMATION">OFFSET_HAS_ANIMATION</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_FORMAT">OFFSET_FORMAT</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_FRAME_COUNT">OFFSET_FRAME_COUNT</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_LOOP_COUNT">OFFSET_LOOP_COUNT</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_ANIMATION_WIDTH">OFFSET_ANIMATION_WIDTH</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#OFFSET_ANIMATION_HEIGHT">OFFSET_ANIMATION_HEIGHT</a></code><i class="m"><code class="return">long</code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ABI_VERSION_DESC">ABI_VERSION_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#WEBP_VERSION_DESC">WEBP_VERSION_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#READ_FEATURES_DESC">READ_FEATURES_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#DECODE_DESC">DECODE_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ENCODE_DESC">ENCODE_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ENCODE_BGR_DESC">ENCODE_BGR_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#READ_ANIMATION_DESC">READ_ANIMATION_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#DECODE_ANIMATION_DESC">DECODE_ANIMATION_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ENCODE_ANIMATION_DESC">ENCODE_ANIMATION_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ENCODE_ARGB_DESC">ENCODE_ARGB_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#ENCODE_ANIMATION_ARGB_DESC">ENCODE_ANIMATION_ARGB_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#DECODE_INTO_ARGB_DESC">DECODE_INTO_ARGB_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
+					<li class="q"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#FREE_DESC">FREE_DESC</a></code><i class="m"><code class="return"><a aria-label="java.lang.foreign.FunctionDescriptor 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html">FunctionDescriptor</a></code></i></li>
 				</ul>
-				<h5 class="r">Methods</h5>
+				<h5 class="DB">Methods</h5>
 				<ul>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#hasArgbEntryPoints()">hasArgbEntryPoints</a></code><code class="DB">()</code><i class="y"><code>boolean</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#hasBgrEntryPoint()">hasBgrEntryPoint</a></code><code class="DB">()</code><i class="y"><code>boolean</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_abi_version()">imagify_webp_abi_version</a></code><code class="DB">()</code><i class="y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_webp_version()">imagify_webp_webp_version</a></code><code class="DB">()</code><i class="y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_read_features(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_read_features</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="y"><code>int</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_decode(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_decode</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">outLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="y"><code>int</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_encode(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_encode</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="y"><code>int</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_decode_into_argb(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_decode_into_argb</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code>int</code><code class="parameterName">outStride</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="y"><code>int</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_encode_argb(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_encode_argb</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="y"><code>int</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_encode_animation_argb(java.lang.foreign.MemorySegment,int,int,int,java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_encode_animation_argb</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="y"><code>int</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_encode_bgr(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_encode_bgr</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="y"><code>int</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_read_animation(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_read_animation</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">animation</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="y"><code>int</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_decode_animation(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_decode_animation</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">animation</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="y"><code>int</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_encode_animation(java.lang.foreign.MemorySegment,int,int,int,java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_encode_animation</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="y"><code>int</code></i></li>
-					<li class="l"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_free(java.lang.foreign.MemorySegment)">imagify_webp_free</a></code><code class="DB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">buffer</code>)</code><i class="y"><code>void</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#hasArgbEntryPoints()">hasArgbEntryPoints</a></code><code class="p">()</code><i class="m"><code>boolean</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#hasBgrEntryPoint()">hasBgrEntryPoint</a></code><code class="p">()</code><i class="m"><code>boolean</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_abi_version()">imagify_webp_abi_version</a></code><code class="p">()</code><i class="m"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_webp_version()">imagify_webp_webp_version</a></code><code class="p">()</code><i class="m"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_read_features(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_read_features</a></code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_decode(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_decode</a></code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">outLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_encode(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_encode</a></code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_decode_into_argb(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_decode_into_argb</a></code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code>int</code><code class="parameterName">outStride</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">features</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_encode_argb(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_encode_argb</a></code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_encode_animation_argb(java.lang.foreign.MemorySegment,int,int,int,java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_encode_animation_argb</a></code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_encode_bgr(java.lang.foreign.MemorySegment,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_encode_bgr</a></code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_read_animation(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_read_animation</a></code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">animation</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_decode_animation(java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_decode_animation</a></code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">animation</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_encode_animation(java.lang.foreign.MemorySegment,int,int,int,java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,long)">imagify_webp_encode_animation</a></code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">delays</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">lossless</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">method</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encodedLength</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">message</code>, <code>long</code><code class="parameterName">messageCapacity</code>)</code><i class="m"><code>int</code></i></li>
+					<li class="q"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_free(java.lang.foreign.MemorySegment)">imagify_webp_free</a></code><code class="p">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">buffer</code>)</code><i class="m"><code>void</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="W">
+		<footer class="M">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

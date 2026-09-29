@@ -19,9 +19,9 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="v">
-		<header class="P" date="2026-09-29">
-			<h1 class="Q"><a href="index.html"><code>Imagify</code></a></h1>
+	<body class="J">
+		<header class="K" date="2026-09-29">
+			<h1 class="a"><a href="index.html"><code>Imagify</code></a></h1>
 			<nav class="R"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
@@ -35,28 +35,19 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="L"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="b"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="w"></nav>
-		<article class="e" id="Article">
-			<div class="m">
+		<nav class="N"></nav>
+		<article class="L" id="Article">
+			<div class="r">
 				<section class="A">
 					<h2>Imagify API Overview</h2>
 					<p>This page provides a concise overview of the available APIs, including their purpose, key functionalities, and usage patterns. It serves as a starting point for developers to understand how to integrate and interact with the system effectively.</p>
-					<section class="A">
-						<h4>🛠️ Interface</h4>
-						<table>
-							<tr>
-								<td><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html">JpegliLibrary</a></code></td>
-								<td>JNA binding for the C ABI in src/main/native/jpegli/imagify_jpegli.h.</td>
-							</tr>
-						</table>
-					</section>
 					<section class="A">
 						<h4>🛠️ Class</h4>
 						<table>
@@ -174,13 +165,18 @@ Magic bytes: no reliable header (starts with 0xFF 0xD8).</td>
 								<td>Registers IcoImageReader with ImageIO.</td>
 							</tr>
 							<tr>
+								<td><code><a href="api/imagify.jpeg.ffm.JpegliCodec.html">JpegliCodec</a></code></td>
+								<td>Entry point to the jpegli based JPEG codec using Java&apos;s Foreign Function &amp; Memory API
+(JEP 454).</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.jpeg.ffm.JpegliLibrary.html">JpegliLibrary</a></code></td>
+								<td>FFM binding for the C ABI in src/main/native/jpegli/imagify_jpegli.h.</td>
+							</tr>
+							<tr>
 								<td><code><a href="api/imagify.jpeg.JpegWriteParam.html">JpegWriteParam</a></code></td>
 								<td>The write parameters of JpegImageWriter, which carry the two settings a JPEG has and an
 javax.imageio.ImageWriteParam has nowhere to put.</td>
-							</tr>
-							<tr>
-								<td><code><a href="api/imagify.jpeg.jna.JpegliCodec.html">JpegliCodec</a></code></td>
-								<td>Entry point to the jpegli based JPEG codec.</td>
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.jpeg.JpegImageReaderSpi.html">JpegImageReaderSpi</a></code></td>
@@ -261,7 +257,8 @@ way the RGB image description enumeration writes it down.</td>
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.ImageFormat.Avif.Subsampling.html">ImageFormat.Avif.Subsampling</a></code></td>
-								<td>How finely the colour-difference channels are stored, named the way the format&apos;s own pixel
+								<td>How finely the colour-difference channels are stored, named the way the format&apos;s own
+pixel
 format enumeration writes it down.</td>
 							</tr>
 							<tr>
@@ -326,8 +323,8 @@ Each algorithm provides a kernel function and a support radius.</td>
 				</section>
 			</div>
 		</article>
-		<aside class="p"></aside>
-		<footer class="W">
+		<aside class="O"></aside>
+		<footer class="M">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
