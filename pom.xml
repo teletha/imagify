@@ -20,12 +20,6 @@ The native `libavif` shared library is bundled for Windows, macOS
 and Linux on x64 and arm64. It is unpacked automatically on first
 use, so no installation is required.
 
-AVIF ships two native files rather than one. Alongside `libavif` there
-is `imagifyavif`, a small shim that binds a flat C ABI of its own, so
-that an encode can hand its pixels to libavif without copying them. The
-two are unpacked into one directory together, because the shim imports
-libavif by name and a loader looks for that name beside the shim.
-
     -Dimagify.avif.bundled=false   # ignore the bundled library,
                                     # use a system libavif instead
 
@@ -193,10 +187,10 @@ by the document, so resizing is a separate step.
 
 ## Version
 
-Supported `libavif` versions: `1.0.0` to `1.4.x`. `AvifCodec` binds
-a flat C ABI of its own rather than libavif&apos;s, as `JpegliCodec` and
-`WebpCodec` do against jpegli&apos;s and libwebp&apos;s, and the three of them
-refuse a library built against another revision of it.</description>
+Supported `libavif` versions: `1.0.0` to `1.4.x`. `JpegliCodec`
+and `WebpCodec` bind a flat C ABI of their own rather than
+jpegli&apos;s or libwebp&apos;s, and refuse a library built against
+another revision of it.</description>
 	<licenses>
 		<license>
 			<name>MIT License</name>
