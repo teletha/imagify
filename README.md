@@ -110,9 +110,10 @@ decodes the entry closest to 256x256.
     ImageIO.write(image, "webp", new File("out.webp"));
 
     byte[] webp = WebpCodec.encode(image, 80, false);
-    // quality 0 (smallest) to 100. In lossless mode libwebp reads it as
-    // an amount of effort rather than a fidelity, so 0 is quick and 100
-    // is thorough, and neither loses a pixel.
+    // quality 0 (smallest) to 100. In lossless mode libwebp
+    // reads it as an amount of effort rather than a fidelity,
+    // so 0 is quick and 100 is thorough, and neither loses a
+    // pixel.
     byte[] quick = WebpCodec.encode(image, 80, false,
             ImageFormat.Webp.DEFAULT_COMPRESSION_METHOD - 4);
     List<BufferedImage> frames =

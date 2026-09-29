@@ -5,8 +5,7 @@
 	<version>1.1.0</version>
 	<packaging>jar</packaging>
 	<name>imagify</name>
-	<description>
-AVIF encoding and decoding for Java, backed by libavif.
+	<description>AVIF encoding and decoding for Java, backed by libavif.
 
 JPEG encoding and decoding for Java, backed by
 [jpegli](https://github.com/google/jpegli).
@@ -41,7 +40,7 @@ aside and the JDK&apos;s own JPEG reader and writer take over, so
 
 ## Decode
 
-    byte[] avif = Files.readAllBytes(Path.of("photo.avif"));
+    byte[] avif = Files.readAllBytes(Path.of(&quot;photo.avif&quot;));
     DecodedImage result = AvifCodec.decode(avif);
     BufferedImage image = result.image();
     AvifImageInfo info = result.info();
@@ -51,17 +50,17 @@ aside and the JDK&apos;s own JPEG reader and writer take over, so
     byte[] avif = AvifCodec.encode(image, 75, 4);
     // quality 0 (smallest) to 100 (lossless)
     // speed   0 (slowest) to 10 (fastest)
-    Files.write(Path.of("out.avif"), avif);
+    Files.write(Path.of(&quot;out.avif&quot;), avif);
 
 ## ImageIO
 
-    BufferedImage image = ImageIO.read(new File("photo.avif"));
-    ImageIO.write(image, "avif", new File("out.avif"));
+    BufferedImage image = ImageIO.read(new File(&quot;photo.avif&quot;));
+    ImageIO.write(image, &quot;avif&quot;, new File(&quot;out.avif&quot;));
 
 ## JPEG
 
-    BufferedImage image = ImageIO.read(new File("photo.jpg"));
-    ImageIO.write(image, "jpeg", new File("out.jpg"));
+    BufferedImage image = ImageIO.read(new File(&quot;photo.jpg&quot;));
+    ImageIO.write(image, &quot;jpeg&quot;, new File(&quot;out.jpg&quot;));
 
     byte[] jpeg = JpegliCodec.encode(image, 85);
     // quality 1 (smallest) to 100 (most detail)
@@ -96,8 +95,8 @@ needs the picture has to flatten the image first.
 
 ## ICO
 
-    BufferedImage image = ImageIO.read(new File("app.ico"));
-    ImageIO.write(image, "ico", new File("out.ico"));
+    BufferedImage image = ImageIO.read(new File(&quot;app.ico&quot;));
+    ImageIO.write(image, &quot;ico&quot;, new File(&quot;out.ico&quot;));
 
 The writer stores a 32-bit BGRA bitmap with an AND mask derived
 from the alpha channel, so transparency is preserved. The reader
@@ -105,13 +104,14 @@ decodes the entry closest to 256x256.
 
 ## WebP
 
-    BufferedImage image = ImageIO.read(new File("photo.webp"));
-    ImageIO.write(image, "webp", new File("out.webp"));
+    BufferedImage image = ImageIO.read(new File(&quot;photo.webp&quot;));
+    ImageIO.write(image, &quot;webp&quot;, new File(&quot;out.webp&quot;));
 
     byte[] webp = WebpCodec.encode(image, 80, false);
-    // quality 0 (smallest) to 100. In lossless mode libwebp reads it as
-    // an amount of effort rather than a fidelity, so 0 is quick and 100
-    // is thorough, and neither loses a pixel.
+    // quality 0 (smallest) to 100. In lossless mode libwebp
+    // reads it as an amount of effort rather than a fidelity,
+    // so 0 is quick and 100 is thorough, and neither loses a
+    // pixel.
     byte[] quick = WebpCodec.encode(image, 80, false,
             ImageFormat.Webp.DEFAULT_COMPRESSION_METHOD - 4);
     List&lt;BufferedImage&gt; frames =
@@ -135,7 +135,7 @@ here is a file `cwebp` writes from the same options. Through
 the `ImageIO` plug-in it is set on the format:
 
     ImageFormat fast = ImageFormat.WEBP.compressionMethod(2);
-    ImageIO.write(image, "webp", out);   // with a format of your own
+    ImageIO.write(image, &quot;webp&quot;, out);   // with a format of your own
 
 To write many images at once, across every core:
 
@@ -153,7 +153,7 @@ later release:
 
 ## SVG
 
-    BufferedImage image = ImageIO.read(new File("icon.svg"));
+    BufferedImage image = ImageIO.read(new File(&quot;icon.svg&quot;));
 
 SVG is read only. It is rasterised with JSVG at the size declared
 by the document, so resizing is a separate step.
@@ -262,16 +262,6 @@ another revision of it.</description>
 				<configuration>
 					<argLine>-ea   -Dfile.encoding=UTF-8</argLine>
 					<reportFormat>plain</reportFormat>
-					<!--
-						The "timing" tag is for the tests that read a clock to say how large a prize
-						something is. The suite runs four ways concurrent (see
-						src/test/resources/junit-platform.properties), so a wall clock reading taken
-						under the GIF and AVIF suites is a reading of the machine rather than of the
-						code, and on a two core CI runner it is off by a factor of two either way.
-						Whatever those tests are watching for a property is pinned somewhere else,
-						where nothing can be argued with it. The -Ptiming profile puts them back.
-					-->
-					<excludedGroups>timing</excludedGroups>
 					<consoleOutputReporter>
 						<disable>true</disable>
 					</consoleOutputReporter>
@@ -313,32 +303,4 @@ another revision of it.</description>
 			</plugin>
 		</plugins>
 	</build>
-	<profiles>
-		<!--
-			Puts the tests that read a clock back into the run, which the ordinary build leaves out.
-			They are measurements rather than properties, and the suite is four ways concurrent, so
-			what they report is a fact about the machine as much as about the code. They are worth
-			running when the question is "how much did this buy" and not when the question is "is it
-			still correct"; the properties they sit next to are in the ordinary run either way.
-
-				mvn test -Ptiming
-		-->
-		<profile>
-			<id>timing</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<!-- Overrides rather than merges: the empty value has to replace the
-							     exclusion above, not sit beside it, or the profile would be a
-							     no-op that still excluded everything it was meant to include. -->
-							<excludedGroups combine.self="override"/>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>
