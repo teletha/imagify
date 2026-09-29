@@ -116,6 +116,17 @@ public final class Imagify {
     }
 
     /**
+     * Starts a pipeline by reading from one or more file paths given as strings.
+     * Each string is a path, and each path provides one frame.
+     *
+     * @param paths the file paths
+     * @return this pipeline for chaining
+     */
+    public static Imagify read(String... paths) {
+        return read(toPaths(paths));
+    }
+
+    /**
      * Starts a pipeline by reading from one or more InputStreams.
      * Format is auto-detected from magic bytes. Each stream provides one frame.
      *
@@ -226,6 +237,17 @@ public final class Imagify {
      */
     public Imagify add(Path... paths) {
         return addPaths(List.of(paths));
+    }
+
+    /**
+     * Adds frames from one or more file paths given as strings. Only the first frame of each file
+     * is taken.
+     *
+     * @param paths the file paths
+     * @return this pipeline for chaining
+     */
+    public Imagify add(String... paths) {
+        return add(toPaths(paths));
     }
 
     /**
@@ -563,6 +585,18 @@ public final class Imagify {
         }
     }
 
+    /**
+     * Turns file paths given as strings into {@link Path}s, so that every entry point that takes a
+     * path can also be handed a string.
+     */
+    private static Path[] toPaths(String... paths) {
+        Path[] converted = new Path[paths.length];
+        for (int i = 0; i < paths.length; i++) {
+            converted[i] = Path.of(paths[i]);
+        }
+        return converted;
+    }
+
     private static int checkedGridSize(int columns, int rows) {
         if (columns <= 0 || rows <= 0) {
             throw new IllegalArgumentException("the grid must be positive, got " + columns + "x" + rows);
@@ -795,6 +829,52 @@ public final class Imagify {
             throw new IOError(e);
         }
         return this;
+    }
+
+    /**
+     * Writes the result to a file path given as a string, with the format detected from the
+     * extension.
+     *
+     * @param path the file path
+     * @see #writeTo(Path)
+     */
+    public Imagify writeTo(String path) {
+        return writeTo(Path.of(path));
+    }
+
+    /**
+     * Writes the result to a file path given as a string, with the format detected from the
+     * extension and the given quality.
+     *
+     * @param path the file path
+     * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @see #writeTo(Path, double)
+     */
+    public Imagify writeTo(String path, double quality) {
+        return writeTo(Path.of(path), quality);
+    }
+
+    /**
+     * Writes the result to a file path given as a string, with an explicit format.
+     *
+     * @param path the file path
+     * @param format the format to write
+     * @see #writeTo(Path, ImageFormat)
+     */
+    public Imagify writeTo(String path, ImageFormat format) {
+        return writeTo(Path.of(path), format);
+    }
+
+    /**
+     * Writes the result to a file path given as a string, with an explicit format and quality.
+     *
+     * @param path the file path
+     * @param format the format to write
+     * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @see #writeTo(Path, ImageFormat, double)
+     */
+    public Imagify writeTo(String path, ImageFormat format, double quality) {
+        return writeTo(Path.of(path), format, quality);
     }
 
     /**

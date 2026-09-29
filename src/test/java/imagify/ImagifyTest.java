@@ -580,4 +580,69 @@ class ImagifyTest {
         Files.write(fileJpg, toBytes(src, ImageFormat.JPEG));
         assertEquals(ImageFormat.JPEG, ImageFormat.fromPath(fileJpg));
     }
+
+    // ------------------------------------------------------- string paths
+
+    @Test
+    @DisplayName("read from a String path is the same as reading from the Path")
+    void readsFromStringPath(@TempDir Path dir) throws IOException {
+        BufferedImage src = makeImage(20, 10);
+        Path file = dir.resolve("input.png");
+        Files.write(file, toBytes(src, ImageFormat.PNG));
+
+        Imagify pipe = Imagify.read(file.toString());
+        assertEquals(1, pipe.frameCount());
+        assertEquals(20, pipe.toBufferedImage().getWidth());
+        assertEquals(10, pipe.toBufferedImage().getHeight());
+    }
+
+    @Test
+    @DisplayName("add from String paths takes each file as a frame")
+    void addsFromStringPaths(@TempDir Path dir) throws IOException {
+        Path first = dir.resolve("first.png");
+        Path second = dir.resolve("second.png");
+        Files.write(first, toBytes(makeImage(20, 10), ImageFormat.PNG));
+        Files.write(second, toBytes(makeImage(20, 10), ImageFormat.PNG));
+
+        Imagify pipe = Imagify.read(first.toString()).add(second.toString());
+        assertEquals(2, pipe.frameCount());
+    }
+
+    @Test
+    @DisplayName("writeTo a String path is the same as writing to the Path")
+    void writeToStringPath(@TempDir Path dir) throws IOException {
+        BufferedImage src = makeImage(20, 10);
+        Path file = dir.resolve("input.png");
+        Files.write(file, toBytes(src, ImageFormat.PNG));
+
+        Path detected = dir.resolve("detected.png");
+        Imagify.read(file).writeTo(detected.toString());
+        assertTrue(Files.exists(detected));
+        assertTrue(Files.size(detected) > 0);
+        assertEquals(20, ImageReader.read(detected).toBufferedImage().getWidth());
+
+        Path explicit = dir.resolve("explicit.png");
+        Imagify.read(file).writeTo(explicit.toString(), ImageFormat.PNG);
+        assertTrue(Files.exists(explicit));
+        assertTrue(Files.size(explicit) > 0);
+    }
+
+    @Test
+    @DisplayName("writeTo a String path carries the quality, with and without a format")
+    void writeToStringPathWithQuality(@TempDir Path dir) throws IOException {
+        BufferedImage src = makeImage(20, 10);
+        Path file = dir.resolve("input.png");
+        Files.write(file, toBytes(src, ImageFormat.PNG));
+
+        Path detected = dir.resolve("detected.jpg");
+        Imagify.read(file).writeTo(detected.toString(), 0.5);
+        assertTrue(Files.exists(detected));
+        assertTrue(Files.size(detected) > 0);
+
+        Path explicit = dir.resolve("explicit.jpg");
+        Imagify.read(file).writeTo(explicit.toString(), ImageFormat.JPEG, 0.5);
+        assertTrue(Files.exists(explicit));
+        assertTrue(Files.size(explicit) > 0);
+        assertEquals(20, ImageReader.read(explicit).toBufferedImage().getWidth());
+    }
 }

@@ -39,10 +39,11 @@ Everything is also registered as an `ImageIO` plug-in, so the ordinary
 
 ## Read
 
-`Imagify.read` accepts a `Path`, a `byte[]`, an `InputStream` or an
-already decoded `BufferedImage`. The format is detected from the header,
-so the caller does not name it. Passing several sources, or adding more
-with `add`, makes each one a frame of a single sequence:
+`Imagify.read` accepts a `Path`, a path as a `String`, a `byte[]`, an
+`InputStream` or an already decoded `BufferedImage`. The format is
+detected from the header, so the caller does not name it. Passing
+several sources, or adding more with `add`, makes each one a frame of
+a single sequence:
 
     Imagify.read(Path.of("frame-1.png"), Path.of("frame-2.png"));
 
@@ -96,10 +97,11 @@ like:
 
 ## Write
 
-`writeTo(Path)` takes the format from the file extension.
-`writeToBytes` and `writeTo(OutputStream, ...)` are the same without a
-file. A quality of `0.0` (smallest) to `1.0` (largest) can be given, and
-so can the format:
+`writeTo(Path)` takes the format from the file extension, and a path
+given as a `String` works the same way. `writeToBytes` and
+`writeTo(OutputStream, ...)` are the same without a file. A quality of
+`0.0` (smallest) to `1.0` (largest) can be given, and so can the
+format:
 
     .writeToBytes(ImageFormat.AVIF)
     .writeToBytes(ImageFormat.WEBP, 0.8)
