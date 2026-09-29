@@ -19,9 +19,9 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="s">
-		<header class="P" date="2026-09-29">
-			<h1 class="Q"><a href="index.html"><code>Imagify</code></a></h1>
+	<body class="l">
+		<header class="m" date="2026-09-29">
+			<h1 class="o"><a href="index.html"><code>Imagify</code></a></h1>
 			<nav class="R"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="S"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="p"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="t"></nav>
-		<article class="M" id="Article">
-			<section class="J"><code class="n">imagify</code>
-				<h2 class="Class b"><code class="CB">ImageReader</code></h2>
-				<div class="FB"></div><span class="A"><p>Reads images from various sources with automatic format detection.</p><p>Supported sources: <code>byte[]</code>, <code>Path</code>, <code>InputStream</code>.</p><p>Format detection priority:
+		<nav class="J"></nav>
+		<article class="X" id="Article">
+			<section class="b"><code class="HB">imagify</code>
+				<h2 class="Class n"><code class="w">ImageReader</code></h2>
+				<div class="t"></div><span class="A"><p>Reads images from various sources with automatic format detection.</p><p>Supported sources: <code>byte[]</code>, <code>Path</code>, <code>InputStream</code>.</p><p>Format detection priority:
  
 						<ol>
 							<li>Explicit <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code> parameter</li>
@@ -63,129 +63,129 @@
  List&lt;BufferedImage&gt; allFrames = seq.frames();
  int[] delays = seq.delaysMs();
  </code></pre></span></section>
-			<section class="J" id="read(byte[])">
-				<h2 class="IB"><i class="PUBLIC STATIC"></i><code class="CB">read</code><code class="y">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="K"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
-				<table class="c">
-					<tr class="BB">
+			<section class="b" id="read(byte[])">
+				<h2 class="EB"><i class="STATIC PUBLIC"></i><code class="w">read</code><code class="FB">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="AB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
+				<table class="P">
+					<tr class="d">
 						<td><code array="fix">byte</code><code class="parameterName">data</code></td>
 						<td><span><p>the encoded image data</p></span></td>
 					</tr>
-					<tr class="k">
+					<tr class="N">
 						<td><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></td>
 						<td><span><p>a <code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code> containing one or more frames</p></span></td>
 					</tr>
-					<tr class="x">
+					<tr class="f">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Reads an image from a byte array with auto-detected format.</p></span></section>
-			<section class="J" id="read(byte[],imagify.ImageFormat)">
-				<h2 class="IB"><i class="PUBLIC STATIC"></i><code class="CB">read</code><code class="y">(<code array="fix">byte</code><code class="parameterName">data</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="K"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
-				<table class="c">
-					<tr class="BB">
+			<section class="b" id="read(byte[],imagify.ImageFormat)">
+				<h2 class="EB"><i class="STATIC PUBLIC"></i><code class="w">read</code><code class="FB">(<code array="fix">byte</code><code class="parameterName">data</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="AB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
+				<table class="P">
+					<tr class="d">
 						<td><code array="fix">byte</code><code class="parameterName">data</code></td>
 						<td><span><p>the encoded image data</p></span></td>
 					</tr>
-					<tr class="BB">
+					<tr class="d">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td><span><p>the format to use</p></span></td>
 					</tr>
-					<tr class="k">
+					<tr class="N">
 						<td><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></td>
 						<td><span><p>a <code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code> containing one or more frames</p></span></td>
 					</tr>
-					<tr class="x">
+					<tr class="f">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Reads an image from a byte array with explicit format.</p></span></section>
-			<section class="J" id="read(java.nio.file.Path)">
-				<h2 class="IB"><i class="PUBLIC STATIC"></i><code class="CB">read</code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="K"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
-				<table class="c">
-					<tr class="BB">
+			<section class="b" id="read(java.nio.file.Path)">
+				<h2 class="EB"><i class="STATIC PUBLIC"></i><code class="w">read</code><code class="FB">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="AB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
+				<table class="P">
+					<tr class="d">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td><span><p>the file path</p></span></td>
 					</tr>
-					<tr class="k">
+					<tr class="N">
 						<td><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></td>
 						<td><span><p>a <code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code> containing one or more frames</p></span></td>
 					</tr>
-					<tr class="x">
+					<tr class="f">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Reads an image from a file path with auto-detected format.</p></span></section>
-			<section class="J" id="read(java.nio.file.Path,imagify.ImageFormat)">
-				<h2 class="IB"><i class="PUBLIC STATIC"></i><code class="CB">read</code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="K"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
-				<table class="c">
-					<tr class="BB">
+			<section class="b" id="read(java.nio.file.Path,imagify.ImageFormat)">
+				<h2 class="EB"><i class="STATIC PUBLIC"></i><code class="w">read</code><code class="FB">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="AB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
+				<table class="P">
+					<tr class="d">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td><span><p>the file path</p></span></td>
 					</tr>
-					<tr class="BB">
+					<tr class="d">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td><span><p>the format to use</p></span></td>
 					</tr>
-					<tr class="k">
+					<tr class="N">
 						<td><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></td>
 						<td><span><p>a <code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code> containing one or more frames</p></span></td>
 					</tr>
-					<tr class="x">
+					<tr class="f">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Reads an image from a file path with explicit format.</p></span></section>
-			<section class="J" id="read(java.io.InputStream)">
-				<h2 class="IB"><i class="PUBLIC STATIC"></i><code class="CB">read</code><code class="y">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>)</code><i class="K"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
-				<table class="c">
-					<tr class="BB">
+			<section class="b" id="read(java.io.InputStream)">
+				<h2 class="EB"><i class="STATIC PUBLIC"></i><code class="w">read</code><code class="FB">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>)</code><i class="AB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
+				<table class="P">
+					<tr class="d">
 						<td><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code></td>
 						<td><span><p>the input stream</p></span></td>
 					</tr>
-					<tr class="k">
+					<tr class="N">
 						<td><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></td>
 						<td><span><p>a <code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code> containing one or more frames</p></span></td>
 					</tr>
-					<tr class="x">
+					<tr class="f">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Reads an image from an InputStream with auto-detected format.</p></span></section>
-			<section class="J" id="read(java.io.InputStream,imagify.ImageFormat)">
-				<h2 class="IB"><i class="PUBLIC STATIC"></i><code class="CB">read</code><code class="y">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="K"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
-				<table class="c">
-					<tr class="BB">
+			<section class="b" id="read(java.io.InputStream,imagify.ImageFormat)">
+				<h2 class="EB"><i class="STATIC PUBLIC"></i><code class="w">read</code><code class="FB">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="AB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
+				<table class="P">
+					<tr class="d">
 						<td><code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code></td>
 						<td><span><p>the input stream</p></span></td>
 					</tr>
-					<tr class="BB">
+					<tr class="d">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code></td>
 						<td><span><p>the format to use</p></span></td>
 					</tr>
-					<tr class="k">
+					<tr class="N">
 						<td><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></td>
 						<td><span><p>a <code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code> containing one or more frames</p></span></td>
 					</tr>
-					<tr class="x">
+					<tr class="f">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Reads an image from an InputStream with explicit format.</p></span></section>
 		</article>
-		<aside class="u">
-			<div class="JB">
-				<h5 class="i">Static Methods</h5>
+		<aside class="e">
+			<div class="j">
+				<h5 class="y">Static Methods</h5>
 				<ul>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageReader.html#read(byte[])">read</a></code><code class="y">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="GB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageReader.html#read(byte[],imagify.ImageFormat)">read</a></code><code class="y">(<code array="fix">byte</code><code class="parameterName">data</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="GB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageReader.html#read(java.nio.file.Path)">read</a></code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="GB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageReader.html#read(java.nio.file.Path,imagify.ImageFormat)">read</a></code><code class="y">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="GB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageReader.html#read(java.io.InputStream)">read</a></code><code class="y">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>)</code><i class="GB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
-					<li class="V"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageReader.html#read(java.io.InputStream,imagify.ImageFormat)">read</a></code><code class="y">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="GB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
+					<li class="DB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(byte[])">read</a></code><code class="FB">(<code array="fix">byte</code><code class="parameterName">data</code>)</code><i class="CB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
+					<li class="DB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(byte[],imagify.ImageFormat)">read</a></code><code class="FB">(<code array="fix">byte</code><code class="parameterName">data</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="CB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
+					<li class="DB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(java.nio.file.Path)">read</a></code><code class="FB">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="CB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
+					<li class="DB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(java.nio.file.Path,imagify.ImageFormat)">read</a></code><code class="FB">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="CB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
+					<li class="DB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(java.io.InputStream)">read</a></code><code class="FB">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>)</code><i class="CB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
+					<li class="DB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageReader.html#read(java.io.InputStream,imagify.ImageFormat)">read</a></code><code class="FB">(<code><a aria-label="java.io.InputStream 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/InputStream.html">InputStream</a></code><code class="parameterName">in</code>, <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code><code class="parameterName">format</code>)</code><i class="CB"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="T">
+		<footer class="c">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
