@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="f">
-		<header class="J" date="2026-09-29">
-			<h1 class="K"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="L"><a href="api/main.html" id="API"><svg class="package">
+	<body class="s">
+		<header class="o" date="2026-09-29">
+			<h1 class="e"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="M"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="q"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="i"></nav>
-		<article class="g" id="Article">
-			<section class="CB"><code class="y">imagify</code>
-				<h2 class="Class X"><code class="DB">ImageResizer</code></h2>
-				<div class="m"></div><span class="A"><p>High-quality <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code> resizing utility.</p><p>Wraps <code><a aria-label="imagify.BufferedImageResize" href="api/imagify.BufferedImageResize.html">BufferedImageResize</a></code> with a cleaner API that supports
+		<nav class="u"></nav>
+		<article class="V" id="Article">
+			<section class="CB"><code class="J">imagify</code>
+				<h2 class="Class LB"><code class="l">ImageResizer</code></h2>
+				<div class="r"></div><span class="A"><p>High-quality <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code> resizing utility.</p><p>Wraps <code><a aria-label="imagify.BufferedImageResize" href="api/imagify.BufferedImageResize.html">BufferedImageResize</a></code> with a cleaner API that supports
  both direct dimension specification and percentage-based scaling.</p><p>Usage:</p><pre><code>
  // Resize to exact dimensions
  BufferedImage resized = ImageResizer.resize(original, 800, 600);
@@ -56,138 +56,138 @@ BufferedImage sharp = ImageResizer.resize(original, 800, 600, ResizeAlgorithm.LA
 </p>
 						</code></pre></span></section>
 			<section class="CB" id="resize(java.awt.image.BufferedImage,int,int)">
-				<h2 class="s"><i class="STATIC PUBLIC"></i><code class="DB">resize</code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="U"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="b">
-					<tr class="T">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="l">resize</code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="JB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="h">
+					<tr class="w">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the source image</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td><span><p>target width</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td><span><p>target height</p></span></td>
 					</tr>
-					<tr class="d">
+					<tr class="z">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the resized image</p></span></td>
 					</tr>
 				</table><span class="A"><p>Resizes the image to the specified dimensions using the default algorithm (BILINEAR).</p></span></section>
 			<section class="CB" id="resize(java.awt.image.BufferedImage,int,int,imagify.ResizeAlgorithm)">
-				<h2 class="s"><i class="STATIC PUBLIC"></i><code class="DB">resize</code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="b">
-					<tr class="T">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="l">resize</code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="JB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="h">
+					<tr class="w">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the source image</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code>int</code><code class="parameterName">targetW</code></td>
 						<td><span><p>target width</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code>int</code><code class="parameterName">targetH</code></td>
 						<td><span><p>target height</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td><span><p>the resampling algorithm</p></span></td>
 					</tr>
-					<tr class="d">
+					<tr class="z">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the resized image</p></span></td>
 					</tr>
 				</table><span class="A"><p>Resizes the image to the specified dimensions using the specified algorithm.</p></span></section>
 			<section class="CB" id="resize(java.awt.image.BufferedImage,double)">
-				<h2 class="s"><i class="STATIC PUBLIC"></i><code class="DB">resize</code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">scale</code>)</code><i class="U"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="b">
-					<tr class="T">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="l">resize</code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">scale</code>)</code><i class="JB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="h">
+					<tr class="w">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the source image</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code>double</code><code class="parameterName">scale</code></td>
 						<td><span><p>the scale factor (0.1 - 10.0)</p></span></td>
 					</tr>
-					<tr class="d">
+					<tr class="z">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the resized image</p></span></td>
 					</tr>
 				</table><span class="A"><p>Resizes the image by the specified scale factor (both dimensions).
 Uses BILINEAR by default.</p></span></section>
 			<section class="CB" id="resize(java.awt.image.BufferedImage,double,imagify.ResizeAlgorithm)">
-				<h2 class="s"><i class="STATIC PUBLIC"></i><code class="DB">resize</code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="b">
-					<tr class="T">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="l">resize</code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="JB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="h">
+					<tr class="w">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the source image</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code>double</code><code class="parameterName">scale</code></td>
 						<td><span><p>the scale factor (0.1 - 10.0)</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td><span><p>the resampling algorithm</p></span></td>
 					</tr>
-					<tr class="d">
+					<tr class="z">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the resized image</p></span></td>
 					</tr>
 				</table><span class="A"><p>Resizes the image by the specified scale factor using the specified algorithm.</p></span></section>
 			<section class="CB" id="resizeToFit(java.awt.image.BufferedImage,int)">
-				<h2 class="s"><i class="STATIC PUBLIC"></i><code class="DB">resizeToFit</code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">maxDimension</code>)</code><i class="U"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="b">
-					<tr class="T">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="l">resizeToFit</code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">maxDimension</code>)</code><i class="JB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="h">
+					<tr class="w">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the source image</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code>int</code><code class="parameterName">maxDimension</code></td>
 						<td><span><p>the maximum dimension for the longest edge</p></span></td>
 					</tr>
-					<tr class="d">
+					<tr class="z">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the resized image maintaining aspect ratio</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns the longest edge resized to the specified maximum, maintaining aspect ratio.
 Uses BILINEAR by default.</p></span></section>
 			<section class="CB" id="resizeToFit(java.awt.image.BufferedImage,int,imagify.ResizeAlgorithm)">
-				<h2 class="s"><i class="STATIC PUBLIC"></i><code class="DB">resizeToFit</code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="U"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="b">
-					<tr class="T">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="l">resizeToFit</code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="JB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="h">
+					<tr class="w">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the source image</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code>int</code><code class="parameterName">maxDimension</code></td>
 						<td><span><p>the maximum dimension for the longest edge</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code></td>
 						<td><span><p>the resampling algorithm</p></span></td>
 					</tr>
-					<tr class="d">
+					<tr class="z">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the resized image maintaining aspect ratio</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns the longest edge resized to the specified maximum, maintaining aspect ratio.</p></span></section>
 		</article>
-		<aside class="j">
-			<div class="w">
-				<h5 class="GB">Static Methods</h5>
+		<aside class="v">
+			<div class="m">
+				<h5 class="X">Static Methods</h5>
 				<ul>
-					<li class="o"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageResizer.html#resize(java.awt.image.BufferedImage,int,int)">resize</a></code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="Q"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="o"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageResizer.html#resize(java.awt.image.BufferedImage,int,int,imagify.ResizeAlgorithm)">resize</a></code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="Q"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="o"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageResizer.html#resize(java.awt.image.BufferedImage,double)">resize</a></code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">scale</code>)</code><i class="Q"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="o"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageResizer.html#resize(java.awt.image.BufferedImage,double,imagify.ResizeAlgorithm)">resize</a></code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="Q"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="o"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageResizer.html#resizeToFit(java.awt.image.BufferedImage,int)">resizeToFit</a></code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">maxDimension</code>)</code><i class="Q"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="o"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageResizer.html#resizeToFit(java.awt.image.BufferedImage,int,imagify.ResizeAlgorithm)">resizeToFit</a></code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="Q"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="k"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageResizer.html#resize(java.awt.image.BufferedImage,int,int)">resize</a></code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>)</code><i class="x"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="k"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageResizer.html#resize(java.awt.image.BufferedImage,int,int,imagify.ResizeAlgorithm)">resize</a></code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">targetW</code>, <code>int</code><code class="parameterName">targetH</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="x"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="k"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageResizer.html#resize(java.awt.image.BufferedImage,double)">resize</a></code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">scale</code>)</code><i class="x"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="k"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageResizer.html#resize(java.awt.image.BufferedImage,double,imagify.ResizeAlgorithm)">resize</a></code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>double</code><code class="parameterName">scale</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="x"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="k"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageResizer.html#resizeToFit(java.awt.image.BufferedImage,int)">resizeToFit</a></code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">maxDimension</code>)</code><i class="x"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="k"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageResizer.html#resizeToFit(java.awt.image.BufferedImage,int,imagify.ResizeAlgorithm)">resizeToFit</a></code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code>int</code><code class="parameterName">maxDimension</code>, <code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code><code class="parameterName">algorithm</code>)</code><i class="x"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="h">
+		<footer class="t">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

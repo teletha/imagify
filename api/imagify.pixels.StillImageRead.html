@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="f">
-		<header class="J" date="2026-09-29">
-			<h1 class="K"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="L"><a href="api/main.html" id="API"><svg class="package">
+	<body class="s">
+		<header class="o" date="2026-09-29">
+			<h1 class="e"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="M"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="q"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="i"></nav>
-		<article class="g" id="Article">
-			<section class="CB"><code class="y">imagify.pixels</code>
-				<h2 class="Class X"><code class="DB">StillImageRead</code></h2>
-				<div class="m"></div><span class="A"><p>Applies a <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code> to an image that has already been decoded.</p><p>Every <code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">javax.imageio.ImageReader</a></code> in this library decodes a whole image and then hands it
+		<nav class="u"></nav>
+		<article class="V" id="Article">
+			<section class="CB"><code class="J">imagify.pixels</code>
+				<h2 class="Class LB"><code class="l">StillImageRead</code></h2>
+				<div class="r"></div><span class="A"><p>Applies a <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code> to an image that has already been decoded.</p><p>Every <code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">javax.imageio.ImageReader</a></code> in this library decodes a whole image and then hands it
  to this class, which is the only thing that knows how a caller narrows one: the source region, the
  source sub sampling factors, the destination image and the destination offset. It lives here
  because the JPEG and AVIF readers have exactly the same answer to all of it, and two copies of
@@ -65,114 +65,114 @@
 					</p>
 				</span></section>
 			<section class="CB" id="DEFAULT_TYPES">
-				<h2 class="s"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="DB">DEFAULT_TYPES</code><i class="U"><code class="return"><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2><span class="A"><p>The image types <code><a aria-label="imagify.pixels.StillImageRead" href="api/imagify.pixels.StillImageRead.html#targetOf">#targetOf</a></code> can build a destination in, most useful first.</p></span></section>
+				<h2 class="n"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="l">DEFAULT_TYPES</code><i class="JB"><code class="return"><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2><span class="A"><p>The image types <code><a aria-label="imagify.pixels.StillImageRead" href="api/imagify.pixels.StillImageRead.html#targetOf">#targetOf</a></code> can build a destination in, most useful first.</p></span></section>
 			<section class="CB" id="sampleOf(int,int,javax.imageio.ImageReadParam)">
-				<h2 class="s"><i class="STATIC PUBLIC"></i><code class="DB">sampleOf</code><code class="n">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>)</code><i class="U"><code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code></i></h2>
-				<table class="b">
-					<tr class="T">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="l">sampleOf</code><code class="EB">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>)</code><i class="JB"><code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code></i></h2>
+				<table class="h">
+					<tr class="w">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td><span><p>the decoded image width</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td><span><p>the decoded image height</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code></td>
 						<td><span><p>the read parameters, may be <code>null</code></p></span></td>
 					</tr>
-					<tr class="d">
+					<tr class="z">
 						<td><code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code></td>
 						<td><span><p>the selected region</p></span></td>
 					</tr>
-					<tr class="IB">
+					<tr class="BB">
 						<td><code><a aria-label="javax.imageio.IIOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOException.html">IIOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Works out which part of a decoded image the read parameters select.</p></span></section>
 			<section class="CB" id="targetOf(javax.imageio.ImageReadParam,imagify.pixels.StillImageRead.Sample,java.util.List)">
-				<h2 class="s"><i class="STATIC PUBLIC"></i><code class="DB">targetOf</code><code class="n">(<code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code><code class="parameterName">sample</code>, <code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code><code class="parameterName">types</code>)</code><i class="U"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="b">
-					<tr class="T">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="l">targetOf</code><code class="EB">(<code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code><code class="parameterName">sample</code>, <code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code><code class="parameterName">types</code>)</code><i class="JB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="h">
+					<tr class="w">
 						<td><code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code></td>
 						<td><span><p>the read parameters, may be <code>null</code></p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code><code class="parameterName">sample</code></td>
 						<td><span><p>the selected region</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code><code class="parameterName">types</code></td>
 						<td><span><p>the image types that can be built, for an
 <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html#getDestinationType()">ImageReadParam#getDestinationType()</a></code> request</p></span></td>
 					</tr>
-					<tr class="d">
+					<tr class="z">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the destination, with nothing written into it yet</p></span></td>
 					</tr>
-					<tr class="IB">
+					<tr class="BB">
 						<td><code><a aria-label="javax.imageio.IIOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOException.html">IIOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Builds the image the caller asked to be handed, which is either the destination they supplied
 or a new one of the requested type.</p></span></section>
 			<section class="CB" id="checkBands(javax.imageio.ImageReadParam,int)">
-				<h2 class="s"><i class="STATIC PUBLIC"></i><code class="DB">checkBands</code><code class="n">(<code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code>int</code><code class="parameterName">channels</code>)</code><i class="U"><code>void</code></i></h2>
-				<table class="b">
-					<tr class="T">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="l">checkBands</code><code class="EB">(<code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code>int</code><code class="parameterName">channels</code>)</code><i class="JB"><code>void</code></i></h2>
+				<table class="h">
+					<tr class="w">
 						<td><code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code></td>
 						<td><span><p>the read parameters, may be <code>null</code></p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code>int</code><code class="parameterName">channels</code></td>
 						<td><span><p>the number of channels the decoder produces</p></span></td>
 					</tr>
-					<tr class="IB">
+					<tr class="BB">
 						<td><code><a aria-label="javax.imageio.IIOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOException.html">IIOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Refuses a band selection that would drop or reorder samples.</p></span></section>
 			<section class="CB" id="transfer(java.awt.image.BufferedImage,imagify.pixels.StillImageRead.Sample,javax.imageio.ImageReadParam,java.awt.image.BufferedImage)">
-				<h2 class="s"><i class="STATIC PUBLIC"></i><code class="DB">transfer</code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code><code class="parameterName">sample</code>, <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">target</code>)</code><i class="U"><code>void</code></i></h2>
-				<table class="b">
-					<tr class="T">
+				<h2 class="n"><i class="PUBLIC STATIC"></i><code class="l">transfer</code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code><code class="parameterName">sample</code>, <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">target</code>)</code><i class="JB"><code>void</code></i></h2>
+				<table class="h">
+					<tr class="w">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code></td>
 						<td><span><p>the decoded image</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code><code class="parameterName">sample</code></td>
 						<td><span><p>the selected region</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code></td>
 						<td><span><p>the read parameters, may be <code>null</code></p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="w">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">target</code></td>
 						<td><span><p>the destination, as handed back by <code><a aria-label="imagify.pixels.StillImageRead" href="api/imagify.pixels.StillImageRead.html#targetOf">#targetOf</a></code></p></span></td>
 					</tr>
-					<tr class="IB">
+					<tr class="BB">
 						<td><code><a aria-label="javax.imageio.IIOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOException.html">IIOException</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Copies the selected part of a decoded image into the destination.</p></span></section>
 		</article>
-		<aside class="j">
-			<div class="w">
-				<h5 class="GB">Static Fields</h5>
+		<aside class="v">
+			<div class="m">
+				<h5 class="X">Static Fields</h5>
 				<ul>
-					<li class="o"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.pixels.StillImageRead.html#DEFAULT_TYPES">DEFAULT_TYPES</a></code><i class="Q"><code class="return"><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
+					<li class="k"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.pixels.StillImageRead.html#DEFAULT_TYPES">DEFAULT_TYPES</a></code><i class="x"><code class="return"><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
 				</ul>
-				<h5 class="GB">Static Methods</h5>
+				<h5 class="X">Static Methods</h5>
 				<ul>
-					<li class="o"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.pixels.StillImageRead.html#sampleOf(int,int,javax.imageio.ImageReadParam)">sampleOf</a></code><code class="n">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>)</code><i class="Q"><code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code></i></li>
-					<li class="o"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.pixels.StillImageRead.html#targetOf(javax.imageio.ImageReadParam,imagify.pixels.StillImageRead.Sample,java.util.List)">targetOf</a></code><code class="n">(<code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code><code class="parameterName">sample</code>, <code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code><code class="parameterName">types</code>)</code><i class="Q"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="o"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.pixels.StillImageRead.html#checkBands(javax.imageio.ImageReadParam,int)">checkBands</a></code><code class="n">(<code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code>int</code><code class="parameterName">channels</code>)</code><i class="Q"><code>void</code></i></li>
-					<li class="o"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.pixels.StillImageRead.html#transfer(java.awt.image.BufferedImage,imagify.pixels.StillImageRead.Sample,javax.imageio.ImageReadParam,java.awt.image.BufferedImage)">transfer</a></code><code class="n">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code><code class="parameterName">sample</code>, <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">target</code>)</code><i class="Q"><code>void</code></i></li>
+					<li class="k"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.pixels.StillImageRead.html#sampleOf(int,int,javax.imageio.ImageReadParam)">sampleOf</a></code><code class="EB">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>)</code><i class="x"><code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code></i></li>
+					<li class="k"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.pixels.StillImageRead.html#targetOf(javax.imageio.ImageReadParam,imagify.pixels.StillImageRead.Sample,java.util.List)">targetOf</a></code><code class="EB">(<code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code><code class="parameterName">sample</code>, <code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code><code class="parameterName">types</code>)</code><i class="x"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="k"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.pixels.StillImageRead.html#checkBands(javax.imageio.ImageReadParam,int)">checkBands</a></code><code class="EB">(<code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code>int</code><code class="parameterName">channels</code>)</code><i class="x"><code>void</code></i></li>
+					<li class="k"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.pixels.StillImageRead.html#transfer(java.awt.image.BufferedImage,imagify.pixels.StillImageRead.Sample,javax.imageio.ImageReadParam,java.awt.image.BufferedImage)">transfer</a></code><code class="EB">(<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">source</code>, <code><a aria-label="imagify.pixels.StillImageRead.Sample" href="api/imagify.pixels.StillImageRead.Sample.html">Sample</a></code><code class="parameterName">sample</code>, <code><a aria-label="javax.imageio.ImageReadParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReadParam.html">ImageReadParam</a></code><code class="parameterName">param</code>, <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code><code class="parameterName">target</code>)</code><i class="x"><code>void</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="h">
+		<footer class="t">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
