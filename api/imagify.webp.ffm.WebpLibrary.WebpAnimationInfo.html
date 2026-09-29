@@ -44,22 +44,23 @@
 		</header>
 		<nav class="o"></nav>
 		<article class="n" id="Article">
-			<section class="GB"><code class="a">imagify</code>
-				<h2 class="Record KB"><code class="i">SpriteSheet.Cell</code></h2>
+			<section class="GB"><code class="a">imagify.webp.ffm</code>
+				<h2 class="Record KB"><code class="i">WebpLibrary.WebpAnimationInfo</code></h2>
 				<div class="v">
 					<ul class="E G">
 						<li><code><a aria-label="java.lang.Record 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Record.html">Record</a></code></li>
 					</ul>
-				</div><span class="A"><p>Where one frame&apos;s cell lies in the sheet.</p></span></section>
-			<section class="GB" id="Cell(int,int,int,int)">
-				<h2 class="z"><i class="PUBLIC"></i><code class="i">Cell</code><code class="h">(<code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code></h2>
+				</div><span class="A"><p>The properties of a WebP animation&apos;s control chunk, as reported by
+<code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_read_animation">#imagify_webp_read_animation</a></code> and <code><a aria-label="imagify.webp.ffm.WebpLibrary" href="api/imagify.webp.ffm.WebpLibrary.html#imagify_webp_decode_animation">#imagify_webp_decode_animation</a></code>.</p></span></section>
+			<section class="GB" id="WebpAnimationInfo(int,int,int,int)">
+				<h2 class="z"><i class="PUBLIC"></i><code class="i">WebpAnimationInfo</code><code class="h">(<code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code></h2>
 				<table class="y">
 					<tr class="d">
-						<td><code>int</code><code class="parameterName">x</code></td>
+						<td><code>int</code><code class="parameterName">frameCount</code></td>
 						<td></td>
 					</tr>
 					<tr class="d">
-						<td><code>int</code><code class="parameterName">y</code></td>
+						<td><code>int</code><code class="parameterName">loopCount</code></td>
 						<td></td>
 					</tr>
 					<tr class="d">
@@ -103,8 +104,8 @@
 					</tr>
 				</table>
 			</section>
-			<section class="GB" id="x()">
-				<h2 class="z"><i class="PUBLIC"></i><code class="i">x</code><code class="h">()</code><i class="u"><code>int</code></i></h2>
+			<section class="GB" id="frameCount()">
+				<h2 class="z"><i class="PUBLIC"></i><code class="i">frameCount</code><code class="h">()</code><i class="u"><code>int</code></i></h2>
 				<table class="y">
 					<tr class="S">
 						<td><code>int</code></td>
@@ -112,8 +113,8 @@
 					</tr>
 				</table>
 			</section>
-			<section class="GB" id="y()">
-				<h2 class="z"><i class="PUBLIC"></i><code class="i">y</code><code class="h">()</code><i class="u"><code>int</code></i></h2>
+			<section class="GB" id="loopCount()">
+				<h2 class="z"><i class="PUBLIC"></i><code class="i">loopCount</code><code class="h">()</code><i class="u"><code>int</code></i></h2>
 				<table class="y">
 					<tr class="S">
 						<td><code>int</code></td>
@@ -144,17 +145,17 @@
 			<div class="FB">
 				<h5 class="p">Constructors</h5>
 				<ul>
-					<li class="g"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.Cell.html#Cell(int,int,int,int)">Cell</a></code><code class="h">(<code>int</code><code class="parameterName">x</code>, <code>int</code><code class="parameterName">y</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code></li>
+					<li class="g"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.WebpAnimationInfo.html#WebpAnimationInfo(int,int,int,int)">WebpAnimationInfo</a></code><code class="h">(<code>int</code><code class="parameterName">frameCount</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>)</code></li>
 				</ul>
 				<h5 class="p">Methods</h5>
 				<ul>
-					<li class="g"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.SpriteSheet.Cell.html#toString()">toString</a></code><code class="h">()</code><i class="w"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="g"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.SpriteSheet.Cell.html#hashCode()">hashCode</a></code><code class="h">()</code><i class="w"><code>int</code></i></li>
-					<li class="g"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.SpriteSheet.Cell.html#equals(java.lang.Object)">equals</a></code><code class="h">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="w"><code>boolean</code></i></li>
-					<li class="g"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.Cell.html#x()">x</a></code><code class="h">()</code><i class="w"><code>int</code></i></li>
-					<li class="g"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.Cell.html#y()">y</a></code><code class="h">()</code><i class="w"><code>int</code></i></li>
-					<li class="g"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.Cell.html#width()">width</a></code><code class="h">()</code><i class="w"><code>int</code></i></li>
-					<li class="g"><i class="PUBLIC"></i><code><a href="api/imagify.SpriteSheet.Cell.html#height()">height</a></code><code class="h">()</code><i class="w"><code>int</code></i></li>
+					<li class="g"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.WebpAnimationInfo.html#toString()">toString</a></code><code class="h">()</code><i class="w"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="g"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.WebpAnimationInfo.html#hashCode()">hashCode</a></code><code class="h">()</code><i class="w"><code>int</code></i></li>
+					<li class="g"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.ffm.WebpLibrary.WebpAnimationInfo.html#equals(java.lang.Object)">equals</a></code><code class="h">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="w"><code>boolean</code></i></li>
+					<li class="g"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.WebpAnimationInfo.html#frameCount()">frameCount</a></code><code class="h">()</code><i class="w"><code>int</code></i></li>
+					<li class="g"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.WebpAnimationInfo.html#loopCount()">loopCount</a></code><code class="h">()</code><i class="w"><code>int</code></i></li>
+					<li class="g"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.WebpAnimationInfo.html#width()">width</a></code><code class="h">()</code><i class="w"><code>int</code></i></li>
+					<li class="g"><i class="PUBLIC"></i><code><a href="api/imagify.webp.ffm.WebpLibrary.WebpAnimationInfo.html#height()">height</a></code><code class="h">()</code><i class="w"><code>int</code></i></li>
 				</ul>
 			</div>
 		</aside>

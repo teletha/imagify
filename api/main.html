@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="V">
-		<header class="W" date="2026-09-28">
-			<h1 class="f"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="x"><a href="api/main.html" id="API"><svg class="package">
+	<body class="m">
+		<header class="X" date="2026-09-29">
+			<h1 class="O"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="Q"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,16 +35,16 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="b"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="Y"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="Y"></nav>
-		<article class="L" id="Article">
-			<div class="u">
+		<nav class="o"></nav>
+		<article class="n" id="Article">
+			<div class="GB">
 				<section class="A">
 					<h2>Imagify API Overview</h2>
 					<p>This page provides a concise overview of the available APIs, including their purpose, key functionalities, and usage patterns. It serves as a starting point for developers to understand how to integrate and interact with the system effectively.</p>
@@ -59,10 +59,6 @@ AVIF images.</td>
 							<tr>
 								<td><code><a href="api/imagify.jpeg.jna.JpegliLibrary.html">JpegliLibrary</a></code></td>
 								<td>JNA binding for the C ABI in src/main/native/jpegli/imagify_jpegli.h.</td>
-							</tr>
-							<tr>
-								<td><code><a href="api/imagify.webp.jna.WebpLibrary.html">WebpLibrary</a></code></td>
-								<td>JNA binding for the C ABI in src/main/native/webp/imagify_webp.h.</td>
 							</tr>
 						</table>
 					</section>
@@ -273,16 +269,12 @@ javax.imageio.ImageWriteParam has nowhere to put.</td>
 								<td>ImageWriter</td>
 							</tr>
 							<tr>
-								<td><code><a href="api/imagify.webp.jna.WebpLibrary.WebpAnimation.html">WebpLibrary.WebpAnimation</a></code></td>
-								<td>What the animation control chunk of a WebP file says.</td>
+								<td><code><a href="api/imagify.webp.ffm.WebpLibrary.html">WebpLibrary</a></code></td>
+								<td>FFM binding for the C ABI in src/main/native/webp/imagify_webp.h.</td>
 							</tr>
 							<tr>
-								<td><code><a href="api/imagify.webp.jna.WebpLibrary.WebpFeatures.html">WebpLibrary.WebpFeatures</a></code></td>
-								<td>What the container headers of a WebP file say, without a pixel being decoded.</td>
-							</tr>
-							<tr>
-								<td><code><a href="api/imagify.webp.jna.WebpCodec.html">WebpCodec</a></code></td>
-								<td>Entry point to the libwebp based WebP codec.</td>
+								<td><code><a href="api/imagify.webp.ffm.WebpCodec.html">WebpCodec</a></code></td>
+								<td>Entry point to the libwebp based WebP codec using Java&apos;s Foreign Function &amp; Memory API (JEP 454).</td>
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.webp.WebpImageReader.html">WebpImageReader</a></code></td>
@@ -381,8 +373,18 @@ Each algorithm provides a kernel function and a support radius.</td>
 								<td>Properties of the image contained in a WebP file, as reported by the container headers.</td>
 							</tr>
 							<tr>
-								<td><code><a href="api/imagify.webp.jna.WebpCodec.DecodedWebp.html">WebpCodec.DecodedWebp</a></code></td>
-								<td>A WebP file read in a single pass, holding its properties and its frames together.</td>
+								<td><code><a href="api/imagify.webp.ffm.WebpLibrary.WebpAnimationInfo.html">WebpLibrary.WebpAnimationInfo</a></code></td>
+								<td>The properties of a WebP animation&apos;s control chunk, as reported by
+#imagify_webp_read_animation and #imagify_webp_decode_animation.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.webp.ffm.WebpLibrary.WebpFeaturesInfo.html">WebpLibrary.WebpFeaturesInfo</a></code></td>
+								<td>The properties of a WebP file&apos;s container headers, as reported by
+#imagify_webp_read_features.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.webp.ffm.WebpCodec.DecodedWebp.html">WebpCodec.DecodedWebp</a></code></td>
+								<td>no description</td>
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.pixels.StillImageRead.Sample.html">StillImageRead.Sample</a></code></td>
@@ -393,8 +395,8 @@ Each algorithm provides a kernel function and a support radius.</td>
 				</section>
 			</div>
 		</article>
-		<aside class="Z"></aside>
-		<footer class="X">
+		<aside class="l"></aside>
+		<footer class="e">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

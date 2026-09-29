@@ -10,7 +10,7 @@ const root = {
 		"imagify.jpeg",
 		"imagify.jpeg.jna",
 		"imagify.webp",
-		"imagify.webp.jna",
+		"imagify.webp.ffm",
 		"imagify.pixels"
 	],
 	"types": [
@@ -341,27 +341,27 @@ const root = {
 		},
 		{
 			"name": "WebpLibrary",
-			"packageName": "imagify.webp.jna",
-			"type": "Interface"
-		},
-		{
-			"name": "WebpLibrary.WebpAnimation",
-			"packageName": "imagify.webp.jna",
+			"packageName": "imagify.webp.ffm",
 			"type": "Class"
 		},
 		{
-			"name": "WebpLibrary.WebpFeatures",
-			"packageName": "imagify.webp.jna",
-			"type": "Class"
+			"name": "WebpLibrary.WebpAnimationInfo",
+			"packageName": "imagify.webp.ffm",
+			"type": "Record"
+		},
+		{
+			"name": "WebpLibrary.WebpFeaturesInfo",
+			"packageName": "imagify.webp.ffm",
+			"type": "Record"
 		},
 		{
 			"name": "WebpCodec",
-			"packageName": "imagify.webp.jna",
+			"packageName": "imagify.webp.ffm",
 			"type": "Class"
 		},
 		{
 			"name": "WebpCodec.DecodedWebp",
-			"packageName": "imagify.webp.jna",
+			"packageName": "imagify.webp.ffm",
 			"type": "Record"
 		},
 		{
