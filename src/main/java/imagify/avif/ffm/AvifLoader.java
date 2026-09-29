@@ -19,15 +19,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * Loads the C shim that fronts {@code libavif} and binds it, lazily and at most once.
+ * Loads the {@code imagifyavif} shared library and binds it, lazily and at most once.
  *
- * <p>Two libraries are involved, and both the order and the directory they share matter.
- * {@code libavif} is a 10 MB shared library that ships in the jar, and the shim is a small module
- * that imports the {@code avif*} symbols from it. A module's imports are resolved when the module
- * is loaded rather than at first use, and they are resolved against the files sitting beside the
- * module being loaded, so libavif has to be mapped first and has to keep the file name the shim's
- * import table records. That is why both are unpacked into one directory under the names they are
- * stored in the jar under, rather than one apiece into a directory apiece.
+ * <p>One file per platform. It is a shim over libavif with libavif and libaom linked into it, so
+ * there is nothing beside it for a loader to have to find, which is what makes it the same shape as
+ * the WebP shim next door. An earlier version shipped libavif beside the shim and imported it
+ * instead, and that needs the shim's import table to name a file the jar can actually ship: the two
+ * Unix loaders resolve a dependency by the SONAME of the library it was linked against, which
+ * libavif sets to {@code libavif.so.16} or {@code libavif.16.dylib}, and the jar's files are named
+ * for the platform and the architecture. Linking it in removes the question rather than answering it.
  *
  * <p>Nothing here ever throws. A platform with no bundled library, a missing resource, a library
  * that will not load and a full temporary directory all mean "unavailable", and the reason is kept
@@ -119,35 +119,23 @@ final class AvifLoader {
         if (!Boolean.parseBoolean(System.getProperty(BUNDLED_PROPERTY, "true"))) {
             return refuse("the bundled libavif is turned off by -D" + BUNDLED_PROPERTY + "=false");
         }
-        String avif = "libavif-" + platform + "-" + cpu + fileName(platform);
-        String shim = "imagifyavif-" + platform + "-" + cpu + fileName(platform);
-        // Both go into one directory and both keep their file names, because a module's imports are
-        // resolved when it is loaded rather than at first use, and they are resolved against the
-        // files sitting beside the module being loaded. The shim's import table names libavif by its
-        // file name, so a libavif renamed on the way out is a load failure and not a deferred one.
+        String name = shimName(platform, cpu);
         Path directory;
         try {
             directory = Files.createTempDirectory("imagify-avif-");
         } catch (IOException e) {
-            return refuse("cannot create a directory to unpack " + shim + " into: " + describe(e));
+            return refuse("cannot create a directory to unpack " + name + " into: " + describe(e));
         }
-        // The two are named apart in the reason because only one of them being missing is the
-        // ordinary case, and it is the one a user can fix: the shim ships with this jar while
-        // libavif is fetched by the natives workflow, so a build that ran without it has a libavif
-        // for every platform and a shim for one.
-        if (unpack(directory, avif) == null) {
-            return refuse(avif + " is not in this jar");
+        if (unpack(directory, name) == null) {
+            return refuse(name + " is not in this jar. The six of them are built by the avif-natives "
+                    + "workflow and belong in src/main/resources/imagify/avif/native/, one per platform.");
         }
-        if (unpack(directory, shim) == null) {
-            return refuse(shim + " is not in this jar, so there is nothing to bind libavif through. "
-                    + "Both files are built by the avif-natives workflow and belong side by side in "
-                    + "src/main/resources/imagify/avif/native/.");
-        }
-        // libavif first, so that the shim's import of it is already satisfied.
-        System.load(directory.resolve(avif).toString());
-        Path shimFile = directory.resolve(shim);
-        System.load(shimFile.toString());
-        log.log(Level.DEBUG, "loaded the AVIF shim from {0}", shimFile);
+        // One library and nothing beside it, so there is no order to get right and no sibling to
+        // fail to find. It is unpacked under the name it has in the jar, which is also the name the
+        // loader is asked for, so nothing is renamed on the way out.
+        Path file = directory.resolve(name);
+        System.load(file.toString());
+        log.log(Level.DEBUG, "loaded the AVIF shim from {0}", file);
         return new AvifShim(SymbolLookup.loaderLookup());
     }
 
@@ -168,7 +156,7 @@ final class AvifLoader {
      * Copies a classpath resource into a directory on disk, because a shared library cannot be
      * mapped straight out of a jar and {@code System.load} only takes an absolute path.
      *
-     * @param directory where to put it, which is also where the loader will look for what it imports
+     * @param directory where to put it
      * @param resource the file name below {@code /imagify/avif/native/}, which is also the name to
      *        give the copy
      * @return the absolute path of the copy, or {@code null} when there is no such resource
@@ -188,14 +176,21 @@ final class AvifLoader {
     }
 
     /**
+     * The one file this loader wants for a platform.
+     *
+     * <p>It is the shim rather than a libavif, because libavif is linked into it. An earlier version
+     * wanted two files, a libavif and the shim beside it, and the reason it no longer does is in the
+     * class documentation: the shim recorded libavif's SONAME and the jar could not ship a file by
+     * that name.
+     *
      * @param osName the value of the {@code os.name} system property
      * @param arch the value of the {@code os.arch} system property
-     * @return the resource name of the library for that platform, or {@code null}
+     * @return the resource name for that platform, or {@code null} when there is none
      */
     static String resourceName(String osName, String arch) {
         String platform = platform(osName);
         String cpu = cpu(arch);
-        return platform == null || cpu == null ? null : "libavif-" + platform + "-" + cpu + fileName(platform);
+        return platform == null || cpu == null ? null : shimName(platform, cpu);
     }
 
     /**
@@ -236,20 +231,17 @@ final class AvifLoader {
     }
 
     /**
-     * The name of the shim for a platform, which is the libavif resource name with {@code libavif}
-     * replaced by {@code imagifyavif}.
+     * The name of the shim for a platform, which is {@code imagifyavif-<platform>-<cpu>.<ext>}.
      *
-     * <p>It keeps the platform and the architecture in the name for the reason the libavif ones do:
-     * the shim and the library it imports have to be the same build, and two files in one jar both
-     * called {@code imagifyavif.dll} and {@code libavif.dll} would leave nothing saying which.
+     * <p>It keeps the platform and the architecture in the name so that six of them can sit in one
+     * directory in one jar, and so that a name in a bug report says which build it came from.
      *
-     * @param osName the value of the {@code os.name} system property
-     * @param arch the value of the {@code os.arch} system property
-     * @return the resource name of the shim for that platform, or {@code null}
+     * @param platform one of the values {@link #platform(String)} returns
+     * @param cpu one of the values {@link #cpu(String)} returns
+     * @return the resource name for that platform
      */
-    static String shimName(String osName, String arch) {
-        String libavif = resourceName(osName, arch);
-        return libavif == null ? null : libavif.replaceFirst("^libavif", "imagifyavif");
+    static String shimName(String platform, String cpu) {
+        return "imagifyavif-" + platform + "-" + cpu + fileName(platform);
     }
 
     /**

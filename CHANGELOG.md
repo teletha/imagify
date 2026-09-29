@@ -54,7 +54,7 @@
   API, and dropped the JNA binding. libavif is a plain C library and was bound directly at
   first, which needed a hand written `MemoryLayout` for each of its thirteen structures;
   the shim replaced those with a C file the compiler checks, and made an encode's pixels
-  reach libavif without a copy of them.
+  reach libavif without a copy of them. One native file per platform, as with WebP.
 * `AvifCodec.readHeader` reads a file's container without decoding a pixel, and
   `AvifCodec.openSequence` walks a file's frames one at a time instead of decoding all of
   them. A 498x280 header read measures under a millisecond against 23 ms for the decode.

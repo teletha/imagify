@@ -413,7 +413,8 @@ class AvifShimTest {
 
         @Test
         @DisplayName("reports the libavif it was linked against")
-        void reportsItsVersion() {
+        void reportsItsVersion() throws Exception {
+            requireShim();
             String version = AvifCodec.getVersion();
             assertTrue(version != null && version.startsWith("1."),
                     "libavif version was " + version);

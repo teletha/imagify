@@ -1,25 +1,17 @@
-# Bundled `libavif` shared libraries
+# Bundled `imagifyavif` shared libraries
 
-This directory holds the prebuilt `libavif` shared libraries that ship inside the jar, one per
-supported platform, and the small shim that binds them. `AvifLoader` picks the right pair at runtime,
-unpacks them into one temporary directory and loads them by absolute path, so users never have to
-install anything.
+This directory holds one prebuilt shared library per supported platform. It is the shim that
+`imagify.avif.ffm` loads, and it has `libavif` linked into it, so one file per platform is all there
+is. `AvifLoader` picks the right one at runtime, unpacks it to a temporary directory and loads it by
+absolute path, so users never have to install anything.
 
-There are two files per platform because AVIF is bound through a C shim rather than directly. See
-"Why a shim" below; the short version is that the FFM ABI will not let a Java array be stored into
-`avifRGBImage.pixels`, so an entry point that takes the pixels as its own argument is what makes an
-encode possible without copying them.
+The arrangement is the same one the WebP shim uses, and getting here took three attempts worth
+recording, because the two-file version was tried first and does not work.
 
 ## Expected files
 
 | File | Platform | Build |
 | --- | --- | --- |
-| `libavif-windows-x64.dll` | Windows x64 | MSVC, `/MT`, x64 |
-| `libavif-windows-arm64.dll` | Windows arm64 | MSVC, `/MT`, arm64 |
-| `libavif-linux-x64.so` | Linux x64 | glibc, x86_64 |
-| `libavif-linux-arm64.so` | Linux arm64 | glibc, aarch64 |
-| `libavif-macos-x64.dylib` | macOS x64 | AppleClang, x86_64 |
-| `libavif-macos-arm64.dylib` | macOS arm64 | AppleClang, arm64 |
 | `imagifyavif-windows-x64.dll` | Windows x64 | MSVC, `/MT`, x64 |
 | `imagifyavif-windows-arm64.dll` | Windows arm64 | MSVC, `/MT`, arm64 |
 | `imagifyavif-linux-x64.so` | Linux x64 | glibc, x86_64 |
@@ -27,60 +19,56 @@ encode possible without copying them.
 | `imagifyavif-macos-x64.dylib` | macOS x64 | AppleClang, x86_64 |
 | `imagifyavif-macos-arm64.dylib` | macOS arm64 | AppleClang, arm64 |
 
-The names are derived in `AvifLoader.resourceName` and `AvifLoader.shimName`, and pinned by
-`AvifLoaderTest`. Renaming a file here silently disables AVIF support on that platform, which is why
-those tests exist rather than a comment.
-
-The shim's name has to match the library's for the platform and the architecture, because the shim
-imports libavif by its file name. `AvifLoader.shimName` derives one from the other so the two cannot
-drift, and the shim is unpacked into the same directory for the same reason.
+The names are derived in `AvifLoader.shimName` and pinned by `AvifLoaderTest`. Renaming a file here
+silently disables AVIF support on that platform, which is why those tests exist rather than a
+comment.
 
 ## Building them
 
-`.github/workflows/avif-natives.yml` builds all six libavif binaries and all six shims and attaches
-them to a rolling GitHub release. Run it with:
+`.github/workflows/avif-natives.yml` builds all six and attaches them to a rolling GitHub release.
+Run it with:
 
 ```
 gh workflow run avif-natives.yml
 ```
 
+Then drop the six files into this directory and commit them. There is nothing to put beside them.
+
 ### libavif
 
-The libavif build is a plain configure with the CLI tools turned off and `aom` linked in statically:
-
 ```
-cmake -S libavif -B build \
+cmake -S libavif -B build -G Ninja \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=ON \
+      -DBUILD_SHARED_LIBS=OFF \
       -DAVIF_BUILD_APPS=OFF \
       -DAVIF_BUILD_TESTS=OFF \
       -DAVIF_LIBYUV=LOCAL \
       -DAVIF_LIBSHARPYUV=LOCAL \
       -DAVIF_CODEC_AOM=LOCAL
-cmake --build build --config Release --target avif
+cmake --build build --target avif_static
 ```
 
-On Windows, build with MSVC and the static C runtime:
+`BUILD_SHARED_LIBS=OFF` is what makes this work and it is not a detail. With it, libavif builds an
+`avif_static` target that merges every `LOCAL` dependency into one archive, so the shim links against
+libavif and finds libaom, libyuv and sharpyuv inside it. That is what `=LOCAL` means for a static
+consumer, and it is why one file per platform ships rather than one plus six side dependencies.
 
-```
--DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl
--DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
-```
+`AVIF_LIBYUV` is not optional in the same way: it defaults to `SYSTEM`, and libavif aborts the
+configure outright when `pkg-config` cannot find it. `AVIF_LIBSHARPYUV` is optional but supplies the
+fast RGB to YUV conversion the encoder path uses.
 
-A developer command prompt has to be active first, otherwise CMake silently selects the MinGW GCC
-that ships in the runner image, and a MinGW DLL imports `libwinpthread-1.dll`. That file is not part
-of Windows, so a library depending on it would not load on a machine where the user has installed
-nothing.
+Only libaom is enabled, because it encodes and decodes and is what libavif picks by default. The
+other codecs are off because each drags in a build tool the CI runner images do not reliably
+provide:
 
-`MultiThreaded` is `/MT` rather than `/MD`. `/MD` would leave the library importing
-`VCRUNTIME140.dll` and `MSVCP140.dll`, which arrive with the Visual C++ redistributable rather than
-with Windows, so again a user who has installed nothing would be missing them. The shim is built
-the same way and for the same reason: it is loaded by absolute path out of a temporary directory and
-can be counted on to find nothing next to itself.
+| codec | needs | how it failed |
+| --- | --- | --- |
+| `AVIF_CODEC_DAV1D` | Meson | built through Meson rather than CMake; on Windows runners Chocolatey installs Meson as an MSI, so the new `PATH` never reaches the configure step |
+| `AVIF_CODEC_RAV1E` | a Rust toolchain | the macOS arm64 image reinstalls `rust-std` while cargo is still running, and the link then fails on missing `.rlib` files |
+| `AVIF_CODEC_SVT` | NASM | hard failure at `enable_language(ASM_NASM)` on x86 when NASM is absent |
 
-`check-self-contained.py` enforces the result: `VCRUNTIME140.dll` and `MSVCP140.dll` are not on its
-allow list, so a build that picks them up fails. The imagify shims are in the same position,
-importing nothing beyond `KERNEL32.dll` and the C runtime that Windows provides.
+Turning one back on means installing its tool on all three platforms first. `AVIF_CODEC_AOM` plus
+NASM is the whole set of requirements: CMake, Ninja and a C compiler.
 
 ### Naming the target CPU
 
@@ -95,64 +83,76 @@ MSVC cannot read NASM syntax, so the x64 targets still need NASM installed, whil
 must not have it on the `PATH`: libaom treats any assembler it finds as permission to build its
 x86 sources.
 
-`=LOCAL` makes libavif fetch and build each dependency in-tree instead of linking against whatever
-the build machine happens to ship. The result is a **self-contained** library with no further
-shared dependencies, which is what lets a single file per platform be shipped.
-
-`AVIF_LIBYUV` is not optional in the same way: it defaults to `SYSTEM`, and libavif aborts the
-configure outright when `pkg-config` cannot find it. `AVIF_LIBSHARPYUV` is optional but supplies
-the fast RGB to YUV conversion the encoder path uses.
-
 ### The shim
 
 ```
-cmake -S src/main/native/avif -B build \
+cmake -S src/main/native/avif -B shim-build \
       -DCMAKE_BUILD_TYPE=Release \
-      -DIMAGIFY_AVIF_SOURCE_DIR=<where libavif was built>
-cmake --build build --config Release
+      -DIMAGIFY_AVIF_SOURCE_DIR=../libavif/build \
+      -DIMAGIFY_AVIF_HEADER_DIR=../libavif/include
+cmake --build shim-build
 ```
 
-The shim is *not* built from a libavif source tree. It is built against a libavif that already
-exists, which is the opposite of the libwebp build next door, where libwebp is compiled from source
-and linked in statically. That is what keeps it 140 KB rather than a second copy of a 10 MB library.
+## Why one file rather than a libavif beside the shim
 
-On Windows the shim needs an import library, because MSVC's linker will not take a DLL as an input.
-`CMakeLists.txt` generates one from a module definition file naming the nineteen `avif*` entry
-points the shim calls, which is short enough to read and check against the header. The module name
-in that file has to be the bundled libavif's own file name, since that is the name the loader looks
-for beside the shim.
+The first version of this linked a prebuilt shared libavif and shipped it in the jar next to the
+shim, which imports the `avif*` symbols from it. That does not work on the two Unix platforms, and
+three fixes were tried before the question was removed.
 
-## Why a self-contained library is required
+A shim that imports libavif records the **SONAME** of the library it linked against, and the two
+Unix loaders resolve a dependency by that name rather than against the directory the loading module
+sits in. libavif sets its own `SOVERSION` unconditionally, with no cache variable to override it:
 
-On Windows, `LoadLibrary` resolves the dependencies of the module it loads against the directory of
-the *executable* and against `PATH`, never against the directory of the module itself. A
-`libavif.dll` that links `aom.dll` next to it would therefore fail to load from a temporary
-directory. A distribution build of `libavif` such as MSYS2's, which is only 326 KB precisely because
-it links aom, dav1d, rav1e, SvtAv1Enc, libyuv, libjpeg, libpng, libxml2 and zlib dynamically, cannot
-be redistributed this way.
+```cmake
+set_target_properties(avif PROPERTIES VERSION ${LIBRARY_VERSION} SOVERSION ${LIBRARY_SOVERSION})
+```
 
-This is also why the shim and libavif are unpacked into **one** directory. The shim's import table
-names libavif, and a module's imports are resolved when the module is loaded rather than at first
-use, so both files have to be sitting next to each other under the names they have here.
+so the name in the shim is `libavif.so.16` or `libavif.16.dylib`. The jar cannot ship either,
+because the files are named for the platform and the architecture so that six of them fit in one
+directory. A shim with a stock name loads on the machine that built it and on no other.
 
-## Why a shim
+| attempt | what happened |
+| --- | --- |
+| `CMAKE_SHARED_LIBRARY_SONAME_C_FLAG` | a flag CMake hands to nothing, because `avif.h` is a C header and the library is C++ |
+| its `CXX` twin as well | additive, because libavif sets `SOVERSION` itself, and the linker concatenated the two into `libavif-linux-x64.solavif.so.16` |
+| `patchelf --set-soname` on libavif | renames the file, then leaves `DT_STRTAB` outside every `PT_LOAD`, so `check-self-contained.py` can no longer read the library it was checking |
 
-The FFM ABI will not store a heap segment, which is what a Java array is, into a pointer-typed struct
+Linking libavif in has no name to get right on any platform, and the self-contained check then
+applies to the shim exactly as it does to the WebP one. The cost is that libavif cannot be swapped
+without rebuilding the shim, and the jar is about the same size either way, since the bytes move
+from one file into the other.
+
+## Why a shim at all, if libavif is linked in anyway
+
+For the same reason the WebP shim exists, and it is one line of the FFM ABI.
+
+FFM will not store a heap segment, which is what a Java array becomes, into a pointer-typed struct
 field. `avifRGBImage.pixels` is exactly such a field, and it is the buffer every conversion in and
-out of a picture goes through. An encode that filled it in from Java would have to copy the pixels
-into native memory first, which is a copy of a whole image.
+out of a picture goes through, so an encode that filled it in from Java would copy a whole image
+first. A function *parameter* is different: a downcall made with `Linker.Option.critical(true)` pins
+the array for the length of the call rather than copying it, and the callee is on the stack for
+exactly that long. One entry point that takes the pixels as its own argument is therefore the whole
+of the zero copy.
 
-A function *parameter* is a different matter. A downcall made with `Linker.Option.critical(true)`
-pins the array for the length of the call rather than copying it, and the callee is on the stack for
-exactly that long, so it cannot store the pointer anywhere that outlives the pin. One entry point
-that takes the pixels as its own argument is therefore the whole of the zero copy.
+The second reason is the thirteen libavif structures. A direct FFM binding needs a hand written
+`MemoryLayout` for each, and a struct whose fields are in the wrong order does not fail, it returns
+a wrong picture. In C the compiler checks every field against the header it was compiled with.
 
-Without the shim, this is unreachable from Java. With it, an encode reads the caller's pixels where
-they are and a decode copies them out of libavif's own buffer once rather than twice.
+`Linker.Option.critical(true)` is what makes the first of these work and what a binding must remember
+to pass: without it, FFM refuses a heap segment outright with `Heap segment not allowed`, and every
+encode fails before libavif is reached. `AvifShimTest` pins that.
 
-`Linker.Option.critical(true)` is what makes this work and what a binding must remember to pass:
-without it, FFM refuses a heap segment outright with `Heap segment not allowed`, and every encode
-fails before libavif is reached. `AvifShimTest` pins that.
+## Self containment
+
+`check-self-contained.py` fails the build when a bundled library still depends on something a user's
+machine would not have. The shim links libavif and libaom in, so what it brings with it is the C and
+C++ runtimes, and those are on the allow list: `libstdc++` on Linux, `libc++` inside `libSystem` on
+macOS, and on Windows nothing at all under `/MT`.
+
+`/MT` rather than `/MD` is deliberate. `/MD` would leave the library importing `VCRUNTIME140.dll`
+and `MSVCP140.dll`, which arrive with the Visual C++ redistributable rather than with Windows, so a
+user who has installed nothing would be missing them. The bundled library is loaded by absolute path
+out of a temporary directory and can be counted on to find nothing next to itself.
 
 ## Licensing
 

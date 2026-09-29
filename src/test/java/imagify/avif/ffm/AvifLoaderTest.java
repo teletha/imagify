@@ -41,21 +41,6 @@ class AvifLoaderTest {
 
     @ParameterizedTest(name = "{0} {1} -> {2}")
     @CsvSource({
-            "Windows 10,        amd64,  libavif-windows-x64.dll",
-            "Windows 11,        x86_64, libavif-windows-x64.dll",
-            "Windows Server 2022, aarch64, libavif-windows-arm64.dll",
-            "Linux,             amd64,  libavif-linux-x64.so",
-            "Linux,             aarch64, libavif-linux-arm64.so",
-            "Mac OS X,          x86_64, libavif-macos-x64.dylib",
-            "Mac OS X,          aarch64, libavif-macos-arm64.dylib",
-    })
-    @DisplayName("every supported platform resolves to a bundled libavif")
-    void supportedLibavif(String osName, String arch, String expected) {
-        assertEquals(expected, resourceName(osName, arch));
-    }
-
-    @ParameterizedTest(name = "{0} {1} -> {2}")
-    @CsvSource({
             "Windows 10,        amd64,  imagifyavif-windows-x64.dll",
             "Windows 11,        x86_64, imagifyavif-windows-x64.dll",
             "Windows Server 2022, aarch64, imagifyavif-windows-arm64.dll",
@@ -64,29 +49,22 @@ class AvifLoaderTest {
             "Mac OS X,          x86_64, imagifyavif-macos-x64.dylib",
             "Mac OS X,          aarch64, imagifyavif-macos-arm64.dylib",
     })
-    @DisplayName("every supported platform resolves to a bundled shim")
-    void supportedShim(String osName, String arch, String expected) {
-        assertEquals(expected, shimName(osName, arch));
+    @DisplayName("every supported platform resolves to one bundled file")
+    void supported(String osName, String arch, String expected) {
+        assertEquals(expected, resourceName(osName, arch));
     }
 
-    @ParameterizedTest(name = "{0} {1}")
-    @CsvSource({
-            "Windows 10,        amd64",
-            "Windows 11,        x86_64",
-            "Windows Server 2022, aarch64",
-            "Linux,             amd64",
-            "Linux,             aarch64",
-            "Mac OS X,          x86_64",
-            "Mac OS X,          aarch64",
-    })
-    @DisplayName("the shim and the library it imports are named for the same build")
-    void shimMatchesLibrary(String osName, String arch) {
-        String libavif = resourceName(osName, arch);
-        String shim = shimName(osName, arch);
-        // Only the leading "libavif" differs, so the platform, the architecture and the extension all
-        // agree. If they ever stopped agreeing, the shim would be importing a libavif for a different
-        // platform than the one it was built for.
-        assertEquals(libavif.replaceFirst("^libavif", ""), shim.replaceFirst("^imagifyavif", ""));
+    @Test
+    @DisplayName("the bundled file is the shim, not a libavif to sit beside it")
+    void oneFileNotTwo() {
+        // libavif is linked into the shim. When it was shipped beside the shim instead, the shim
+        // recorded libavif's SONAME and the two Unix loaders looked for a file the jar did not have,
+        // because its files are named for the platform and the architecture. Three ways of renaming
+        // it were tried in the natives workflow before the question was removed rather than answered.
+        String name = resourceName("Linux", "amd64");
+        assertNotNull(name);
+        assertTrue(name.startsWith("imagifyavif-"), name);
+        assertFalse(name.contains("libavif"), name + " suggests a second file to resolve at run time");
     }
 
     @ParameterizedTest(name = "os.name={0}")
@@ -123,7 +101,6 @@ class AvifLoaderTest {
     void unknownOs(String osName) {
         assertNull(platform(osName));
         assertNull(resourceName(osName, "amd64"));
-        assertNull(shimName(osName, "amd64"));
     }
 
     @ParameterizedTest(name = "os.arch={0}")
@@ -132,7 +109,6 @@ class AvifLoaderTest {
     void unknownArch(String arch) {
         assertNull(cpu(arch));
         assertNull(resourceName("Linux", arch));
-        assertNull(shimName("Linux", arch));
     }
 
     @Test
@@ -165,7 +141,7 @@ class AvifLoaderTest {
     void resourceRoot(String osName, String arch) {
         assertEquals("/imagify/avif/native/", AvifLoader.RESOURCE_ROOT);
         assertNotNull(AvifLoader.class.getResource(AvifLoader.RESOURCE_ROOT + resourceName(osName, arch)),
-                "libavif is not where the loader looks for it");
+                resourceName(osName, arch) + " is not where the loader looks for it");
     }
 
     @Test
@@ -186,24 +162,6 @@ class AvifLoaderTest {
             expected[i] = (byte) i;
         }
         assertArrayEquals(expected, Files.readAllBytes(unpacked));
-    }
-
-    @Test
-    @DisplayName("two resources unpacked for the same load land side by side")
-    void twoResourcesShareADirectory() throws IOException {
-        // This is the arrangement the shim depends on, and it is why unpack takes a directory rather
-        // than making one: the shim's import table names libavif, and the loader looks for that name
-        // among the files sitting next to the shim.
-        Path directory = Files.createTempDirectory("imagify-avif-test-");
-        Path first = AvifLoader.unpack(directory, "fake-library.dll");
-        Path second = AvifLoader.unpack(directory, "fake-library-two.dll");
-        assertNotNull(first);
-        assertNotNull(second);
-        assertEquals(first.getParent(), second.getParent());
-        // And both are there, not just one, because the whole point of the shared directory is that
-        // the second is what the first imports.
-        assertTrue(Files.isRegularFile(first));
-        assertTrue(Files.isRegularFile(second));
     }
 
     @Test
@@ -244,25 +202,22 @@ class AvifLoaderTest {
     }
 
     @Test
-    @DisplayName("both bundled resources for this platform, if any, are real binaries")
-    void bundledResourcesAreNotPointerFiles() {
-        // Absent is the normal state until the avif-natives workflow fills the directory in. What must
-        // never happen is a file being there but useless: a git LFS pointer or a truncated checkout
-        // would fail at System.load time with a message that points at the wrong thing.
-        String osName = System.getProperty("os.name");
-        String arch = System.getProperty("os.arch");
-        for (String resource : new String[] {resourceName(osName, arch), shimName(osName, arch)}) {
-            assumeTrue(resource != null, "skipped: no bundled library for this platform");
-            var url = AvifLoader.class.getResource(AvifLoader.RESOURCE_ROOT + resource);
-            assumeTrue(url != null, "skipped: " + resource + " is not in this jar");
-            try (var in = url.openStream()) {
-                byte[] head = in.readNBytes(64);
-                assertTrue(head.length == 64, () -> resource + " is only " + head.length + " bytes long");
-                assertFalse(head.length >= 64 && head[0] == 'v' && head[1] == 'e' && head[2] == 'r' && head[3] == 's',
-                        () -> resource + " is a git LFS pointer, not a binary");
-            } catch (IOException e) {
-                fail(e);
-            }
+    @DisplayName("the bundled file for this platform, if any, is a real binary")
+    void bundledResourceIsNotAPointerFile() {
+        // Absent is the normal state until the avif-natives workflow fills the directory in. What
+        // must never happen is a file being there but useless: a git LFS pointer or a truncated
+        // checkout would fail at System.load time with a message that points at the wrong thing.
+        String resource = resourceName(System.getProperty("os.name"), System.getProperty("os.arch"));
+        assumeTrue(resource != null, "skipped: no bundled library for this platform");
+        var url = AvifLoader.class.getResource(AvifLoader.RESOURCE_ROOT + resource);
+        assumeTrue(url != null, "skipped: " + resource + " is not in this jar");
+        try (var in = url.openStream()) {
+            byte[] head = in.readNBytes(64);
+            assertTrue(head.length == 64, () -> resource + " is only " + head.length + " bytes long");
+            assertFalse(head.length >= 64 && head[0] == 'v' && head[1] == 'e' && head[2] == 'r' && head[3] == 's',
+                    () -> resource + " is a git LFS pointer, not a binary");
+        } catch (IOException e) {
+            fail(e);
         }
     }
 }
