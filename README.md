@@ -30,10 +30,10 @@ The `jpegli` library is bundled and unpacked the same way.
     -Dimagify.jpeg.bundled=false   # ignore the bundled library,
                                     # use a system jpegli instead
 
-It is bound through Java's own Foreign Function & Memory API, so there
-is no third party jar to declare, and an image already in
-`TYPE_4BYTE_ABGR` is encoded where it lies rather than copied into
-native memory first.
+It is bound through Java's own Foreign Function &amp; Memory API,
+so there is no third party jar to declare, and an image already
+in `TYPE_4BYTE_ABGR` is encoded where it lies rather than copied
+into native memory first.
 
 The native `libwebp` library is bundled the same way.
 

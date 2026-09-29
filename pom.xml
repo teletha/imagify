@@ -28,12 +28,17 @@ The `jpegli` library is bundled and unpacked the same way.
     -Dimagify.jpeg.bundled=false   # ignore the bundled library,
                                     # use a system jpegli instead
 
+It is bound through Java&apos;s own Foreign Function &amp; Memory API,
+so there is no third party jar to declare, and an image already
+in `TYPE_4BYTE_ABGR` is encoded where it lies rather than copied
+into native memory first.
+
 The native `libwebp` library is bundled the same way.
 
     -Dimagify.webp.bundled=false  # ignore the bundled library,
                                     # use a system libwebp instead
 
-Neither is required for JPEG to work. When one of them is
+None of them is required for JPEG to work. When one of them is
 missing for the running platform, the `ImageIO` plug-in steps
 aside and the JDK&apos;s own JPEG reader and writer take over, so
 `ImageIO.read()` of a JPEG never fails because of it.
