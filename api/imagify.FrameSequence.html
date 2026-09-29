@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<meta content="width=device-width, initial-scale=1" name="viewport"/>
-		<meta content="Explains how to use Imagify and its API. " name="description"/>
+		<meta content="Explains how to use Imagify and its API. Imagify reads, transforms and writes images through one small fluent API. Supported format are avif, bmp, gif, ico, jpeg, png, svg and webp." name="description"/>
 		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 		<link href="https://fonts.googleapis.com" rel="preconnect"/>
 		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="j">
+	<body class="Z">
 		<header class="a" date="2026-09-29">
-			<h1 class="Z"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="b"><a href="api/main.html" id="API"><svg class="package">
+			<h1 class="J"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="u"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,108 +35,108 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="c"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="g"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="N"></nav>
-		<article class="k" id="Article">
-			<section class="t"><code class="HB">imagify</code>
-				<h2 class="Class e"><code class="JB">FrameSequence</code></h2>
-				<div class="IB"></div><span class="A"><p>A sequence of image frames with their display durations.</p><p>Used for animated formats such as GIF, animated WebP, and animated AVIF.
+		<nav class="c"></nav>
+		<article class="b" id="Article">
+			<section class="DB"><code class="i">imagify</code>
+				<h2 class="Class FB"><code class="EB">FrameSequence</code></h2>
+				<div class="t"></div><span class="A"><p>A sequence of image frames with their display durations.</p><p>Used for animated formats such as GIF, animated WebP, and animated AVIF.
  For single-image formats, this contains a single frame.</p></span></section>
-			<section class="t" id="FrameSequence(java.util.List,int[],int)">
-				<h2 class="v"><i class="PUBLIC"></i><code class="JB">FrameSequence</code><code class="r">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">delaysMs</code>, <code>int</code><code class="parameterName">loopCount</code>)</code></h2>
-				<table class="KB">
-					<tr class="BB">
+			<section class="DB" id="FrameSequence(java.util.List,int[],int)">
+				<h2 class="JB"><i class="PUBLIC"></i><code class="EB">FrameSequence</code><code class="X">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">delaysMs</code>, <code>int</code><code class="parameterName">loopCount</code>)</code></h2>
+				<table class="e">
+					<tr class="GB">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code></td>
 						<td><span><p>the frames, all of the same size, at least one</p></span></td>
 					</tr>
-					<tr class="BB">
+					<tr class="GB">
 						<td><code array="fix">int</code><code class="parameterName">delaysMs</code></td>
 						<td><span><p>how long each frame is shown in milliseconds, one entry per frame</p></span></td>
 					</tr>
-					<tr class="BB">
+					<tr class="GB">
 						<td><code>int</code><code class="parameterName">loopCount</code></td>
 						<td><span><p>how many times the animation repeats, 0 meaning forever</p></span></td>
 					</tr>
 				</table><span class="A"><p>Creates a frame sequence.</p></span></section>
-			<section class="t" id="frames()">
-				<h2 class="v"><i class="PUBLIC"></i><code class="JB">frames</code><code class="r">()</code><i class="d"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></h2>
-				<table class="KB">
-					<tr class="m">
+			<section class="DB" id="frames()">
+				<h2 class="JB"><i class="PUBLIC"></i><code class="EB">frames</code><code class="X">()</code><i class="W"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></h2>
+				<table class="e">
+					<tr class="KB">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></td>
 						<td><span><p>the frames in display order, never <code>null</code></p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="t" id="delaysMs()">
-				<h2 class="v"><i class="PUBLIC"></i><code class="JB">delaysMs</code><code class="r">()</code><i class="d"><code array="fix">int</code></i></h2>
-				<table class="KB">
-					<tr class="m">
+			<section class="DB" id="delaysMs()">
+				<h2 class="JB"><i class="PUBLIC"></i><code class="EB">delaysMs</code><code class="X">()</code><i class="W"><code array="fix">int</code></i></h2>
+				<table class="e">
+					<tr class="KB">
 						<td><code array="fix">int</code></td>
 						<td><span><p>how long each frame is shown in milliseconds, one entry per frame</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="t" id="loopCount()">
-				<h2 class="v"><i class="PUBLIC"></i><code class="JB">loopCount</code><code class="r">()</code><i class="d"><code>int</code></i></h2>
-				<table class="KB">
-					<tr class="m">
+			<section class="DB" id="loopCount()">
+				<h2 class="JB"><i class="PUBLIC"></i><code class="EB">loopCount</code><code class="X">()</code><i class="W"><code>int</code></i></h2>
+				<table class="e">
+					<tr class="KB">
 						<td><code>int</code></td>
 						<td><span><p>how many times the animation repeats, 0 meaning forever</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="t" id="frameCount()">
-				<h2 class="v"><i class="PUBLIC"></i><code class="JB">frameCount</code><code class="r">()</code><i class="d"><code>int</code></i></h2>
-				<table class="KB">
-					<tr class="m">
+			<section class="DB" id="frameCount()">
+				<h2 class="JB"><i class="PUBLIC"></i><code class="EB">frameCount</code><code class="X">()</code><i class="W"><code>int</code></i></h2>
+				<table class="e">
+					<tr class="KB">
 						<td><code>int</code></td>
 						<td><span><p>the number of frames</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="t" id="toBufferedImage()">
-				<h2 class="v"><i class="PUBLIC"></i><code class="JB">toBufferedImage</code><code class="r">()</code><i class="d"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="KB">
-					<tr class="m">
+			<section class="DB" id="toBufferedImage()">
+				<h2 class="JB"><i class="PUBLIC"></i><code class="EB">toBufferedImage</code><code class="X">()</code><i class="W"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="e">
+					<tr class="KB">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the first frame</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns the first frame as a <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code>.</p><p>Convenience method for when a single-image operation is needed,
  such as writing to a format that does not support animation.</p></span></section>
-			<section class="t" id="firstFrameOnly()">
-				<h2 class="v"><i class="PUBLIC"></i><code class="JB">firstFrameOnly</code><code class="r">()</code><i class="d"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
-				<table class="KB">
-					<tr class="m">
+			<section class="DB" id="firstFrameOnly()">
+				<h2 class="JB"><i class="PUBLIC"></i><code class="EB">firstFrameOnly</code><code class="X">()</code><i class="W"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></h2>
+				<table class="e">
+					<tr class="KB">
 						<td><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></td>
 						<td><span><p>a single frame sequence</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns a sequence holding only the first frame, dropping every other frame.</p><p>The delay and loop count of the first frame are kept. Returns this
  instance unchanged when it already holds a single frame.</p></span></section>
 		</article>
-		<aside class="l">
-			<div class="V">
-				<h5 class="O">Constructors</h5>
+		<aside class="d">
+			<div class="BB">
+				<h5 class="m">Constructors</h5>
 				<ul>
-					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#FrameSequence(java.util.List,int[],int)">FrameSequence</a></code><code class="r">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">delaysMs</code>, <code>int</code><code class="parameterName">loopCount</code>)</code></li>
+					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#FrameSequence(java.util.List,int[],int)">FrameSequence</a></code><code class="X">(<code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code><code class="parameterName">frames</code>, <code array="fix">int</code><code class="parameterName">delaysMs</code>, <code>int</code><code class="parameterName">loopCount</code>)</code></li>
 				</ul>
-				<h5 class="O">Methods</h5>
+				<h5 class="m">Methods</h5>
 				<ul>
-					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#frames()">frames</a></code><code class="r">()</code><i class="R"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></li>
-					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#delaysMs()">delaysMs</a></code><code class="r">()</code><i class="R"><code array="fix">int</code></i></li>
-					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#loopCount()">loopCount</a></code><code class="r">()</code><i class="R"><code>int</code></i></li>
-					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#frameCount()">frameCount</a></code><code class="r">()</code><i class="R"><code>int</code></i></li>
-					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#toBufferedImage()">toBufferedImage</a></code><code class="r">()</code><i class="R"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#firstFrameOnly()">firstFrameOnly</a></code><code class="r">()</code><i class="R"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
+					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#frames()">frames</a></code><code class="X">()</code><i class="f"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></code></code></i></li>
+					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#delaysMs()">delaysMs</a></code><code class="X">()</code><i class="f"><code array="fix">int</code></i></li>
+					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#loopCount()">loopCount</a></code><code class="X">()</code><i class="f"><code>int</code></i></li>
+					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#frameCount()">frameCount</a></code><code class="X">()</code><i class="f"><code>int</code></i></li>
+					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#toBufferedImage()">toBufferedImage</a></code><code class="X">()</code><i class="f"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.FrameSequence.html#firstFrameOnly()">firstFrameOnly</a></code><code class="X">()</code><i class="f"><code><a aria-label="imagify.FrameSequence" href="api/imagify.FrameSequence.html">FrameSequence</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="f">
+		<footer class="M">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
