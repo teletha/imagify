@@ -11,6 +11,7 @@ package imagify.jpeg.ffm;
 
 import java.lang.foreign.FunctionDescriptor;
 import java.lang.foreign.Linker;
+import java.lang.foreign.Linker.Option;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.SymbolLookup;
 import java.lang.foreign.ValueLayout;
@@ -22,7 +23,8 @@ import java.nio.charset.StandardCharsets;
  *
  * <p>This is the Foreign Function &amp; Memory API (JEP 454) counterpart to the JNA binding that
  * used to sit in {@code imagify.jpeg.jna}. It describes the function signatures of the
- * {@code jpegli} based shared library and calls them through {@code java.lang.foreign}. There are no
+ * {@code jpegli} based shared library and calls them through {@code java.lang.foreign}. There are
+ * no
  * structures to describe: the shim keeps {@code struct jpeg_compress_struct} and
  * {@code struct jpeg_decompress_struct} on its own side of the boundary and exposes only plain
  * scalars, pointers and buffers, which is exactly what makes an FFM binding of it small.
@@ -116,21 +118,14 @@ public final class JpegliLibrary {
 
     private static final FunctionDescriptor JPEGLI_VERSION_DESC = FunctionDescriptor.of(ValueLayout.ADDRESS);
 
-    private static final FunctionDescriptor READ_HEADER_DESC = FunctionDescriptor.of(ValueLayout.JAVA_INT,
-            ValueLayout.ADDRESS, ValueLayout.JAVA_LONG,
-            ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS,
-            ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS,
-            ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG);
+    private static final FunctionDescriptor READ_HEADER_DESC = FunctionDescriptor
+            .of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG);
 
-    private static final FunctionDescriptor DECODE_DESC = FunctionDescriptor.of(ValueLayout.JAVA_INT,
-            ValueLayout.ADDRESS, ValueLayout.JAVA_LONG,
-            ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS,
-            ValueLayout.ADDRESS, ValueLayout.JAVA_LONG);
+    private static final FunctionDescriptor DECODE_DESC = FunctionDescriptor
+            .of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG);
 
-    private static final FunctionDescriptor ENCODE_DESC = FunctionDescriptor.of(ValueLayout.JAVA_INT,
-            ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT,
-            ValueLayout.JAVA_INT, ValueLayout.JAVA_INT,
-            ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG);
+    private static final FunctionDescriptor ENCODE_DESC = FunctionDescriptor
+            .of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG);
 
     private static final FunctionDescriptor FREE_DESC = FunctionDescriptor.ofVoid(ValueLayout.ADDRESS);
 
@@ -165,10 +160,10 @@ public final class JpegliLibrary {
         this.readHeader = resolveSymbol(lookup, "imagify_jpegli_read_header", READ_HEADER_DESC);
         this.decode = resolveSymbol(lookup, "imagify_jpegli_decode", DECODE_DESC);
         // The one call in this binding that reads a Java array where it lies rather than a copy of
-        // it. critical(true) is what lets it: a heap segment, which is what a Java array becomes, is
-        // refused as a pointer argument otherwise. The array is pinned for the length of the call,
-        // which is the length of an encode, and the shim reads width * height * 4 bytes of it in
-        // place, so the bytes never go through a native buffer at all.
+        // it. critical(true) is what lets it: a heap segment, which is what a Java array becomes,
+        // is refused as a pointer argument otherwise. The array is pinned for the length of the
+        // call, which is the length of an encode, and the shim reads width * height * 4 bytes of it
+        // in place, so the bytes never go through a native buffer at all.
         this.encode = resolveSymbol(lookup, "imagify_jpegli_encode", ENCODE_DESC, Linker.Option.critical(true));
         this.free = resolveSymbol(lookup, "imagify_jpegli_free", FREE_DESC);
     }
@@ -203,15 +198,10 @@ public final class JpegliLibrary {
      *
      * @return {@link #IMAGIFY_JPEG_OK}, or a status saying what went wrong
      */
-    public int imagify_jpegli_read_header(MemorySegment data, long length, MemorySegment width,
-            MemorySegment height, MemorySegment components, MemorySegment progressive,
-            MemorySegment horizontalFactor, MemorySegment verticalFactor, MemorySegment densityUnit,
-            MemorySegment horizontalDensity, MemorySegment verticalDensity, MemorySegment precision,
-            MemorySegment message, long messageCapacity) {
+    public int imagify_jpegli_read_header(MemorySegment data, long length, MemorySegment width, MemorySegment height, MemorySegment components, MemorySegment progressive, MemorySegment horizontalFactor, MemorySegment verticalFactor, MemorySegment densityUnit, MemorySegment horizontalDensity, MemorySegment verticalDensity, MemorySegment precision, MemorySegment message, long messageCapacity) {
         try {
-            return (int) readHeader.invokeExact(data, length, width, height, components, progressive,
-                    horizontalFactor, verticalFactor, densityUnit, horizontalDensity, verticalDensity,
-                    precision, message, messageCapacity);
+            return (int) readHeader
+                    .invokeExact(data, length, width, height, components, progressive, horizontalFactor, verticalFactor, densityUnit, horizontalDensity, verticalDensity, precision, message, messageCapacity);
         } catch (Throwable t) {
             throw new IllegalStateException("imagify_jpegli_read_header() failed", t);
         }
@@ -224,12 +214,9 @@ public final class JpegliLibrary {
      *
      * @return {@link #IMAGIFY_JPEG_OK}, or a status saying what went wrong
      */
-    public int imagify_jpegli_decode(MemorySegment data, long length, MemorySegment out,
-            MemorySegment outLength, MemorySegment width, MemorySegment height, MemorySegment message,
-            long messageCapacity) {
+    public int imagify_jpegli_decode(MemorySegment data, long length, MemorySegment out, MemorySegment outLength, MemorySegment width, MemorySegment height, MemorySegment message, long messageCapacity) {
         try {
-            return (int) decode.invokeExact(data, length, out, outLength, width, height, message,
-                    messageCapacity);
+            return (int) decode.invokeExact(data, length, out, outLength, width, height, message, messageCapacity);
         } catch (Throwable t) {
             throw new IllegalStateException("imagify_jpegli_decode() failed", t);
         }
@@ -241,17 +228,15 @@ public final class JpegliLibrary {
      * Calls {@code imagify_jpegli_encode}.
      *
      * <p>{@code pixels} may be a heap segment, which is what a Java array becomes: the call was
-     * built with {@link Linker.Option#critical(boolean)} so that the shim reads the bytes where they
+     * built with {@link Option#critical(boolean)} so that the shim reads the bytes where they
      * are rather than out of a copy of them.
      *
      * @return {@link #IMAGIFY_JPEG_OK}, or a status saying what went wrong
      */
-    public int imagify_jpegli_encode(MemorySegment pixels, int width, int height, int quality,
-            int subsampling, int optimizeCoding, MemorySegment encoded, MemorySegment encodedLength,
-            MemorySegment message, long messageCapacity) {
+    public int imagify_jpegli_encode(MemorySegment pixels, int width, int height, int quality, int subsampling, int optimizeCoding, MemorySegment encoded, MemorySegment encodedLength, MemorySegment message, long messageCapacity) {
         try {
-            return (int) encode.invokeExact(pixels, width, height, quality, subsampling, optimizeCoding,
-                    encoded, encodedLength, message, messageCapacity);
+            return (int) encode
+                    .invokeExact(pixels, width, height, quality, subsampling, optimizeCoding, encoded, encodedLength, message, messageCapacity);
         } catch (Throwable t) {
             throw new IllegalStateException("imagify_jpegli_encode() failed", t);
         }
@@ -289,10 +274,8 @@ public final class JpegliLibrary {
         }
     }
 
-    private static MethodHandle resolveSymbol(SymbolLookup lookup, String name,
-            FunctionDescriptor descriptor, Linker.Option... options) {
-        MemorySegment symbol = lookup.find(name)
-                .orElseThrow(() -> new IllegalStateException("cannot find native symbol: " + name));
+    private static MethodHandle resolveSymbol(SymbolLookup lookup, String name, FunctionDescriptor descriptor, Linker.Option... options) {
+        MemorySegment symbol = lookup.find(name).orElseThrow(() -> new IllegalStateException("cannot find native symbol: " + name));
         try {
             return LINKER.downcallHandle(symbol, descriptor, options);
         } catch (Throwable t) {
