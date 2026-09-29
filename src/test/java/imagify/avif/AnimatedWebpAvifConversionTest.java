@@ -9,17 +9,7 @@
  */
 package imagify.avif;
 
-import imagify.avif.jna.AvifCodec;
-import imagify.webp.ffm.WebpCodec;
-import imagify.webp.WebpException;
-
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.image.BufferedImage;
 import java.nio.file.Files;
@@ -27,7 +17,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
+
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import imagify.avif.ffm.AvifCodec;
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * Test for mutual conversion between animated WebP and animated AVIF.

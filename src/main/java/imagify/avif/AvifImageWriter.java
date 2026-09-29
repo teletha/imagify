@@ -9,8 +9,9 @@
  */
 package imagify.avif;
 
-import imagify.avif.jna.AvifCodec;
-import imagify.avif.jna.AvifLibrary;
+import java.awt.image.RenderedImage;
+import java.io.IOException;
+import java.util.Locale;
 
 import javax.imageio.IIOException;
 import javax.imageio.IIOImage;
@@ -18,11 +19,11 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.metadata.IIOMetadata;
-import javax.imageio.stream.ImageOutputStream;
 import javax.imageio.spi.ImageWriterSpi;
-import java.awt.image.RenderedImage;
-import java.io.IOException;
-import java.util.Locale;
+import javax.imageio.stream.ImageOutputStream;
+
+import imagify.avif.ffm.AvifCodec;
+import imagify.avif.ffm.AvifConstants;
 
 /**
  * {@link ImageWriter} that encodes images as AVIF using {@code libavif}.
@@ -32,10 +33,10 @@ import java.util.Locale;
  * {@link java.awt.image.BufferedImage#TYPE_4BYTE_ABGR} first, so colour and alpha are preserved
  * rather than composited over an opaque background.
  *
- * <p>The encoder speed is fixed at {@link AvifLibrary#DEFAULT_SPEED}. The quality comes from the
+ * <p>The encoder speed is fixed at {@link AvifConstants#DEFAULT_SPEED}. The quality comes from the
  * compression quality of the {@link ImageWriteParam}, which maps the {@code javax.imageio} range of
  * {@link AvifImageWriterSpi#MINIMUM_QUALITY} to {@link AvifImageWriterSpi#MAXIMUM_QUALITY} onto the
- * {@code libavif} range of {@code 0} to {@link AvifLibrary#AVIF_QUALITY_BEST}.
+ * {@code libavif} range of {@code 0} to {@link AvifConstants#QUALITY_BEST}.
  *
  * <p>Instances are stateful and, as mandated by {@link ImageWriter}, not thread safe.
  */
@@ -168,7 +169,7 @@ public class AvifImageWriter extends ImageWriter {
 
     private static byte[] encode(RenderedImage source, int quality) throws IIOException {
         try {
-            return AvifCodec.encode(source, quality, AvifLibrary.DEFAULT_SPEED);
+            return AvifCodec.encode(source, quality, AvifConstants.DEFAULT_SPEED);
         } catch (AvifException e) {
             throw new IIOException("cannot encode the image as AVIF: " + e.getMessage(), e);
         }
@@ -176,12 +177,12 @@ public class AvifImageWriter extends ImageWriter {
 
     /**
      * @param param the write parameters, may be {@code null}
-     * @return {@code libavif} quality, 0 (worst) to {@link AvifLibrary#AVIF_QUALITY_BEST} (lossless)
+     * @return {@code libavif} quality, 0 (worst) to {@link AvifConstants#QUALITY_BEST} (lossless)
      * @throws IIOException when the parameters are not supported
      */
     private static int qualityOf(ImageWriteParam param) throws IIOException {
         if (param == null || param.getCompressionMode() != ImageWriteParam.MODE_EXPLICIT) {
-            return AvifLibrary.DEFAULT_QUALITY;
+            return AvifConstants.DEFAULT_QUALITY;
         }
         float quality = param.getCompressionQuality();
         if (quality < AvifImageWriterSpi.MINIMUM_QUALITY || quality > AvifImageWriterSpi.MAXIMUM_QUALITY) {
@@ -190,7 +191,7 @@ public class AvifImageWriter extends ImageWriter {
                     + AvifImageWriterSpi.MINIMUM_QUALITY + " and " + AvifImageWriterSpi.MAXIMUM_QUALITY
                     + ", got " + quality);
         }
-        return Math.round(quality * AvifLibrary.AVIF_QUALITY_BEST);
+        return Math.round(quality * AvifConstants.QUALITY_BEST);
     }
 
     /**

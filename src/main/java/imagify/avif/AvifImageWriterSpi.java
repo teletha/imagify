@@ -9,14 +9,14 @@
  */
 package imagify.avif;
 
-import imagify.avif.jna.AvifCodec;
+import java.awt.image.RenderedImage;
+import java.util.Locale;
 
-import javax.imageio.IIOException;
 import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriter;
 import javax.imageio.spi.ImageWriterSpi;
-import java.awt.image.RenderedImage;
-import java.util.Locale;
+
+import imagify.avif.ffm.AvifCodec;
 
 /**
  * Registers {@link AvifImageWriter} with {@code ImageIO}.

@@ -12,8 +12,6 @@ package imagify;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
-import imagify.avif.jna.AvifCodec;
-import imagify.webp.ffm.WebpCodec;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,6 +22,9 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import imagify.avif.ffm.AvifCodec;
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * Tests that the {@code quality} argument of {@link ImageWriter} reaches the encoder, and that

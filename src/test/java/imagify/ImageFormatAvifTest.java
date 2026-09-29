@@ -25,7 +25,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import imagify.avif.jna.AvifCodec;
+import imagify.avif.ffm.AvifCodec;
 
 /**
  * Tests that {@link ImageFormat#AVIF} behaves like every other format in the public API, that is

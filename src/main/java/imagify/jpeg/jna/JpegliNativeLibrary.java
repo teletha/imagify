@@ -9,6 +9,8 @@
  */
 package imagify.jpeg.jna;
 
+import static java.lang.System.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,15 +23,13 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Locale;
 
-import static java.lang.System.getLogger;
-
 /**
  * Locates the jpegli based shared library that ships inside this jar and unpacks it so that the
  * platform dynamic linker can load it.
  *
  * <p>A shared library cannot be mapped straight out of a jar, so the resource is copied to a
  * temporary directory and loaded from there by its absolute path, which is the same trick
- * {@code imagify.avif.jna.AvifNativeLibrary} uses for {@code libavif} and which is where the layout
+ * {@code imagify.avif.ffm.AvifLoader} uses for {@code libavif} and which is where the layout
  * below comes from.
  *
  * <p>The bundled binaries live under {@value #RESOURCE_ROOT} and are named after the platform they

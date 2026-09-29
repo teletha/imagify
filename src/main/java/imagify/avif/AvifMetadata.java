@@ -9,11 +9,12 @@
  */
 package imagify.avif;
 
-import imagify.avif.jna.AvifCodec;
-
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
+
 import org.w3c.dom.Node;
+
+import imagify.avif.ffm.AvifCodec;
 
 /**
  * Read only {@link IIOMetadata} implementation holding the AVIF specific properties as well as

@@ -9,17 +9,18 @@
  */
 package imagify.avif;
 
-import imagify.avif.jna.AvifCodec;
-
-import javax.imageio.ImageReader;
-import javax.imageio.spi.ImageReaderSpi;
-import javax.imageio.stream.ImageInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
+
+import javax.imageio.ImageReader;
+import javax.imageio.spi.ImageReaderSpi;
+import javax.imageio.stream.ImageInputStream;
+
+import imagify.avif.ffm.AvifCodec;
 
 /**
  * Registers {@link AvifImageReader} with {@code ImageIO}.

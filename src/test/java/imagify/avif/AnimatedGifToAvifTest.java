@@ -9,19 +9,7 @@
  */
 package imagify.avif;
 
-import imagify.avif.jna.AvifCodec;
-import imagify.avif.jna.AvifLibrary;
-import imagify.avif.AvifImageInfo;
-import imagify.ImageMetrics;
-
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
-import javax.imageio.metadata.IIOMetadata;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.image.BufferedImage;
 import java.nio.file.Files;
@@ -29,7 +17,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import javax.imageio.ImageIO;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.stream.ImageInputStream;
+
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import imagify.ImageMetrics;
+import imagify.avif.ffm.AvifCodec;
+import imagify.avif.ffm.AvifConstants;
 
 /**
  * Test for animated GIF to animated AVIF conversion.
@@ -232,7 +231,7 @@ class AnimatedGifToAvifTest {
         // planes per frame instead of three full ones, worth about 1.7x on the encode and 2.2x on
         // the file at the same quality. This test pins the choice down so it cannot regress
         // silently; AvifImageIOTest covers the still side staying at 4:4:4.
-        assertEquals(AvifLibrary.AVIF_PIXEL_FORMAT_YUV420,
+        assertEquals(AvifConstants.PIXEL_FORMAT_YUV420,
                 AvifCodec.readHeader(avifBytes).yuvFormat(),
                 "the animation encoder should subsample chroma to 4:2:0");
     }

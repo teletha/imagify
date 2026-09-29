@@ -16,8 +16,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import imagify.ImageFormat.Jpeg;
 import imagify.ImageFormat.Jpeg.Subsampling;
-import imagify.avif.jna.AvifLibrary;
+import imagify.avif.ffm.AvifConstants;
 import imagify.jpeg.jna.JpegliLibrary;
 import imagify.webp.ffm.WebpCodec;
 
@@ -462,16 +463,16 @@ public abstract class ImageFormat {
 
         /**
          * How long the encoder may take, {@code 0} being the slowest and most thorough and
-         * {@code 10} the quickest. Unset means {@link AvifLibrary#DEFAULT_SPEED} for a still image
-         * and {@link AvifLibrary#DEFAULT_ANIMATION_SPEED} for an animation, which pays the cost of
+         * {@code 10} the quickest. Unset means {@link AvifConstants#DEFAULT_SPEED} for a still image
+         * and {@link AvifConstants#DEFAULT_ANIMATION_SPEED} for an animation, which pays the cost of
          * a speed setting once per frame.
          */
         public final Integer speed;
 
         /**
          * How hard the alpha plane is compressed, {@code AVIF_QUALITY_WORST} being the worst and
-         * {@link AvifLibrary#AVIF_QUALITY_BEST} keeping every alpha value as it was given. Unset
-         * means {@link AvifLibrary#AVIF_QUALITY_LOSSLESS}, because lossy alpha is the single most
+         * {@link AvifConstants#QUALITY_BEST} keeping every alpha value as it was given. Unset
+         * means {@link AvifConstants#QUALITY_LOSSLESS}, because lossy alpha is the single most
          * visible AVIF artefact and an alpha plane is cheap to store.
          */
         public final Integer alphaQuality;
@@ -540,8 +541,8 @@ public abstract class ImageFormat {
          * @throws IllegalArgumentException if the quality is outside what {@code libavif} accepts
          */
         public Avif alphaQuality(int alphaQuality) {
-            if (alphaQuality < AvifLibrary.AVIF_QUALITY_WORST || alphaQuality > AvifLibrary.AVIF_QUALITY_BEST) {
-                throw new IllegalArgumentException("the alpha quality must be between " + AvifLibrary.AVIF_QUALITY_WORST + " and " + AvifLibrary.AVIF_QUALITY_BEST + ", got " + alphaQuality);
+            if (alphaQuality < AvifConstants.QUALITY_WORST || alphaQuality > AvifConstants.QUALITY_BEST) {
+                throw new IllegalArgumentException("the alpha quality must be between " + AvifConstants.QUALITY_WORST + " and " + AvifConstants.QUALITY_BEST + ", got " + alphaQuality);
             }
             return new Avif(speed, alphaQuality, subsampling, chromaDownsampling);
         }
@@ -593,16 +594,16 @@ public abstract class ImageFormat {
          */
         public enum Subsampling {
             /** YUV444, the colour channels at full size: the most detail and the largest file. */
-            YUV444(AvifLibrary.AVIF_PIXEL_FORMAT_YUV444),
+            YUV444(AvifConstants.PIXEL_FORMAT_YUV444),
 
             /** YUV422, the colour channels half the width: the usual choice for text and line art. */
-            YUV422(AvifLibrary.AVIF_PIXEL_FORMAT_YUV422),
+            YUV422(AvifConstants.PIXEL_FORMAT_YUV422),
 
             /** YUV420, the colour channels half in both directions: the smallest, and what is written for an animation unless asked otherwise. */
-            YUV420(AvifLibrary.AVIF_PIXEL_FORMAT_YUV420),
+            YUV420(AvifConstants.PIXEL_FORMAT_YUV420),
 
             /** YUV400, no colour channels at all: greyscale, the smallest of all. */
-            YUV400(AvifLibrary.AVIF_PIXEL_FORMAT_YUV400);
+            YUV400(AvifConstants.PIXEL_FORMAT_YUV400);
 
             /** The underlying {@code AVIF_PIXEL_FORMAT_*} value. */
             public final int pixelFormat;
@@ -624,19 +625,19 @@ public abstract class ImageFormat {
          */
         public enum ChromaDownsampling {
             /** The encoder chooses, which is the best balance of quality and speed. */
-            AUTOMATIC(AvifLibrary.AVIF_CHROMA_DOWNSAMPLING_AUTOMATIC),
+            AUTOMATIC(AvifConstants.CHROMA_DOWNSAMPLING_AUTOMATIC),
 
             /** The quickest reduction, which may show visible colour bleeding on saturated edges. */
-            FASTEST(AvifLibrary.AVIF_CHROMA_DOWNSAMPLING_FASTEST),
+            FASTEST(AvifConstants.CHROMA_DOWNSAMPLING_FASTEST),
 
             /** The best-looking reduction, which averages the chroma values. */
-            BEST_QUALITY(AvifLibrary.AVIF_CHROMA_DOWNSAMPLING_BEST_QUALITY),
+            BEST_QUALITY(AvifConstants.CHROMA_DOWNSAMPLING_BEST_QUALITY),
 
             /** A simple box average of the chroma samples. */
-            AVERAGE(AvifLibrary.AVIF_CHROMA_DOWNSAMPLING_AVERAGE),
+            AVERAGE(AvifConstants.CHROMA_DOWNSAMPLING_AVERAGE),
 
             /** A sharpness-preserving filter that tries to keep colour edges from smearing. */
-            SHARP_YUV(AvifLibrary.AVIF_CHROMA_DOWNSAMPLING_SHARP_YUV);
+            SHARP_YUV(AvifConstants.CHROMA_DOWNSAMPLING_SHARP_YUV);
 
             /** The underlying {@code AVIF_CHROMA_DOWNSAMPLING_*} value. */
             public final int value;

@@ -4,6 +4,18 @@
 
 ### ⚠ Breaking change
 
+* the AVIF codec is `imagify.avif.ffm.AvifCodec`, bound through a C shim and Java's Foreign
+  Function & Memory API, and the `imagify.avif.jna` package is gone along with the JNA
+  binding it held: `AvifCodec`, `AvifLibrary` and the fourteen structures it declared, plus
+  `AvifAnimationDecoder` and `AvifNativeLibrary`.
+
+  A program that named `imagify.avif.jna.AvifCodec` has to name `imagify.avif.ffm.AvifCodec`
+  instead. The static methods on it are the same and take the same arguments, so this is one
+  import and one class name, with two exceptions: `AvifAnimationDecoder` is now
+  `AvifSequence` and is opened with `AvifCodec.openSequence` rather than
+  `AvifAnimationDecoder.open`, and `AvifCodec.library()` and `requireLibrary()` are gone
+  because there is no binding object to hand back.
+
 * the WebP codec is `imagify.webp.ffm.WebpCodec`, bound through Java's Foreign Function &
   Memory API, and there is nothing in front of it any more. Both the second backend and the
   facade that dispatched to it are gone: the `webp4j-core` dependency, the
@@ -17,13 +29,35 @@
   has to name `imagify.webp.ffm.WebpCodec` instead, and one that read `WebpCodec.backend()`
   has nothing left to ask.
 
-  The default WebP codec is bound through `java.lang.foreign`, so a program on JDK 24 or
-  newer that uses it from the class path is asked to allow native access. Nothing fails
-  without it, but the JDK warns on every run and will block the call in a later release:
+* the default AVIF and WebP codecs are bound through `java.lang.foreign`, so a program on
+  JDK 24 or newer that uses either from the class path is asked to allow native access.
+  Nothing fails without it, but the JDK warns on every run and will block the call in a
+  later release:
 
       java --enable-native-access=ALL-UNNAMED -cp ... YourApp
 
+### Fixed
+
+* the three CICP fields of an AVIF file were read as garbage. `colorPrimaries`,
+  `transferCharacteristics` and `matrixCoefficients` are `uint16_t` in `avifImage`, and the
+  JNA binding declared all three as `int`, which is two bytes wider and shifts every field
+  after them. A file whose colour primaries are 2 was reported as **131074**, which is that
+  2 and the next field shifted up by sixteen bits. The pictures were unaffected: libavif
+  reads its own fields by pointer and never went through the binding's copy. Only
+  `AvifImageInfo`, and so only what `AvifMetadata` publishes through `ImageIO`, was wrong.
+  The shim reads them in C, where the compiler checks the width against the header it was
+  compiled with, and `AvifShimTest` pins the value against a file that carries 2.
+
 ### Features
+
+* encode and decode AVIF with a bundled `libavif` through the Foreign Function & Memory
+  API, and dropped the JNA binding. libavif is a plain C library and was bound directly at
+  first, which needed a hand written `MemoryLayout` for each of its thirteen structures;
+  the shim replaced those with a C file the compiler checks, and made an encode's pixels
+  reach libavif without a copy of them.
+* `AvifCodec.readHeader` reads a file's container without decoding a pixel, and
+  `AvifCodec.openSequence` walks a file's frames one at a time instead of decoding all of
+  them. A 498x280 header read measures under a millisecond against 23 ms for the decode.
 
 * encode and decode WebP with a bundled `libwebp` through the Foreign Function &amp; Memory
   API, and dropped the JNA binding
@@ -40,6 +74,24 @@
 
 ### Performance
 
+* the default AVIF encoder speed is 6 rather than `libavif`'s own `AVIF_SPEED_DEFAULT`.
+  These are not the same thing on a current build: measured at 517x380 and quality 70
+  against libavif 1.4.2, `AVIF_SPEED_DEFAULT` is indistinguishable from
+  `AVIF_SPEED_SLOWEST` and costs **4917 ms** against **170 ms** at speed 6, for a file of
+  the same **77 kB**. A default that is 29x slower for the same bytes is not a default
+  anybody wants, and every AVIF file this version writes is produced at a different point
+  on that curve: at quality 10 a 517x380 card goes from 45.5 kB at 19.9 dB PSNR to
+  44.8 kB at 18.4 dB, and at quality 90 from 135.6 kB at 37.5 dB to 137.3 kB at 36.0 dB.
+* an AVIF encode hands its pixels to `libavif` where they are instead of copying them
+  into native memory first, and a decode copies them out of `libavif`'s own buffer once
+  rather than twice. Neither side of the boundary moves a pixel any more, which is a
+  change in what is copied rather than a measurable change in how long a decode takes:
+  libavif's own YUV to RGB conversion is most of the work, so on a 12 core Ryzen 9 a
+  498x280 decode measured **23 ms** and the copy that was removed measured **below the
+  resolution of the measurement**. At 4000x3000, where the pixels are 45 MB, a decode
+  measured **169 ms** and one `memcpy` of that many bytes **2 ms**, so the copy was
+  about **1%** of a decode. The structural change is real and the speedup is not worth
+  claiming as one.
 * a lossless encode honours the quality it is given instead of having it pinned to
   100. libwebp reads `quality` in lossless mode as an amount of effort, and the
   pinned 100 was the most effort it can be given: 86 iterations against 51 at 75, and

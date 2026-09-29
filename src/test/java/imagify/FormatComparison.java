@@ -24,8 +24,8 @@ import javax.imageio.ImageIO;
 import org.junit.jupiter.api.Assumptions;
 
 import imagify.avif.AvifException;
-import imagify.avif.jna.AvifCodec;
-import imagify.avif.jna.AvifLibrary;
+import imagify.avif.ffm.AvifCodec;
+import imagify.avif.ffm.AvifConstants;
 import imagify.webp.WebpException;
 import imagify.webp.ffm.WebpCodec;
 
@@ -48,7 +48,7 @@ class FormatComparison {
     private static final int[] QUALITIES = {10, 20, 30, 40, 50, 60, 70, 80, 90};
 
     /** The library default: slow enough to be fair, fast enough to keep the test short. */
-    private static final int AVIF_SPEED = AvifLibrary.DEFAULT_SPEED;
+    private static final int AVIF_SPEED = AvifConstants.DEFAULT_SPEED;
 
     private static final String AVIF = "avif";
 

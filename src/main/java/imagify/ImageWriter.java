@@ -38,8 +38,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import imagify.avif.AvifException;
-import imagify.avif.jna.AvifCodec;
-import imagify.avif.jna.AvifLibrary;
+import imagify.avif.ffm.AvifCodec;
+import imagify.avif.ffm.AvifConstants;
 import imagify.jpeg.JpegException;
 import imagify.jpeg.jna.JpegliCodec;
 import imagify.jpeg.jna.JpegliLibrary;
@@ -607,7 +607,7 @@ public final class ImageWriter {
     private static byte[] encodeAvif(BufferedImage image, ImageFormat.Avif avif, double quality) throws IOException {
         try {
             return AvifCodec.encode(image, (int) Math
-                    .round(quality * AvifLibrary.AVIF_QUALITY_BEST), avif.speed, avif.alphaQuality, avif.subsampling != null
+                    .round(quality * AvifConstants.QUALITY_BEST), avif.speed, avif.alphaQuality, avif.subsampling != null
                             ? avif.subsampling.pixelFormat
                             : -1, avif.chromaDownsampling != null ? avif.chromaDownsampling.value : -1);
         } catch (AvifException e) {

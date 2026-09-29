@@ -32,7 +32,7 @@ import java.awt.image.SinglePixelPackedSampleModel;
  * failing, and {@link #toBufferedImage} and {@link #toAbgrBytes} are therefore the only two places
  * allowed to touch raw bytes.
  *
- * <p>It lives outside the codec packages so that both {@link imagify.avif.jna.AvifCodec} and
+ * <p>It lives outside the codec packages so that both {@link imagify.avif.ffm.AvifCodec} and
  * {@link imagify.jpeg.jna.JpegliCodec} share one conversion rather than keeping two that are only
  * ever going to disagree.
  *
@@ -88,32 +88,65 @@ public final class AbgrPixels {
      * @throws IllegalArgumentException when a sub sampling factor is not positive
      */
     public static byte[] toAbgrBytes(RenderedImage source, int x, int y, int width, int height, int subX, int subY) {
+        byte[] abgr = new byte[bytes(width, height)];
+        toAbgrBytes(source, x, y, width, height, subX, subY, abgr, 0);
+        return abgr;
+    }
+
+    /**
+     * Extracts a sub-sampled region of an image as tightly packed A, B, G, R bytes, into an array the
+     * caller already has, at an offset in it.
+     *
+     * <p>This is the form an animation needs. Its frames are handed to the codec as one block, so
+     * that the block can be pinned once and read where it lies rather than copied a frame at a time,
+     * and packing a sequence through the allocating form above would build one array per frame and
+     * then copy each of them into the block, which is the copy this exists to avoid.
+     *
+     * @param source the image to read
+     * @param x left edge of the region, in image coordinates
+     * @param y top edge of the region, in image coordinates
+     * @param width region width, in destination pixels
+     * @param height region height, in destination pixels
+     * @param subX horizontal sub sampling factor, at least 1
+     * @param subY vertical sub sampling factor, at least 1
+     * @param abgr where to write the bytes, in A, B, G, R order
+     * @param offset an index into {@code abgr} to start at, which must leave room for
+     *        {@code width * height * 4} bytes
+     * @throws IllegalArgumentException when a sub sampling factor is not positive, or when the
+     *         array is too small for the region at that offset
+     */
+    public static void toAbgrBytes(RenderedImage source, int x, int y, int width, int height, int subX,
+            int subY, byte[] abgr, int offset) {
         if (subX < 1 || subY < 1) {
             throw new IllegalArgumentException("sub sampling factors must be positive: " + subX + "x" + subY);
+        }
+        int needed = bytes(width, height);
+        if (offset < 0 || abgr.length - offset < needed) {
+            throw new IllegalArgumentException("expected room for " + needed
+                    + " bytes at offset " + offset + " but the array holds " + abgr.length);
         }
         if (subX == 1 && subY == 1
                 && source instanceof BufferedImage image
                 && image.getType() == BufferedImage.TYPE_4BYTE_ABGR
                 && isPacked(image, bytes(source.getWidth(), source.getHeight()))) {
-            return copyRows(image.getRaster(), x, y, width, height);
+            copyRows(image.getRaster(), x, y, width, height, abgr, offset);
+            return;
         }
         int regionWidth = width * subX;
         int regionHeight = height * subY;
         int[] region = new int[regionWidth * regionHeight];
         getArgb(source, x, y, regionWidth, regionHeight, region);
 
-        byte[] abgr = new byte[bytes(width, height)];
         for (int row = 0; row < height; row++) {
             for (int column = 0; column < width; column++) {
                 int pixel = region[row * subY * regionWidth + column * subX];
-                int target = (row * width + column) * 4;
+                int target = offset + (row * width + column) * 4;
                 abgr[target] = (byte) (pixel >>> 24);
                 abgr[target + 1] = (byte) pixel;
                 abgr[target + 2] = (byte) (pixel >> 8);
                 abgr[target + 3] = (byte) (pixel >> 16);
             }
         }
-        return abgr;
     }
 
     /**
@@ -209,15 +242,27 @@ public final class AbgrPixels {
      * @return the in-memory A, B, G, R bytes of a region, one unbreakable row per row
      */
     private static byte[] copyRows(Raster raster, int x, int y, int width, int height) {
+        byte[] abgr = new byte[bytes(width, height)];
+        copyRows(raster, x, y, width, height, abgr, 0);
+        return abgr;
+    }
+
+    /**
+     * Copies the in-memory A, B, G, R bytes of a region into an array the caller has, a row at a time.
+     *
+     * <p>A row at a time rather than one arraycopy of the whole region, because the region's own
+     * rows are laid out with the source image's width as the stride and the destination is packed, so
+     * a region narrower than the image is not contiguous in either.
+     */
+    private static void copyRows(Raster raster, int x, int y, int width, int height, byte[] abgr,
+            int offset) {
         DataBufferByte buffer = (DataBufferByte) raster.getDataBuffer();
         byte[] all = buffer.getData();
         int stride = raster.getWidth() * 4;
-        byte[] abgr = new byte[bytes(width, height)];
         for (int row = 0; row < height; row++) {
             System.arraycopy(all, buffer.getOffset() + (y + row) * stride + x * 4,
-                    abgr, row * width * 4, width * 4);
+                    abgr, offset + row * width * 4, width * 4);
         }
-        return abgr;
     }
 
     /**

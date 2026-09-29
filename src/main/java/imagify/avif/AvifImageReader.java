@@ -9,9 +9,12 @@
  */
 package imagify.avif;
 
-import imagify.avif.jna.AvifAnimationDecoder;
-import imagify.avif.jna.AvifCodec;
-import imagify.pixels.StillImageRead;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageReadParam;
@@ -20,12 +23,10 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+
+import imagify.avif.ffm.AvifCodec;
+import imagify.avif.ffm.AvifSequence;
+import imagify.pixels.StillImageRead;
 
 /**
  * {@link ImageReader} for AVIF images, backed by {@code libavif}.
@@ -66,7 +67,7 @@ public class AvifImageReader extends ImageReader {
     private ImageInputStream stream;
     private long start = -1;
     private byte[] encoded;
-    private AvifAnimationDecoder animation;
+    private AvifSequence animation;
 
     /**
      * @param originatingProvider the provider that created this reader
@@ -120,7 +121,7 @@ public class AvifImageReader extends ImageReader {
         checkInput();
         // The loop count belongs to the file rather than to any one frame, and the frame timing that
         // goes with it is not what a caller of stream metadata is after.
-        AvifAnimationDecoder decoder = animation();
+        AvifSequence decoder = animation();
         return new AvifMetadata(decoder.info(), 0, decoder.loopCount());
     }
 
@@ -172,10 +173,10 @@ public class AvifImageReader extends ImageReader {
     /**
      * The decoder over the whole file, opened on first use and kept until the input is replaced.
      */
-    private AvifAnimationDecoder animation() throws IIOException {
+    private AvifSequence animation() throws IIOException {
         if (animation == null) {
             try {
-                animation = AvifAnimationDecoder.open(encoded());
+                animation = AvifCodec.openSequence(encoded());
             } catch (AvifException e) {
                 throw new IIOException("cannot read the AVIF file: " + e.getMessage(), e);
             }
@@ -202,7 +203,7 @@ public class AvifImageReader extends ImageReader {
     private int size(int imageIndex, boolean width) throws IIOException {
         checkIndex(imageIndex);
         try {
-            AvifAnimationDecoder decoder = animation();
+            AvifSequence decoder = animation();
             return width ? decoder.width(imageIndex) : decoder.height(imageIndex);
         } catch (AvifException e) {
             throw new IIOException("cannot read the size of frame " + imageIndex + ": "
@@ -213,7 +214,7 @@ public class AvifImageReader extends ImageReader {
     private IIOMetadata metadataOf(int imageIndex) throws IIOException {
         checkIndex(imageIndex);
         try {
-            AvifAnimationDecoder decoder = animation();
+            AvifSequence decoder = animation();
             // A file with a single frame is a still image, not a one frame animation, so there is
             // nothing to say about how long it is shown and no duration is published.
             int durationMs = decoder.frameCount() > 1 ? decoder.durationMs(imageIndex) : 0;

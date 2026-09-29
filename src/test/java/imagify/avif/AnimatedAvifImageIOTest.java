@@ -48,8 +48,8 @@ class AnimatedAvifImageIOTest {
 
     @BeforeAll
     static void requireLibavif() {
-        assumeTrue(imagify.avif.jna.AvifCodec
-                .isAvailable(), () -> "skipped: libavif is not available (" + imagify.avif.jna.AvifCodec.getUnavailableReason() + ")");
+        assumeTrue(imagify.avif.ffm.AvifCodec
+                .isAvailable(), () -> "skipped: libavif is not available (" + imagify.avif.ffm.AvifCodec.getUnavailableReason() + ")");
     }
 
     // -------------------------------------------------------------------------------- fixture
@@ -76,7 +76,7 @@ class AnimatedAvifImageIOTest {
             frames.add(frame(index, width, height));
         }
         try {
-            return imagify.avif.jna.AvifCodec.encodeAnimation(frames, delaysMs, 70, loopCount);
+            return imagify.avif.ffm.AvifCodec.encodeAnimation(frames, delaysMs, 70, loopCount);
         } catch (imagify.avif.AvifException e) {
             throw new AssertionError(e);
         }
@@ -88,7 +88,7 @@ class AnimatedAvifImageIOTest {
      */
     private static byte[] still(int width, int height) {
         try {
-            return imagify.avif.jna.AvifCodec.encode(frame(0, width, height), 70, 8);
+            return imagify.avif.ffm.AvifCodec.encode(frame(0, width, height), 70, 8);
         } catch (AvifException e) {
             throw new AssertionError(e);
         }
