@@ -26,7 +26,7 @@ import javax.imageio.stream.ImageInputStream;
 
 import imagify.jpeg.JpegImageReader;
 import imagify.jpeg.JpegImageReaderSpi;
-import imagify.jpeg.jna.JpegliCodec;
+import imagify.jpeg.ffm.JpegliCodec;
 import imagify.webp.ffm.WebpCodec;
 
 /**

@@ -1,7 +1,7 @@
 # Native sources
 
 The C sources here are the shims behind the two codecs of this library that cannot be bound straight
-through the standard Java FFM API: `jpegli/` for `imagify.jpeg.jna.JpegliCodec` and `webp/` for
+through the standard Java FFM API: `jpegli/` for `imagify.jpeg.ffm.JpegliCodec` and `webp/` for
 `imagify.webp.ffm.WebpCodec`. Everything else this project does in native code is a dependency it
 ships prebuilt; this is the one place where the jar has to carry code of its own, because both
 bindings need a layer that keeps a third party structure layout on the C side.
@@ -24,7 +24,7 @@ directories and built by `.github/workflows/jpegli-natives.yml` and
 
 ## Why a shim at all
 
-The obvious binding is JNA straight onto the third party API, and that does not work for each codec
+The obvious binding is straight onto the third party API, and that does not work for each codec
 for a reason of its own.
 
 ### The jpegli shim
@@ -34,12 +34,11 @@ jpegli implements the whole of libjpeg's public interface, so a binding could in
 
 - libjpeg reports a fatal error by calling `cinfo->err->error_exit`, and that callback must not
   return. The only portable way of getting control back is `setjmp` / `longjmp` across the call that
-  failed. JNA cannot take part in it: `CallbackReference.DefaultCallbackProxy` catches every
-  `Throwable` a `Callback` throws, passes it to a `CallbackExceptionHandler`, and documents that the
-  method must not throw. A callback wired up as `error_exit` would therefore return normally, libjpeg
-  would carry on past an error it believes to be fatal, and a damaged file could be read into a
-  structure field that was never written. The unwinding happens in the shim instead, where `setjmp`
-  is real and every entry point answers a status code rather than throwing.
+  failed. A binding cannot take part in it: a handler that has to return into Java must return, and
+  `error_exit` must not, so a handler wired up as `error_exit` would return normally, libjpeg would
+  carry on past an error it believes to be fatal, and a damaged file could be read into a structure
+  field that was never written. The unwinding happens in the shim instead, where `setjmp` is real and
+  every entry point answers a status code rather than throwing.
 - A direct binding would also have to describe `struct jpeg_compress_struct` and `struct
   jpeg_decompress_struct` field by field: several hundred fields of nested substructures, two
   different layouts, and both of them following the libjpeg revision rather than anything this

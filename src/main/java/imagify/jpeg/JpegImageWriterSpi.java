@@ -16,7 +16,7 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriter;
 import javax.imageio.spi.ImageWriterSpi;
 
-import imagify.jpeg.jna.JpegliCodec;
+import imagify.jpeg.ffm.JpegliCodec;
 
 /**
  * Registers {@link JpegImageWriter} with {@code ImageIO}.

@@ -35,7 +35,7 @@ import java.awt.image.WritableRaster;
  * allowed to touch raw bytes.
  *
  * <p>It lives outside the codec packages so that both {@link imagify.avif.ffm.AvifCodec} and
- * {@link imagify.jpeg.jna.JpegliCodec} share one conversion rather than keeping two that are only
+ * {@link imagify.jpeg.ffm.JpegliCodec} share one conversion rather than keeping two that are only
  * ever going to disagree.
  *
  * <p>Every other layout is converted through the source {@link ColorModel}, which always yields

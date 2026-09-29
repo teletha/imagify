@@ -7,9 +7,9 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package imagify.jpeg.jna;
+package imagify.jpeg.ffm;
 
-import static imagify.jpeg.jna.JpegliNativeLibrary.*;
+import static imagify.jpeg.ffm.JpegliNativeLibrary.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 

@@ -9,20 +9,19 @@
  */
 
 /*
- * A flat C ABI over the libjpeg62 compatible API that jpegli implements, for the JNA binding in
- * imagify.jpeg.jna.
+ * A flat C ABI over the libjpeg62 compatible API that jpegli implements, for the FFM binding in
+ * imagify.jpeg.ffm.
  *
  * jpegli exports the whole of libjpeg's public interface, so a binding could in principle talk to it
  * directly. It cannot, and this file is the reason why.
  *
  * Error handling. libjpeg reports a fatal error by calling cinfo->err->error_exit, which by
  * contract must not return, and the only portable way of getting control back afterwards is
- * setjmp/longjmp. JNA cannot take part in that: com.sun.jna.CallbackReference.DefaultCallbackProxy
- * catches every Throwable a Callback throws and hands it to a CallbackExceptionHandler, and
- * documents that the method must not throw. A Callback used as error_exit would therefore return
- * normally, and libjpeg would carry on after an error it believes to be fatal, which is how a
- * process ends up reading a struct field that was never written. So the setjmp/longjmp happens
- * here, in C, and the caller is handed a status code and a message instead.
+ * setjmp/longjmp. A binding cannot take part in that: a handler that has to return into Java must
+ * return, and error_exit must not, so a binding that installed one would see it return and libjpeg
+ * would carry on after an error it believes to be fatal, which is how a process ends up reading a
+ * struct field that was never written. So the setjmp/longjmp happens here, in C, and the caller is
+ * handed a status code and a message instead.
  *
  * The structures. The other thing a direct binding would have to do is describe
  * struct jpeg_compress_struct and struct jpeg_decompress_struct field by field, and those are

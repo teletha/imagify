@@ -19,7 +19,6 @@ public class Project extends bee.api.Project {
         versionControlSystem("https://github.com/teletha/imagify");
         require(SourceVersion.latest(), SourceVersion.RELEASE_24);
 
-        require("net.java.dev.jna", "jna");
         require("com.github.weisj", "jsvg");
         require("com.github.teletha", "antibug").atTest();
 
@@ -47,12 +46,17 @@ public class Project extends bee.api.Project {
                     -Dimagify.jpeg.bundled=false   # ignore the bundled library,
                                                     # use a system jpegli instead
 
+                It is bound through Java's own Foreign Function &amp; Memory API,
+                so there is no third party jar to declare, and an image already
+                in `TYPE_4BYTE_ABGR` is encoded where it lies rather than copied
+                into native memory first.
+
                 The native `libwebp` library is bundled the same way.
 
                     -Dimagify.webp.bundled=false  # ignore the bundled library,
                                                     # use a system libwebp instead
 
-                Neither is required for JPEG to work. When one of them is
+                None of them is required for JPEG to work. When one of them is
                 missing for the running platform, the `ImageIO` plug-in steps
                 aside and the JDK's own JPEG reader and writer take over, so
                 `ImageIO.read()` of a JPEG never fails because of it.

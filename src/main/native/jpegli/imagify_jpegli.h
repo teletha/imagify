@@ -9,8 +9,8 @@
  */
 
 /*
- * A flat C ABI over the libjpeg62 compatible API that jpegli implements, for the JNA binding in
- * imagify.jpeg.jna. See imagify_jpegli.c for why this layer exists at all.
+ * A flat C ABI over the libjpeg62 compatible API that jpegli implements, for the FFM binding in
+ * imagify.jpeg.ffm. See imagify_jpegli.c for why this layer exists at all.
  */
 
 #ifndef IMAGIFY_JPEGLI_H_
@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 /*
- * The version of this ABI, not of jpegli. The JNA binding gates on it so that a jar built against
+ * The version of this ABI, not of jpegli. The FFM binding gates on it so that a jar built against
  * one revision of this file refuses a library built against another rather than reading arguments
  * from the wrong offsets.
  */

@@ -20,7 +20,7 @@ import javax.imageio.ImageReader;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 
-import imagify.jpeg.jna.JpegliCodec;
+import imagify.jpeg.ffm.JpegliCodec;
 
 /**
  * Registers {@link JpegImageReader} with {@code ImageIO}.

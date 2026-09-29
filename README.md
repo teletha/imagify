@@ -30,12 +30,17 @@ The `jpegli` library is bundled and unpacked the same way.
     -Dimagify.jpeg.bundled=false   # ignore the bundled library,
                                     # use a system jpegli instead
 
+It is bound through Java's own Foreign Function & Memory API, so there
+is no third party jar to declare, and an image already in
+`TYPE_4BYTE_ABGR` is encoded where it lies rather than copied into
+native memory first.
+
 The native `libwebp` library is bundled the same way.
 
     -Dimagify.webp.bundled=false  # ignore the bundled library,
                                     # use a system libwebp instead
 
-Neither is required for JPEG to work. When one of them is
+None of them is required for JPEG to work. When one of them is
 missing for the running platform, the `ImageIO` plug-in steps
 aside and the JDK's own JPEG reader and writer take over, so
 `ImageIO.read()` of a JPEG never fails because of it.
@@ -285,7 +290,6 @@ If you think something might be a bug, but you're not sure, ask on StackOverflow
 
 ## Dependency
 Imagify depends on the following products on runtime.
-* [jna-5.19.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.19.1)
 * [jsvg-2.2.0](https://mvnrepository.com/artifact/com.github.weisj/jsvg/2.2.0)
 <p align="right"><a href="#top">back to top</a></p>
 

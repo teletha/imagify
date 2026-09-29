@@ -21,8 +21,8 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageWriterSpi;
 import javax.imageio.stream.ImageOutputStream;
 
-import imagify.jpeg.jna.JpegliCodec;
-import imagify.jpeg.jna.JpegliLibrary;
+import imagify.jpeg.ffm.JpegliCodec;
+import imagify.jpeg.ffm.JpegliLibrary;
 
 /**
  * {@link ImageWriter} that encodes images as JPEG using

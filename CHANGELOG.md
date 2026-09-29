@@ -29,8 +29,20 @@
   has to name `imagify.webp.ffm.WebpCodec` instead, and one that read `WebpCodec.backend()`
   has nothing left to ask.
 
-* the default AVIF and WebP codecs are bound through `java.lang.foreign`, so a program on
-  JDK 24 or newer that uses either from the class path is asked to allow native access.
+* the JPEG codec is `imagify.jpeg.ffm.JpegliCodec`, bound through a C shim and Java's Foreign
+  Function & Memory API, and the `imagify.jpeg.jna` package is gone along with the JNA binding
+  it held: `JpegliCodec`, `JpegliLibrary` and `JpegliNativeLibrary`.
+
+  A program that named `imagify.jpeg.jna.JpegliCodec` has to name
+  `imagify.jpeg.ffm.JpegliCodec` instead. The static methods on it are the same and take the same
+  arguments, so this is one import and one class name. The one visible difference is that an
+  encode whose source is already a `TYPE_4BYTE_ABGR` image hands its own backing array to the shim
+  rather than copying it into native memory first. The `jna.library.path` system property no longer
+  means anything; a system jpegli is now found through `java.library.path`, or the platform's own
+  search path.
+
+* the default AVIF, JPEG and WebP codecs are bound through `java.lang.foreign`, so a program on
+  JDK 24 or newer that uses any of them from the class path is asked to allow native access.
   Nothing fails without it, but the JDK warns on every run and will block the call in a
   later release:
 
@@ -59,6 +71,10 @@
   `AvifCodec.openSequence` walks a file's frames one at a time instead of decoding all of
   them. A 498x280 header read measures under a millisecond against 23 ms for the decode.
 
+* encode and decode JPEG with a bundled `jpegli` through the Foreign Function & Memory API, and
+  dropped the JNA binding. An image already in `TYPE_4BYTE_ABGR` is read where it lies rather
+  than copied into native memory, and the shim keeps `jpeg_compress_struct` and
+  `jpeg_decompress_struct` on its own side of the boundary, as it always did.
 * encode and decode WebP with a bundled `libwebp` through the Foreign Function &amp; Memory
   API, and dropped the JNA binding
 * `WebpCodec.encode` takes an encoding effort, so a still image is no longer stuck at

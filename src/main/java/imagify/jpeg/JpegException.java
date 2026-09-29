@@ -18,8 +18,9 @@ import java.io.Serial;
  * input.
  *
  * <p>Every message this carries comes either from the C shim in {@code src/main/native} or from
- * {@link #JpegException(String, Throwable)} wrapping whatever JNA reported while loading the shared
- * library, so the text is a description rather than a stable identifier. Nothing should parse it.
+ * {@link #JpegException(String, Throwable)} wrapping whatever the loader reported while loading the
+ * shared library, so the text is a description rather than a stable identifier. Nothing should parse
+ * it.
  */
 public class JpegException extends Exception {
 

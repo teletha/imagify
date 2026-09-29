@@ -13,7 +13,7 @@ import java.util.Locale;
 
 import imagify.ImageFormat;
 import imagify.ImageFormat.Jpeg.Subsampling;
-import imagify.jpeg.jna.JpegliLibrary;
+import imagify.jpeg.ffm.JpegliLibrary;
 
 /**
  * The write parameters of {@link JpegImageWriter}, which carry the two settings a JPEG has and an
