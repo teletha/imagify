@@ -16,10 +16,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import imagify.ImageFormat.Jpeg;
 import imagify.ImageFormat.Jpeg.Subsampling;
 import imagify.avif.ffm.AvifConstants;
-import imagify.jpeg.jna.JpegliLibrary;
+import imagify.jpeg.ffm.JpegliLibrary;
 import imagify.webp.ffm.WebpCodec;
 
 /**
@@ -204,7 +203,8 @@ public abstract class ImageFormat {
              *
              * <p>
              * Both spellings are kept because both are asked for somewhere: a caller reading a
-             * frame header thinks in sampling factors, and the encoder takes a single code. Deriving
+             * frame header thinks in sampling factors, and the encoder takes a single code.
+             * Deriving
              * one from the other at every call site is how the two drift apart.
              * </p>
              */
@@ -463,8 +463,10 @@ public abstract class ImageFormat {
 
         /**
          * How long the encoder may take, {@code 0} being the slowest and most thorough and
-         * {@code 10} the quickest. Unset means {@link AvifConstants#DEFAULT_SPEED} for a still image
-         * and {@link AvifConstants#DEFAULT_ANIMATION_SPEED} for an animation, which pays the cost of
+         * {@code 10} the quickest. Unset means {@link AvifConstants#DEFAULT_SPEED} for a still
+         * image
+         * and {@link AvifConstants#DEFAULT_ANIMATION_SPEED} for an animation, which pays the cost
+         * of
          * a speed setting once per frame.
          */
         public final Integer speed;
@@ -514,9 +516,8 @@ public abstract class ImageFormat {
             this(null, null, null, null);
         }
 
-        private Avif(Integer speed, Integer alphaQuality, Subsampling subsampling,
-                ChromaDownsampling chromaDownsampling) {
-            super("AVIF", "avif", "image/avif", null, true, true, 0.70);
+        private Avif(Integer speed, Integer alphaQuality, Subsampling subsampling, ChromaDownsampling chromaDownsampling) {
+            super("AVIF", "avif", "image/avif", null, true, true, 0.80);
             this.speed = speed;
             this.alphaQuality = alphaQuality;
             this.subsampling = subsampling;
@@ -549,7 +550,7 @@ public abstract class ImageFormat {
 
         /**
          * @param subsampling how finely to store the colour-difference channels, or {@code null} to
-         *                    leave it to the encoder
+         *            leave it to the encoder
          * @return this format asking for that much colour detail
          */
         public Avif subsampling(Subsampling subsampling) {
@@ -558,7 +559,7 @@ public abstract class ImageFormat {
 
         /**
          * @param chromaDownsampling the filter to reduce the colour-difference channels with, or
-         *                            {@code null} to leave it to the encoder
+         *            {@code null} to leave it to the encoder
          * @return this format asking for that filter
          */
         public Avif chromaDownsampling(ChromaDownsampling chromaDownsampling) {
@@ -575,9 +576,8 @@ public abstract class ImageFormat {
          */
         @Override
         public boolean equals(Object object) {
-            return object instanceof Avif other && super.equals(object) && Objects.equals(speed, other.speed)
-                    && Objects.equals(alphaQuality, other.alphaQuality) && subsampling == other.subsampling
-                    && chromaDownsampling == other.chromaDownsampling;
+            return object instanceof Avif other && super.equals(object) && Objects.equals(speed, other.speed) && Objects
+                    .equals(alphaQuality, other.alphaQuality) && subsampling == other.subsampling && chromaDownsampling == other.chromaDownsampling;
         }
 
         /**
@@ -589,17 +589,23 @@ public abstract class ImageFormat {
         }
 
         /**
-         * How finely the colour-difference channels are stored, named the way the format's own pixel
+         * How finely the colour-difference channels are stored, named the way the format's own
+         * pixel
          * format enumeration writes it down.
          */
         public enum Subsampling {
             /** YUV444, the colour channels at full size: the most detail and the largest file. */
             YUV444(AvifConstants.PIXEL_FORMAT_YUV444),
 
-            /** YUV422, the colour channels half the width: the usual choice for text and line art. */
+            /**
+             * YUV422, the colour channels half the width: the usual choice for text and line art.
+             */
             YUV422(AvifConstants.PIXEL_FORMAT_YUV422),
 
-            /** YUV420, the colour channels half in both directions: the smallest, and what is written for an animation unless asked otherwise. */
+            /**
+             * YUV420, the colour channels half in both directions: the smallest, and what is
+             * written for an animation unless asked otherwise.
+             */
             YUV420(AvifConstants.PIXEL_FORMAT_YUV420),
 
             /** YUV400, no colour channels at all: greyscale, the smallest of all. */
@@ -618,7 +624,8 @@ public abstract class ImageFormat {
          * way the RGB image description enumeration writes it down.
          *
          * <p>
-         * This is a second, narrower thing than {@link Subsampling}: it decides how the reduction is
+         * This is a second, narrower thing than {@link Subsampling}: it decides how the reduction
+         * is
          * done, not whether it happens. It therefore has nothing at all to do with a file stored as
          * {@link Subsampling#YUV444}, where no channel is ever reduced.
          * </p>
@@ -627,7 +634,9 @@ public abstract class ImageFormat {
             /** The encoder chooses, which is the best balance of quality and speed. */
             AUTOMATIC(AvifConstants.CHROMA_DOWNSAMPLING_AUTOMATIC),
 
-            /** The quickest reduction, which may show visible colour bleeding on saturated edges. */
+            /**
+             * The quickest reduction, which may show visible colour bleeding on saturated edges.
+             */
             FASTEST(AvifConstants.CHROMA_DOWNSAMPLING_FASTEST),
 
             /** The best-looking reduction, which averages the chroma values. */
@@ -663,7 +672,8 @@ public abstract class ImageFormat {
      * The defaults are spelled out here instead of being read from {@link Jpeg#DEFAULT_SUBSAMPLING}
      * and {@link Jpeg#DEFAULT_OPTIMIZE_HUFFMAN_TABLES}, because a static field of a subclass cannot
      * be read while that subclass is still initialising, and comes back {@code null} instead of its
-     * value. {@link Jpeg} extends this class, so a caller who names {@link Jpeg#DEFAULT_SUBSAMPLING}
+     * value. {@link Jpeg} extends this class, so a caller who names
+     * {@link Jpeg#DEFAULT_SUBSAMPLING}
      * before naming any format makes the virtual machine initialise {@code Jpeg} first, which
      * initialises this class first, and the two are then initialising each other. Naming
      * {@link Jpeg.Subsampling#S420} asks for the nested enum alone, which depends on neither and so

@@ -24,7 +24,7 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 
-import imagify.jpeg.jna.JpegliCodec;
+import imagify.jpeg.ffm.JpegliCodec;
 import imagify.pixels.StillImageRead;
 
 /**

@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package imagify.jpeg.jna;
+package imagify.jpeg.ffm;
 
 import static java.lang.System.*;
 
@@ -29,7 +29,7 @@ import java.util.Locale;
  *
  * <p>A shared library cannot be mapped straight out of a jar, so the resource is copied to a
  * temporary directory and loaded from there by its absolute path, which is the same trick
- * {@code imagify.avif.ffm.AvifLoader} uses for {@code libavif} and which is where the layout
+ * {@code imagify.webp.ffm.WebpNativeLibrary} uses for {@code libwebp} and which is where the layout
  * below comes from.
  *
  * <p>The bundled binaries live under {@value #RESOURCE_ROOT} and are named after the platform they
@@ -44,11 +44,11 @@ import java.util.Locale;
  * libjpegli-macos-arm64.dylib
  * </pre>
  *
- * <p>See {@code src/main/native/jpegli/CMakeLists.txt} for how they are built. The short version is that
- * they are statically linked against jpegli and highway, so that they have no further dependencies
- * at all: on Windows the loader resolves the dependencies of a {@code LoadLibrary}ed module against
- * the directory of the executable and against {@code PATH} only, never against the directory of the
- * module itself.
+ * <p>See {@code src/main/native/jpegli/CMakeLists.txt} for how they are built. The short version is
+ * that they are statically linked against jpegli and highway, so that they have no further
+ * dependencies at all: on Windows the loader resolves the dependencies of a {@code LoadLibrary}ed
+ * module against the directory of the executable and against {@code PATH} only, never against the
+ * directory of the module itself.
  *
  * <p>Nothing here ever throws. A platform without a bundled library, a missing resource and a full
  * temporary directory all simply mean "not bundled", which leaves {@link JpegliCodec} free to fall

@@ -6,7 +6,7 @@
 #
 #          http://opensource.org/licenses/mit-license.php
 
-# Builds the shared library that imagify.jpeg.jna loads, for all six targets this jar supports.
+# Builds the shared library that imagify.jpeg.ffm loads, for all six targets this jar supports.
 #
 # jpegli ships a libjpeg62 compatible shared library, but only declares the target where the linker
 # understands a version script, which excludes Windows and macOS:
@@ -68,7 +68,7 @@ endif()
 #
 # BUILD_TESTING is off because jpegli's root CMakeLists FATAL_ERRORs on an unpopulated testdata
 # submodule, and because it is what turns on googletest. Nothing here is tested by ctest; the test
-# suite in this repository exercises the library through JNA.
+# suite in this repository exercises the library through the FFM binding.
 set(JPEGLI_ENABLE_JPEGLI_LIBJPEG OFF CACHE BOOL "" FORCE)
 set(JPEGLI_INSTALL_JPEGLI_LIBJPEG OFF CACHE BOOL "" FORCE)
 set(JPEGLI_ENABLE_TOOLS OFF CACHE BOOL "" FORCE)
@@ -192,10 +192,10 @@ set_property(TARGET imagify_jpegli_libjpeg PROPERTY POSITION_INDEPENDENT_CODE ON
 
 # --- the shim -------------------------------------------------------------------------------------
 #
-# imagify_jpegli.c is the only C in this project, and it is what makes a JNA binding of jpegli
-# possible at all. libjpeg unwinds out of a fatal error with setjmp/longjmp, while JNA silently
-# swallows an exception thrown from a callback, so the handler has to live on the C side of the
-# boundary. Its header says the whole of it.
+# imagify_jpegli.c is the only C in this project, and it is what makes a foreign binding of jpegli
+# possible at all. libjpeg unwinds out of a fatal error with setjmp/longjmp, and a handler that has
+# to return into Java cannot take part in that, so the handler lives on the C side of the boundary.
+# Its header says the whole of it.
 add_library(imagify_jpegli SHARED
   imagify_jpegli.c imagify_jpegli.h $<TARGET_OBJECTS:imagify_jpegli_libjpeg>)
 target_include_directories(imagify_jpegli PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")

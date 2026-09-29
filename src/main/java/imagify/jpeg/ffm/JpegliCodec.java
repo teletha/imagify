@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package imagify.jpeg.jna;
+package imagify.jpeg.ffm;
 
 import static java.lang.System.*;
 
@@ -15,21 +15,20 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.lang.foreign.Arena;
+import java.lang.foreign.Linker;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.SymbolLookup;
+import java.lang.foreign.ValueLayout;
 import java.nio.file.Path;
-
-import com.sun.jna.Memory;
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import com.sun.jna.ptr.IntByReference;
-import com.sun.jna.ptr.LongByReference;
-import com.sun.jna.ptr.PointerByReference;
 
 import imagify.jpeg.JpegException;
 import imagify.jpeg.JpegImageInfo;
 import imagify.pixels.AbgrPixels;
 
 /**
- * Entry point to the {@code jpegli} based JPEG codec.
+ * Entry point to the {@code jpegli} based JPEG codec using Java's Foreign Function &amp; Memory API
+ * (JEP 454).
  *
  * <p>This is the encoder and decoder behind both the ImageIO service providers in
  * {@code imagify.jpeg} and the direct calls {@link imagify.ImageWriter} and
@@ -44,15 +43,20 @@ import imagify.pixels.AbgrPixels;
  * <p>Prebuilt shared libraries for Windows, macOS and Linux, in both 64 bit flavours, ship inside
  * this jar and are unpacked on demand, so installing anything is not required. Should this jar hold
  * no library for the current platform, a jpegli based one found the usual way is used instead: point
- * the {@code jna.library.path} system property (or the platform specific {@code PATH} /
+ * the {@code java.library.path} system property (or the platform specific {@code PATH} /
  * {@code LD_LIBRARY_PATH}) at the directory that holds it.
  *
  * <pre>
- * java -Djna.library.path=/usr/local/lib -cp ... YourApp
+ * java -Djava.library.path=/usr/local/lib -cp ... YourApp
  * </pre>
  *
  * <p>Set {@code -Dimagify.jpeg.bundled=false} to ignore the bundled library and always look for one
  * installed on the system.
+ *
+ * <p>An encode whose source is already a {@link BufferedImage#TYPE_4BYTE_ABGR} image hands its own
+ * backing array to the shim, which reads it in place, so the pixels are not copied into native
+ * memory on the way in. Anything else is converted to that layout once, through the shared
+ * {@link AbgrPixels}.
  *
  * @see <a href="https://github.com/google/jpegli">google/jpegli</a>
  */
@@ -121,7 +125,7 @@ public final class JpegliCodec {
                 log.log(Level.WARNING, "The jpegli JPEG codec is disabled: {0}. This jar ships a "
                         + "jpegli for Windows, macOS and Linux on x64 and arm64, so either your "
                         + "platform is not one of those or the bundled library could not be "
-                        + "unpacked. You can also point -Djna.library.path at a directory that "
+                        + "unpacked. You can also point -Djava.library.path at a directory that "
                         + "holds one. JPEG keeps working either way, through the JDK's own "
                         + "support.", failure);
             }
@@ -145,13 +149,8 @@ public final class JpegliCodec {
     }
 
     private static JpegliLibrary load() {
-        if (Native.SIZE_T_SIZE != 8) {
-            throw new IllegalStateException("a 64 bit JVM is required, got " + System.getProperty("os.arch"));
-        }
         Path bundled = JpegliNativeLibrary.extract();
-        JpegliLibrary lib = bundled == null
-                ? Native.load(JpegliLibrary.LIBRARY_NAME, JpegliLibrary.class)
-                : Native.load(bundled.toString(), JpegliLibrary.class);
+        JpegliLibrary lib = bundled == null ? loadSystem() : loadBundled(bundled);
 
         // A library built against a different revision of the header would answer these calls with
         // arguments read from the wrong offsets, so the check has to happen before the first one
@@ -162,8 +161,29 @@ public final class JpegliCodec {
                     + " but this jar speaks " + JpegliLibrary.ABI_VERSION);
         }
         log.log(Level.DEBUG, "using jpegli {0}{1}", lib.imagify_jpegli_jpegli_version(),
-                bundled == null ? "" : " from " + bundled);
+                bundled == null ? " from system" : " from " + bundled);
         return lib;
+    }
+
+    /**
+     * Looks up a jpegli on the platform's own search path, which is what
+     * {@code -Dimagify.jpeg.bundled=false} asks for.
+     */
+    private static JpegliLibrary loadSystem() {
+        System.loadLibrary(JpegliLibrary.LIBRARY_NAME);
+        return new JpegliLibrary(Linker.nativeLinker().defaultLookup());
+    }
+
+    private static JpegliLibrary loadBundled(Path bundled) {
+        System.load(bundled.toString());
+        Linker linker = Linker.nativeLinker();
+        // The symbols are resolved once and the downcall handles that capture them are then held
+        // for as long as this class lives, which outlives the thread that loaded the library and is
+        // called from every one of them. A confined arena would tie the symbols to the loading
+        // thread, so the library is opened against the global arena instead, which is what a
+        // process wide codec wants anyway.
+        SymbolLookup lookup = linker.defaultLookup().or(SymbolLookup.libraryLookup(bundled, Arena.global()));
+        return new JpegliLibrary(lookup);
     }
 
     private static String describe(Throwable t) {
@@ -188,26 +208,27 @@ public final class JpegliCodec {
         if (encoded == null) {
             throw new JpegException("no input");
         }
-        try (Memory input = input(encoded); Memory message = new Memory(JpegliLibrary.MESSAGE_LENGTH)) {
-            IntByReference width = new IntByReference();
-            IntByReference height = new IntByReference();
-            IntByReference components = new IntByReference();
-            IntByReference progressive = new IntByReference();
-            IntByReference horizontalFactor = new IntByReference();
-            IntByReference verticalFactor = new IntByReference();
-            IntByReference densityUnit = new IntByReference();
-            IntByReference horizontalDensity = new IntByReference();
-            IntByReference verticalDensity = new IntByReference();
-            IntByReference precision = new IntByReference();
+        try (Arena arena = Arena.ofConfined()) {
+            MemorySegment data = input(encoded, arena);
+            MemorySegment message = arena.allocate(JpegliLibrary.MESSAGE_LENGTH);
+            MemorySegment width = arena.allocate(ValueLayout.JAVA_INT);
+            MemorySegment height = arena.allocate(ValueLayout.JAVA_INT);
+            MemorySegment components = arena.allocate(ValueLayout.JAVA_INT);
+            MemorySegment progressive = arena.allocate(ValueLayout.JAVA_INT);
+            MemorySegment horizontalFactor = arena.allocate(ValueLayout.JAVA_INT);
+            MemorySegment verticalFactor = arena.allocate(ValueLayout.JAVA_INT);
+            MemorySegment densityUnit = arena.allocate(ValueLayout.JAVA_INT);
+            MemorySegment horizontalDensity = arena.allocate(ValueLayout.JAVA_INT);
+            MemorySegment verticalDensity = arena.allocate(ValueLayout.JAVA_INT);
+            MemorySegment precision = arena.allocate(ValueLayout.JAVA_INT);
 
-            int status = lib.imagify_jpegli_read_header(input, encoded.length, width, height, components,
+            int status = lib.imagify_jpegli_read_header(data, encoded.length, width, height, components,
                     progressive, horizontalFactor, verticalFactor, densityUnit, horizontalDensity,
                     verticalDensity, precision, message, JpegliLibrary.MESSAGE_LENGTH);
-            check(lib, status, message, "imagify_jpegli_read_header()");
-            return new JpegImageInfo(width.getValue(), height.getValue(), components.getValue(),
-                    components.getValue() == 1, progressive.getValue() != 0, horizontalFactor.getValue(),
-                    verticalFactor.getValue(), densityUnit.getValue(), horizontalDensity.getValue(),
-                    verticalDensity.getValue(), precision.getValue());
+            check(status, message, "imagify_jpegli_read_header()");
+            return new JpegImageInfo(at(width), at(height), at(components), at(components) == 1,
+                    at(progressive) != 0, at(horizontalFactor), at(verticalFactor), at(densityUnit),
+                    at(horizontalDensity), at(verticalDensity), at(precision));
         }
     }
 
@@ -231,32 +252,34 @@ public final class JpegliCodec {
         if (encoded == null) {
             throw new JpegException("no input");
         }
-        IntByReference width = new IntByReference();
-        IntByReference height = new IntByReference();
-        try (Memory input = input(encoded); Memory message = new Memory(JpegliLibrary.MESSAGE_LENGTH)) {
-            PointerByReference out = new PointerByReference();
-            LongByReference outLength = new LongByReference();
+        try (Arena arena = Arena.ofConfined()) {
+            MemorySegment data = input(encoded, arena);
+            MemorySegment message = arena.allocate(JpegliLibrary.MESSAGE_LENGTH);
+            MemorySegment out = arena.allocate(ValueLayout.ADDRESS);
+            MemorySegment outLength = arena.allocate(ValueLayout.JAVA_LONG);
+            MemorySegment width = arena.allocate(ValueLayout.JAVA_INT);
+            MemorySegment height = arena.allocate(ValueLayout.JAVA_INT);
             int status;
             try {
-                status = lib.imagify_jpegli_decode(input, encoded.length, out, outLength, width, height,
+                status = lib.imagify_jpegli_decode(data, encoded.length, out, outLength, width, height,
                         message, JpegliLibrary.MESSAGE_LENGTH);
             } catch (RuntimeException e) {
-                // Whatever the call was doing when Java threw, the buffer may already be allocated.
-                free(lib, out.getValue());
+                // Whatever the call was doing when it failed, the buffer may already be allocated.
+                lib.imagify_jpegli_free(pointer(out));
                 throw new JpegException("imagify_jpegli_decode() failed", e);
             }
-            check(lib, status, message, "imagify_jpegli_decode()");
-            Pointer pixels = out.getValue();
-            int length = Math.toIntExact(outLength.getValue());
-            if (pixels == null || length <= 0) {
-                free(lib, pixels);
+            check(status, message, "imagify_jpegli_decode()");
+            MemorySegment pixels = pointer(out);
+            long length = outLength.get(ValueLayout.JAVA_LONG, 0);
+            if (pixels.address() == 0 || length <= 0) {
+                lib.imagify_jpegli_free(pixels);
                 throw new JpegException("imagify_jpegli_decode() did not produce any pixel");
             }
             try {
-                return AbgrPixels.toBufferedImage(pixels.getByteArray(0, length),
-                        width.getValue(), height.getValue());
+                return AbgrPixels.toBufferedImage(pixels.reinterpret(length).toArray(ValueLayout.JAVA_BYTE),
+                        at(width), at(height));
             } finally {
-                free(lib, pixels);
+                lib.imagify_jpegli_free(pixels);
             }
         }
     }
@@ -288,6 +311,9 @@ public final class JpegliCodec {
      * is therefore written against whatever colour sits behind it rather than losing the picture; a
      * caller that needs the picture has to flatten it first.
      *
+     * <p>An image already in {@link BufferedImage#TYPE_4BYTE_ABGR} hands its own backing array to
+     * the shim, which reads it where it lies; every other layout is converted to that one first.
+     *
      * @param source the image to encode; any {@link RenderedImage} is accepted
      * @param quality 1 (smallest) to 100 (most detail)
      * @param subsampling an {@code IMAGIFY_JPEG_SAMP_*} value, which is what
@@ -310,50 +336,67 @@ public final class JpegliCodec {
         }
         int clamped = Math.max(JpegliLibrary.IMAGIFY_JPEG_MIN_QUALITY,
                 Math.min(JpegliLibrary.IMAGIFY_JPEG_MAX_QUALITY, quality));
-        byte[] abgr = AbgrPixels.toAbgrBytes(source, 0, 0, width, height, 1, 1);
+        // The shim reads A, B, G, R bytes. An image that already keeps them that way is handed
+        // over as itself; anything else is converted once, and that array is what crosses.
+        byte[] abgr = source instanceof BufferedImage image ? AbgrPixels.abgrBytesOrNull(image) : null;
+        if (abgr == null) {
+            abgr = AbgrPixels.toAbgrBytes(source, 0, 0, width, height, 1, 1);
+        }
 
-        try (Memory pixels = new Memory(abgr.length); Memory message = new Memory(JpegliLibrary.MESSAGE_LENGTH)) {
-            pixels.write(0, abgr, 0, abgr.length);
-            PointerByReference encoded = new PointerByReference();
-            LongByReference encodedLength = new LongByReference();
+        try (Arena arena = Arena.ofConfined()) {
+            MemorySegment message = arena.allocate(JpegliLibrary.MESSAGE_LENGTH);
+            MemorySegment encoded = arena.allocate(ValueLayout.ADDRESS);
+            MemorySegment encodedLength = arena.allocate(ValueLayout.JAVA_LONG);
             int status;
             try {
-                status = lib.imagify_jpegli_encode(pixels, width, height, clamped, subsampling,
-                        optimizeHuffmanTables ? 1 : 0, encoded, encodedLength, message,
+                status = lib.imagify_jpegli_encode(MemorySegment.ofArray(abgr), width, height, clamped,
+                        subsampling, optimizeHuffmanTables ? 1 : 0, encoded, encodedLength, message,
                         JpegliLibrary.MESSAGE_LENGTH);
             } catch (RuntimeException e) {
-                free(lib, encoded.getValue());
+                lib.imagify_jpegli_free(pointer(encoded));
                 throw new JpegException("imagify_jpegli_encode() failed", e);
             }
-            check(lib, status, message, "imagify_jpegli_encode()");
-            Pointer file = encoded.getValue();
-            int length = Math.toIntExact(encodedLength.getValue());
-            if (file == null || length <= 0) {
-                free(lib, file);
+            check(status, message, "imagify_jpegli_encode()");
+            MemorySegment file = pointer(encoded);
+            long length = encodedLength.get(ValueLayout.JAVA_LONG, 0);
+            if (file.address() == 0 || length <= 0) {
+                lib.imagify_jpegli_free(file);
                 throw new JpegException("imagify_jpegli_encode() did not produce any output");
             }
             try {
-                return file.getByteArray(0, length);
+                return file.reinterpret(length).toArray(ValueLayout.JAVA_BYTE);
             } finally {
-                free(lib, file);
+                lib.imagify_jpegli_free(file);
             }
         }
     }
 
     // ------------------------------------------------------------------------------- internals
 
-    private static Memory input(byte[] encoded) {
-        // A Memory needs a positive size, and an empty input is a caller error rather than a
+    /**
+     * @param encoded the bytes to hand to the shim
+     * @param arena where the copy lives
+     * @return a native segment holding them, at least one byte long
+     */
+    private static MemorySegment input(byte[] encoded, Arena arena) {
+        // A segment needs a positive size, and an empty input is a caller error rather than a
         // reason to allocate a zero length buffer the shim would then reject.
-        Memory memory = new Memory(Math.max(encoded.length, 1));
+        MemorySegment data = arena.allocate(Math.max(encoded.length, 1));
         if (encoded.length > 0) {
-            memory.write(0, encoded, 0, encoded.length);
+            data.copyFrom(MemorySegment.ofArray(encoded));
         }
-        return memory;
+        return data;
     }
 
-    private static void check(JpegliLibrary lib, int status, Memory message, String operation)
-            throws JpegException {
+    private static int at(MemorySegment value) {
+        return value.get(ValueLayout.JAVA_INT, 0);
+    }
+
+    private static MemorySegment pointer(MemorySegment reference) {
+        return reference.get(ValueLayout.ADDRESS, 0);
+    }
+
+    private static void check(int status, MemorySegment message, String operation) throws JpegException {
         if (status == JpegliLibrary.IMAGIFY_JPEG_OK) {
             return;
         }
@@ -375,11 +418,5 @@ public final class JpegliCodec {
             case JpegliLibrary.IMAGIFY_JPEG_ERR_INTERNAL -> "jpegli failed for no stated reason";
             default -> "status " + status;
         };
-    }
-
-    private static void free(JpegliLibrary lib, Pointer buffer) {
-        if (buffer != null) {
-            lib.imagify_jpegli_free(buffer);
-        }
     }
 }

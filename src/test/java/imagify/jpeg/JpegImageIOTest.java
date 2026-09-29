@@ -35,8 +35,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import imagify.ImageFormat.Jpeg.Subsampling;
-import imagify.jpeg.jna.JpegliCodec;
-import imagify.jpeg.jna.JpegliLibrary;
+import imagify.jpeg.ffm.JpegliCodec;
+import imagify.jpeg.ffm.JpegliLibrary;
 
 /**
  * Tests the {@code ImageIO} integration, and above all what happens when there is no jpegli to

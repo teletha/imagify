@@ -28,7 +28,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import imagify.ImageFormat.Jpeg.Subsampling;
-import imagify.jpeg.jna.JpegliCodec;
+import imagify.jpeg.ffm.JpegliCodec;
 
 /**
  * Tests that {@link ImageFormat#JPEG} carries the two encoder settings it offers, through
