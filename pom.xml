@@ -16,17 +16,9 @@ rasterises SVG through JSVG.
 
 ## Loading
 
-The native `imagifyavif` shared library is bundled for Windows, macOS
+The native `libavif` shared library is bundled for Windows, macOS
 and Linux on x64 and arm64. It is unpacked automatically on first
 use, so no installation is required.
-
-It is a shim over `libavif` with `libavif` and `libaom` linked into it, so
-one file per platform is all there is. An earlier version shipped `libavif`
-beside the shim and imported it, and that does not work on the two Unix
-platforms: the shim recorded `libavif`'s SONAME, which the loaders look for
-by name rather than beside the shim, and the jar's files are named for the
-platform and the architecture. The reasoning is in
-`src/main/native/avif/CMakeLists.txt`.
 
     -Dimagify.avif.bundled=false   # ignore the bundled library,
                                     # use a system libavif instead
@@ -195,10 +187,10 @@ by the document, so resizing is a separate step.
 
 ## Version
 
-Supported `libavif` versions: `1.0.0` to `1.4.x`. `AvifCodec` binds
-a flat C ABI of its own rather than `libavif`'s, as `JpegliCodec` and
-`WebpCodec` do against `jpegli`'s and `libwebp`'s, and the three of them
-refuse a library built against another revision of it.</description>
+Supported `libavif` versions: `1.0.0` to `1.4.x`. `JpegliCodec`
+and `WebpCodec` bind a flat C ABI of their own rather than
+jpegli&apos;s or libwebp&apos;s, and refuse a library built against
+another revision of it.</description>
 	<licenses>
 		<license>
 			<name>MIT License</name>
