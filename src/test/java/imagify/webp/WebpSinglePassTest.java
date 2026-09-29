@@ -9,8 +9,6 @@
  */
 package imagify.webp;
 
-import imagify.webp.ffm.WebpCodec;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
@@ -64,7 +62,7 @@ class WebpSinglePassTest {
     @DisplayName("decodeFile hands back the properties, the frames and the timing together")
     void decodeFileIsSelfConsistent() throws Exception {
         byte[] encoded = anime();
-        WebpCodec.DecodedWebp decoded = WebpCodec.decodeFile(encoded);
+        DecodedWebp decoded = WebpCodec.decodeFile(encoded);
 
         assertEquals(58, decoded.frames().size(), "frame count");
         assertEquals(decoded.frames().size(), decoded.info().frameCount(),
@@ -85,7 +83,7 @@ class WebpSinglePassTest {
     @Test
     @DisplayName("decodeFile still leaves a still image without a timing, because it has none")
     void aStillHasNoTiming() throws Exception {
-        WebpCodec.DecodedWebp decoded = WebpCodec.decodeFile(WebpCodec.encode(frame(0), 80, false));
+        DecodedWebp decoded = WebpCodec.decodeFile(WebpCodec.encode(frame(0), 80, false));
         assertEquals(1, decoded.frames().size());
         assertNull(decoded.delaysMs(), "a still image is not a one frame animation");
         assertFalse(decoded.info().hasAnimation());

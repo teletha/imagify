@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import imagify.avif.jna.AvifCodec;
-import imagify.webp.ffm.WebpCodec;
+import imagify.webp.WebpCodec;
 
 /**
  * Verifies cross-conversion from every input format to every output format.

@@ -17,7 +17,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -26,7 +28,7 @@ import org.junit.jupiter.api.Assumptions;
 import imagify.avif.AvifException;
 import imagify.avif.jna.AvifCodec;
 import imagify.avif.jna.AvifLibrary;
-import imagify.webp.ffm.WebpCodec;
+import imagify.webp.WebpCodec;
 import imagify.webp.WebpException;
 
 /**
@@ -57,7 +59,8 @@ class FormatComparison {
     private static final String WEBP_LOSSLESS = "webp-lossless";
 
     /** One source image together with every encoding made from it. */
-    private record Sample(String id, String name, int width, int height, int sourceBytes, boolean opaque, List<Variant> variants) {
+    private record Sample(String id, String name, int width, int height, int sourceBytes, boolean opaque, List<Variant> variants,
+            Map<WebpWay, List<Numbers>> webp) {
     }
 
     /** One encoding of one image, with the measurements that describe it. */
@@ -65,6 +68,58 @@ class FormatComparison {
 
         String label() {
             return WEBP_LOSSLESS.equals(format) ? "webp lossless" : format + " q" + quality;
+        }
+    }
+
+    /** What one WebP encoding cost and gave up, on whichever backend produced it. */
+    private record Numbers(int bytes, double psnr, double ssim, long encodeNanos, long decodeNanos) {
+    }
+
+    /** One WebP encoding: the variant the report keeps, and what every available backend made of it. */
+    private record Webp(Variant variant, Map<WebpWay, Numbers> numbers) {
+    }
+
+    /**
+     * The two ways this library reaches {@code libwebp}.
+     *
+     * <p>The report and its assertions follow the backend the library settled on, so the numbers in
+     * the report stay the ones {@code ImageIO} produces. Every other available one is run alongside
+     * and only logged, to say what choosing it would have cost on the same image at the same setting.
+     */
+    private enum WebpWay {
+
+        FFM(WebpCodec.Backend.FFM), WEBP4J(WebpCodec.Backend.WEBP4J);
+
+        private final WebpCodec.Backend backend;
+
+        WebpWay(WebpCodec.Backend backend) {
+            this.backend = backend;
+        }
+
+        boolean isAvailable() {
+            return backend.isAvailable();
+        }
+
+        String title() {
+            return backend.title();
+        }
+
+        String reason() {
+            return backend.getUnavailableReason();
+        }
+
+        byte[] encode(BufferedImage image, int quality, boolean lossless, int method) throws WebpException {
+            return switch (this) {
+            case FFM -> imagify.webp.ffm.WebpCodec.encode(image, quality, lossless, method);
+            case WEBP4J -> imagify.webp.webp4j.WebpCodec.encode(image, quality, lossless, method);
+            };
+        }
+
+        BufferedImage decode(byte[] encoded) throws WebpException {
+            return switch (this) {
+            case FFM -> imagify.webp.ffm.WebpCodec.decode(encoded);
+            case WEBP4J -> imagify.webp.webp4j.WebpCodec.decode(encoded);
+            };
         }
     }
 
@@ -82,9 +137,14 @@ class FormatComparison {
         Path reportDir = Paths.get(REPORT_DIR);
         Files.createDirectories(reportDir);
 
+        WebpWay selected = selected();
+        System.out.println("webp backends: " + describeWays());
+        System.out.println("  the report follows " + selected.title() + ", marked * below; every other available one runs alongside and is only logged");
+        System.out.printf("  %-1s %-8s %10s %9s %9s %9s %8s%n", "", "backend", "bytes", "encode", "decode", "PSNR", "SSIM");
+
         List<Sample> samples = new ArrayList<>();
         for (int i = 0; i < pngs.size(); i++) {
-            samples.add(convert(pngs.get(i), String.format("img%02d", i + 1), reportDir));
+            samples.add(convert(pngs.get(i), String.format("img%02d", i + 1), reportDir, selected));
         }
 
         Path html = reportDir.resolve("index.html");
@@ -107,11 +167,12 @@ class FormatComparison {
         for (String[] row : summaryRows(samples)) {
             System.out.printf("  %-16s %-8s %10s %8s %9s %8s %10s%n", row[0], row[1], row[2], row[3], row[4], row[5], row[6]);
         }
+        appendWebpTotals(samples, selected);
     }
 
     // ------------------------------------------------------------------ conversion
 
-    private static Sample convert(Path png, String id, Path reportDir) throws IOException, AvifException, WebpException {
+    private static Sample convert(Path png, String id, Path reportDir, WebpWay selected) throws IOException, AvifException, WebpException {
         BufferedImage image = ImageIO.read(png.toFile());
         assertNotNull(image, "cannot read " + png);
 
@@ -146,33 +207,90 @@ class FormatComparison {
             variants.add(measure(AVIF, quality, encoded, decoded, reference, width, height, encodeNanos, decodeNanos, file));
         }
 
+        // Every WebP encoding goes through every available backend, so the two can be read side by
+        // side on the same image at the same setting. Only the selected one reaches the report.
+        Map<WebpWay, List<Numbers>> log = new EnumMap<>(WebpWay.class);
         for (int quality : QUALITIES) {
-            long start = System.nanoTime();
-            byte[] encoded = WebpCodec.encode(image, quality, false);
-            long encodeNanos = System.nanoTime() - start;
-
-            start = System.nanoTime();
-            BufferedImage decoded = WebpCodec.decode(encoded);
-            long decodeNanos = System.nanoTime() - start;
-
-            Path file = webpDir.resolve(id + ".q" + quality + ".webp");
-            Files.write(file, encoded);
-            variants.add(measure(WEBP, quality, encoded, decoded, reference, width, height, encodeNanos, decodeNanos, file));
+            Webp webp = webp(id, image, reference, width, height, webpDir.resolve(id + ".q" + quality + ".webp"), WEBP, quality, false, selected);
+            collect(webp, log);
+            variants.add(webp.variant());
         }
 
         // WebP can be lossless, so it gives a useful upper bound on what fidelity costs.
-        long start = System.nanoTime();
-        byte[] lossless = WebpCodec.encode(image, 0, true);
-        long encodeNanos = System.nanoTime() - start;
-        start = System.nanoTime();
-        BufferedImage decoded = WebpCodec.decode(lossless);
-        long decodeNanos = System.nanoTime() - start;
+        Webp webp = webp(id, image, reference, width, height, webpDir.resolve(id + ".lossless.webp"), WEBP_LOSSLESS, 0, true, selected);
+        collect(webp, log);
+        variants.add(webp.variant());
 
-        Path file = webpDir.resolve(id + ".lossless.webp");
-        Files.write(file, lossless);
-        variants.add(measure(WEBP_LOSSLESS, 0, lossless, decoded, reference, width, height, encodeNanos, decodeNanos, file));
+        return new Sample(id, png.getFileName().toString(), width, height, sourceBytes, opaque, variants, log);
+    }
 
-        return new Sample(id, png.getFileName().toString(), width, height, sourceBytes, opaque, variants);
+    /**
+     * Encodes and decodes one WebP setting through every available backend and logs what each one
+     * made of it. Only the selected backend writes files, because only its result is in the report,
+     * and a run is meant to leave a report rather than a second copy of everything in it.
+     */
+    private static Webp webp(String id, BufferedImage image, int[] reference, int width, int height, Path file, String format, int quality, boolean lossless, WebpWay selected)
+            throws IOException, WebpException {
+        Map<WebpWay, Numbers> numbers = new EnumMap<>(WebpWay.class);
+        Variant variant = null;
+
+        for (WebpWay way : WebpWay.values()) {
+            if (!way.isAvailable()) {
+                continue;
+            }
+
+            long start = System.nanoTime();
+            byte[] encoded = way.encode(image, quality, lossless, WebpCodec.DEFAULT_COMPRESSION_METHOD);
+            long encodeNanos = System.nanoTime() - start;
+
+            start = System.nanoTime();
+            BufferedImage decoded = way.decode(encoded);
+            long decodeNanos = System.nanoTime() - start;
+
+            numbers.put(way, measure(encoded, decoded, reference, width, height, encodeNanos, decodeNanos));
+            if (way == selected) {
+                Files.write(file, encoded);
+                variant = measure(format, quality, encoded, decoded, reference, width, height, encodeNanos, decodeNanos, file);
+            }
+        }
+
+        assertNotNull(variant, "no available backend produced " + format + " for " + id);
+        System.out.printf("  %s %s q%s%n", format, id, lossless ? "lossless" : quality);
+        for (WebpWay way : WebpWay.values()) {
+            Numbers each = numbers.get(way);
+            if (each != null) {
+                System.out.printf("  %-1s %-8s %10s %9s %9s %9s %8s%n", way == selected ? "*" : "", way.title(), group(each.bytes()),
+                        millis(each.encodeNanos()), millis(each.decodeNanos()), String.format("%.1f", each.psnr()), String.format("%.4f", each.ssim()));
+            }
+        }
+        return new Webp(variant, numbers);
+    }
+
+    /** Files one encoding's numbers under the backend that produced them. */
+    private static void collect(Webp webp, Map<WebpWay, List<Numbers>> log) {
+        for (Map.Entry<WebpWay, Numbers> entry : webp.numbers().entrySet()) {
+            log.computeIfAbsent(entry.getKey(), way -> new ArrayList<>()).add(entry.getValue());
+        }
+    }
+
+    /** @return the backend the report and its assertions follow */
+    private static WebpWay selected() {
+        return WebpCodec.backend() == WebpCodec.Backend.WEBP4J ? WebpWay.WEBP4J : WebpWay.FFM;
+    }
+
+    /** @return every backend and whether it can run here, for the line above the conversions */
+    private static String describeWays() {
+        StringBuilder text = new StringBuilder();
+        for (WebpWay way : WebpWay.values()) {
+            if (text.length() > 0) {
+                text.append(", ");
+            }
+            text.append(way.title());
+            if (!way.isAvailable()) {
+                text.append(" (unavailable: ").append(way.reason()).append(")");
+            }
+        }
+        return text.toString();
     }
 
     private static Variant measure(String format, int quality, byte[] encoded, BufferedImage decoded, int[] reference, int width, int height, long encodeNanos, long decodeNanos, Path file)
@@ -182,9 +300,14 @@ class FormatComparison {
         Path decodedPng = file.resolveSibling(file.getFileName() + ".decoded.png");
         ImageIO.write(decoded, "png", decodedPng.toFile());
 
+        Numbers numbers = measure(encoded, decoded, reference, width, height, encodeNanos, decodeNanos);
+        return new Variant(format, quality, numbers.bytes(), numbers.psnr(), numbers.ssim(), numbers.encodeNanos(), numbers.decodeNanos(), file, decodedPng);
+    }
+
+    private static Numbers measure(byte[] encoded, BufferedImage decoded, int[] reference, int width, int height, long encodeNanos, long decodeNanos) {
         int[] actual = argb(decoded);
         assertEquals(reference.length, actual.length, "the round trip changed the image size");
-        return new Variant(format, quality, encoded.length, psnr(reference, actual), ssim(reference, actual, width, height), encodeNanos, decodeNanos, file, decodedPng);
+        return new Numbers(encoded.length, psnr(reference, actual), ssim(reference, actual, width, height), encodeNanos, decodeNanos);
     }
 
     // ------------------------------------------------------------------ measurement
@@ -269,6 +392,42 @@ class FormatComparison {
             return String.format("%.1f kB", bytes / 1024.0);
         }
         return bytes + " B";
+    }
+
+    private static String millis(long nanos) {
+        return String.format("%.0f ms", nanos / 1_000_000.0);
+    }
+
+    /**
+     * Totals per backend over every WebP encoding of the run, so the two ways can be compared
+     * without reading one line per image and setting.
+     */
+    private static void appendWebpTotals(List<Sample> samples, WebpWay selected) {
+        System.out.println("webp, both ways, over every image and setting:");
+        System.out.printf("  %-1s %-8s %10s %8s %9s %8s %10s%n", "", "backend", "bytes", "vs PNG", "PSNR", "SSIM", "encode");
+        for (WebpWay way : WebpWay.values()) {
+            long bytes = 0;
+            long source = 0;
+            long encodeNanos = 0;
+            double psnrSum = 0;
+            double ssimSum = 0;
+            int count = 0;
+            for (Sample sample : samples) {
+                source += sample.sourceBytes();
+                for (Numbers numbers : sample.webp().getOrDefault(way, List.of())) {
+                    bytes += numbers.bytes();
+                    encodeNanos += numbers.encodeNanos();
+                    psnrSum += numbers.psnr();
+                    ssimSum += numbers.ssim();
+                    count++;
+                }
+            }
+            if (count > 0) {
+                System.out.printf("  %-1s %-8s %10s %8s %9s %8s %10s%n", way == selected ? "*" : "", way.title(), group(bytes),
+                        String.format("%.1f%%", 100.0 * bytes / source), String.format("%.1f", psnrSum / count), String.format("%.4f", ssimSum / count),
+                        millis(encodeNanos));
+            }
+        }
     }
 
     // ------------------------------------------------------------------ report

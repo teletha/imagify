@@ -9,7 +9,6 @@
  */
 package imagify.webp;
 
-import imagify.webp.ffm.WebpCodec;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;

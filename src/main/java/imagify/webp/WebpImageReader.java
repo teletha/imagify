@@ -9,8 +9,6 @@
  */
 package imagify.webp;
 
-import imagify.webp.ffm.WebpCodec;
-
 import javax.imageio.IIOException;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -66,7 +64,7 @@ public class WebpImageReader extends ImageReader {
     private ImageInputStream stream;
     private long start = -1;
     private byte[] encoded;
-    private WebpCodec.DecodedWebp decoded;
+    private DecodedWebp decoded;
     private WebpImageInfo info;
     private int[] delaysMs;
 

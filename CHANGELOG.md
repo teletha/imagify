@@ -4,23 +4,49 @@
 
 ### ⚠ Breaking change
 
-* `imagify.webp.WebpCodec` moved from `imagify.webp.jna.WebpCodec` to
-  `imagify.webp.ffm.WebpCodec`, replacing JNA with Java's Foreign Function &amp; Memory
-  API (JEP 454). The public API of the class is unchanged; only the import and the
-  internal implementation changed. Update the import, and drop the `webp4j-core`
-  dependency if one was declared for the WebP plug-in. The `jna` dependency itself
-  stays, because the AVIF and JPEG plug-ins still use it.
+* `imagify.webp.WebpCodec` is the entry point again, and dispatches to a backend rather
+  than being one. The FFM implementation stays where it was, in
+  `imagify.webp.ffm.WebpCodec`, so code importing that still compiles and still means the
+  FFM backend, and code importing `imagify.webp.WebpCodec` gets whichever backend is in
+  use. Nothing has to change.
 
-  The WebP codec is bound through `java.lang.foreign`, so a program on JDK 24 or newer
-  that uses it from the class path is asked to allow native access. Nothing fails
-  without it, but the JDK warns on every run and will block the call in a later
-  release:
+  `WebpCodec.DecodedWebp` is now the top level `imagify.webp.DecodedWebp`, because both
+  backends answer with it and a nested type cannot be named from a class of the same
+  simple name. `WebpCodec.Backend` is new, and answers which backend is in use.
+
+  The default WebP codec is bound through `java.lang.foreign`, so a program on JDK 24 or
+  newer that uses it from the class path is asked to allow native access. Nothing fails
+  without it, but the JDK warns on every run and will block the call in a later release:
 
       java --enable-native-access=ALL-UNNAMED -cp ... YourApp
 
 ### Features
 
-* encode and decode WebP with a bundled `libwebp`, dropped `webp4j`
+* two WebP backends ship in the jar and the system property `imagify.webp.backend`
+  chooses between them, read once on first use:
+
+      java -Dimagify.webp.backend=webp4j -cp ... YourApp
+
+  `ffm` is the default and is the one described below. `webp4j` binds the same `libwebp`
+  through JNI, so it needs no `--enable-native-access` flag, and it ships its own copy of
+  the library inside its own jar. The `webp4j-core` dependency comes back, so a project
+  that had to declare it by hand for the WebP plug-in no longer has to.
+
+  A backend that is named but cannot load its library is not a failure: the other one is
+  used instead and the substitution is logged, and only when neither can load does
+  `WebpCodec.isAvailable()` answer false. A name that is neither backend is a warning and
+  the default, which is the same bargain the ImageIO plug-ins have always made.
+
+  The one setting the two do not share is the encoding effort of a still image. `webp4j`'s
+  still image entry point takes quality, lossless and threading and nothing else, so it
+  always encodes a still at libwebp's own default of method 4 and says so once at
+  `WARNING` rather than refusing, which would make `ImageFormat.Webp.compressionMethod()`
+  unusable on that backend. An animation can be told either effort on both. Everything
+  else is the same work either way, and a file written through one backend is read by the
+  other: `WebpBackendTest` pins that by driving both of them and asking them to agree.
+
+* encode and decode WebP with a bundled `libwebp` through the Foreign Function &amp; Memory
+  API, and dropped the JNA binding
 * `WebpCodec.encode` takes an encoding effort, so a still image is no longer stuck at
   libwebp's default. Measured on a 498x280 photograph at quality 75, method 2 is
   **2.7x** quicker than method 4 for 4.3% more bytes; on a 1600x1200 gradient,

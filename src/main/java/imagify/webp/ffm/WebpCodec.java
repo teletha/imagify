@@ -10,6 +10,7 @@
 package imagify.webp.ffm;
 
 import imagify.pixels.AbgrPixels;
+import imagify.webp.DecodedWebp;
 import imagify.webp.WebpException;
 import imagify.webp.WebpImageInfo;
 
@@ -36,7 +37,9 @@ import static java.lang.System.getLogger;
  * <p>This is the encoder and decoder behind both the ImageIO service providers in
  * {@code imagify.webp} and the direct calls {@link imagify.ImageWriter} and
  * {@link imagify.ImageReader} make, so a WebP written through any of them comes out of the same
- * encoder with the same settings.
+ * encoder with the same settings. {@link imagify.webp.WebpCodec} is the entry point for all of
+ * that; this class is the {@linkplain imagify.webp.WebpCodec.Backend#FFM FFM} backend behind it,
+ * which is the one used unless {@code -Dimagify.webp.backend=webp4j} names the other.
  *
  * <p>The native library is loaded lazily, on first use, and failing to load it is never fatal: the
  * ImageIO service providers of this library then stay inert instead of breaking {@code ImageIO} for
@@ -535,13 +538,6 @@ public final class WebpCodec {
         // carries a channel rather than from whether the decoded words happen to be opaque, so that
         // a file with no channel comes back as the JDK's opaque type and not as an ARGB one.
         return normalise(AbgrPixels.toArgbImage(words, width, height), info.hasAlpha());
-    }
-
-    public record DecodedWebp(WebpImageInfo info, List<BufferedImage> frames, int[] delaysMs) {
-        public DecodedWebp {
-            frames = List.copyOf(frames);
-            delaysMs = delaysMs == null ? null : delaysMs.clone();
-        }
     }
 
     public static DecodedWebp decodeFile(byte[] encoded) throws WebpException {
