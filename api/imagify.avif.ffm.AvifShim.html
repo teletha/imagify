@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="s">
-		<header class="e" date="2026-09-29">
-			<h1 class="M"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="f"><a href="api/main.html" id="API"><svg class="package">
+	<body class="j">
+		<header class="a" date="2026-09-29">
+			<h1 class="Z"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="b"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="g"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="c"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="l"></nav>
-		<article class="t" id="Article">
-			<section class="y"><code class="IB">imagify.avif.ffm</code>
-				<h2 class="Class JB"><code class="m">AvifShim</code></h2>
-				<div class="KB"></div><span class="A"><p>The <code>imagify_avif_*</code> entry points of the C shim, which is what makes the zero copy
+		<nav class="N"></nav>
+		<article class="k" id="Article">
+			<section class="t"><code class="HB">imagify.avif.ffm</code>
+				<h2 class="Class e"><code class="JB">AvifShim</code></h2>
+				<div class="IB"></div><span class="A"><p>The <code>imagify_avif_*</code> entry points of the C shim, which is what makes the zero copy
 possible.</p><p>The shim is a thin C ABI over libavif that exists for one reason. <code>avifRGBImage.pixels</code>
  is a pointer-typed struct field, and FFM will not put a heap segment, which is what a Java array
  is, into one: the field is a pointer into native memory that the struct itself lives in, and a
@@ -64,514 +64,514 @@ possible.</p><p>The shim is a thin C ABI over libavif that exists for one reason
 </p>
 					</p>
 				</span></section>
-			<section class="y" id="AvifShim(java.lang.foreign.SymbolLookup)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">AvifShim</code><code class="CB">(<code><a aria-label="java.lang.foreign.SymbolLookup 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/SymbolLookup.html">SymbolLookup</a></code><code class="parameterName">lookup</code>)</code></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="AvifShim(java.lang.foreign.SymbolLookup)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">AvifShim</code><code class="r">(<code><a aria-label="java.lang.foreign.SymbolLookup 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/SymbolLookup.html">SymbolLookup</a></code><code class="parameterName">lookup</code>)</code></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.SymbolLookup 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/SymbolLookup.html">SymbolLookup</a></code><code class="parameterName">lookup</code></td>
 						<td><span><p>a lookup that can resolve the <code>imagify_avif_*</code> symbols of a loaded shim</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="y" id="libavifVersion()">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">libavifVersion</code><code class="CB">()</code><i class="LB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="q">
-					<tr class="O">
+			<section class="t" id="libavifVersion()">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">libavifVersion</code><code class="r">()</code><i class="d"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="KB">
+					<tr class="m">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the libavif version the shim was linked against</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="y" id="pictureCreate(int,int,int,int)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">pictureCreate</code><code class="CB">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">depth</code>, <code>int</code><code class="parameterName">yuvFormat</code>)</code><i class="LB"><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="pictureCreate(int,int,int,int)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">pictureCreate</code><code class="r">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">depth</code>, <code>int</code><code class="parameterName">yuvFormat</code>)</code><i class="d"><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td><span><p>image width in pixels</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td><span><p>image height in pixels</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">depth</code></td>
 						<td><span><p>bits per channel</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">yuvFormat</code></td>
 						<td><span><p>an <code>AVIF_PIXEL_FORMAT_*</code> value</p></span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code></td>
 						<td><span><p>a new picture, or <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html#NULL">MemorySegment#NULL</a></code> when the geometry is not one libavif
 takes</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="y" id="pictureDestroy(java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">pictureDestroy</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>)</code><i class="LB"><code>void</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="pictureDestroy(java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">pictureDestroy</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>)</code><i class="d"><code>void</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="y" id="pictureFromAbgr(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">pictureFromAbgr</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">rowBytes</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="pictureFromAbgr(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">pictureFromAbgr</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">rowBytes</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code></td>
 						<td><span><p>the picture to fill</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code></td>
 						<td><span><p>the address of the caller&apos;s own bytes, which is what makes this zero copy: the
 parameter is an address, not a segment, so a Java array reaches the shim as itself</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">rowBytes</code></td>
 						<td><span><p>the stride of the pixels</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">chromaDownsampling</code></td>
 						<td><span><p>an <code>AVIF_CHROMA_DOWNSAMPLING_*</code> value, or -1 for the default</p></span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td><span><p>an <code>IMAGIFY_AVIF_*</code> status</p></span></td>
 					</tr>
 				</table><span class="A"><p>Converts tightly packed A, B, G, R bytes into a picture&apos;s planes, without a copy.</p></span></section>
-			<section class="y" id="hasPictureFromBgr()">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">hasPictureFromBgr</code><code class="CB">()</code><i class="LB"><code>boolean</code></i></h2>
-				<table class="q">
-					<tr class="O">
+			<section class="t" id="hasPictureFromBgr()">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">hasPictureFromBgr</code><code class="r">()</code><i class="d"><code>boolean</code></i></h2>
+				<table class="KB">
+					<tr class="m">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Whether the loaded shim has the BGR encode entry point.</p></span></section>
-			<section class="y" id="pictureFromBgr(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">pictureFromBgr</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">rowBytes</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="pictureFromBgr(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">pictureFromBgr</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">rowBytes</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">rowBytes</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">chromaDownsampling</code></td>
 						<td></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Converts tightly packed B, G, R bytes into a picture&apos;s planes, without a copy.</p></span></section>
-			<section class="y" id="pictureToAbgr(java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">pictureToAbgr</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="pictureToAbgr(java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">pictureToAbgr</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code></td>
 						<td><span><p>the picture to read</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">maxThreads</code></td>
 						<td><span><p>the number of threads the conversion may use, 0 or less for one</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code></td>
 						<td><span><p>receives the allocated buffer</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code></td>
 						<td><span><p>receives its length in bytes</p></span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td><span><p>an <code>IMAGIFY_AVIF_*</code> status</p></span></td>
 					</tr>
 				</table><span class="A"><p>Converts a picture&apos;s planes into tightly packed A, B, G, R bytes the caller can read once.</p></span></section>
-			<section class="y" id="hasPictureToAbgrInto()">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">hasPictureToAbgrInto</code><code class="CB">()</code><i class="LB"><code>boolean</code></i></h2>
-				<table class="q">
-					<tr class="O">
+			<section class="t" id="hasPictureToAbgrInto()">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">hasPictureToAbgrInto</code><code class="r">()</code><i class="d"><code>boolean</code></i></h2>
+				<table class="KB">
+					<tr class="m">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Whether the loaded shim has the decode-into entry point.</p></span></section>
-			<section class="y" id="pictureToAbgrInto(java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,long)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">pictureToAbgrInto</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>long</code><code class="parameterName">length</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="pictureToAbgrInto(java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,long)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">pictureToAbgrInto</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>long</code><code class="parameterName">length</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">maxThreads</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Converts a picture&apos;s planes into tightly packed A, B, G, R bytes the caller has already
 allocated.</p></span></section>
-			<section class="y" id="pictureInfo(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">pictureInfo</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="pictureInfo(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">pictureInfo</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code></td>
 						<td><span><p>the picture to describe</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code></td>
 						<td><span><code><a aria-label="imagify.avif.ffm.AvifConstants" href="api/imagify.avif.ffm.AvifConstants.html#INFO_COUNT">AvifConstants#INFO_COUNT</a></code> four byte slots, at the offsets in AvifConstants</span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td><span><p>an <code>IMAGIFY_AVIF_*</code> status</p></span></td>
 					</tr>
 				</table><span class="A"><p>Asks the shim to fill in the properties of a picture.</p></span></section>
-			<section class="y" id="pictureEncode(java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">pictureEncode</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>, <code>int</code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="pictureEncode(java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">pictureEncode</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>, <code>int</code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">speed</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">alphaQuality</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">maxThreads</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code></td>
 						<td></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="y" id="pictureDecode(java.lang.foreign.MemorySegment,long,int,java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">pictureDecode</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="pictureDecode(java.lang.foreign.MemorySegment,long,int,java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">pictureDecode</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">maxThreads</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code></td>
 						<td></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="y" id="animationEncode(int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int,int,int,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">animationEncode</code><code class="CB">(<code>int</code><code class="parameterName">frameCount</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">yuvFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>, <code>int</code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="animationEncode(int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int,int,int,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">animationEncode</code><code class="r">(<code>int</code><code class="parameterName">frameCount</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">yuvFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>, <code>int</code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">frameCount</code></td>
 						<td><span><p>how many frames are in the block</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code></td>
 						<td><span><p>one block of <code>frameCount * width * height * 4</code> bytes in A, B, G, R order</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">durationsMs</code></td>
 						<td><span><p>how long each frame is shown, one entry per frame</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">width</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">height</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">yuvFormat</code></td>
 						<td><span><p>an <code>AVIF_PIXEL_FORMAT_*</code> value</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">chromaDownsampling</code></td>
 						<td><span><p>an <code>AVIF_CHROMA_DOWNSAMPLING_*</code> value, or -1 for the default</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">quality</code></td>
 						<td><span><p>0 to 100, or -1 for libavif&apos;s own</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">speed</code></td>
 						<td><span><p>0 to 10, or -1 for libavif&apos;s own</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">alphaQuality</code></td>
 						<td><span><p>0 to 100, or -1 for lossless</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">loopCount</code></td>
 						<td><span><p>how often it repeats, 0 meaning forever</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">maxThreads</code></td>
 						<td><span><p>the number of threads libavif may use</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code></td>
 						<td><span><p>receives the allocated file</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code></td>
 						<td><span><p>receives its length in bytes</p></span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td><span><p>an <code>IMAGIFY_AVIF_*</code> status</p></span></td>
 					</tr>
 				</table><span class="A"><p>Encodes a sequence of frames as one animated AVIF file, with the frames read where they lie.</p></span></section>
-			<section class="y" id="sequenceOpen(java.lang.foreign.MemorySegment,long,int,java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">sequenceOpen</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="sequenceOpen(java.lang.foreign.MemorySegment,long,int,java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">sequenceOpen</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code></td>
 						<td><span><p>the encoded file</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td><span><p>its length in bytes</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">maxThreads</code></td>
 						<td><span><p>the number of threads libavif may use</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code></td>
 						<td><span><p>receives the open sequence</p></span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td><span><p>an <code>IMAGIFY_AVIF_*</code> status</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="y" id="sequenceClose(java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">sequenceClose</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>)</code><i class="LB"><code>void</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="sequenceClose(java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">sequenceClose</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>)</code><i class="d"><code>void</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="y" id="sequenceRead(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">sequenceRead</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frameCount</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">loopCount</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="sequenceRead(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">sequenceRead</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frameCount</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">loopCount</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code></td>
 						<td><span><p>the open sequence</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code></td>
 						<td><span><code><a aria-label="imagify.avif.ffm.AvifConstants" href="api/imagify.avif.ffm.AvifConstants.html#INFO_COUNT">AvifConstants#INFO_COUNT</a></code> four byte slots for the file&apos;s properties</span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frameCount</code></td>
 						<td><span><p>receives how many frames there are</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">loopCount</code></td>
 						<td><span><p>receives how often it repeats</p></span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td><span><p>an <code>IMAGIFY_AVIF_*</code> status</p></span></td>
 					</tr>
 				</table><span class="A"><p>Reads the file&apos;s own properties, its frame count and its loop count, none of which costs a
 pixel.</p></span></section>
-			<section class="y" id="sequenceSizes(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">sequenceSizes</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sizes</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="sequenceSizes(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">sequenceSizes</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sizes</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code></td>
 						<td><span><p>the open sequence</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sizes</code></td>
 						<td><span><p>three arrays of <code>frameCount</code> entries back to back: widths, heights and
 durations in milliseconds</p></span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td><span><p>an <code>IMAGIFY_AVIF_*</code> status</p></span></td>
 					</tr>
 				</table><span class="A"><p>Reads the size and the duration of every frame in one pass over the container.</p></span></section>
-			<section class="y" id="sequenceFrame(java.lang.foreign.MemorySegment,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">sequenceFrame</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code>int</code><code class="parameterName">index</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">width</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">height</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="sequenceFrame(java.lang.foreign.MemorySegment,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">sequenceFrame</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code>int</code><code class="parameterName">index</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">width</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">height</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code></td>
 						<td><span><p>the open sequence</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td><span><p>the frame to decode</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">maxThreads</code></td>
 						<td><span><p>the number of threads the conversion may use, 0 or less for one</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code></td>
 						<td><span><p>receives the allocated buffer</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code></td>
 						<td><span><p>receives its length in bytes</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">width</code></td>
 						<td><span><p>receives the frame&apos;s own width, which can be smaller than the file&apos;s</p></span></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">height</code></td>
 						<td><span><p>receives the frame&apos;s own height</p></span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td><span><p>an <code>IMAGIFY_AVIF_*</code> status</p></span></td>
 					</tr>
 				</table><span class="A"><p>Decodes one frame of a sequence into tightly packed A, B, G, R bytes.</p></span></section>
-			<section class="y" id="hasSequenceFrameInto()">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">hasSequenceFrameInto</code><code class="CB">()</code><i class="LB"><code>boolean</code></i></h2>
-				<table class="q">
-					<tr class="O">
+			<section class="t" id="hasSequenceFrameInto()">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">hasSequenceFrameInto</code><code class="r">()</code><i class="d"><code>boolean</code></i></h2>
+				<table class="KB">
+					<tr class="m">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Whether the loaded shim has the frame-decode-into entry point.</p></span></section>
-			<section class="y" id="sequenceFrameInto(java.lang.foreign.MemorySegment,int,int,java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">sequenceFrameInto</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code>int</code><code class="parameterName">index</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">width</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">height</code>)</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="sequenceFrameInto(java.lang.foreign.MemorySegment,int,int,java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">sequenceFrameInto</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code>int</code><code class="parameterName">index</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">width</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">height</code>)</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>int</code><code class="parameterName">maxThreads</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code>long</code><code class="parameterName">length</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">width</code></td>
 						<td></td>
 					</tr>
-					<tr class="U">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">height</code></td>
 						<td></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Decodes one frame of a sequence into a caller-allocated buffer.</p></span></section>
-			<section class="y" id="free(java.lang.foreign.MemorySegment)">
-				<h2 class="L"><i class="PUBLIC"></i><code class="m">free</code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">buffer</code>)</code><i class="LB"><code>void</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="free(java.lang.foreign.MemorySegment)">
+				<h2 class="v"><i class="PUBLIC"></i><code class="JB">free</code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">buffer</code>)</code><i class="d"><code>void</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">buffer</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="b">
-			<div class="h">
-				<h5 class="FB">Constructors</h5>
+		<aside class="l">
+			<div class="V">
+				<h5 class="O">Constructors</h5>
 				<ul>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#AvifShim(java.lang.foreign.SymbolLookup)">AvifShim</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.SymbolLookup 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/SymbolLookup.html">SymbolLookup</a></code><code class="parameterName">lookup</code>)</code></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#AvifShim(java.lang.foreign.SymbolLookup)">AvifShim</a></code><code class="r">(<code><a aria-label="java.lang.foreign.SymbolLookup 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/SymbolLookup.html">SymbolLookup</a></code><code class="parameterName">lookup</code>)</code></li>
 				</ul>
-				<h5 class="FB">Methods</h5>
+				<h5 class="O">Methods</h5>
 				<ul>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#libavifVersion()">libavifVersion</a></code><code class="CB">()</code><i class="v"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureCreate(int,int,int,int)">pictureCreate</a></code><code class="CB">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">depth</code>, <code>int</code><code class="parameterName">yuvFormat</code>)</code><i class="v"><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureDestroy(java.lang.foreign.MemorySegment)">pictureDestroy</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>)</code><i class="v"><code>void</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureFromAbgr(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int)">pictureFromAbgr</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">rowBytes</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#hasPictureFromBgr()">hasPictureFromBgr</a></code><code class="CB">()</code><i class="v"><code>boolean</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureFromBgr(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int)">pictureFromBgr</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">rowBytes</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureToAbgr(java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">pictureToAbgr</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#hasPictureToAbgrInto()">hasPictureToAbgrInto</a></code><code class="CB">()</code><i class="v"><code>boolean</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureToAbgrInto(java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,long)">pictureToAbgrInto</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>long</code><code class="parameterName">length</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureInfo(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">pictureInfo</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureEncode(java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">pictureEncode</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>, <code>int</code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureDecode(java.lang.foreign.MemorySegment,long,int,java.lang.foreign.MemorySegment)">pictureDecode</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#animationEncode(int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int,int,int,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">animationEncode</a></code><code class="CB">(<code>int</code><code class="parameterName">frameCount</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">yuvFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>, <code>int</code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceOpen(java.lang.foreign.MemorySegment,long,int,java.lang.foreign.MemorySegment)">sequenceOpen</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceClose(java.lang.foreign.MemorySegment)">sequenceClose</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>)</code><i class="v"><code>void</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceRead(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">sequenceRead</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frameCount</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">loopCount</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceSizes(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">sequenceSizes</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sizes</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceFrame(java.lang.foreign.MemorySegment,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">sequenceFrame</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code>int</code><code class="parameterName">index</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">width</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">height</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#hasSequenceFrameInto()">hasSequenceFrameInto</a></code><code class="CB">()</code><i class="v"><code>boolean</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceFrameInto(java.lang.foreign.MemorySegment,int,int,java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">sequenceFrameInto</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code>int</code><code class="parameterName">index</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">width</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">height</code>)</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#free(java.lang.foreign.MemorySegment)">free</a></code><code class="CB">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">buffer</code>)</code><i class="v"><code>void</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#libavifVersion()">libavifVersion</a></code><code class="r">()</code><i class="R"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureCreate(int,int,int,int)">pictureCreate</a></code><code class="r">(<code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">depth</code>, <code>int</code><code class="parameterName">yuvFormat</code>)</code><i class="R"><code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureDestroy(java.lang.foreign.MemorySegment)">pictureDestroy</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>)</code><i class="R"><code>void</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureFromAbgr(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int)">pictureFromAbgr</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">rowBytes</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#hasPictureFromBgr()">hasPictureFromBgr</a></code><code class="r">()</code><i class="R"><code>boolean</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureFromBgr(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int)">pictureFromBgr</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>int</code><code class="parameterName">rowBytes</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureToAbgr(java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">pictureToAbgr</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#hasPictureToAbgrInto()">hasPictureToAbgrInto</a></code><code class="r">()</code><i class="R"><code>boolean</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureToAbgrInto(java.lang.foreign.MemorySegment,int,java.lang.foreign.MemorySegment,long)">pictureToAbgrInto</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>long</code><code class="parameterName">length</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureInfo(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">pictureInfo</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureEncode(java.lang.foreign.MemorySegment,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">pictureEncode</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">picture</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>, <code>int</code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#pictureDecode(java.lang.foreign.MemorySegment,long,int,java.lang.foreign.MemorySegment)">pictureDecode</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#animationEncode(int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,int,int,int,int,int,int,int,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">animationEncode</a></code><code class="r">(<code>int</code><code class="parameterName">frameCount</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frames</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">durationsMs</code>, <code>int</code><code class="parameterName">width</code>, <code>int</code><code class="parameterName">height</code>, <code>int</code><code class="parameterName">yuvFormat</code>, <code>int</code><code class="parameterName">chromaDownsampling</code>, <code>int</code><code class="parameterName">quality</code>, <code>int</code><code class="parameterName">speed</code>, <code>int</code><code class="parameterName">alphaQuality</code>, <code>int</code><code class="parameterName">loopCount</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">encoded</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceOpen(java.lang.foreign.MemorySegment,long,int,java.lang.foreign.MemorySegment)">sequenceOpen</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">data</code>, <code>long</code><code class="parameterName">length</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceClose(java.lang.foreign.MemorySegment)">sequenceClose</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>)</code><i class="R"><code>void</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceRead(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">sequenceRead</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">out</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">frameCount</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">loopCount</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceSizes(java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">sequenceSizes</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sizes</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceFrame(java.lang.foreign.MemorySegment,int,int,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">sequenceFrame</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code>int</code><code class="parameterName">index</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">width</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">height</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#hasSequenceFrameInto()">hasSequenceFrameInto</a></code><code class="r">()</code><i class="R"><code>boolean</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#sequenceFrameInto(java.lang.foreign.MemorySegment,int,int,java.lang.foreign.MemorySegment,long,java.lang.foreign.MemorySegment,java.lang.foreign.MemorySegment)">sequenceFrameInto</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">sequence</code>, <code>int</code><code class="parameterName">index</code>, <code>int</code><code class="parameterName">maxThreads</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">pixels</code>, <code>long</code><code class="parameterName">length</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">width</code>, <code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">height</code>)</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifShim.html#free(java.lang.foreign.MemorySegment)">free</a></code><code class="r">(<code><a aria-label="java.lang.foreign.MemorySegment 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/foreign/MemorySegment.html">MemorySegment</a></code><code class="parameterName">buffer</code>)</code><i class="R"><code>void</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="d">
+		<footer class="f">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="s">
-		<header class="e" date="2026-09-29">
-			<h1 class="M"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="f"><a href="api/main.html" id="API"><svg class="package">
+	<body class="j">
+		<header class="a" date="2026-09-29">
+			<h1 class="Z"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="b"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="g"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="c"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="l"></nav>
-		<article class="t" id="Article">
-			<section class="y"><code class="IB">imagify</code>
-				<h2 class="AbstractClass JB"><code class="m">ImageFormat</code></h2>
-				<div class="KB">
+		<nav class="N"></nav>
+		<article class="k" id="Article">
+			<section class="t"><code class="HB">imagify</code>
+				<h2 class="AbstractClass e"><code class="JB">ImageFormat</code></h2>
+				<div class="IB">
 					<ul class="E I">
 						<li><code><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></li>
 						<li><code><a aria-label="imagify.ImageFormat.Bmp" href="api/imagify.ImageFormat.Bmp.html">Bmp</a></code></li>
@@ -82,8 +82,8 @@
 							<li><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#fromPath(java.nio.file.Path)">#fromPath(Path)</a></code> - by file extension + header fallback</li>
 						</ul>
 					</p></span></section>
-			<section class="y" id="JPEG">
-				<h2 class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="m">JPEG</code><i class="LB"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></h2><span class="A"><p>The defaults are spelled out here instead of being read from <code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html#DEFAULT_SUBSAMPLING">Jpeg#DEFAULT_SUBSAMPLING</a></code>
+			<section class="t" id="JPEG">
+				<h2 class="v"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="JB">JPEG</code><i class="d"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></h2><span class="A"><p>The defaults are spelled out here instead of being read from <code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html#DEFAULT_SUBSAMPLING">Jpeg#DEFAULT_SUBSAMPLING</a></code>
 and <code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html#DEFAULT_OPTIMIZE_HUFFMAN_TABLES">Jpeg#DEFAULT_OPTIMIZE_HUFFMAN_TABLES</a></code>, because a static field of a subclass cannot
 be read while that subclass is still initialising, and comes back <code>null</code> instead of its
 value. <code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code> extends this class, so a caller who names
@@ -92,49 +92,49 @@ before naming any format makes the virtual machine initialise <code>Jpeg</code> 
 initialises this class first, and the two are then initialising each other. Naming
 Jpeg.Subsampling#S420 asks for the nested enum alone, which depends on neither and so
 is safe whichever of the three classes is initialised first.</p></span></section>
-			<section class="y" id="PNG">
-				<h2 class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="m">PNG</code><i class="LB"><code class="return"><a aria-label="imagify.ImageFormat.Png" href="api/imagify.ImageFormat.Png.html">Png</a></code></i></h2>
+			<section class="t" id="PNG">
+				<h2 class="v"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="JB">PNG</code><i class="d"><code class="return"><a aria-label="imagify.ImageFormat.Png" href="api/imagify.ImageFormat.Png.html">Png</a></code></i></h2>
 			</section>
-			<section class="y" id="GIF">
-				<h2 class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="m">GIF</code><i class="LB"><code class="return"><a aria-label="imagify.ImageFormat.Gif" href="api/imagify.ImageFormat.Gif.html">Gif</a></code></i></h2>
+			<section class="t" id="GIF">
+				<h2 class="v"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="JB">GIF</code><i class="d"><code class="return"><a aria-label="imagify.ImageFormat.Gif" href="api/imagify.ImageFormat.Gif.html">Gif</a></code></i></h2>
 			</section>
-			<section class="y" id="WEBP">
-				<h2 class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="m">WEBP</code><i class="LB"><code class="return"><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></h2>
+			<section class="t" id="WEBP">
+				<h2 class="v"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="JB">WEBP</code><i class="d"><code class="return"><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></h2>
 			</section>
-			<section class="y" id="AVIF">
-				<h2 class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="m">AVIF</code><i class="LB"><code class="return"><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
+			<section class="t" id="AVIF">
+				<h2 class="v"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="JB">AVIF</code><i class="d"><code class="return"><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></h2>
 			</section>
-			<section class="y" id="BMP">
-				<h2 class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="m">BMP</code><i class="LB"><code class="return"><a aria-label="imagify.ImageFormat.Bmp" href="api/imagify.ImageFormat.Bmp.html">Bmp</a></code></i></h2>
+			<section class="t" id="BMP">
+				<h2 class="v"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="JB">BMP</code><i class="d"><code class="return"><a aria-label="imagify.ImageFormat.Bmp" href="api/imagify.ImageFormat.Bmp.html">Bmp</a></code></i></h2>
 			</section>
-			<section class="y" id="all()">
-				<h2 class="L"><i class="STATIC PUBLIC"></i><code class="m">all</code><code class="CB">()</code><i class="LB"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></code></code></i></h2>
-				<table class="q">
-					<tr class="O">
+			<section class="t" id="all()">
+				<h2 class="v"><i class="PUBLIC STATIC"></i><code class="JB">all</code><code class="r">()</code><i class="d"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></code></code></i></h2>
+				<table class="KB">
+					<tr class="m">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></code></code></td>
 						<td><span><p>an unmodifiable list of all formats</p></span></td>
 					</tr>
 				</table><span class="A"><p>Returns every format, in declaration order.</p></span></section>
-			<section class="y" id="fromExtension(java.lang.String)">
-				<h2 class="L"><i class="STATIC PUBLIC"></i><code class="m">fromExtension</code><code class="CB">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">extension</code>)</code><i class="LB"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="fromExtension(java.lang.String)">
+				<h2 class="v"><i class="PUBLIC STATIC"></i><code class="JB">fromExtension</code><code class="r">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">extension</code>)</code><i class="d"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">extension</code></td>
 						<td><span><p>the file extension (e.g., &quot;png&quot;, &quot;.jpg&quot;)</p></span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></td>
 						<td><span><p>the matching ImageFormat</p></span></td>
 					</tr>
 				</table><span class="A"><p>Resolves the format from a file extension.</p></span></section>
-			<section class="y" id="fromHeader(byte[])">
-				<h2 class="L"><i class="STATIC PUBLIC"></i><code class="m">fromHeader</code><code class="CB">(<code array="fix">byte</code><code class="parameterName">header</code>)</code><i class="LB"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="fromHeader(byte[])">
+				<h2 class="v"><i class="PUBLIC STATIC"></i><code class="JB">fromHeader</code><code class="r">(<code array="fix">byte</code><code class="parameterName">header</code>)</code><i class="d"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code array="fix">byte</code><code class="parameterName">header</code></td>
 						<td><span><p>the first few bytes of the file/data</p></span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></td>
 						<td><span><p>the matching ImageFormat</p></span></td>
 					</tr>
@@ -146,18 +146,18 @@ is safe whichever of the three classes is initialised first.</p></span></section
  simply not able to change the answer.
 </p>
 				</span></section>
-			<section class="y" id="fromPath(java.nio.file.Path)">
-				<h2 class="L"><i class="STATIC PUBLIC"></i><code class="m">fromPath</code><code class="CB">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="LB"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="fromPath(java.nio.file.Path)">
+				<h2 class="v"><i class="PUBLIC STATIC"></i><code class="JB">fromPath</code><code class="r">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="d"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code></td>
 						<td><span><p>the file path</p></span></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></td>
 						<td><span><p>the detected ImageFormat</p></span></td>
 					</tr>
-					<tr class="T">
+					<tr class="LB">
 						<td><code><a aria-label="java.io.IOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IOException.html">IOException</a></code></td>
 						<td></td>
 					</tr>
@@ -168,27 +168,27 @@ is safe whichever of the three classes is initialised first.</p></span></section
  format of a name hands its bytes to <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#fromHeader(byte[])">#fromHeader(byte[])</a></code> instead.
 </p>
 				</span></section>
-			<section class="y" id="detect(byte[])">
-				<h2 class="L"><i class="STATIC PUBLIC"></i><code class="m">detect</code><code class="CB">(<code array="fix">byte</code><code class="parameterName">header</code>)</code><i class="LB"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="detect(byte[])">
+				<h2 class="v"><i class="PUBLIC STATIC"></i><code class="JB">detect</code><code class="r">(<code array="fix">byte</code><code class="parameterName">header</code>)</code><i class="d"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code array="fix">byte</code><code class="parameterName">header</code></td>
 						<td></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Attempts to detect the format by checking magic bytes.
 Returns null if detection fails (not an error, just unknown).</p></span></section>
-			<section class="y" id="equals(java.lang.Object)">
-				<h2 class="L"><i class="OVERRIDE PUBLIC"></i><code class="m">equals</code><code class="CB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="LB"><code>boolean</code></i></h2>
-				<table class="q">
-					<tr class="U">
+			<section class="t" id="equals(java.lang.Object)">
+				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="JB">equals</code><code class="r">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="d"><code>boolean</code></i></h2>
+				<table class="KB">
+					<tr class="BB">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code></td>
 						<td></td>
 					</tr>
-					<tr class="O">
+					<tr class="m">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
@@ -199,53 +199,53 @@ Returns null if detection fails (not an error, just unknown).</p></span></sectio
  requests rather than two constants, and a caller comparing them with <code>equals</code> is asking
  whether they ask for the same thing.
  </p></span></section>
-			<section class="y" id="hashCode()">
-				<h2 class="L"><i class="OVERRIDE PUBLIC"></i><code class="m">hashCode</code><code class="CB">()</code><i class="LB"><code>int</code></i></h2>
-				<table class="q">
-					<tr class="O">
+			<section class="t" id="hashCode()">
+				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="JB">hashCode</code><code class="r">()</code><i class="d"><code>int</code></i></h2>
+				<table class="KB">
+					<tr class="m">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="y" id="toString()">
-				<h2 class="L"><i class="OVERRIDE PUBLIC"></i><code class="m">toString</code><code class="CB">()</code><i class="LB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="q">
-					<tr class="O">
+			<section class="t" id="toString()">
+				<h2 class="v"><i class="OVERRIDE PUBLIC"></i><code class="JB">toString</code><code class="r">()</code><i class="d"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="KB">
+					<tr class="m">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="b">
-			<div class="h">
-				<h5 class="FB">Static Fields</h5>
+		<aside class="l">
+			<div class="V">
+				<h5 class="O">Static Fields</h5>
 				<ul>
-					<li class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.html#JPEG">JPEG</a></code><i class="v"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></li>
-					<li class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.html#PNG">PNG</a></code><i class="v"><code class="return"><a aria-label="imagify.ImageFormat.Png" href="api/imagify.ImageFormat.Png.html">Png</a></code></i></li>
-					<li class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.html#GIF">GIF</a></code><i class="v"><code class="return"><a aria-label="imagify.ImageFormat.Gif" href="api/imagify.ImageFormat.Gif.html">Gif</a></code></i></li>
-					<li class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.html#WEBP">WEBP</a></code><i class="v"><code class="return"><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></li>
-					<li class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.html#AVIF">AVIF</a></code><i class="v"><code class="return"><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
-					<li class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.html#BMP">BMP</a></code><i class="v"><code class="return"><a aria-label="imagify.ImageFormat.Bmp" href="api/imagify.ImageFormat.Bmp.html">Bmp</a></code></i></li>
+					<li class="h"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.html#JPEG">JPEG</a></code><i class="R"><code class="return"><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">Jpeg</a></code></i></li>
+					<li class="h"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.html#PNG">PNG</a></code><i class="R"><code class="return"><a aria-label="imagify.ImageFormat.Png" href="api/imagify.ImageFormat.Png.html">Png</a></code></i></li>
+					<li class="h"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.html#GIF">GIF</a></code><i class="R"><code class="return"><a aria-label="imagify.ImageFormat.Gif" href="api/imagify.ImageFormat.Gif.html">Gif</a></code></i></li>
+					<li class="h"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.html#WEBP">WEBP</a></code><i class="R"><code class="return"><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></li>
+					<li class="h"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.html#AVIF">AVIF</a></code><i class="R"><code class="return"><a aria-label="imagify.ImageFormat.Avif" href="api/imagify.ImageFormat.Avif.html">Avif</a></code></i></li>
+					<li class="h"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.html#BMP">BMP</a></code><i class="R"><code class="return"><a aria-label="imagify.ImageFormat.Bmp" href="api/imagify.ImageFormat.Bmp.html">Bmp</a></code></i></li>
 				</ul>
-				<h5 class="FB">Static Methods</h5>
+				<h5 class="O">Static Methods</h5>
 				<ul>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.html#all()">all</a></code><code class="CB">()</code><i class="v"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></code></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.html#fromExtension(java.lang.String)">fromExtension</a></code><code class="CB">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">extension</code>)</code><i class="v"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.html#fromHeader(byte[])">fromHeader</a></code><code class="CB">(<code array="fix">byte</code><code class="parameterName">header</code>)</code><i class="v"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.html#fromPath(java.nio.file.Path)">fromPath</a></code><code class="CB">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="v"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></li>
-					<li class="w"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.html#detect(byte[])">detect</a></code><code class="CB">(<code array="fix">byte</code><code class="parameterName">header</code>)</code><i class="v"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></li>
+					<li class="h"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageFormat.html#all()">all</a></code><code class="r">()</code><i class="R"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></code></code></i></li>
+					<li class="h"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageFormat.html#fromExtension(java.lang.String)">fromExtension</a></code><code class="r">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">extension</code>)</code><i class="R"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></li>
+					<li class="h"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageFormat.html#fromHeader(byte[])">fromHeader</a></code><code class="r">(<code array="fix">byte</code><code class="parameterName">header</code>)</code><i class="R"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></li>
+					<li class="h"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageFormat.html#fromPath(java.nio.file.Path)">fromPath</a></code><code class="r">(<code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code><code class="parameterName">path</code>)</code><i class="R"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></li>
+					<li class="h"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ImageFormat.html#detect(byte[])">detect</a></code><code class="r">(<code array="fix">byte</code><code class="parameterName">header</code>)</code><i class="R"><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></i></li>
 				</ul>
-				<h5 class="FB">Methods</h5>
+				<h5 class="O">Methods</h5>
 				<ul>
-					<li class="w"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.html#equals(java.lang.Object)">equals</a></code><code class="CB">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="v"><code>boolean</code></i></li>
-					<li class="w"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.html#hashCode()">hashCode</a></code><code class="CB">()</code><i class="v"><code>int</code></i></li>
-					<li class="w"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.html#toString()">toString</a></code><code class="CB">()</code><i class="v"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="h"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.html#equals(java.lang.Object)">equals</a></code><code class="r">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="R"><code>boolean</code></i></li>
+					<li class="h"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.html#hashCode()">hashCode</a></code><code class="r">()</code><i class="R"><code>int</code></i></li>
+					<li class="h"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.html#toString()">toString</a></code><code class="r">()</code><i class="R"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="d">
+		<footer class="f">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
