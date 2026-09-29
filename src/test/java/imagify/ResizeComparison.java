@@ -433,7 +433,8 @@ class ResizeComparison {
             // Original at native size.
             String origSize = "--w:" + sample.width() + "px;--ar:" + sample.width() + "/" + sample.height();
             html.append("<h4>Original image</h4>\n<div class=\"grid\">\n")
-                    .append(figure(relative(sample.original().toString()), origSize, "Original image · " + sample.width() + "×" + sample.height()))
+                    .append(figure(relative(sample.original().toString()), origSize, "Original image · " + sample.width() + "×" + sample
+                            .height()))
                     .append("</div>\n");
 
             // Per target scale, one figure per algorithm.

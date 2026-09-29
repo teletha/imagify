@@ -419,8 +419,8 @@ class WebpWordPathTest {
     // ----------------------------------------------------------------- the format carries it
 
     @Nested
-    @DisplayName("the facade hands a still image's effort to the encoder")
-    class ThroughTheFacade {
+    @DisplayName("a still image's effort reaches the encoder")
+    class ThroughTheCodec {
 
         @Test
         @DisplayName("a format that names an effort is written at that effort")

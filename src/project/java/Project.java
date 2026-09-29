@@ -21,7 +21,6 @@ public class Project extends bee.api.Project {
 
         require("net.java.dev.jna", "jna");
         require("com.github.weisj", "jsvg");
-        require("dev.matrixlab.webp4j", "webp4j-core");
         require("com.github.teletha", "antibug").atTest();
 
         describe("""
@@ -137,7 +136,7 @@ public class Project extends bee.api.Project {
                     List<BufferedImage> frames =
                         WebpCodec.decodeAnimation(animated);
 
-                The direct API lives in `imagify.webp.WebpCodec`, alongside
+                The direct API lives in `imagify.webp.ffm.WebpCodec`, alongside
                 the `imagify.webp` ImageIO plug-in it backs. Lossless `VP8L`
                 output is selected by choosing the `WebP Lossless` compression
                 type of the write parameter, or by passing `true` to
@@ -163,54 +162,22 @@ public class Project extends bee.api.Project {
                     ImageWriter.toFiles(images, ImageFormat.WEBP, 0.8, paths);
                     // both take a thread count, and neither changes what comes out
 
-                ### Choosing a backend
+                ### WebP
 
-                Two backends sit behind that one class and both ship in this
-                jar, so choosing between them is a switch rather than a
-                decision about which dependency to declare:
+                WebP is bound with Java's own Foreign Function & Memory API,
+                so there is no third party jar to declare: the bundled
+                `libwebp` is unpacked on first use, and `WebpCodec` encodes and
+                decodes a lossy or a lossless still and an animation either way.
 
-                    java -Dimagify.webp.backend=webp4j -cp ... YourApp
-
-                `ffm` binds the bundled `libwebp` with Java's own Foreign
-                Function & Memory API and is the default. `webp4j` binds the
-                same library through JNI, so it needs no native access to be
-                allowed, and it cannot be told how hard to encode a still
-                image: it always encodes one at libwebp's default effort and
-                says so once in the log. Everything else, a lossy or a
-                lossless still, an animation either way, is the same work
-                either backend does. `WebpCodec.backend()` answers which one is
-                in use, and a file written through one is read by the other.
-
-                A backend that cannot load its library is not a failure of the
-                call that follows: the other one is used instead and the
-                substitution is logged, and only when neither can load does
-                `WebpCodec.isAvailable()` answer false and the plug-in stand
-                aside for the JDK's own WebP support.
-
-                The choice is settled the first time anything uses WebP, and
-                `System.setProperty` after that is too late. An `ImageIO.write`
-                or an `ImageIO.read` settles it just as a direct call does, so a
-                program that sets the property has to do it before any of that.
-
-                A program that wants one backend for one call and the other for
-                the next does not use the property at all. Both backends are
-                public and carry the same API, so a call names the one it wants:
-
-                    byte[] a = imagify.webp.ffm.WebpCodec
-                            .encode(image, 80, false, 4);
-                    byte[] b = imagify.webp.webp4j.WebpCodec
-                            .encode(image, 80, false);
-
-                That reaches the codec and not the `ImageIO` plug-ins, which go
-                through whichever backend the property settled on.
-
-                The default backend is bound through `java.lang.foreign`, so on
-                JDK 24 and newer a program that uses it from the class
-                path is asked to allow native access. Nothing fails without
-                it, but the JDK warns on every run and will block the call in a
-                later release:
+                It is bound through `java.lang.foreign`, so on JDK 24 and newer
+                a program that uses it from the class path is asked to allow
+                native access. Nothing fails without it, but the JDK warns on
+                every run and will block the call in a later release:
 
                     java --enable-native-access=ALL-UNNAMED -cp ... YourApp
+
+                How hard the encoder tries is a caller's to decide, through
+                `ImageFormat.Webp.compressionMethod(int)`.
 
                 ## SVG
 
@@ -240,10 +207,9 @@ public class Project extends bee.api.Project {
                 ## Version
 
                 Supported `libavif` versions: `1.0.0` to `1.4.x`. `JpegliCodec`
-                and the FFM WebP backend bind a flat C ABI of their own rather
-                than jpegli's or libwebp's, and refuse a library built against
-                another revision of it. The `webp4j` backend speaks libwebp's
-                own API through JNI and has no ABI of its own to refuse.
+                and `WebpCodec` bind a flat C ABI of their own rather than
+                jpegli's or libwebp's, and refuse a library built against
+                another revision of it.
                 """);
     }
 }

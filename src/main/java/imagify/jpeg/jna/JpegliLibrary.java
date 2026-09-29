@@ -119,7 +119,7 @@ public interface JpegliLibrary extends Library {
      * <p>The number is the one {@link imagify.ImageFormat.Jpeg} carries as its 0.0 to 1.0
      * {@code defaultQuality}, restated on the encoder's own 1 to 100 scale. That is the same thing
      * {@link imagify.avif.jna.AvifLibrary#DEFAULT_QUALITY} and
-     * {@link imagify.webp.WebpCodec#DEFAULT_QUALITY} do: a codec cannot read a package private
+     * {@link imagify.webp.ffm.WebpCodec#DEFAULT_QUALITY} do: a codec cannot read a package private
      * member of the format that describes it, so each one says what it does by default and the
      * format's own value follows it. Restating it rather than copying it into two call sites is
      * what keeps the two from drifting apart.

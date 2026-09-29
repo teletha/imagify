@@ -24,11 +24,11 @@ import java.util.List;
  * <p>It is shared by the WebP backends, so a file read through one of them and a file read
  * through another both answer with this and not with a type of their own.
  *
- * @param info     the properties reported by the headers
- * @param frames   the frames in presentation order, composited onto the canvas for an animation,
- *                 and exactly one frame for a still image
+ * @param info the properties reported by the headers
+ * @param frames the frames in presentation order, composited onto the canvas for an animation,
+ *            and exactly one frame for a still image
  * @param delaysMs how long each frame is shown in milliseconds, parallel to {@code frames}, or
- *                 {@code null} for a still image, which has no timing of its own
+ *            {@code null} for a still image, which has no timing of its own
  */
 public record DecodedWebp(WebpImageInfo info, List<BufferedImage> frames, int[] delaysMs) {
 

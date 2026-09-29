@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -50,8 +49,7 @@ class ImageFormatPngTest {
             // level a format names is the one asked for as the quality that lands on it. Comparing
             // against the plug-in is what makes this a claim about the level rather than about
             // "a different file".
-            assertArrayEquals(throughThePlugin(source, 1.0 - (double) level / 9.0), png,
-                    "level " + level + " did not reach the compressor as level " + level);
+            assertArrayEquals(throughThePlugin(source, 1.0 - level / 9.0), png, "level " + level + " did not reach the compressor as level " + level);
         }
     }
 
@@ -60,12 +58,10 @@ class ImageFormatPngTest {
     void theDefaultLevelIsTheOneThePlugInWouldHavePicked() throws IOException {
         BufferedImage source = flat(400, 400);
 
-        assertEquals(4, ImageFormat.Png.DEFAULT_COMPRESSION_LEVEL,
-                "the plug-in settles on 4, which is not the 6 java.util.zip calls its default");
+        assertEquals(4, ImageFormat.Png.DEFAULT_COMPRESSION_LEVEL, "the plug-in settles on 4, which is not the 6 java.util.zip calls its default");
         assertEquals(ImageFormat.Png.DEFAULT_COMPRESSION_LEVEL, ImageFormat.PNG.compressionLevel);
-        assertArrayEquals(throughImageIo(source),
-                ImageWriter.toBytes(source, ImageFormat.PNG),
-                "a plain PNG should be encoded exactly as ImageIO encodes it");
+        assertArrayEquals(throughImageIo(source), ImageWriter
+                .toBytes(source, ImageFormat.PNG), "a plain PNG should be encoded exactly as ImageIO encodes it");
     }
 
     @Test
@@ -77,9 +73,8 @@ class ImageFormatPngTest {
         byte[] quickest = ImageWriter.toBytes(source, ImageFormat.PNG.compressionLevel(0));
         byte[] thorough = ImageWriter.toBytes(source, ImageFormat.PNG.compressionLevel(9));
 
-        assertTrue(thorough.length * 10 < quickest.length, String.format(
-                "two deflate levels apart are worth a great deal, but %d bytes against %d is not",
-                thorough.length, quickest.length));
+        assertTrue(thorough.length * 10 < quickest.length, String
+                .format("two deflate levels apart are worth a great deal, but %d bytes against %d is not", thorough.length, quickest.length));
 
         // Which is the whole reason the argument is no longer spent on this: the two files are the
         // same picture, so neither of them is a better PNG than the other.
@@ -93,9 +88,8 @@ class ImageFormatPngTest {
         BufferedImage source = flat(64, 64);
 
         for (double quality : new double[] {0.0, 0.5, 1.0}) {
-            assertArrayEquals(ImageWriter.toBytes(source, ImageFormat.PNG, 0.0),
-                    ImageWriter.toBytes(source, ImageFormat.PNG, quality),
-                    "a PNG cannot lose anything, so " + quality + " should have made no difference");
+            assertArrayEquals(ImageWriter.toBytes(source, ImageFormat.PNG, 0.0), ImageWriter
+                    .toBytes(source, ImageFormat.PNG, quality), "a PNG cannot lose anything, so " + quality + " should have made no difference");
         }
     }
 
@@ -108,8 +102,7 @@ class ImageFormatPngTest {
 
         assertNotEquals(ImageFormat.PNG, thorough, "asking for more effort is a different request");
         assertNotSame(ImageFormat.PNG, thorough, "a value the caller owns cannot change the constant");
-        assertEquals(thorough, ImageFormat.PNG.compressionLevel(9),
-                "two values asking for the same thing are equal");
+        assertEquals(thorough, ImageFormat.PNG.compressionLevel(9), "two values asking for the same thing are equal");
         assertEquals(thorough.hashCode(), ImageFormat.PNG.compressionLevel(9).hashCode());
 
         assertThrows(IllegalArgumentException.class, () -> ImageFormat.PNG.compressionLevel(10));

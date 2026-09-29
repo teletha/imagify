@@ -9,10 +9,7 @@
  */
 package imagify.webp.ffm;
 
-import imagify.pixels.AbgrPixels;
-import imagify.webp.DecodedWebp;
-import imagify.webp.WebpException;
-import imagify.webp.WebpImageInfo;
+import static java.lang.System.*;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -29,21 +26,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static java.lang.System.getLogger;
+import imagify.pixels.AbgrPixels;
+import imagify.webp.DecodedWebp;
+import imagify.webp.WebpException;
+import imagify.webp.WebpImageInfo;
 
 /**
- * Entry point to the {@code libwebp} based WebP codec using Java's Foreign Function &amp; Memory API (JEP 454).
+ * Entry point to the {@code libwebp} based WebP codec using Java's Foreign Function &amp; Memory
+ * API (JEP 454).
  *
  * <p>This is the encoder and decoder behind both the ImageIO service providers in
  * {@code imagify.webp} and the direct calls {@link imagify.ImageWriter} and
  * {@link imagify.ImageReader} make, so a WebP written through any of them comes out of the same
- * encoder with the same settings. {@link imagify.webp.WebpCodec} is the entry point for all of
- * that; this class is the {@linkplain imagify.webp.WebpCodec.Backend#FFM FFM} backend behind it,
- * which is the one used unless {@code -Dimagify.webp.backend=webp4j} names the other.
+ * encoder with the same settings.
  *
  * <p>The native library is loaded lazily, on first use, and failing to load it is never fatal: the
  * ImageIO service providers of this library then stay inert instead of breaking {@code ImageIO} for
- * every other format, and the facade falls back to the JDK's own WebP support, which is the
+ * every other format, and they fall back to the JDK's own WebP support, which is the
  * {@link javax.imageio} providers that ship with a JDK 13 or newer. Use {@link #isAvailable()} to
  * find out which of the two a given call will use.
  *
@@ -97,16 +96,23 @@ public final class WebpCodec {
     private static final Object LOCK = new Object();
 
     private static volatile boolean loaded;
+
     private static volatile WebpLibrary library;
+
     private static volatile String failure;
 
     private static final int HEADER_LENGTH = 30;
+
     private static final int FIRST_CHUNK = 12;
+
     private static final int CHUNK_HEADER_LENGTH = 8;
+
     private static final int ANMF_FRAME_HEADER_LENGTH = CHUNK_HEADER_LENGTH + 16;
 
     private static final String CHUNK_VP8L = "VP8L";
+
     private static final String CHUNK_VP8 = "VP8 ";
+
     private static final String CHUNK_ANMF = "ANMF";
 
     private static final int LOSSLESS_HEADER_LENGTH = 128;
@@ -123,15 +129,17 @@ public final class WebpCodec {
     }
 
     public static final int FORMAT_VP8 = WebpLibrary.FORMAT_VP8;
+
     public static final int FORMAT_VP8L = WebpLibrary.FORMAT_VP8L;
+
     public static final int FORMAT_VP8X = WebpLibrary.FORMAT_VP8X;
 
     public static String formatName(int format) {
         return switch (format) {
-            case WebpLibrary.FORMAT_VP8 -> "VP8";
-            case WebpLibrary.FORMAT_VP8L -> "VP8L";
-            case WebpLibrary.FORMAT_VP8X -> "VP8X";
-            default -> "unknown(" + format + ")";
+        case WebpLibrary.FORMAT_VP8 -> "VP8";
+        case WebpLibrary.FORMAT_VP8L -> "VP8L";
+        case WebpLibrary.FORMAT_VP8X -> "VP8X";
+        default -> "unknown(" + format + ")";
         };
     }
 
@@ -163,12 +171,7 @@ public final class WebpCodec {
                 library = load();
             } catch (Throwable t) {
                 failure = describe(t);
-                log.log(Level.WARNING, "The WebP codec is disabled: {0}. This jar ships a WebP "
-                        + "codec for Windows, macOS and Linux on x64 and arm64, so either your "
-                        + "platform is not one of those or the bundled library could not be "
-                        + "unpacked. You can also point -Djava.library.path at a directory that "
-                        + "holds one. ImageIO falls back to the JDK's own WebP support either "
-                        + "way.", failure);
+                log.log(Level.WARNING, "The WebP codec is disabled: {0}. This jar ships a WebP " + "codec for Windows, macOS and Linux on x64 and arm64, so either your " + "platform is not one of those or the bundled library could not be " + "unpacked. You can also point -Djava.library.path at a directory that " + "holds one. ImageIO falls back to the JDK's own WebP support either " + "way.", failure);
             }
             loaded = true;
             return library;
@@ -185,17 +188,14 @@ public final class WebpCodec {
 
     private static WebpLibrary load() {
         Path bundled = WebpNativeLibrary.extract();
-        WebpLibrary lib = bundled == null
-                ? loadSystem()
-                : loadBundled(bundled);
+        WebpLibrary lib = bundled == null ? loadSystem() : loadBundled(bundled);
 
         String abi = lib.imagify_webp_abi_version();
         if (!WebpLibrary.ABI_VERSION.equals(abi)) {
-            throw new IllegalStateException("the WebP library speaks ABI version " + abi
-                    + " but this jar speaks " + WebpLibrary.ABI_VERSION);
+            throw new IllegalStateException("the WebP library speaks ABI version " + abi + " but this jar speaks " + WebpLibrary.ABI_VERSION);
         }
-        log.log(Level.DEBUG, "using libwebp {0}{1}", lib.imagify_webp_webp_version(),
-                bundled == null ? " from system" : " from " + bundled);
+        log.log(Level.DEBUG, "using libwebp {0}{1}", lib.imagify_webp_webp_version(), bundled == null ? " from system"
+                : " from " + bundled);
         return lib;
     }
 
@@ -214,8 +214,7 @@ public final class WebpCodec {
         // thread, and every call from another thread would fail on it, so the library is opened
         // against the global arena instead. Nothing is ever unmapped this way, which is what a
         // process wide codec wants anyway.
-        SymbolLookup lookup = linker.defaultLookup()
-                .or(SymbolLookup.libraryLookup(bundled, Arena.global()));
+        SymbolLookup lookup = linker.defaultLookup().or(SymbolLookup.libraryLookup(bundled, Arena.global()));
         return new WebpLibrary(lookup);
     }
 
@@ -236,8 +235,7 @@ public final class WebpCodec {
             MemorySegment input = input(encoded, arena);
             MemorySegment message = arena.allocate(WebpLibrary.MESSAGE_LENGTH);
             MemorySegment features = arena.allocate(WebpLibrary.WEBP_FEATURES_LAYOUT);
-            int status = lib.imagify_webp_read_features(input, encoded.length, features, message,
-                    WebpLibrary.MESSAGE_LENGTH);
+            int status = lib.imagify_webp_read_features(input, encoded.length, features, message, WebpLibrary.MESSAGE_LENGTH);
             check(lib, status, message, "imagify_webp_read_features()");
             int width = features.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_WIDTH);
             int height = features.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_HEIGHT);
@@ -245,19 +243,17 @@ public final class WebpCodec {
             int hasAnimation = features.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_HAS_ANIMATION);
             int format = features.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_FORMAT);
             if (hasAnimation == 0) {
-                return new WebpImageInfo(width, height, hasAlpha != 0,
-                        false, format, 1, 0);
+                return new WebpImageInfo(width, height, hasAlpha != 0, false, format, 1, 0);
             }
             MemorySegment animation = arena.allocate(WebpLibrary.WEBP_ANIMATION_LAYOUT);
             MemorySegment delaysRef = arena.allocate(ValueLayout.ADDRESS);
-            check(lib, lib.imagify_webp_read_animation(input, encoded.length, animation, delaysRef,
-                    message, WebpLibrary.MESSAGE_LENGTH), message, "imagify_webp_read_animation()");
+            check(lib, lib
+                    .imagify_webp_read_animation(input, encoded.length, animation, delaysRef, message, WebpLibrary.MESSAGE_LENGTH), message, "imagify_webp_read_animation()");
             MemorySegment delaysPtr = delaysRef.get(ValueLayout.ADDRESS, 0);
             int frameCount = animation.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_FRAME_COUNT);
             int loopCount = animation.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_LOOP_COUNT);
             lib.imagify_webp_free(delaysPtr);
-            return new WebpImageInfo(width, height, hasAlpha != 0,
-                    true, format, frameCount, loopCount);
+            return new WebpImageInfo(width, height, hasAlpha != 0, true, format, frameCount, loopCount);
         }
     }
 
@@ -313,8 +309,7 @@ public final class WebpCodec {
     }
 
     private static int chunkSize(byte[] data, int offset) {
-        return (data[offset + 4] & 0xFF) | (data[offset + 5] & 0xFF) << 8
-                | (data[offset + 6] & 0xFF) << 16 | (data[offset + 7] & 0xFF) << 24;
+        return (data[offset + 4] & 0xFF) | (data[offset + 5] & 0xFF) << 8 | (data[offset + 6] & 0xFF) << 16 | (data[offset + 7] & 0xFF) << 24;
     }
 
     public static int losslessHeaderLength() {
@@ -333,20 +328,21 @@ public final class WebpCodec {
      * <p>{@code method} is libwebp's own effort scale and runs against
      * {@link #MIN_METHOD} and {@link #MAX_METHOD}. Lower is faster and produces a larger file, and
      * the difference is large enough to be worth naming: on a 1600x1200 photograph, method 0 takes
-     * roughly a quarter of the time method 4 does and gives up about a third more bytes. Neither end
+     * roughly a quarter of the time method 4 does and gives up about a third more bytes. Neither
+     * end
      * is wrong and the choice is a caller's, which is why the default of
      * {@value #DEFAULT_COMPRESSION_METHOD} is only a default and not a fixed point.
      *
      * @param source the image to encode
-     * @param quality {@link #MIN_QUALITY} to {@link #MAX_QUALITY}; a fidelity to trade away, or, with
-     *        {@code lossless}, how hard to try to make the file small
+     * @param quality {@link #MIN_QUALITY} to {@link #MAX_QUALITY}; a fidelity to trade away, or,
+     *            with
+     *            {@code lossless}, how hard to try to make the file small
      * @param lossless whether to store the pixels without loss
      * @param method {@link #MIN_METHOD} to {@link #MAX_METHOD}
      * @return the encoded file
      * @throws WebpException when the library is unavailable or libwebp refuses the image
      */
-    public static byte[] encode(RenderedImage source, int quality, boolean lossless, int method)
-            throws WebpException {
+    public static byte[] encode(RenderedImage source, int quality, boolean lossless, int method) throws WebpException {
         WebpLibrary lib = requireLibrary();
         if (source == null) {
             throw new WebpException("no image to encode");
@@ -364,41 +360,34 @@ public final class WebpCodec {
         int[] words = lib.hasArgbEntryPoints() ? AbgrPixels.argbWords(source) : null;
         byte[] abgr = words == null ? AbgrPixels.toAbgrBytes(source, 0, 0, width, height, 1, 1) : null;
         try (Arena arena = Arena.ofConfined()) {
-            MemorySegment pixels = words != null
-                    ? MemorySegment.ofArray(words)
-                    : copy(arena, abgr);
+            MemorySegment pixels = words != null ? MemorySegment.ofArray(words) : copy(arena, abgr);
             MemorySegment message = arena.allocate(WebpLibrary.MESSAGE_LENGTH);
             MemorySegment encoded = arena.allocate(ValueLayout.ADDRESS);
             MemorySegment encodedLength = arena.allocate(ValueLayout.JAVA_LONG);
             int status = words != null
-                    ? lib.imagify_webp_encode_argb(pixels, width, height, clamp(quality),
-                            lossless ? 1 : 0, effort, encoded, encodedLength, message,
-                            WebpLibrary.MESSAGE_LENGTH)
-                    : lib.imagify_webp_encode(pixels, width, height, clamp(quality),
-                            lossless ? 1 : 0, effort, encoded, encodedLength, message,
-                            WebpLibrary.MESSAGE_LENGTH);
-            check(lib, status, message, words != null
-                    ? "imagify_webp_encode_argb()"
-                    : "imagify_webp_encode()");
+                    ? lib.imagify_webp_encode_argb(pixels, width, height, clamp(quality), lossless ? 1
+                            : 0, effort, encoded, encodedLength, message, WebpLibrary.MESSAGE_LENGTH)
+                    : lib.imagify_webp_encode(pixels, width, height, clamp(quality), lossless ? 1
+                            : 0, effort, encoded, encodedLength, message, WebpLibrary.MESSAGE_LENGTH);
+            check(lib, status, message, words != null ? "imagify_webp_encode_argb()" : "imagify_webp_encode()");
             return collect(lib, encoded, encodedLength, "imagify_webp_encode()");
         }
     }
 
-    public static byte[] encodeAnimation(List<BufferedImage> frames, int[] delaysMs,
-            int quality, boolean lossless, int loopCount) throws WebpException {
+    public static byte[] encodeAnimation(List<BufferedImage> frames, int[] delaysMs, int quality, boolean lossless, int loopCount)
+            throws WebpException {
         return encodeAnimation(frames, delaysMs, quality, lossless, loopCount, DEFAULT_COMPRESSION_METHOD);
     }
 
-    public static byte[] encodeAnimation(List<BufferedImage> frames, int[] delaysMs,
-            int quality, boolean lossless, int loopCount, int compressionMethod) throws WebpException {
+    public static byte[] encodeAnimation(List<BufferedImage> frames, int[] delaysMs, int quality, boolean lossless, int loopCount, int compressionMethod)
+            throws WebpException {
         WebpLibrary lib = requireLibrary();
         if (frames == null || frames.size() < 2) {
-            throw new WebpException("an animation needs at least two frames, got "
-                    + (frames == null ? 0 : frames.size()));
+            throw new WebpException("an animation needs at least two frames, got " + (frames == null ? 0 : frames.size()));
         }
         if (delaysMs == null || delaysMs.length != frames.size()) {
-            throw new WebpException("expected one delay per frame: " + frames.size()
-                    + " frames but " + (delaysMs == null ? "no" : delaysMs.length + "") + " delays");
+            throw new WebpException("expected one delay per frame: " + frames
+                    .size() + " frames but " + (delaysMs == null ? "no" : delaysMs.length + "") + " delays");
         }
         int width = frames.get(0).getWidth();
         int height = frames.get(0).getHeight();
@@ -429,8 +418,7 @@ public final class WebpCodec {
                 if (own != null) {
                     System.arraycopy(own, 0, words, at, (int) frameWords);
                 } else {
-                    System.arraycopy(AbgrPixels.toArgbWords(image, 0, 0, width, height),
-                            0, words, at, (int) frameWords);
+                    System.arraycopy(AbgrPixels.toArgbWords(image, 0, 0, width, height), 0, words, at, (int) frameWords);
                 }
             } else {
                 int atByte = frame * (int) frameWords * 4;
@@ -440,9 +428,7 @@ public final class WebpCodec {
         }
 
         try (Arena arena = Arena.ofConfined()) {
-            MemorySegment pixels = words != null
-                    ? MemorySegment.ofArray(words)
-                    : copy(arena, abgr);
+            MemorySegment pixels = words != null ? MemorySegment.ofArray(words) : copy(arena, abgr);
             MemorySegment delays = arena.allocate((long) count * Integer.BYTES);
             for (int i = 0; i < count; i++) {
                 delays.set(ValueLayout.JAVA_INT, (long) i * Integer.BYTES, delaysMs[i]);
@@ -452,15 +438,11 @@ public final class WebpCodec {
             MemorySegment encodedLength = arena.allocate(ValueLayout.JAVA_LONG);
             int effort = clamp(compressionMethod, WebpLibrary.MIN_METHOD, WebpLibrary.MAX_METHOD);
             int status = words != null
-                    ? lib.imagify_webp_encode_animation_argb(pixels, count, width, height, delays,
-                            clamp(quality), lossless ? 1 : 0, loopCount, effort, encoded,
-                            encodedLength, message, WebpLibrary.MESSAGE_LENGTH)
-                    : lib.imagify_webp_encode_animation(pixels, count, width, height, delays,
-                            clamp(quality), lossless ? 1 : 0, loopCount, effort, encoded,
-                            encodedLength, message, WebpLibrary.MESSAGE_LENGTH);
-            check(lib, status, message, words != null
-                    ? "imagify_webp_encode_animation_argb()"
-                    : "imagify_webp_encode_animation()");
+                    ? lib.imagify_webp_encode_animation_argb(pixels, count, width, height, delays, clamp(quality), lossless ? 1
+                            : 0, loopCount, effort, encoded, encodedLength, message, WebpLibrary.MESSAGE_LENGTH)
+                    : lib.imagify_webp_encode_animation(pixels, count, width, height, delays, clamp(quality), lossless ? 1
+                            : 0, loopCount, effort, encoded, encodedLength, message, WebpLibrary.MESSAGE_LENGTH);
+            check(lib, status, message, words != null ? "imagify_webp_encode_animation_argb()" : "imagify_webp_encode_animation()");
             return collect(lib, encoded, encodedLength, "imagify_webp_encode_animation()");
         }
     }
@@ -482,8 +464,7 @@ public final class WebpCodec {
             MemorySegment out = arena.allocate(ValueLayout.ADDRESS);
             MemorySegment outLength = arena.allocate(ValueLayout.JAVA_LONG);
             MemorySegment features = arena.allocate(WebpLibrary.WEBP_FEATURES_LAYOUT);
-            int status = lib.imagify_webp_decode(input, encoded.length, out, outLength, features,
-                        message, WebpLibrary.MESSAGE_LENGTH);
+            int status = lib.imagify_webp_decode(input, encoded.length, out, outLength, features, message, WebpLibrary.MESSAGE_LENGTH);
             check(lib, status, message, "imagify_webp_decode()");
             MemorySegment pixels = out.get(ValueLayout.ADDRESS, 0);
             int length = Math.toIntExact(outLength.get(ValueLayout.JAVA_LONG, 0));
@@ -530,9 +511,8 @@ public final class WebpCodec {
             MemorySegment input = input(encoded, arena);
             MemorySegment message = arena.allocate(WebpLibrary.MESSAGE_LENGTH);
             MemorySegment features = arena.allocate(WebpLibrary.WEBP_FEATURES_LAYOUT);
-            check(lib, lib.imagify_webp_decode_into_argb(input, encoded.length,
-                    MemorySegment.ofArray(words), width, features, message, WebpLibrary.MESSAGE_LENGTH),
-                    message, "imagify_webp_decode_into_argb()");
+            check(lib, lib.imagify_webp_decode_into_argb(input, encoded.length, MemorySegment
+                    .ofArray(words), width, features, message, WebpLibrary.MESSAGE_LENGTH), message, "imagify_webp_decode_into_argb()");
         }
         // The alpha type is chosen the same way it is on the other path, from whether the file
         // carries a channel rather than from whether the decoded words happen to be opaque, so that
@@ -547,8 +527,7 @@ public final class WebpCodec {
             MemorySegment input = input(encoded, arena);
             MemorySegment message = arena.allocate(WebpLibrary.MESSAGE_LENGTH);
             MemorySegment features = arena.allocate(WebpLibrary.WEBP_FEATURES_LAYOUT);
-            int status = lib.imagify_webp_read_features(input, encoded.length, features, message,
-                    WebpLibrary.MESSAGE_LENGTH);
+            int status = lib.imagify_webp_read_features(input, encoded.length, features, message, WebpLibrary.MESSAGE_LENGTH);
             check(lib, status, message, "imagify_webp_read_features()");
             int hasAlpha = features.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_HAS_ALPHA);
             int width = features.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_WIDTH);
@@ -556,13 +535,13 @@ public final class WebpCodec {
             int format = features.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_FORMAT);
             int hasAnimation = features.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_HAS_ANIMATION);
             if (hasAnimation == 0) {
-                WebpImageInfo info = new WebpImageInfo(width, height, hasAlpha != 0,
-                        false, format, 1, 0);
+                WebpImageInfo info = new WebpImageInfo(width, height, hasAlpha != 0, false, format, 1, 0);
                 return new DecodedWebp(info, List.of(decode(encoded)), null);
             }
-            DecodedAnimation animation = decodeAnimationData(lib, input, encoded.length, message, features.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_HAS_ALPHA) != 0, arena);
-            WebpImageInfo info = new WebpImageInfo(width, height, hasAlpha != 0, true, format,
-                    animation.info.frameCount(), animation.info.loopCount());
+            DecodedAnimation animation = decodeAnimationData(lib, input, encoded.length, message, features
+                    .get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_HAS_ALPHA) != 0, arena);
+            WebpImageInfo info = new WebpImageInfo(width, height, hasAlpha != 0, true, format, animation.info.frameCount(), animation.info
+                    .loopCount());
             return new DecodedWebp(info, animation.frames, animation.delays);
         }
     }
@@ -574,11 +553,10 @@ public final class WebpCodec {
             MemorySegment input = input(encoded, arena);
             MemorySegment message = arena.allocate(WebpLibrary.MESSAGE_LENGTH);
             MemorySegment features = arena.allocate(WebpLibrary.WEBP_FEATURES_LAYOUT);
-            int status = lib.imagify_webp_read_features(input, encoded.length, features, message,
-                    WebpLibrary.MESSAGE_LENGTH);
+            int status = lib.imagify_webp_read_features(input, encoded.length, features, message, WebpLibrary.MESSAGE_LENGTH);
             check(lib, status, message, "imagify_webp_read_features()");
-            DecodedAnimation animation = decodeAnimationData(lib, input, encoded.length, message,
-                    features.get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_HAS_ALPHA) != 0, arena);
+            DecodedAnimation animation = decodeAnimationData(lib, input, encoded.length, message, features
+                    .get(ValueLayout.JAVA_INT, WebpLibrary.OFFSET_HAS_ALPHA) != 0, arena);
             List<BufferedImage> frames = animation.frames;
             if (frames.isEmpty()) {
                 throw new WebpException("the WebP animation holds no frames");
@@ -595,8 +573,8 @@ public final class WebpCodec {
             MemorySegment message = arena.allocate(WebpLibrary.MESSAGE_LENGTH);
             MemorySegment animation = arena.allocate(WebpLibrary.WEBP_ANIMATION_LAYOUT);
             MemorySegment delaysRef = arena.allocate(ValueLayout.ADDRESS);
-            check(lib, lib.imagify_webp_read_animation(input, encoded.length, animation, delaysRef,
-                    message, WebpLibrary.MESSAGE_LENGTH), message, "imagify_webp_read_animation()");
+            check(lib, lib
+                    .imagify_webp_read_animation(input, encoded.length, animation, delaysRef, message, WebpLibrary.MESSAGE_LENGTH), message, "imagify_webp_read_animation()");
             MemorySegment delaysPtr = delaysRef.get(ValueLayout.ADDRESS, 0);
             if (delaysPtr.address() == 0) {
                 throw new WebpException("imagify_webp_read_animation() did not produce any delay");
@@ -609,20 +587,19 @@ public final class WebpCodec {
                 timings[i] = delays.get(ValueLayout.JAVA_INT, (long) i * Integer.BYTES);
             }
             lib.imagify_webp_free(delaysPtr);
-            return new int[][] { { frameCount, loopCount }, timings };
+            return new int[][] {{frameCount, loopCount}, timings};
         }
     }
 
-    private record DecodedAnimation(WebpLibrary.WebpAnimationInfo info, List<BufferedImage> frames,
-            int[] delays) {}
+    private record DecodedAnimation(WebpLibrary.WebpAnimationInfo info, List<BufferedImage> frames, int[] delays) {
+    }
 
-    private static DecodedAnimation decodeAnimationData(WebpLibrary lib, MemorySegment input, int length,
-            MemorySegment message, boolean alpha, Arena arena) throws WebpException {
+    private static DecodedAnimation decodeAnimationData(WebpLibrary lib, MemorySegment input, int length, MemorySegment message, boolean alpha, Arena arena)
+            throws WebpException {
         MemorySegment animation = arena.allocate(WebpLibrary.WEBP_ANIMATION_LAYOUT);
         MemorySegment framesRef = arena.allocate(ValueLayout.ADDRESS);
         MemorySegment delaysRef = arena.allocate(ValueLayout.ADDRESS);
-        int status = lib.imagify_webp_decode_animation(input, length, animation, framesRef,
-                    delaysRef, message, WebpLibrary.MESSAGE_LENGTH);
+        int status = lib.imagify_webp_decode_animation(input, length, animation, framesRef, delaysRef, message, WebpLibrary.MESSAGE_LENGTH);
         check(lib, status, message, "imagify_webp_decode_animation()");
         MemorySegment framesPtr = framesRef.get(ValueLayout.ADDRESS, 0);
         MemorySegment delaysPtr = delaysRef.get(ValueLayout.ADDRESS, 0);
@@ -652,8 +629,7 @@ public final class WebpCodec {
         }
     }
 
-    private static List<BufferedImage> splitFrames(byte[] bytes, int frameCount, int width, int height,
-            boolean alpha) {
+    private static List<BufferedImage> splitFrames(byte[] bytes, int frameCount, int width, int height, boolean alpha) {
         int frameBytes = Math.multiplyExact(Math.multiplyExact(width, height), 4);
         List<BufferedImage> frames = new ArrayList<>(frameCount);
         for (int frame = 0; frame < frameCount; frame++) {
@@ -710,8 +686,8 @@ public final class WebpCodec {
      * @return the encoded file
      * @throws WebpException when the entry point reported success but produced nothing
      */
-    private static byte[] collect(WebpLibrary lib, MemorySegment encoded, MemorySegment encodedLength,
-            String operation) throws WebpException {
+    private static byte[] collect(WebpLibrary lib, MemorySegment encoded, MemorySegment encodedLength, String operation)
+            throws WebpException {
         MemorySegment file = encoded.get(ValueLayout.ADDRESS, 0);
         int length = Math.toIntExact(encodedLength.get(ValueLayout.JAVA_LONG, 0));
         if (file.address() == 0 || length <= 0) {
@@ -733,8 +709,7 @@ public final class WebpCodec {
         return Math.max(low, Math.min(high, value));
     }
 
-    private static void check(WebpLibrary lib, int status, MemorySegment message, String operation)
-            throws WebpException {
+    private static void check(WebpLibrary lib, int status, MemorySegment message, String operation) throws WebpException {
         if (status == WebpLibrary.IMAGIFY_WEBP_OK) {
             return;
         }
@@ -747,19 +722,18 @@ public final class WebpCodec {
             nullIdx++;
         }
         String text = new String(textBytes, 0, nullIdx);
-        throw new WebpException(operation + " failed: "
-                + (text.isBlank() ? statusName(status) : text));
+        throw new WebpException(operation + " failed: " + (text.isBlank() ? statusName(status) : text));
     }
 
     public static String statusName(int status) {
         return switch (status) {
-            case WebpLibrary.IMAGIFY_WEBP_OK -> "no error";
-            case WebpLibrary.IMAGIFY_WEBP_ERR_ARGUMENT -> "a parameter was out of range";
-            case WebpLibrary.IMAGIFY_WEBP_ERR_CORRUPT -> "the input is not a WebP file, or is a damaged one";
-            case WebpLibrary.IMAGIFY_WEBP_ERR_MEMORY -> "out of memory";
-            case WebpLibrary.IMAGIFY_WEBP_ERR_UNSUPPORTED -> "libwebp will not do this";
-            case WebpLibrary.IMAGIFY_WEBP_ERR_INTERNAL -> "libwebp failed for no stated reason";
-            default -> "status " + status;
+        case WebpLibrary.IMAGIFY_WEBP_OK -> "no error";
+        case WebpLibrary.IMAGIFY_WEBP_ERR_ARGUMENT -> "a parameter was out of range";
+        case WebpLibrary.IMAGIFY_WEBP_ERR_CORRUPT -> "the input is not a WebP file, or is a damaged one";
+        case WebpLibrary.IMAGIFY_WEBP_ERR_MEMORY -> "out of memory";
+        case WebpLibrary.IMAGIFY_WEBP_ERR_UNSUPPORTED -> "libwebp will not do this";
+        case WebpLibrary.IMAGIFY_WEBP_ERR_INTERNAL -> "libwebp failed for no stated reason";
+        default -> "status " + status;
         };
     }
 }

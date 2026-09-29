@@ -9,24 +9,6 @@
  */
 package imagify;
 
-import imagify.avif.AvifException;
-import imagify.avif.jna.AvifCodec;
-import imagify.avif.jna.AvifLibrary;
-import imagify.jpeg.JpegException;
-import imagify.jpeg.jna.JpegliCodec;
-import imagify.jpeg.jna.JpegliLibrary;
-import imagify.webp.ffm.WebpCodec;
-import imagify.webp.WebpException;
-import imagify.webp.WebpImageWriterSpi;
-
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.metadata.IIOInvalidTreeException;
-import javax.imageio.metadata.IIOMetadata;
-import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
-import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -41,9 +23,29 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.metadata.IIOInvalidTreeException;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
+import javax.imageio.stream.ImageOutputStream;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import imagify.avif.AvifException;
+import imagify.avif.jna.AvifCodec;
+import imagify.avif.jna.AvifLibrary;
+import imagify.jpeg.JpegException;
+import imagify.jpeg.jna.JpegliCodec;
+import imagify.jpeg.jna.JpegliLibrary;
+import imagify.webp.WebpException;
+import imagify.webp.WebpImageWriterSpi;
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * Writes images to various destinations with format control.
@@ -100,7 +102,8 @@ import org.w3c.dom.NodeList;
  */
 public final class ImageWriter {
 
-    private ImageWriter() {}
+    private ImageWriter() {
+    }
 
     // ---------------------------------------------------------------- FrameSequence
 
@@ -111,8 +114,8 @@ public final class ImageWriter {
      * the frames are encoded as an animation. Otherwise the first frame is
      * written as a still image.</p>
      *
-     * @param frames   the frame sequence
-     * @param format   the output format
+     * @param frames the frame sequence
+     * @param format the output format
      * @return the encoded bytes
      * @throws IOException if the image cannot be encoded
      */
@@ -127,9 +130,9 @@ public final class ImageWriter {
      * the frames are encoded as an animation. Otherwise the first frame is
      * written as a still image.</p>
      *
-     * @param frames   the frame sequence
-     * @param format   the output format
-     * @param quality  {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @param frames the frame sequence
+     * @param format the output format
+     * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
      * @return the encoded bytes
      * @throws IOException if the image cannot be encoded
      */
@@ -147,9 +150,9 @@ public final class ImageWriter {
      * the frames are encoded as an animation. Otherwise the first frame is
      * written as a still image.</p>
      *
-     * @param frames  the frame sequence
-     * @param format  the output format
-     * @param path    the output file path
+     * @param frames the frame sequence
+     * @param format the output format
+     * @param path the output file path
      * @throws IOException if the image cannot be encoded or written
      */
     public static void toFile(FrameSequence frames, ImageFormat format, Path path) throws IOException {
@@ -163,10 +166,10 @@ public final class ImageWriter {
      * the frames are encoded as an animation. Otherwise the first frame is
      * written as a still image.</p>
      *
-     * @param frames  the frame sequence
-     * @param format  the output format
+     * @param frames the frame sequence
+     * @param format the output format
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
-     * @param path    the output file path
+     * @param path the output file path
      * @throws IOException if the image cannot be encoded or written
      */
     public static void toFile(FrameSequence frames, ImageFormat format, double quality, Path path) throws IOException {
@@ -182,7 +185,7 @@ public final class ImageWriter {
      * written as a still image.</p>
      *
      * @param frames the frame sequence
-     * @param path   the output file path
+     * @param path the output file path
      * @throws IOException if the image cannot be encoded or written
      */
     public static void toFile(FrameSequence frames, Path path) throws IOException {
@@ -197,8 +200,8 @@ public final class ImageWriter {
      * the frames are encoded as an animation. Otherwise the first frame is
      * written as a still image.</p>
      *
-     * @param frames  the frame sequence
-     * @param path    the output file path
+     * @param frames the frame sequence
+     * @param path the output file path
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
      * @throws IOException if the image cannot be encoded or written
      */
@@ -244,7 +247,10 @@ public final class ImageWriter {
         try {
             writeToStream(image, format, quality, stream);
         } finally {
-            try { stream.close(); } catch (IOException ignored) {}
+            try {
+                stream.close();
+            } catch (IOException ignored) {
+            }
         }
     }
 
@@ -276,10 +282,12 @@ public final class ImageWriter {
      * 24 cores and made no image faster and most of them slower, because of the two passes of its
      * own that read the flag both split a frame in two rather than across the cores it has. So the
      * cores a machine has are idle for the length of an encode, and the only way to fill them is to
-     * have more than one encode running. Measured here, twelve 1600x1200 WebP images go from 1435 ms
+     * have more than one encode running. Measured here, twelve 1600x1200 WebP images go from 1435
+     * ms
      * on one thread to 226 ms on twelve, which is 6.4x.</p>
      *
-     * <p>The images are independent, so nothing about them is shared: each one is converted, encoded
+     * <p>The images are independent, so nothing about them is shared: each one is converted,
+     * encoded
      * and collected on its own thread with its own arena and its own encoder configuration, and the
      * results come back in the order they were given. Nothing here is more than a loop over
      * {@link #toBytes(BufferedImage, ImageFormat, double)} spread over a pool, and a caller who
@@ -290,7 +298,8 @@ public final class ImageWriter {
      * <p>One image on a one core machine is not worth a pool, and the pool size never exceeds the
      * number of images. Beyond that the useful number of threads is the number of images: more
      * threads than that is more threads than work, and a pool larger than the core count on a
-     * machine that is also running something else is how a library makes another process slower.</p>
+     * machine that is also running something else is how a library makes another process
+     * slower.</p>
      *
      * @param images the images to encode
      * @param format the output format
@@ -299,8 +308,7 @@ public final class ImageWriter {
      * @throws IOException if any image cannot be encoded
      * @throws IllegalArgumentException if {@code images} is null or holds a null
      */
-    public static List<byte[]> toBytes(List<BufferedImage> images, ImageFormat format, double quality)
-            throws IOException {
+    public static List<byte[]> toBytes(List<BufferedImage> images, ImageFormat format, double quality) throws IOException {
         return toBytes(images, format, quality, 0);
     }
 
@@ -311,14 +319,13 @@ public final class ImageWriter {
      * @param format the output format
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
      * @param threads how many encodes to run at once, or {@code 0} for one per core and never more
-     *        than there are images
+     *            than there are images
      * @return the encoded bytes, in the order the images were given
      * @throws IOException if any image cannot be encoded
      * @throws IllegalArgumentException if {@code images} is null or holds a null, or
-     *         {@code threads} is negative
+     *             {@code threads} is negative
      */
-    public static List<byte[]> toBytes(List<BufferedImage> images, ImageFormat format, double quality,
-            int threads) throws IOException {
+    public static List<byte[]> toBytes(List<BufferedImage> images, ImageFormat format, double quality, int threads) throws IOException {
         if (images == null) {
             throw new IllegalArgumentException("no images to encode");
         }
@@ -337,8 +344,7 @@ public final class ImageWriter {
         int width = threads > 0 ? threads : Runtime.getRuntime().availableProcessors();
         // Never more threads than there is work for, and never more than there are cores even when
         // the caller asked for more, because a thread with nothing to do still has to be scheduled.
-        int pool = Math.max(1, Math.min(Math.min(width, count),
-                Runtime.getRuntime().availableProcessors()));
+        int pool = Math.max(1, Math.min(Math.min(width, count), Runtime.getRuntime().availableProcessors()));
         if (pool == 1) {
             List<byte[]> serial = new ArrayList<>(count);
             for (BufferedImage image : images) {
@@ -389,14 +395,12 @@ public final class ImageWriter {
      * @param paths one path per image, in the same order
      * @throws IOException if any image cannot be encoded or written
      * @throws IllegalArgumentException if the two lists are of different lengths, or either is null
-     *         or holds a null
+     *             or holds a null
      */
-    public static void toFiles(List<BufferedImage> images, ImageFormat format, double quality,
-            List<Path> paths) throws IOException {
+    public static void toFiles(List<BufferedImage> images, ImageFormat format, double quality, List<Path> paths) throws IOException {
         if (paths == null || paths.size() != (images == null ? -1 : images.size())) {
-            throw new IllegalArgumentException("expected one path per image: "
-                    + (images == null ? "no" : images.size()) + " images but "
-                    + (paths == null ? "no paths" : paths.size() + " paths"));
+            throw new IllegalArgumentException("expected one path per image: " + (images == null ? "no"
+                    : images.size()) + " images but " + (paths == null ? "no paths" : paths.size() + " paths"));
         }
         for (Path path : paths) {
             if (path == null) {
@@ -434,7 +438,10 @@ public final class ImageWriter {
         try {
             writeToStream(image, format, quality, stream);
         } finally {
-            try { stream.close(); } catch (IOException ignored) {}
+            try {
+                stream.close();
+            } catch (IOException ignored) {
+            }
         }
     }
 
@@ -448,18 +455,17 @@ public final class ImageWriter {
         int encoderQuality = (int) Math.round(quality * 100);
         if (format instanceof ImageFormat.Avif avif) {
             try {
-                return AvifCodec.encodeAnimation(frames.frames(), frames.delaysMs(), encoderQuality,
-                        frames.loopCount(), avif.speed, avif.alphaQuality,
-                        avif.subsampling != null ? avif.subsampling.pixelFormat : -1,
-                        avif.chromaDownsampling != null ? avif.chromaDownsampling.value : -1);
+                return AvifCodec.encodeAnimation(frames.frames(), frames.delaysMs(), encoderQuality, frames
+                        .loopCount(), avif.speed, avif.alphaQuality, avif.subsampling != null ? avif.subsampling.pixelFormat
+                                : -1, avif.chromaDownsampling != null ? avif.chromaDownsampling.value : -1);
             } catch (AvifException e) {
                 throw new IOException("failed to encode AVIF animation", e);
             }
         }
         if (format instanceof ImageFormat.Webp webp) {
             try {
-                return WebpCodec.encodeAnimation(frames.frames(), frames.delaysMs(), encoderQuality,
-                        webp.lossless, frames.loopCount(), webp.compressionMethod);
+                return WebpCodec.encodeAnimation(frames.frames(), frames.delaysMs(), encoderQuality, webp.lossless, frames
+                        .loopCount(), webp.compressionMethod);
             } catch (WebpException e) {
                 throw new IOException("failed to encode WebP animation", e);
             }
@@ -469,20 +475,22 @@ public final class ImageWriter {
 
     // ------------------------------------------------------------------ internal
 
-    private static void writeToStream(BufferedImage image, ImageFormat format, double quality, ImageOutputStream stream) throws IOException {
+    private static void writeToStream(BufferedImage image, ImageFormat format, double quality, ImageOutputStream stream)
+            throws IOException {
         checkQuality(quality);
 
         if (format instanceof ImageFormat.Avif avif) {
-            // An ImageWriteParam has room for a quality and a compression type and for nothing else,
+            // An ImageWriteParam has room for a quality and a compression type and for nothing
+            // else,
             // so the AVIF encoder settings the format carries cannot be handed to the plug-in. This
-            // goes through the codec itself instead, which is also what the plug-in does, so a plain
+            // goes through the codec itself instead, which is also what the plug-in does, so a
+            // plain
             // AVIF format is encoded exactly as it was before.
             stream.write(encodeAvif(image, avif, quality));
             return;
         }
 
-        if (format instanceof ImageFormat.Webp webp
-                && webp.compressionMethod != WebpCodec.DEFAULT_COMPRESSION_METHOD) {
+        if (format instanceof ImageFormat.Webp webp && webp.compressionMethod != WebpCodec.DEFAULT_COMPRESSION_METHOD) {
             // The WebP encoder effort is the one setting of that format an ImageWriteParam has no
             // room for, so a caller who has named one cannot be given it through the plug-in. It
             // goes through the codec itself instead, which is what the plug-in does, so a format
@@ -496,7 +504,8 @@ public final class ImageWriter {
         if (format instanceof ImageFormat.Jpeg jpeg && JpegliCodec.isAvailable()) {
             // The same reasoning as AVIF, and more of it: the subsampling and the entropy coder
             // tables are both off the write param, and the jpegli encoder is reached directly
-            // rather than through whichever provider ImageIO hands back first, which for JPEG is not
+            // rather than through whichever provider ImageIO hands back first, which for JPEG is
+            // not
             // this library's at all. A plain JPEG format therefore comes out of jpegli rather than
             // out of com.sun.imageio, which is the point of shipping the library.
             stream.write(encodeJpeg(image, jpeg, quality));
@@ -507,12 +516,13 @@ public final class ImageWriter {
         // getImageWriters(type, name) rather than getImageWritersByFormatName(name): the latter
         // answers with every provider registered under a name and never asks canEncodeImage, so its
         // order is registration order rather than suitability. A JPEG provider backed by jpegli is
-        // exactly the provider that declines the image whenever its native library is missing, and it
+        // exactly the provider that declines the image whenever its native library is missing, and
+        // it
         // is registered before the JDK's own, so taking the first entry would replace a working
         // codec with one that throws. Filtering leaves the JDK's writer in place, which is what
         // happened before this jar claimed JPEG at all.
-        Iterator<javax.imageio.ImageWriter> writers =
-                ImageIO.getImageWriters(ImageTypeSpecifier.createFromRenderedImage(image), formatName);
+        Iterator<javax.imageio.ImageWriter> writers = ImageIO
+                .getImageWriters(ImageTypeSpecifier.createFromRenderedImage(image), formatName);
         if (!writers.hasNext()) {
             ImageIO.write(image, formatName, stream);
             return;
@@ -525,8 +535,7 @@ public final class ImageWriter {
             if (param == null) {
                 writer.write(image);
             } else {
-                writer.write(null, new IIOImage(image, null, jpegMetadata(writer, image, param, format)),
-                        param);
+                writer.write(null, new IIOImage(image, null, jpegMetadata(writer, image, param, format)), param);
             }
         } finally {
             writer.dispose();
@@ -538,22 +547,21 @@ public final class ImageWriter {
      *
      * <p>
      * Only JPEG has anything to say here, and only when the jpegli codec is not the one writing it:
-     * the colour-difference channels are laid down at the sampling rates its frame header names, and
+     * the colour-difference channels are laid down at the sampling rates its frame header names,
+     * and
      * those are not an {@link ImageWriteParam} but image metadata. A JPEG written at
      * {@link ImageFormat.Jpeg#DEFAULT_SUBSAMPLING} says nothing, which is the point of answering
      * {@code null} for it: the write then carries no metadata at all, exactly as it did before, and
      * the file it produces is the file the writer would have written on its own.
      * </p>
      */
-    private static IIOMetadata jpegMetadata(javax.imageio.ImageWriter writer, BufferedImage image,
-            ImageWriteParam param, ImageFormat format) throws IOException {
-        if (!(format instanceof ImageFormat.Jpeg jpeg)
-                || jpeg.subsampling == ImageFormat.Jpeg.DEFAULT_SUBSAMPLING) {
+    private static IIOMetadata jpegMetadata(javax.imageio.ImageWriter writer, BufferedImage image, ImageWriteParam param, ImageFormat format)
+            throws IOException {
+        if (!(format instanceof ImageFormat.Jpeg jpeg) || jpeg.subsampling == ImageFormat.Jpeg.DEFAULT_SUBSAMPLING) {
             return null;
         }
         try {
-            IIOMetadata metadata = writer.getDefaultImageMetadata(
-                    ImageTypeSpecifier.createFromRenderedImage(image), param);
+            IIOMetadata metadata = writer.getDefaultImageMetadata(ImageTypeSpecifier.createFromRenderedImage(image), param);
             String nativeFormat = metadata.getNativeMetadataFormatName();
             Node root = metadata.getAsTree(nativeFormat);
             NodeList components = ((Element) root).getElementsByTagName("componentSpec");
@@ -562,48 +570,46 @@ public final class ImageWriter {
                 // Only the luma channel carries a sampling rate of its own, and it is the one the
                 // frame header numbers 1. The two colour-difference channels follow it.
                 boolean luma = "1".equals(component.getAttribute("componentId"));
-                component.setAttribute("HsamplingFactor", String.valueOf(
-                        luma ? jpeg.subsampling.horizontalFactor : 1));
-                component.setAttribute("VsamplingFactor", String.valueOf(
-                        luma ? jpeg.subsampling.verticalFactor : 1));
+                component.setAttribute("HsamplingFactor", String.valueOf(luma ? jpeg.subsampling.horizontalFactor : 1));
+                component.setAttribute("VsamplingFactor", String.valueOf(luma ? jpeg.subsampling.verticalFactor : 1));
             }
             metadata.mergeTree(nativeFormat, root);
             return metadata;
         } catch (IIOInvalidTreeException | IllegalArgumentException e) {
             // A JPEG that quietly lost the colour detail it was asked for would be worse than one
             // that failed, so the caller is told the request cannot be honoured.
-            throw new IOException("the JPEG writer would not accept " + jpeg.subsampling
-                    + " subsampling: " + e.getMessage(), e);
+            throw new IOException("the JPEG writer would not accept " + jpeg.subsampling + " subsampling: " + e.getMessage(), e);
         }
     }
 
     private static byte[] encodeJpeg(BufferedImage image, ImageFormat.Jpeg jpeg, double quality) throws IOException {
         try {
-            return JpegliCodec.encode(image, Math.round((float) quality * JpegliLibrary.IMAGIFY_JPEG_MAX_QUALITY),
-                    jpeg.subsampling.samp, jpeg.optimizeHuffmanTables);
+            return JpegliCodec.encode(image, Math
+                    .round((float) quality * JpegliLibrary.IMAGIFY_JPEG_MAX_QUALITY), jpeg.subsampling.samp, jpeg.optimizeHuffmanTables);
         } catch (JpegException e) {
             throw new IOException("failed to encode a JPEG image: " + e.getMessage(), e);
         }
     }
 
-    private static byte[] encodeWebp(BufferedImage image, ImageFormat.Webp webp, double quality)
-            throws IOException {
+    private static byte[] encodeWebp(BufferedImage image, ImageFormat.Webp webp, double quality) throws IOException {
         try {
-            // The 0.0 to 1.0 of javax.imageio mapped onto the 0 to 100 that libwebp expects, the same
-            // mapping WebpImageWriter makes, so a format that names a method of its own differs from
+            // The 0.0 to 1.0 of javax.imageio mapped onto the 0 to 100 that libwebp expects, the
+            // same
+            // mapping WebpImageWriter makes, so a format that names a method of its own differs
+            // from
             // one that does not only in the effort spent and not at all in the fidelity asked for.
-            return WebpCodec.encode(image, Math.round((float) quality * WebpCodec.MAX_QUALITY),
-                    webp.lossless, webp.compressionMethod);
+            return WebpCodec.encode(image, Math.round((float) quality * WebpCodec.MAX_QUALITY), webp.lossless, webp.compressionMethod);
         } catch (WebpException e) {
             throw new IOException("failed to encode a WebP image: " + e.getMessage(), e);
         }
     }
 
-    private static byte[] encodeAvif(BufferedImage image, ImageFormat.Avif avif, double quality) throws IOException {        try {
-            return AvifCodec.encode(image, (int) Math.round(quality * AvifLibrary.AVIF_QUALITY_BEST),
-                    avif.speed, avif.alphaQuality,
-                    avif.subsampling != null ? avif.subsampling.pixelFormat : -1,
-                    avif.chromaDownsampling != null ? avif.chromaDownsampling.value : -1);
+    private static byte[] encodeAvif(BufferedImage image, ImageFormat.Avif avif, double quality) throws IOException {
+        try {
+            return AvifCodec.encode(image, (int) Math
+                    .round(quality * AvifLibrary.AVIF_QUALITY_BEST), avif.speed, avif.alphaQuality, avif.subsampling != null
+                            ? avif.subsampling.pixelFormat
+                            : -1, avif.chromaDownsampling != null ? avif.chromaDownsampling.value : -1);
         } catch (AvifException e) {
             throw new IOException("failed to encode an AVIF image: " + e.getMessage(), e);
         }
@@ -628,8 +634,8 @@ public final class ImageWriter {
             } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
                 // Silently writing a lossy file where a lossless one was asked for would be worse
                 // than failing, so the caller is told the request cannot be honoured.
-                throw new IOException("the WebP writer does not accept the "
-                        + WebpImageWriterSpi.COMPRESSION_TYPE_LOSSLESS + " compression type: " + e.getMessage(), e);
+                throw new IOException("the WebP writer does not accept the " + WebpImageWriterSpi.COMPRESSION_TYPE_LOSSLESS + " compression type: " + e
+                        .getMessage(), e);
             }
         }
         if (format instanceof ImageFormat.Jpeg jpeg && jpeg.optimizeHuffmanTables) {
@@ -654,7 +660,8 @@ public final class ImageWriter {
      * caller passes to say how much of the picture to keep decides instead how hard the compressor
      * works, and a request for the best quality on a lossless format is answered with a file many
      * times larger holding exactly the same pixels. The effort is therefore taken from
-     * {@link ImageFormat.Png#compressionLevel}, which is where a caller can say it out loud, and the
+     * {@link ImageFormat.Png#compressionLevel}, which is where a caller can say it out loud, and
+     * the
      * argument is ignored here just as it already was for GIF and BMP.
      * </p>
      *

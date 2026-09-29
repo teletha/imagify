@@ -27,6 +27,8 @@ import javax.imageio.stream.ImageInputStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import imagify.webp.ffm.WebpCodec;
+
 
 /**
  * Tests that a WebP file is walked once, not once per question asked of it.

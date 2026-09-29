@@ -2,7 +2,7 @@
 
 The C sources here are the shims behind the two codecs of this library that cannot be bound straight
 through the standard Java FFM API: `jpegli/` for `imagify.jpeg.jna.JpegliCodec` and `webp/` for
-`imagify.webp.ffm.WebpCodec`, the default WebP backend behind `imagify.webp.WebpCodec`. Everything else this project does in native code is a dependency it
+`imagify.webp.ffm.WebpCodec`. Everything else this project does in native code is a dependency it
 ships prebuilt; this is the one place where the jar has to carry code of its own, because both
 bindings need a layer that keeps a third party structure layout on the C side.
 

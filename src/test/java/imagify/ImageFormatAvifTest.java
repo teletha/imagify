@@ -12,7 +12,6 @@ package imagify;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
-import imagify.avif.jna.AvifCodec;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,9 +25,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import imagify.avif.jna.AvifCodec;
+
 /**
  * Tests that {@link ImageFormat#AVIF} behaves like every other format in the public API, that is
- * through {@link ImageWriter} and {@link ImageReader} rather than through the AVIF package directly.
+ * through {@link ImageWriter} and {@link ImageReader} rather than through the AVIF package
+ * directly.
  *
  * <p>The settings the format carries are the reason this is worth having separately from the
  * plug-in's own tests: an {@link javax.imageio.ImageWriteParam} has room for a quality and a
@@ -39,8 +41,7 @@ class ImageFormatAvifTest {
 
     @BeforeEach
     void requireLibavif() {
-        assumeTrue(AvifCodec.isAvailable(),
-                () -> "libavif is not available: " + AvifCodec.getUnavailableReason());
+        assumeTrue(AvifCodec.isAvailable(), () -> "libavif is not available: " + AvifCodec.getUnavailableReason());
     }
 
     @Test
@@ -67,15 +68,11 @@ class ImageFormatAvifTest {
         byte[] thorough = ImageWriter.toBytes(source, ImageFormat.AVIF.speed(0));
         byte[] quickest = ImageWriter.toBytes(source, ImageFormat.AVIF.speed(10));
 
-        assertFalse(Arrays.equals(thorough, quickest),
-                "the same image at two speeds should not have produced the same file");
-        double thoroughFidelity = ImageMetrics.psnr(expected,
-                pixels(ImageReader.read(thorough, ImageFormat.AVIF).toBufferedImage()));
-        double quickestFidelity = ImageMetrics.psnr(expected,
-                pixels(ImageReader.read(quickest, ImageFormat.AVIF).toBufferedImage()));
-        assertTrue(thoroughFidelity >= quickestFidelity, String.format(
-                "the thorough encoder should not be the further from the source: %.2f dB against %.2f dB",
-                thoroughFidelity, quickestFidelity));
+        assertFalse(Arrays.equals(thorough, quickest), "the same image at two speeds should not have produced the same file");
+        double thoroughFidelity = ImageMetrics.psnr(expected, pixels(ImageReader.read(thorough, ImageFormat.AVIF).toBufferedImage()));
+        double quickestFidelity = ImageMetrics.psnr(expected, pixels(ImageReader.read(quickest, ImageFormat.AVIF).toBufferedImage()));
+        assertTrue(thoroughFidelity >= quickestFidelity, String
+                .format("the thorough encoder should not be the further from the source: %.2f dB against %.2f dB", thoroughFidelity, quickestFidelity));
     }
 
     @Test
@@ -87,12 +84,10 @@ class ImageFormatAvifTest {
         byte[] byDefault = ImageWriter.toBytes(source, ImageFormat.AVIF);
         byte[] flattened = ImageWriter.toBytes(source, ImageFormat.AVIF.alphaQuality(0));
 
-        assertArrayEquals(expected,
-                alphas(pixels(ImageReader.read(byDefault, ImageFormat.AVIF).toBufferedImage())),
-                "an AVIF keeps every alpha value unless the format says otherwise");
-        assertFalse(Arrays.equals(expected,
-                alphas(pixels(ImageReader.read(flattened, ImageFormat.AVIF).toBufferedImage()))),
-                "asking for the worst alpha quality should be visible in the alpha channel");
+        assertArrayEquals(expected, alphas(pixels(ImageReader.read(byDefault, ImageFormat.AVIF)
+                .toBufferedImage())), "an AVIF keeps every alpha value unless the format says otherwise");
+        assertFalse(Arrays.equals(expected, alphas(pixels(ImageReader.read(flattened, ImageFormat.AVIF)
+                .toBufferedImage()))), "asking for the worst alpha quality should be visible in the alpha channel");
     }
 
     @Test
@@ -102,16 +97,14 @@ class ImageFormatAvifTest {
 
         // The settings have no home in an ImageWriteParam, so this write goes through the codec
         // rather than through the plug-in. What that must not change is the file it produces.
-        assertArrayEquals(ImageWriter.toBytes(source, ImageFormat.AVIF, 0.6),
-                throughThePlugin(source, 0.6f),
-                "a plain AVIF format should be encoded exactly as the plug-in encodes it");
+        assertArrayEquals(ImageWriter
+                .toBytes(source, ImageFormat.AVIF, 0.6), throughThePlugin(source, 0.6f), "a plain AVIF format should be encoded exactly as the plug-in encodes it");
     }
 
     @Test
     @DisplayName("the settings reach the animation encoder as well")
     void theSettingsReachAnAnimation() throws Exception {
-        FrameSequence sequence = new FrameSequence(
-                List.of(gradient(32, 24, false), gradient(32, 24, true)), new int[] {40, 60}, 0);
+        FrameSequence sequence = new FrameSequence(List.of(gradient(32, 24, false), gradient(32, 24, true)), new int[] {40, 60}, 0);
 
         byte[] byDefault = ImageWriter.toBytes(sequence, ImageFormat.AVIF);
         byte[] fastest = ImageWriter.toBytes(sequence, ImageFormat.AVIF.speed(10).alphaQuality(0));
@@ -148,14 +141,12 @@ class ImageFormatAvifTest {
     }
 
     private static byte[] throughThePlugin(BufferedImage source, float quality) throws IOException {
-        java.util.Iterator<javax.imageio.ImageWriter> writers = javax.imageio.ImageIO
-                .getImageWritersByFormatName("avif");
+        java.util.Iterator<javax.imageio.ImageWriter> writers = javax.imageio.ImageIO.getImageWritersByFormatName("avif");
         assumeTrue(writers.hasNext(), "the AVIF plug-in is not registered");
         javax.imageio.ImageWriter writer = writers.next();
         try {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            try (javax.imageio.stream.ImageOutputStream output =
-                    javax.imageio.ImageIO.createImageOutputStream(bytes)) {
+            try (javax.imageio.stream.ImageOutputStream output = javax.imageio.ImageIO.createImageOutputStream(bytes)) {
                 writer.setOutput(output);
                 ImageWriteParam param = writer.getDefaultWriteParam();
                 param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
@@ -186,10 +177,7 @@ class ImageFormatAvifTest {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int a = alpha ? (x % 2 == 0 ? 128 : 255) : 255;
-                image.setRGB(x, y, a << 24
-                        | (x * 255 / (width - 1)) << 16
-                        | (y * 255 / (height - 1)) << 8
-                        | 64);
+                image.setRGB(x, y, a << 24 | (x * 255 / (width - 1)) << 16 | (y * 255 / (height - 1)) << 8 | 64);
             }
         }
         return image;

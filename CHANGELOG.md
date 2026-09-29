@@ -4,15 +4,18 @@
 
 ### ⚠ Breaking change
 
-* `imagify.webp.WebpCodec` is the entry point again, and dispatches to a backend rather
-  than being one. The FFM implementation stays where it was, in
-  `imagify.webp.ffm.WebpCodec`, so code importing that still compiles and still means the
-  FFM backend, and code importing `imagify.webp.WebpCodec` gets whichever backend is in
-  use. Nothing has to change.
+* the WebP codec is `imagify.webp.ffm.WebpCodec`, bound through Java's Foreign Function &
+  Memory API, and there is nothing in front of it any more. Both the second backend and the
+  facade that dispatched to it are gone: the `webp4j-core` dependency, the
+  `imagify.webp.backend` system property, `WebpCodec.Backend`, `WebpCodec.backend()`,
+  `WebpCodec.Backend` and the `imagify.webp.webp4j` package, along with the
+  `imagify.webp.WebpCodec` facade and the `WebpBackendTest` that pinned the two backends to
+  agreeing.
 
-  `WebpCodec.DecodedWebp` is now the top level `imagify.webp.DecodedWebp`, because both
-  backends answer with it and a nested type cannot be named from a class of the same
-  simple name. `WebpCodec.Backend` is new, and answers which backend is in use.
+  A program that named `imagify.webp.WebpCodec` or set the property compiles and means the
+  same thing as before, one import shorter. One that named `imagify.webp.webp4j.WebpCodec`
+  has to name `imagify.webp.ffm.WebpCodec` instead, and one that read `WebpCodec.backend()`
+  has nothing left to ask.
 
   The default WebP codec is bound through `java.lang.foreign`, so a program on JDK 24 or
   newer that uses it from the class path is asked to allow native access. Nothing fails
@@ -21,29 +24,6 @@
       java --enable-native-access=ALL-UNNAMED -cp ... YourApp
 
 ### Features
-
-* two WebP backends ship in the jar and the system property `imagify.webp.backend`
-  chooses between them, read once on first use:
-
-      java -Dimagify.webp.backend=webp4j -cp ... YourApp
-
-  `ffm` is the default and is the one described below. `webp4j` binds the same `libwebp`
-  through JNI, so it needs no `--enable-native-access` flag, and it ships its own copy of
-  the library inside its own jar. The `webp4j-core` dependency comes back, so a project
-  that had to declare it by hand for the WebP plug-in no longer has to.
-
-  A backend that is named but cannot load its library is not a failure: the other one is
-  used instead and the substitution is logged, and only when neither can load does
-  `WebpCodec.isAvailable()` answer false. A name that is neither backend is a warning and
-  the default, which is the same bargain the ImageIO plug-ins have always made.
-
-  The one setting the two do not share is the encoding effort of a still image. `webp4j`'s
-  still image entry point takes quality, lossless and threading and nothing else, so it
-  always encodes a still at libwebp's own default of method 4 and says so once at
-  `WARNING` rather than refusing, which would make `ImageFormat.Webp.compressionMethod()`
-  unusable on that backend. An animation can be told either effort on both. Everything
-  else is the same work either way, and a file written through one backend is read by the
-  other: `WebpBackendTest` pins that by driving both of them and asking them to agree.
 
 * encode and decode WebP with a bundled `libwebp` through the Foreign Function &amp; Memory
   API, and dropped the JNA binding
@@ -75,9 +55,17 @@
   encode faster at the same quality: `exact` 1.00x and byte identical, `sns_strength`
   within noise and worse at the fast end, `filter_strength` slower, `pass` 0.19x to
   0.53x, `segments` 1.06x for 0.80 dB, `use_sharp_yuv` 0.53x, and `target_size` no
-  effect at all. `thread_level` is compiled in and deliberately left at zero: only
-  `VP8EncAnalyze` reads it, and it splits a frame in two rather than across as many
-  threads as it has. The default therefore does not move.
+  effect at all. So the encoder settings are otherwise libwebp's own.
+* `thread_level` is set to 1 rather than left at libwebp's zero. It used to be left
+  there on the strength of a measurement taken on one 24 core host that found the flag
+  not worth setting, which was generalised into a claim about the encoder. Measured on
+  a 12 core Ryzen 9, medians over 20 to 60 iterations with the same method on both
+  sides: 107x103 **2.68 ms to 2.17 ms**, 517x380 **37.19 ms to 22.47 ms**, so a 517x380
+  encode went from 2.02x slower than the JNI binding it replaced to 1.19x. Only
+  `VP8EncAnalyze` reads the flag and it splits a frame in two rather than across as many
+  threads as it has, which caps the gain rather than making it zero. Level 1 rather than
+  more because that is what level 1 buys. `exact` was re-measured on the same host and
+  is still 1.00x and byte identical, so it stays at 1.
 
 ### Notes
 

@@ -9,23 +9,25 @@
  */
 package imagify.webp;
 
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
 
-import imagify.ImageMetrics;
-import imagify.ImageResizer;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+
 import javax.imageio.ImageIO;
+
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import imagify.ImageMetrics;
+import imagify.ImageResizer;
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * Complete verification of animated GIF to animated WebP conversion.
@@ -36,21 +38,18 @@ import org.junit.jupiter.api.io.TempDir;
 class AnimatedGifToWebpTest {
 
     private static final String GIF_DIR = "src/test/resources/anime gif";
+
     private static final String REPORT_DIR = "target/test-output/anime-gif-to-webp";
 
     @Test
     @DisplayName("Converts animated GIF to animated WebP, preserving frame count, timing, dimensions, and quality")
     void convertsAnimatedGifToWebp(@TempDir Path dir) throws Exception {
-        Assumptions.assumeTrue(WebpCodec.isAvailable(),
-                () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
+        Assumptions.assumeTrue(WebpCodec.isAvailable(), () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
 
         Path gifDir = Paths.get(GIF_DIR);
         Assumptions.assumeTrue(Files.isDirectory(gifDir), () -> GIF_DIR + " does not exist");
 
-        List<Path> gifs = Files.walk(gifDir)
-                .filter(p -> p.toString().toLowerCase().endsWith(".gif"))
-                .sorted()
-                .toList();
+        List<Path> gifs = Files.walk(gifDir).filter(p -> p.toString().toLowerCase().endsWith(".gif")).sorted().toList();
         Assumptions.assumeFalse(gifs.isEmpty(), () -> "no GIF files in " + GIF_DIR);
 
         Path reportDir = Paths.get(REPORT_DIR);
@@ -67,52 +66,42 @@ class AnimatedGifToWebpTest {
             if (result.passed) passedGifs++;
         }
 
-        System.out.printf("  Summary: %d/%d GIFs passed, %d total frames%n",
-                passedGifs, gifs.size(), totalFrames);
+        System.out.printf("  Summary: %d/%d GIFs passed, %d total frames%n", passedGifs, gifs.size(), totalFrames);
         assertEquals(gifs.size(), passedGifs, "all GIFs should pass conversion");
     }
 
     @Test
     @DisplayName("Verify pixel-level fidelity in animated GIF to WebP conversion")
     void pixelFidelityPreserved(@TempDir Path dir) throws Exception {
-        Assumptions.assumeTrue(WebpCodec.isAvailable(),
-                () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
+        Assumptions.assumeTrue(WebpCodec.isAvailable(), () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
 
         Path gifDir = Paths.get(GIF_DIR);
         Assumptions.assumeTrue(Files.isDirectory(gifDir));
 
-        List<Path> gifs = Files.walk(gifDir)
-                .filter(p -> p.toString().toLowerCase().endsWith(".gif"))
-                .sorted()
-                .toList();
+        List<Path> gifs = Files.walk(gifDir).filter(p -> p.toString().toLowerCase().endsWith(".gif")).sorted().toList();
         Assumptions.assumeFalse(gifs.isEmpty());
 
-        // Verify PSNR/SSIM on at least one GIF (use a subdirectory to avoid overlap with convertsAnimatedGifToWebp)
+        // Verify PSNR/SSIM on at least one GIF (use a subdirectory to avoid overlap with
+        // convertsAnimatedGifToWebp)
         Path gif = gifs.get(0);
         Path reportDir = Paths.get(REPORT_DIR);
         Path fidelityDir = reportDir.resolve("fidelity");
         Files.createDirectories(fidelityDir);
         ConvertResult result = convertGif(gif, "fidelity_test", fidelityDir);
 
-        assertTrue(result.avgPsnr > 20,
-                "average PSNR should be > 20dB (lossy conversion): " + result.avgPsnr);
-        assertTrue(result.avgSsim > 0.5,
-                "average SSIM should be > 0.5 (structural similarity): " + result.avgSsim);
+        assertTrue(result.avgPsnr > 20, "average PSNR should be > 20dB (lossy conversion): " + result.avgPsnr);
+        assertTrue(result.avgSsim > 0.5, "average SSIM should be > 0.5 (structural similarity): " + result.avgSsim);
     }
 
     @Test
     @DisplayName("Resize animated GIF frames and convert to animated WebP")
     void resizedAnimatedGifToWebp(@TempDir Path dir) throws Exception {
-        Assumptions.assumeTrue(WebpCodec.isAvailable(),
-                () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
+        Assumptions.assumeTrue(WebpCodec.isAvailable(), () -> "libwebp is not available: " + WebpCodec.getUnavailableReason());
 
         Path gifDir = Paths.get(GIF_DIR);
         Assumptions.assumeTrue(Files.isDirectory(gifDir));
 
-        List<Path> gifs = Files.walk(gifDir)
-                .filter(p -> p.toString().toLowerCase().endsWith(".gif"))
-                .sorted()
-                .toList();
+        List<Path> gifs = Files.walk(gifDir).filter(p -> p.toString().toLowerCase().endsWith(".gif")).sorted().toList();
         Assumptions.assumeFalse(gifs.isEmpty());
 
         // Verify on the first GIF
@@ -128,8 +117,7 @@ class AnimatedGifToWebpTest {
             resizedFrames.add(ImageResizer.resize(frame, targetW, targetH));
         }
 
-        byte[] webpBytes = WebpCodec.encodeAnimation(
-                resizedFrames, delaysMs, 75, false, 0);
+        byte[] webpBytes = WebpCodec.encodeAnimation(resizedFrames, delaysMs, 75, false, 0);
         assertTrue(webpBytes.length > 0, "encoded WebP is empty");
 
         // Decode and verify
@@ -164,10 +152,8 @@ class AnimatedGifToWebpTest {
             avgPsnr /= checked;
             avgSsim /= checked;
         }
-        assertTrue(avgPsnr > 20,
-                "average PSNR should be > 20dB after resize+convert: " + avgPsnr);
-        assertTrue(avgSsim > 0.5,
-                "average SSIM should be > 0.5 after resize+convert: " + avgSsim);
+        assertTrue(avgPsnr > 20, "average PSNR should be > 20dB after resize+convert: " + avgPsnr);
+        assertTrue(avgSsim > 0.5, "average SSIM should be > 0.5 after resize+convert: " + avgSsim);
 
         // Write output files for inspection (separate directory to avoid collision)
         Path resizedDir = Paths.get("target/test-output/anime-gif-resized-to-webp");
@@ -175,23 +161,16 @@ class AnimatedGifToWebpTest {
         Path outFile = resizedDir.resolve(gif.getFileName().toString().replace(".gif", "_resized.webp"));
         Files.write(outFile, webpBytes);
 
-        System.out.printf("  Resized %d frames from %dx%d to %dx%d: %d bytes, PSNR=%.1f, SSIM=%.4f%n",
-                resizedFrames.size(),
-                originalFrames.get(0).getWidth(), originalFrames.get(0).getHeight(),
-                targetW, targetH, webpBytes.length, avgPsnr, avgSsim);
+        System.out.printf("  Resized %d frames from %dx%d to %dx%d: %d bytes, PSNR=%.1f, SSIM=%.4f%n", resizedFrames.size(), originalFrames
+                .get(0)
+                .getWidth(), originalFrames.get(0).getHeight(), targetW, targetH, webpBytes.length, avgPsnr, avgSsim);
     }
 
     // ------------------------------------------------------------------ conversion
 
     /** A record holding the conversion result of a single GIF. */
-    private record ConvertResult(
-            int frameCount,
-            int webpBytesLength,
-            boolean hasAnimation,
-            double avgPsnr,
-            double avgSsim,
-            boolean passed
-    ) {}
+    private record ConvertResult(int frameCount, int webpBytesLength, boolean hasAnimation, double avgPsnr, double avgSsim, boolean passed) {
+    }
 
     private ConvertResult convertGif(Path gif, String id, Path reportDir) throws Exception {
         // Read all frames from GIF
@@ -202,15 +181,12 @@ class AnimatedGifToWebpTest {
         int frameWidth = originalFrames.get(0).getWidth();
         int frameHeight = originalFrames.get(0).getHeight();
         for (int i = 1; i < originalFrames.size(); i++) {
-            assertEquals(frameWidth, originalFrames.get(i).getWidth(),
-                    "frame " + i + " width mismatch in " + gif.getFileName());
-            assertEquals(frameHeight, originalFrames.get(i).getHeight(),
-                    "frame " + i + " height mismatch in " + gif.getFileName());
+            assertEquals(frameWidth, originalFrames.get(i).getWidth(), "frame " + i + " width mismatch in " + gif.getFileName());
+            assertEquals(frameHeight, originalFrames.get(i).getHeight(), "frame " + i + " height mismatch in " + gif.getFileName());
         }
 
         // Encode to animated WebP
-        byte[] webpBytes = WebpCodec.encodeAnimation(
-                originalFrames, delaysMs, 75, false, 0);
+        byte[] webpBytes = WebpCodec.encodeAnimation(originalFrames, delaysMs, 75, false, 0);
         assertTrue(webpBytes.length > 0, "encoded WebP is empty");
 
         // Verify header
@@ -224,10 +200,8 @@ class AnimatedGifToWebpTest {
 
         // Verify each frame's dimensions
         for (int i = 0; i < decodedFrames.size(); i++) {
-            assertEquals(frameWidth, decodedFrames.get(i).getWidth(),
-                    "decoded frame " + i + " width mismatch");
-            assertEquals(frameHeight, decodedFrames.get(i).getHeight(),
-                    "decoded frame " + i + " height mismatch");
+            assertEquals(frameWidth, decodedFrames.get(i).getWidth(), "decoded frame " + i + " width mismatch");
+            assertEquals(frameHeight, decodedFrames.get(i).getHeight(), "decoded frame " + i + " height mismatch");
         }
 
         // Verify timing
@@ -238,8 +212,7 @@ class AnimatedGifToWebpTest {
         int[] decodedDelays = timing[1];
         assertEquals(delaysMs.length, decodedDelays.length, "timing array length mismatch");
         for (int i = 0; i < delaysMs.length; i++) {
-            assertEquals(delaysMs[i], decodedDelays[i], Math.max(1, delaysMs[i] / 10),
-                    "delay mismatch at frame " + i);
+            assertEquals(delaysMs[i], decodedDelays[i], Math.max(1, delaysMs[i] / 10), "delay mismatch at frame " + i);
         }
 
         // Pixel-level fidelity check (compare first and last frames)
@@ -266,12 +239,10 @@ class AnimatedGifToWebpTest {
         Path outFile = outDir.resolve(gif.getFileName().toString().replace(".gif", ".webp"));
         Files.write(outFile, webpBytes);
 
-        System.out.printf("  %s: %d frames, %d bytes, PSNR=%.1f dB, SSIM=%.4f, encode/decode OK%n",
-                gif.getFileName(), originalFrames.size(), webpBytes.length, avgPsnr, avgSsim);
+        System.out.printf("  %s: %d frames, %d bytes, PSNR=%.1f dB, SSIM=%.4f, encode/decode OK%n", gif.getFileName(), originalFrames
+                .size(), webpBytes.length, avgPsnr, avgSsim);
 
-        return new ConvertResult(
-                originalFrames.size(), webpBytes.length, info.hasAnimation(),
-                avgPsnr, avgSsim, true);
+        return new ConvertResult(originalFrames.size(), webpBytes.length, info.hasAnimation(), avgPsnr, avgSsim, true);
     }
 
     // ------------------------------------------------------------------ helpers
@@ -319,8 +290,10 @@ class AnimatedGifToWebpTest {
         if ("GraphicControlExtension".equals(node.getNodeName())) {
             var attr = node.getAttributes().getNamedItem("delayTime");
             if (attr != null) {
-                try { return Integer.parseInt(attr.getNodeValue()) * 10; }
-                catch (NumberFormatException ignored) {}
+                try {
+                    return Integer.parseInt(attr.getNodeValue()) * 10;
+                } catch (NumberFormatException ignored) {
+                }
             }
         }
         for (int i = 0; i < node.getChildNodes().getLength(); i++) {

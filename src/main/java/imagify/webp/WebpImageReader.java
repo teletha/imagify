@@ -9,13 +9,6 @@
  */
 package imagify.webp;
 
-import javax.imageio.IIOException;
-import javax.imageio.ImageReadParam;
-import javax.imageio.ImageReader;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.metadata.IIOMetadata;
-import javax.imageio.spi.ImageReaderSpi;
-import javax.imageio.stream.ImageInputStream;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -26,6 +19,16 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import javax.imageio.IIOException;
+import javax.imageio.ImageReadParam;
+import javax.imageio.ImageReader;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.spi.ImageReaderSpi;
+import javax.imageio.stream.ImageInputStream;
+
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * {@link ImageReader} for WebP images, backed by a bundled {@code libwebp}.
@@ -54,18 +57,19 @@ public class WebpImageReader extends ImageReader {
     public static final int IMAGE_INDEX = 0;
 
     /** The image types this reader can produce, most useful first. */
-    private static final List<Integer> TYPES = List.of(
-            BufferedImage.TYPE_INT_ARGB,
-            BufferedImage.TYPE_INT_ARGB_PRE,
-            BufferedImage.TYPE_4BYTE_ABGR,
-            BufferedImage.TYPE_INT_RGB,
-            BufferedImage.TYPE_3BYTE_BGR);
+    private static final List<Integer> TYPES = List
+            .of(BufferedImage.TYPE_INT_ARGB, BufferedImage.TYPE_INT_ARGB_PRE, BufferedImage.TYPE_4BYTE_ABGR, BufferedImage.TYPE_INT_RGB, BufferedImage.TYPE_3BYTE_BGR);
 
     private ImageInputStream stream;
+
     private long start = -1;
+
     private byte[] encoded;
+
     private DecodedWebp decoded;
+
     private WebpImageInfo info;
+
     private int[] delaysMs;
 
     /**
@@ -123,7 +127,8 @@ public class WebpImageReader extends ImageReader {
     @Override
     public IIOMetadata getStreamMetadata() throws IIOException {
         checkInput();
-        // The loop count belongs to the file rather than to any one frame, and the frame timing that
+        // The loop count belongs to the file rather than to any one frame, and the frame timing
+        // that
         // goes with it is not what a caller of stream metadata is after. Reporting it here is what
         // lets a generic reader find it, which is the same route an animated AVIF takes.
         WebpImageInfo image = checkInfo();
@@ -149,8 +154,7 @@ public class WebpImageReader extends ImageReader {
     }
 
     @Override
-    public IIOMetadata getImageMetadata(int imageIndex, String metadataFormat, Set<String> extraMetadataFormats)
-            throws IIOException {
+    public IIOMetadata getImageMetadata(int imageIndex, String metadataFormat, Set<String> extraMetadataFormats) throws IIOException {
         WebpImageInfo image = checkIndex(imageIndex);
         WebpMetadata metadata = new WebpMetadata(image, durationMsOf(image, imageIndex), image.loopCount());
         // Fail fast, with a useful message, on an unsupported format name.
@@ -203,8 +207,7 @@ public class WebpImageReader extends ImageReader {
     private record Sample(int x, int y, int width, int height, int subX, int subY) {
 
         boolean isWholeImage(int sourceWidth, int sourceHeight) {
-            return subX == 1 && subY == 1 && x == 0 && y == 0
-                    && width == sourceWidth && height == sourceHeight;
+            return subX == 1 && subY == 1 && x == 0 && y == 0 && width == sourceWidth && height == sourceHeight;
         }
     }
 
@@ -220,10 +223,9 @@ public class WebpImageReader extends ImageReader {
         int y = region == null ? 0 : region.y;
         int width = region == null ? image.width() : region.width;
         int height = region == null ? image.height() : region.height;
-        if (x < 0 || y < 0 || width <= 0 || height <= 0
-                || x + width > image.width() || y + height > image.height()) {
-            throw new IIOException("the source region " + region + " does not fit in the "
-                    + image.width() + "x" + image.height() + " image");
+        if (x < 0 || y < 0 || width <= 0 || height <= 0 || x + width > image.width() || y + height > image.height()) {
+            throw new IIOException("the source region " + region + " does not fit in the " + image.width() + "x" + image
+                    .height() + " image");
         }
         return new Sample(x, y, divideUp(width, subX), divideUp(height, subY), subX, subY);
     }
@@ -245,9 +247,8 @@ public class WebpImageReader extends ImageReader {
             return new BufferedImage(sample.width(), sample.height(), type);
         }
         if (sample.width() > destination.getWidth() || sample.height() > destination.getHeight()) {
-            throw new IIOException("the destination image is " + destination.getWidth() + "x"
-                    + destination.getHeight() + " but the requested region is " + sample.width() + "x"
-                    + sample.height());
+            throw new IIOException("the destination image is " + destination.getWidth() + "x" + destination
+                    .getHeight() + " but the requested region is " + sample.width() + "x" + sample.height());
         }
         return destination;
     }
@@ -257,12 +258,10 @@ public class WebpImageReader extends ImageReader {
             return;
         }
         if (param.getSourceBands() != null && !isEveryBand(param.getSourceBands(), 4)) {
-            throw new IIOException("source band selection is not supported: "
-                    + Arrays.toString(param.getSourceBands()));
+            throw new IIOException("source band selection is not supported: " + Arrays.toString(param.getSourceBands()));
         }
         if (param.getDestinationBands() != null && !isEveryBand(param.getDestinationBands(), 4)) {
-            throw new IIOException("destination band selection is not supported: "
-                    + Arrays.toString(param.getDestinationBands()));
+            throw new IIOException("destination band selection is not supported: " + Arrays.toString(param.getDestinationBands()));
         }
     }
 
@@ -280,24 +279,18 @@ public class WebpImageReader extends ImageReader {
 
     // ------------------------------------------------------------------------ pixel transfer
 
-    private static void transfer(BufferedImage source, Sample sample, ImageReadParam param, BufferedImage target)
-            throws IIOException {
+    private static void transfer(BufferedImage source, Sample sample, ImageReadParam param, BufferedImage target) throws IIOException {
         Point offset = param == null ? null : param.getDestinationOffset();
         int atX = offset == null ? 0 : offset.x;
         int atY = offset == null ? 0 : offset.y;
-        if (atX < 0 || atY < 0
-                || atX + sample.width() > target.getWidth()
-                || atY + sample.height() > target.getHeight()) {
-            throw new IIOException("the destination offset " + offset + " does not fit in the "
-                    + target.getWidth() + "x" + target.getHeight() + " destination image");
+        if (atX < 0 || atY < 0 || atX + sample.width() > target.getWidth() || atY + sample.height() > target.getHeight()) {
+            throw new IIOException("the destination offset " + offset + " does not fit in the " + target.getWidth() + "x" + target
+                    .getHeight() + " destination image");
         }
         Raster raster = source.getData();
         ColorModel model = target.getColorModel();
-        if (sample.isWholeImage(source.getWidth(), source.getHeight())
-                && atX == 0 && atY == 0
-                && model != null
-                && isWholeImage(target)
-                && model.isCompatibleRaster(raster)) {
+        if (sample.isWholeImage(source.getWidth(), source
+                .getHeight()) && atX == 0 && atY == 0 && model != null && isWholeImage(target) && model.isCompatibleRaster(raster)) {
             // Same memory layout, so the rows can be handed over without touching a single pixel.
             target.getRaster().setRect(0, 0, raster);
             return;
@@ -306,9 +299,8 @@ public class WebpImageReader extends ImageReader {
         int rows = sample.height() * sample.subY();
         int[] pixels = new int[stride * rows];
         source.getRGB(sample.x(), sample.y(), stride, rows, pixels, 0, stride);
-        target.setRGB(atX, atY, sample.width(), sample.height(),
-                divideDown(pixels, sample.width(), sample.height(), sample.subX(), sample.subY()),
-                0, sample.width());
+        target.setRGB(atX, atY, sample.width(), sample
+                .height(), divideDown(pixels, sample.width(), sample.height(), sample.subX(), sample.subY()), 0, sample.width());
     }
 
     /**
@@ -318,8 +310,8 @@ public class WebpImageReader extends ImageReader {
      */
     private static boolean isWholeImage(BufferedImage image) {
         Raster raster = image.getRaster();
-        return raster.getMinX() == 0 && raster.getMinY() == 0
-                && raster.getWidth() == image.getWidth() && raster.getHeight() == image.getHeight();
+        return raster.getMinX() == 0 && raster.getMinY() == 0 && raster.getWidth() == image.getWidth() && raster.getHeight() == image
+                .getHeight();
     }
 
     /**
@@ -358,7 +350,8 @@ public class WebpImageReader extends ImageReader {
         checkInput();
         if (info == null) {
             // One pass over the file, kept, because every frame, every duration and the loop count
-            // all come out of it. Decoding per frame instead would walk an animation once per frame,
+            // all come out of it. Decoding per frame instead would walk an animation once per
+            // frame,
             // which for n frames is n walks rather than one.
             try {
                 decoded = WebpCodec.decodeFile(encoded());
@@ -374,10 +367,9 @@ public class WebpImageReader extends ImageReader {
     private WebpImageInfo checkIndex(int imageIndex) throws IIOException {
         WebpImageInfo image = checkInfo();
         if (imageIndex < 0 || imageIndex >= image.frameCount()) {
-            throw new IndexOutOfBoundsException("image index " + imageIndex + " is out of bounds: "
-                    + (image.hasAnimation()
-                            ? "the WebP animation holds " + image.frameCount() + " frames"
-                            : "a WebP still image holds exactly one image"));
+            throw new IndexOutOfBoundsException("image index " + imageIndex + " is out of bounds: " + (image.hasAnimation()
+                    ? "the WebP animation holds " + image.frameCount() + " frames"
+                    : "a WebP still image holds exactly one image"));
         }
         return image;
     }
@@ -409,7 +401,8 @@ public class WebpImageReader extends ImageReader {
      */
     private long length() {
         try {
-            // A cached file stream answers -1 rather than failing, which is what the contract allows,
+            // A cached file stream answers -1 rather than failing, which is what the contract
+            // allows,
             // so anything below the start position counts as "unknown" too.
             long length = stream.length();
             return length < start ? -1 : length;
@@ -459,10 +452,9 @@ public class WebpImageReader extends ImageReader {
             // one that was asked for is simply the one at that position.
             return decoded.frames().get(imageIndex);
         } catch (IndexOutOfBoundsException e) {
-            throw new IIOException("image index " + imageIndex + " is out of bounds: "
-                    + (image.hasAnimation()
-                            ? "the WebP animation holds " + image.frameCount() + " frames"
-                            : "a WebP still image holds exactly one image"), e);
+            throw new IIOException("image index " + imageIndex + " is out of bounds: " + (image.hasAnimation()
+                    ? "the WebP animation holds " + image.frameCount() + " frames"
+                    : "a WebP still image holds exactly one image"), e);
         }
     }
 

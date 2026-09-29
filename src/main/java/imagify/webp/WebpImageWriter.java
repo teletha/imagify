@@ -9,8 +9,6 @@
  */
 package imagify.webp;
 
-import imagify.webp.ffm.WebpCodec;
-
 import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.util.Locale;
@@ -23,6 +21,8 @@ import javax.imageio.ImageWriter;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageWriterSpi;
 import javax.imageio.stream.ImageOutputStream;
+
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * {@link ImageWriter} that encodes images as WebP using a bundled {@code libwebp}.

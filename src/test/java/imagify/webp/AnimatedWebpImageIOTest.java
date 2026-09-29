@@ -29,6 +29,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import imagify.webp.ffm.WebpCodec;
+
 
 /**
  * Tests that an animated WebP reports its frame timing and its loop count through the standard
