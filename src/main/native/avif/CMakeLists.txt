@@ -183,10 +183,19 @@ target_include_directories(imagify_avif PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}" "$
 target_link_libraries(imagify_avif PRIVATE "${IMAGIFY_AVIF_LIBRARY}")
 
 # libavif is C, but with libyuv and libsharpyuv built locally it is a C++ program underneath, so the
-# link needs the C++ runtime. That is a new dependency this shim does not have with libavif linked
+# link needs the C++ runtime. That is a new dependency this shim would not have with libavif linked
 # dynamically, and it is why the self-contained allow list mentions libstdc++ and libc++: a static
 # libavif brings the C++ runtime with it.
-target_link_libraries(imagify_avif PRIVATE stdc++)
+#
+# The two are not the same name, and naming the wrong one is LNK1181 rather than a warning. MSVC
+# links the C++ runtime by itself when it sees a C++ object file, and here it never does: libavif
+# arrives as a static archive, whose members are not object files until something in them is pulled
+# in. So the runtime is named, and under /MT the static one is libcmt.
+if(MSVC)
+  target_link_libraries(imagify_avif PRIVATE libcmt)
+else()
+  target_link_libraries(imagify_avif PRIVATE stdc++)
+endif()
 
 target_compile_definitions(imagify_avif
   PRIVATE "IMAGIFY_AVIF_VERSION=\"${IMAGIFY_AVIF_VERSION}\"")
