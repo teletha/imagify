@@ -24,9 +24,16 @@ extern "C" {
 #endif
 
 /*
- * The version of this ABI, not of libwebp. The JNA binding gates on it so that a jar built against
+ * The version of this ABI, not of libwebp. The FFM binding gates on it so that a jar built against
  * one revision of this file refuses a library built against another rather than reading arguments
  * from the wrong offsets.
+ *
+ * It stays at 1 across the entry points that take and return 0xAARRGGBB words, because none of the
+ * entry points that made up version 1 changed: they are the same functions with the same arguments
+ * and the same answers. A binding that does not know about them still works against a library that
+ * has them, and a binding that does use them has to ask whether they are there rather than assume
+ * it, since the libraries in the jar are built and shipped one platform at a time. Raising this
+ * number is for the other direction, when a meaning that a binding already relies on has changed.
  */
 #define IMAGIFY_WEBP_ABI_VERSION 1
 
@@ -141,10 +148,14 @@ int imagify_webp_decode(const uint8_t* data, size_t length, uint8_t** out, size_
  * Encodes tightly packed A, B, G, R bytes as a complete WebP file.
  *
  * An alpha of 0 is kept as it is, and so is the colour underneath it, so an image with transparency
- * comes back out of a lossless round trip as the same pixels. Quality is ignored when lossless is
- * nonzero, which is what libwebp itself does with it: in that mode the field is an amount of effort
- * rather than a fidelity to trade away, and a caller that has chosen not to lose anything has not
- * asked a question of it.
+ * comes back out of a lossless round trip as the same pixels.
+ *
+ * quality is honoured in both modes, and means different things in each. It is the fidelity to
+ * trade away when lossless is zero, and it is the amount of effort libwebp spends when it is not:
+ * the same field, read two ways, which is libwebp's own doing. So a caller that has chosen not to
+ * lose anything has said nothing about fidelity and can still say how hard to try, and the whole of
+ * the range is worth using. It is a size rather than a fidelity there, and a file encoded at
+ * IMAGIFY_WEBP_MIN_QUALITY with lossless set is a small file that is still the same picture.
  *
  * On success *encoded holds a buffer the caller owns and must hand back to imagify_webp_free. It is
  * null on failure.
@@ -152,7 +163,7 @@ int imagify_webp_decode(const uint8_t* data, size_t length, uint8_t** out, size_
  * @param pixels width * height * 4 bytes in A, B, G, R order
  * @param width the image width, at least 1
  * @param height the image height, at least 1
- * @param quality IMAGIFY_WEBP_MIN_QUALITY to IMAGIFY_WEBP_MAX_QUALITY, ignored when lossless
+ * @param quality IMAGIFY_WEBP_MIN_QUALITY to IMAGIFY_WEBP_MAX_QUALITY, a fidelity or an effort
  * @param lossless nonzero to store the pixels without loss
  * @param method IMAGIFY_WEBP_MIN_METHOD to IMAGIFY_WEBP_MAX_METHOD, how hard the encoder tries
  * @param encoded receives the buffer to free with imagify_webp_free, or NULL on failure
@@ -163,6 +174,65 @@ int imagify_webp_decode(const uint8_t* data, size_t length, uint8_t** out, size_
  */
 int imagify_webp_encode(const uint8_t* pixels, int width, int height, int quality, int lossless,
     int method, uint8_t** encoded, size_t* encoded_length, char* message, size_t message_capacity);
+
+/*
+ * Encodes 0xAARRGGBB words as a complete WebP file, without a copy of the pixels.
+ *
+ * The same encode as imagify_webp_encode, and the same options in the same range, with the pixels
+ * given in the layout libwebp reads them in rather than the layout this library hands them around
+ * in. A caller whose pixels are already in that layout saves the whole of the shuffle: the byte
+ * buffer imagify_webp_encode has to fill, the copy out of it into the words libwebp wants, and the
+ * image's worth of allocation either of those needs. A caller whose pixels are not already in that
+ * layout is better off with imagify_webp_encode, since the shuffle still has to happen and this
+ * only moves where.
+ *
+ * The words are only read, and only the width * height of them the caller says there are.
+ *
+ * On success *encoded holds a buffer the caller owns and must hand back to imagify_webp_free. It is
+ * null on failure.
+ *
+ * @param pixels width * height 0xAARRGGBB words
+ * @param width the image width, at least 1
+ * @param height the image height, at least 1
+ * @param quality IMAGIFY_WEBP_MIN_QUALITY to IMAGIFY_WEBP_MAX_QUALITY, a fidelity or an effort
+ * @param lossless nonzero to store the pixels without loss
+ * @param method IMAGIFY_WEBP_MIN_METHOD to IMAGIFY_WEBP_MAX_METHOD, how hard the encoder tries
+ * @param encoded receives the buffer to free with imagify_webp_free, or NULL on failure
+ * @param encoded_length receives the number of bytes at *encoded
+ * @param message receives a description of a failure, and is left untouched on success
+ * @param message_capacity the size of message in bytes
+ * @return IMAGIFY_WEBP_OK, or a status that says what went wrong
+ */
+int imagify_webp_encode_argb(const uint32_t* pixels, int width, int height, int quality, int lossless,
+    int method, uint8_t** encoded, size_t* encoded_length, char* message, size_t message_capacity);
+
+/*
+ * Decodes a still image straight into 0xAARRGGBB words the caller has already allocated, which is
+ * the same trade as imagify_webp_encode_argb at the other end of the call.
+ *
+ * The buffer has to be big enough before the decode starts, and the size is in the file's headers,
+ * so a caller reads it with imagify_webp_read_features first. This reads the headers as well, to
+ * refuse an animation and to report what the file holds, and that is the same call the other decode
+ * entry point makes.
+ *
+ * out_stride is in words and may be larger than the width, in which case each row of the file
+ * starts that many words into the buffer and the rows are not contiguous. Nothing else in this ABI
+ * strides, and a caller with an image whose rows are not contiguous is a caller no picture library
+ * can hand a WebP to cheaply anyway.
+ *
+ * An animation is refused with IMAGIFY_WEBP_ERR_UNSUPPORTED, as it is everywhere else.
+ *
+ * @param data the encoded WebP file
+ * @param length the number of bytes at data
+ * @param out the words to decode into, at least width * height of them
+ * @param out_stride how many words apart the rows of out are, at least the image width
+ * @param features receives what the headers say
+ * @param message receives a description of a failure, and is left untouched on success
+ * @param message_capacity the size of message in bytes
+ * @return IMAGIFY_WEBP_OK, or a status that says what went wrong
+ */
+int imagify_webp_decode_into_argb(const uint8_t* data, size_t length, uint32_t* out, int out_stride,
+    imagify_webp_features* features, char* message, size_t message_capacity);
 
 /*
  * Reads the frame count, the loop count and the per frame delay of an animation without decoding a
@@ -214,7 +284,8 @@ int imagify_webp_decode_animation(const uint8_t* data, size_t length,
  * presentation order, which is the layout the animation decoder hands back and so the layout a
  * caller that has just read an animation already has.
  *
- * Quality is ignored when lossless is nonzero, and loop_count of 0 means the animation repeats
+ * quality is honoured in both modes, as it is for the still encode: a fidelity to trade away when
+ * lossless is zero, an amount of effort when it is not. loop_count of 0 means the animation repeats
  * forever, which is what the WebP container itself means by it.
  *
  * On success *encoded holds a buffer the caller owns and must hand back to imagify_webp_free. It is
@@ -225,7 +296,7 @@ int imagify_webp_decode_animation(const uint8_t* data, size_t length,
  * @param width the canvas width, at least 1
  * @param height the canvas height, at least 1
  * @param delays frame_count integers, how long each frame is shown in milliseconds
- * @param quality IMAGIFY_WEBP_MIN_QUALITY to IMAGIFY_WEBP_MAX_QUALITY, ignored when lossless
+ * @param quality IMAGIFY_WEBP_MIN_QUALITY to IMAGIFY_WEBP_MAX_QUALITY, a fidelity or an effort
  * @param lossless nonzero to store the pixels without loss
  * @param loop_count how often the animation repeats, 0 meaning forever
  * @param method IMAGIFY_WEBP_MIN_METHOD to IMAGIFY_WEBP_MAX_METHOD, how hard the encoder tries
@@ -238,6 +309,41 @@ int imagify_webp_decode_animation(const uint8_t* data, size_t length,
 int imagify_webp_encode_animation(const uint8_t* frames, int frame_count, int width, int height,
     const int* delays, int quality, int lossless, int loop_count, int method, uint8_t** encoded,
     size_t* encoded_length, char* message, size_t message_capacity);
+
+/*
+ * Encodes a sequence of frames of 0xAARRGGBB words as an animated WebP file, without a copy of the
+ * pixels.
+ *
+ * The same encode as imagify_webp_encode_animation, with the frames given in the layout libwebp
+ * reads them in rather than the layout this library hands them around in. The saving is the pass
+ * over the pixels that would otherwise unpack Java bytes into these words first; the animation
+ * encoder copies each frame into a frame buffer of its own either way, so unlike the still case
+ * there is no second copy here to save as well.
+ *
+ * The words are only read, and only the frame_count * width * height of them the caller says there
+ * are. An alpha of 0 is kept as it is here as it is in the byte version.
+ *
+ * On success *encoded holds a buffer the caller owns and must hand back to imagify_webp_free. It is
+ * null on failure.
+ *
+ * @param frames frame_count * width * height 0xAARRGGBB words in presentation order
+ * @param frame_count the number of frames, at least 1
+ * @param width the canvas width, at least 1
+ * @param height the canvas height, at least 1
+ * @param delays frame_count integers, how long each frame is shown in milliseconds
+ * @param quality IMAGIFY_WEBP_MIN_QUALITY to IMAGIFY_WEBP_MAX_QUALITY, a fidelity or an effort
+ * @param lossless nonzero to store the pixels without loss
+ * @param loop_count how often the animation repeats, 0 meaning forever
+ * @param method IMAGIFY_WEBP_MIN_METHOD to IMAGIFY_WEBP_MAX_METHOD, how hard the encoder tries
+ * @param encoded receives the buffer to free with imagify_webp_free, or NULL on failure
+ * @param encoded_length receives the number of bytes at *encoded
+ * @param message receives a description of a failure, and is left untouched on success
+ * @param message_capacity the size of message in bytes
+ * @return IMAGIFY_WEBP_OK, or a status that says what went wrong
+ */
+int imagify_webp_encode_animation_argb(const uint32_t* frames, int frame_count, int width,
+    int height, const int* delays, int quality, int lossless, int loop_count, int method,
+    uint8_t** encoded, size_t* encoded_length, char* message, size_t message_capacity);
 
 /*
  * Frees a buffer handed out by any of the entry points above that allocates one. Accepts NULL.

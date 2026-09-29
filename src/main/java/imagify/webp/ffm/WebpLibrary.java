@@ -231,6 +231,24 @@ public final class WebpLibrary {
             ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG
     );
 
+    /** Function descriptor for {@code imagify_webp_encode_argb}. */
+    public static final FunctionDescriptor ENCODE_ARGB_DESC = FunctionDescriptor.of(
+            ValueLayout.JAVA_INT,
+            ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG
+    );
+
+    /** Function descriptor for {@code imagify_webp_encode_animation_argb}. */
+    public static final FunctionDescriptor ENCODE_ANIMATION_ARGB_DESC = FunctionDescriptor.of(
+            ValueLayout.JAVA_INT,
+            ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG
+    );
+
+    /** Function descriptor for {@code imagify_webp_decode_into_argb}. */
+    public static final FunctionDescriptor DECODE_INTO_ARGB_DESC = FunctionDescriptor.of(
+            ValueLayout.JAVA_INT,
+            ValueLayout.ADDRESS, ValueLayout.JAVA_LONG, ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG
+    );
+
     /** Function descriptor for {@code imagify_webp_free}. */
     public static final FunctionDescriptor FREE_DESC = FunctionDescriptor.ofVoid(ValueLayout.ADDRESS);
 
@@ -260,6 +278,10 @@ public final class WebpLibrary {
     private final MethodHandle encodeAnimationHandle;
     private final MethodHandle freeHandle;
 
+    private final MethodHandle encodeArgbHandle;
+    private final MethodHandle encodeAnimationArgbHandle;
+    private final MethodHandle decodeIntoArgbHandle;
+
     /**
      * Creates a new FFM binding for the native library identified by {@code lookup}.
      *
@@ -279,6 +301,25 @@ public final class WebpLibrary {
         this.decodeAnimationHandle = resolveSymbol(lookup, "imagify_webp_decode_animation", DECODE_ANIMATION_DESC);
         this.encodeAnimationHandle = resolveSymbol(lookup, "imagify_webp_encode_animation", ENCODE_ANIMATION_DESC);
         this.freeHandle = resolveSymbol(lookup, "imagify_webp_free", FREE_DESC);
+        this.encodeArgbHandle = resolveOptionalSymbol(lookup, "imagify_webp_encode_argb", ENCODE_ARGB_DESC);
+        this.encodeAnimationArgbHandle = resolveOptionalSymbol(lookup, "imagify_webp_encode_animation_argb", ENCODE_ANIMATION_ARGB_DESC);
+        this.decodeIntoArgbHandle = resolveOptionalSymbol(lookup, "imagify_webp_decode_into_argb", DECODE_INTO_ARGB_DESC);
+    }
+
+    /**
+     * Whether the loaded library has the entry points that read and write {@code 0xAARRGGBB} words
+     * directly, which is what lets an image already in that layout be encoded and a decoded one be
+     * wrapped without a shuffle of the pixels in between.
+     *
+     * <p>All three or none: they were added to the header together and the export list lists them
+     * together, so a library that has two of them is not one this binding knows how to talk to, and
+     * treating it as though it has none is the answer that still works.
+     *
+     * @return {@code true} when the direct word entry points can be called
+     */
+    public boolean hasArgbEntryPoints() {
+        return encodeArgbHandle != null && encodeAnimationArgbHandle != null
+                && decodeIntoArgbHandle != null;
     }
 
     // ----------------------------------------------------------------------- abi version
@@ -361,6 +402,64 @@ public final class WebpLibrary {
         }
     }
 
+    // ----------------------------------------------------------------- the word entry points
+
+    /*
+     * The three below take pixels as 0xAARRGGBB words rather than as A, B, G, R bytes. They are
+     * optional: hasArgbEntryPoints() has to be true before any of them is called, and a library
+     * without them is a normal thing to load rather than a broken one.
+     */
+
+    /**
+     * Calls {@code imagify_webp_decode_into_argb}.
+     *
+     * @throws IllegalStateException when the loaded library does not have the entry point
+     */
+    public int imagify_webp_decode_into_argb(MemorySegment data, long length, MemorySegment out, int outStride, MemorySegment features, MemorySegment message, long messageCapacity) {
+        requireArgb(decodeIntoArgbHandle, "imagify_webp_decode_into_argb");
+        try {
+            return (int) decodeIntoArgbHandle.invoke(data, length, out, outStride, features, message, messageCapacity);
+        } catch (Throwable t) {
+            throw new RuntimeException("imagify_webp_decode_into_argb() failed", t);
+        }
+    }
+
+    /**
+     * Calls {@code imagify_webp_encode_argb}.
+     *
+     * @throws IllegalStateException when the loaded library does not have the entry point
+     */
+    public int imagify_webp_encode_argb(MemorySegment pixels, int width, int height, int quality, int lossless, int method, MemorySegment encoded, MemorySegment encodedLength, MemorySegment message, long messageCapacity) {
+        requireArgb(encodeArgbHandle, "imagify_webp_encode_argb");
+        try {
+            return (int) encodeArgbHandle.invoke(pixels, width, height, quality, lossless, method, encoded, encodedLength, message, messageCapacity);
+        } catch (Throwable t) {
+            throw new RuntimeException("imagify_webp_encode_argb() failed", t);
+        }
+    }
+
+    /**
+     * Calls {@code imagify_webp_encode_animation_argb}.
+     *
+     * @throws IllegalStateException when the loaded library does not have the entry point
+     */
+    public int imagify_webp_encode_animation_argb(MemorySegment frames, int frameCount, int width, int height, MemorySegment delays, int quality, int lossless, int loopCount, int method, MemorySegment encoded, MemorySegment encodedLength, MemorySegment message, long messageCapacity) {
+        requireArgb(encodeAnimationArgbHandle, "imagify_webp_encode_animation_argb");
+        try {
+            return (int) encodeAnimationArgbHandle.invoke(frames, frameCount, width, height, delays, quality, lossless, loopCount, method, encoded, encodedLength, message, messageCapacity);
+        } catch (Throwable t) {
+            throw new RuntimeException("imagify_webp_encode_animation_argb() failed", t);
+        }
+    }
+
+    private static void requireArgb(MethodHandle handle, String name) {
+        if (handle == null) {
+            throw new IllegalStateException("the loaded WebP library has no " + name
+                    + "(); it was built before that entry point was added to"
+                    + " src/main/native/webp/imagify_webp.h");
+        }
+    }
+
     // ------------------------------------------------------------------- read animation
 
     /**
@@ -433,6 +532,46 @@ public final class WebpLibrary {
         try {
             return LINKER.downcallHandle(symbol, descriptor);
         } catch (Throwable t) {
+            throw new IllegalStateException("cannot create downcall handle for " + name, t);
+        }
+    }
+
+    /**
+     * Resolves a symbol that a library built before this entry point existed will not have.
+     *
+     * <p>The 0xAARRGGBB entry points are additive: nothing that made up ABI version 1 changed, and
+     * the libraries this jar ships are built one platform at a time, so one of them is quite likely
+     * to predate them while the binding that reads all six does not. A missing symbol is therefore
+     * an ordinary outcome and not a failure to load, and a {@code null} handle is what says so.
+     * Every call site checks {@link #hasArgbEntryPoints()} before it uses one, and the byte layout
+     * entry points it would otherwise have used are still there to be used.
+     *
+     * <p>{@code critical} is what lets these be called with a segment over a Java array. The FFM
+     * linker will not pass a heap segment down by default, and the whole reason these entry points
+     * exist is that the pixels are not copied, so an arena and a copy of an image's worth of words
+     * is the one thing they must not do. The price is that the array is pinned for the length of the
+     * call, which is the length of an encode: a long one holds a young generation collection up, and
+     * a short one is over before the next one would have started. That is a real cost, and it is
+     * paid only by the callers that chose this path by having an image already in the layout, and
+     * it is smaller than the shuffle the other path performs on the same image.
+     *
+     * @param lookup the symbol lookup
+     * @param name the symbol name
+     * @param descriptor the function descriptor
+     * @return a downcall handle for the symbol, or {@code null} when the library does not export it
+     */
+    private static MethodHandle resolveOptionalSymbol(SymbolLookup lookup, String name,
+            FunctionDescriptor descriptor) {
+        MemorySegment symbol = lookup.find(name).orElse(null);
+        if (symbol == null) {
+            return null;
+        }
+        try {
+            return LINKER.downcallHandle(symbol, descriptor, Linker.Option.critical(true));
+        } catch (Throwable t) {
+            // A library that exports the name but not in the shape this binding expects is a
+            // different failure from one that does not export it, and is worth saying out loud
+            // rather than quietly treating as absent.
             throw new IllegalStateException("cannot create downcall handle for " + name, t);
         }
     }

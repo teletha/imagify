@@ -156,6 +156,9 @@ set(IMAGIFY_WEBP_SYMBOLS
   imagify_webp_read_animation
   imagify_webp_decode_animation
   imagify_webp_encode_animation
+  imagify_webp_encode_argb
+  imagify_webp_encode_animation_argb
+  imagify_webp_decode_into_argb
   imagify_webp_free)
 
 if(WIN32)

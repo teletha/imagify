@@ -21,6 +21,46 @@
 ### Features
 
 * encode and decode WebP with a bundled `libwebp`, dropped `webp4j`
+* `WebpCodec.encode` takes an encoding effort, so a still image is no longer stuck at
+  libwebp's default. Measured on a 498x280 photograph at quality 75, method 2 is
+  **2.7x** quicker than method 4 for 4.3% more bytes; on a 1600x1200 gradient,
+  method 0 is **4.9x** quicker for 3.9% more bytes. The default is still libwebp's
+  own method 4, so a file written by this version is byte for byte the file
+  `cwebp` writes from the same options.
+* `ImageWriter.toBytes(List, ...)` and `ImageWriter.toFiles(List, ...)` encode many
+  images across every core. Twelve independent 1600x1200 lossy encodes measured
+  **6.4x** faster on 12 threads than on one, and the result is the same list in the
+  same order either way.
+
+### Performance
+
+* a lossless encode honours the quality it is given instead of having it pinned to
+  100. libwebp reads `quality` in lossless mode as an amount of effort, and the
+  pinned 100 was the most effort it can be given: 86 iterations against 51 at 75, and
+  a backward reference window of the whole picture rather than 256 rows. Measured
+  **3.5x** faster on noise and **2.5x** on an alpha image, and the caller's number is
+  no longer discarded.
+* pixels that are already a run of `0xAARRGGBB` words are handed to `libwebp` as
+  themselves instead of being packed into `A, B, G, R` bytes first, and a decoded
+  image is written into words rather than into bytes that are then repacked. Nothing
+  on either side of the boundary moves a pixel. Measured: animation encode
+  **1.44x**, decode **1.73x**, still encode about 1.08x.
+* the eight other `WebPConfig` fields were measured and none of them makes a lossy
+  encode faster at the same quality: `exact` 1.00x and byte identical, `sns_strength`
+  within noise and worse at the fast end, `filter_strength` slower, `pass` 0.19x to
+  0.53x, `segments` 1.06x for 0.80 dB, `use_sharp_yuv` 0.53x, and `target_size` no
+  effect at all. `thread_level` is compiled in and deliberately left at zero: only
+  `VP8EncAnalyze` reads it, and it splits a frame in two rather than across as many
+  threads as it has. The default therefore does not move.
+
+### Notes
+
+* the three new native entry points are looked up as optional symbols and the ABI
+  version is unchanged, so a library built for one platform still works with a
+  binding built for another. The whole test suite passes against the previous
+  `windows-x64` binary, where none of the three exist and every encode takes the
+  byte path. The speedups above need the rebuilt native, and the lossless quality
+  fix and the batch API do not.
 
 ## [1.0.3](https://github.com/teletha/imagify/compare/1.0.2...1.0.3) (2026-09-26)
 

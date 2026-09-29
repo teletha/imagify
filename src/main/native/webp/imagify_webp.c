@@ -54,6 +54,19 @@
 #include <webp/encode.h>
 #include <webp/mux.h>
 
+/*
+ * The entry points that take and return 0xAARRGGBB words rely on a byte order rather than only on a
+ * layout: libwebp's WebPDecodeBGRAInto fills a buffer with B, G, R, A bytes, and those four bytes
+ * are the four of a 0xAARRGGBB word only when the word is read the other way round. Every target
+ * this library is built for reads it that way, and a target that did not would produce pictures with
+ * their channels in the wrong places rather than an error, which is the sort of thing that is only
+ * found by a user looking at a broken image. So it stops the build instead.
+ */
+#if defined(__BYTE_ORDER__) && defined(__ORDER_LITTLE_ENDIAN__) \
+    && (__BYTE_ORDER__ != __ORDER_LITTLE_ENDIAN__)
+#error "the 0xAARRGGBB entry points of imagify_webp need a little-endian target"
+#endif
+
 /* --------------------------------------------------------------------------------------------- */
 /* reporting                                                                                       */
 /* --------------------------------------------------------------------------------------------- */
@@ -175,25 +188,66 @@ static int imagify_encode_options_valid(int quality, int method) {
  * free to replace the colour of a fully transparent pixel with something that compresses better, and
  * a Java caller that reads such a pixel back with getRGB() then gets the replacement rather than
  * what it wrote. A file gets a little larger and an image stops changing colour behind the caller's
- * back, which is the better trade for an image library that has been asked to store pixels.
+ * back, which is the better trade for an image library that has been asked to store pixels. It costs
+ * nothing either way: the only thing exact turns off is two clean-up passes libwebp would otherwise
+ * run over the picture.
  *
- * Lossless asks for the slowest of libwebp's own lossless presets rather than treating quality as an
- * amount of effort, which is what libwebp would do with it there. A caller that has chosen not to
- * lose anything has not asked a fidelity question, so the field is not theirs to answer. Method is
- * left alone, so a caller that has said how hard the encoder should try has still been heard.
+ * quality is passed through in both modes. In the lossy mode it is the fidelity to trade away, and
+ * in the lossless mode libwebp reads the same field as an amount of effort, so a caller that has
+ * chosen not to lose anything has named a size rather than a fidelity and is entitled to say how
+ * hard to try. It used not to be passed through at all: lossless went through
+ * WebPConfigLosslessPreset at its slowest level, which pins quality to 100, and 100 is the largest
+ * effort libwebp takes. GetMaxItersForQuality answers 86 at 100 and 51 at 75, and a quality above
+ * 75 also widens the backward reference window from 256 rows of the picture to all 16MB of it, so
+ * the setting made every lossless encode the most expensive one libwebp can be given, discarded the
+ * number the caller had passed, and bought a file no smaller than a much cheaper run would have
+ * produced. Method is left alone, so a caller that has said how hard the encoder should try has
+ * still been heard.
+ *
+ * thread_level stays at libwebp's own zero, which is not an oversight. It was measured both ways on
+ * 24 cores and made no image faster and most of them slower, and reading libwebp says why: of the
+ * encoder's passes only VP8EncAnalyze reads the flag, and it splits a frame into two unequal row
+ * ranges rather than across as many threads as it has, which caps the gain at about a quarter and
+ * spends a thread launch and a join to collect it. The entropy coding that the webp4j this replaces
+ * was built to parallelise is in the token loop, and the token loop does not read the flag. So the
+ * capability is compiled in, as the build file says it is on purpose, and nothing asks for it.
+ *
+ * Nothing here changes for a lossy encode, and the reason is worth writing down, because it is not a
+ * defect in this binding and there is no setting waiting to be found. A lossy VP8 encode is a search:
+ * method says how much of the space of partitions, coefficients and filters to visit, and the search
+ * is the cost. So there is no knob that makes it cheaper without changing what comes out, and the
+ * eight candidates libwebp's WebPConfig offers besides quality and method were each measured at
+ * quality 75 and method 4 against this configuration, on a 1600x1200 gradient and on a real 498x280
+ * photograph, best of five:
+ *
+ *   exact = 0            1.00x, output byte for byte identical. The two clean-up passes it removes
+ *                        are not a measurable share of anything.
+ *   sns_strength 0..100  0.93x to 1.01x, and PSNR is at its worst at the fast end. Nothing.
+ *   filter_strength      0.94x, which is slower, and 2.4 dB worse at the low end. Nothing.
+ *   pass 2, 3, 6         0.53x, 0.35x, 0.19x with the PSNR unmoved. Pure cost, because no more
+ *                        quality was offered to spend the extra passes on.
+ *   segments = 1         1.01x on the gradient and 1.06x on the photograph, for 0.80 dB. A trade, not
+ *                        a speedup.
+ *   use_sharp_yuv = 1    0.53x, and a larger file. A choice about the picture, not about the time.
+ *   target_size          No effect whatsoever: every budget from 40% to 120% of the natural size
+ *                        produced the same bytes. libwebp 1.6.0's file-size targeted search is not
+ *                        reached through this path, and it is the only WebPConfig field that would
+ *                        have answered a different question from the one being asked.
+ *
+ * Method is the one that works, and it is the caller's to turn. On the photograph, method 4 to
+ * method 2 is 2.7x faster for 4.3% more bytes and 1.3 dB less; on the 1600x1200 gradient, method 4
+ * to method 0 is 4.9x faster for 3.9% more bytes and 0.22 dB less, because a large picture has more
+ * for the same search to find. The default stays at libwebp's own, so that a file written here is a
+ * file cwebp would have written from the same options. How hard to try is a caller's to decide, and
+ * ImageFormat.Webp.compressionMethod is where it is decided.
  */
 static int imagify_make_config(WebPConfig* config, int quality, int lossless, int method) {
   if (!WebPConfigInit(config)) {
     return 0;
   }
-  if (lossless) {
-    /* Level 9 is libwebp's slowest and best lossless preset. */
-    WebPConfigLosslessPreset(config, 9);
-    config->method = method;
-  } else {
-    config->quality = (float)quality;
-    config->method = method;
-  }
+  config->quality = (float)quality;
+  config->lossless = lossless ? 1 : 0;
+  config->method = method;
   config->exact = 1;
   return WebPValidateConfig(config) ? 1 : 0;
 }
@@ -327,46 +381,89 @@ int imagify_webp_decode(const uint8_t* data, size_t length, uint8_t** out, size_
   return IMAGIFY_WEBP_OK;
 }
 
-int imagify_webp_encode(const uint8_t* pixels, int width, int height, int quality, int lossless,
-    int method, uint8_t** encoded, size_t* encoded_length, char* message,
-    size_t message_capacity) {
-  if (pixels == NULL || encoded == NULL || encoded_length == NULL) {
-    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT, "no image to encode");
-  }
-  *encoded = NULL;
-  *encoded_length = 0;
-
-  const size_t bytes = imagify_pixel_bytes(width, height);
-  if (bytes == 0) {
-    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_UNSUPPORTED,
-        "libwebp will not encode a picture this size");
-  }
-  if (!imagify_encode_options_valid(quality, method)) {
+/*
+ * Decodes a still image straight into words the caller has already allocated, which is the same as
+ * the encode side's end of the trade: WebPDecodeBGRAInto writes B, G, R, A bytes into the buffer it
+ * is given, and on a little-endian target those four bytes are the four of a 0xAARRGGBB word, so the
+ * words libwebp writes are the words a Java int[] is made of and neither side has to move a pixel
+ * afterwards. The picture imagify_webp_decode would have allocated and repacked is not allocated.
+ *
+ * The caller has to know the width and height before it allocates the buffer, and it cannot know
+ * them without looking, so it reads them with imagify_webp_read_features first. This does not read
+ * them again for its own sake but because it has to reject an animation and report the rest, which
+ * is what the other decode entry point does with the same call.
+ */
+int imagify_webp_decode_into_argb(const uint8_t* data, size_t length, uint32_t* out,
+    int out_stride, imagify_webp_features* features, char* message, size_t message_capacity) {
+  if (data == NULL || out == NULL) {
     return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
-        "quality and method are outside the ranges libwebp accepts");
+        "no image to decode into");
   }
+  if (out_stride < 1) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
+        "the output stride has to be at least one word");
+  }
+
+  WebPBitstreamFeatures parsed;
+  const int feature_status = WebPGetFeatures(data, length, &parsed);
+  if (feature_status != VP8_STATUS_OK) {
+    return imagify_fail(message, message_capacity, imagify_status_of(feature_status),
+        imagify_status_text(feature_status));
+  }
+  if (parsed.has_animation) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_UNSUPPORTED,
+        "an animated WebP has no single image; its frames are read with "
+        "imagify_webp_decode_animation");
+  }
+  if (parsed.width <= 0 || parsed.height <= 0 || out_stride < parsed.width) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
+        "the output buffer is too narrow for the image this file holds");
+  }
+
+  const size_t row_bytes = (size_t)out_stride * 4u;
+  if (WebPDecodeBGRAInto(data, length, (uint8_t*)(uintptr_t)out,
+          row_bytes * (size_t)parsed.height, (int)row_bytes) == NULL) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_CORRUPT,
+        "libwebp could not decode the image");
+  }
+  imagify_report_features(features, &parsed);
+  return IMAGIFY_WEBP_OK;
+}
+
+/*
+ * Encodes width * height 0xAARRGGBB words as a complete WebP file.
+ *
+ * The words are read where they are. WebPPicture.argb is itself a uint32_t* of exactly this layout,
+ * so the picture can point straight at the caller's memory and libwebp never copies it either, which
+ * is one pass fewer and one whole image of allocation fewer than unpacking into words first.
+ *
+ * Handing a picture a pointer it did not allocate is safe because WebPPictureFree does not free
+ * picture.argb: it frees memory_argb_, the buffer a picture filled in for itself, and only then
+ * clears argb. owns_argb therefore decides nothing about the picture, and only whether the words came
+ * from imagify_to_argb and are this library's to release afterwards, which is the whole of what
+ * tells the two entry points apart.
+ *
+ * Reading past the end of the caller's memory is its responsibility, and every entry point that
+ * takes these words says how many of them there are.
+ */
+static int imagify_encode_argb_words(const uint32_t* argb, int width, int height, int quality,
+    int lossless, int method, int owns_argb, uint8_t** encoded, size_t* encoded_length,
+    char* message, size_t message_capacity) {
   WebPConfig config;
   if (!imagify_make_config(&config, quality, lossless, method)) {
     return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
         "libwebp rejected the encoding options");
   }
 
-  const size_t count = bytes / 4u;
-  uint32_t* argb = imagify_to_argb(pixels, count);
-  if (argb == NULL) {
-    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_MEMORY, "out of memory");
-  }
-
   WebPPicture picture;
   if (!WebPPictureInit(&picture)) {
-    WebPFree(argb);
     return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_INTERNAL,
         "libwebp would not initialise a picture");
   }
   picture.use_argb = 1;
   picture.width = width;
   picture.height = height;
-  picture.argb = argb;
+  picture.argb = (uint32_t*)(uintptr_t)argb;
   picture.argb_stride = width;
   /* The memory writer the animation encoder installs on its own pictures. WebPEncode writes
    * through picture.writer and would not write at all without one, so this is the difference
@@ -379,7 +476,9 @@ int imagify_webp_encode(const uint8_t* pixels, int width, int height, int qualit
   const int ok = WebPEncode(&config, &picture);
   const int error_code = (int)picture.error_code;
   WebPPictureFree(&picture);
-  WebPFree(argb);
+  if (owns_argb) {
+    WebPFree((void*)(uintptr_t)argb);
+  }
 
   if (!ok) {
     WebPMemoryWriterClear(&writer);
@@ -399,6 +498,63 @@ int imagify_webp_encode(const uint8_t* pixels, int width, int height, int qualit
   *encoded = writer.mem;
   *encoded_length = writer.size;
   return IMAGIFY_WEBP_OK;
+}
+
+/*
+ * The argument checks both encode entry points make before anything is allocated.
+ */
+static int imagify_encode_argument_error(int width, int height, int quality, int method,
+    char* message, size_t message_capacity) {
+  if (imagify_pixel_bytes(width, height) == 0) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_UNSUPPORTED,
+        "libwebp will not encode a picture this size");
+  }
+  if (!imagify_encode_options_valid(quality, method)) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
+        "quality and method are outside the ranges libwebp accepts");
+  }
+  return IMAGIFY_WEBP_OK;
+}
+
+int imagify_webp_encode(const uint8_t* pixels, int width, int height, int quality, int lossless,
+    int method, uint8_t** encoded, size_t* encoded_length, char* message,
+    size_t message_capacity) {
+  if (pixels == NULL || encoded == NULL || encoded_length == NULL) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT, "no image to encode");
+  }
+  *encoded = NULL;
+  *encoded_length = 0;
+
+  const int argument_error = imagify_encode_argument_error(width, height, quality, method, message,
+      message_capacity);
+  if (argument_error != IMAGIFY_WEBP_OK) {
+    return argument_error;
+  }
+
+  uint32_t* argb = imagify_to_argb(pixels, imagify_pixel_bytes(width, height) / 4u);
+  if (argb == NULL) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_MEMORY, "out of memory");
+  }
+  return imagify_encode_argb_words(argb, width, height, quality, lossless, method, 1, encoded,
+      encoded_length, message, message_capacity);
+}
+
+int imagify_webp_encode_argb(const uint32_t* pixels, int width, int height, int quality,
+    int lossless, int method, uint8_t** encoded, size_t* encoded_length, char* message,
+    size_t message_capacity) {
+  if (pixels == NULL || encoded == NULL || encoded_length == NULL) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT, "no image to encode");
+  }
+  *encoded = NULL;
+  *encoded_length = 0;
+
+  const int argument_error = imagify_encode_argument_error(width, height, quality, method, message,
+      message_capacity);
+  if (argument_error != IMAGIFY_WEBP_OK) {
+    return argument_error;
+  }
+  return imagify_encode_argb_words(pixels, width, height, quality, lossless, method, 0, encoded,
+      encoded_length, message, message_capacity);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -594,16 +750,13 @@ int imagify_webp_decode_animation(const uint8_t* data, size_t length,
   return IMAGIFY_WEBP_OK;
 }
 
-int imagify_webp_encode_animation(const uint8_t* frames, int frame_count, int width, int height,
-    const int* delays, int quality, int lossless, int loop_count, int method, uint8_t** encoded,
-    size_t* encoded_length, char* message, size_t message_capacity) {
-  if (frames == NULL || delays == NULL || encoded == NULL || encoded_length == NULL) {
-    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
-        "no animation to encode");
-  }
-  *encoded = NULL;
-  *encoded_length = 0;
-
+/*
+ * The checks both animation encode entry points make before anything is allocated, and the number of
+ * words one frame is made of, which is what the caller of either needs in order to size the buffer
+ * it is going to hand over.
+ */
+static int imagify_animation_argument_error(int frame_count, int width, int height, int loop_count,
+    int quality, int method, size_t* frame_pixels, char* message, size_t message_capacity) {
   const size_t frame_bytes = imagify_pixel_bytes(width, height);
   if (frame_bytes == 0) {
     return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_UNSUPPORTED,
@@ -625,23 +778,41 @@ int imagify_webp_encode_animation(const uint8_t* frames, int frame_count, int wi
     return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
         "quality and method are outside the ranges libwebp accepts");
   }
+  *frame_pixels = frame_bytes / 4u;
+  return IMAGIFY_WEBP_OK;
+}
+
+/*
+ * Encodes frame_count frames of width * height 0xAARRGGBB words as an animation, one frame after
+ * another in the words given.
+ *
+ * The words are read where they are, for the same reason the still encoder reads them where they
+ * are: the picture handed to each frame can point straight at one of them. The animation encoder
+ * copies each frame into its own frame buffer whatever it is given, so unlike the still case there
+ * is no libwebp copy to save here, and what is saved is the pass over the pixels that would have
+ * unpacked Java bytes into these words first.
+ *
+ * owns_argb says whether the words are this library's to release, which is the same distinction the
+ * still encoder makes and for the same reason.
+ */
+static int imagify_encode_animation_argb_words(const uint32_t* argb, int frame_count, int width,
+    int height, const int* delays, int quality, int lossless, int loop_count, int method,
+    size_t count, int owns_argb, uint8_t** encoded, size_t* encoded_length, char* message,
+    size_t message_capacity) {
   WebPConfig config;
   if (!imagify_make_config(&config, quality, lossless, method)) {
+    if (owns_argb) {
+      WebPFree((void*)(uintptr_t)argb);
+    }
     return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
         "libwebp rejected the encoding options");
   }
 
-  const size_t count = frame_bytes / 4u;
-  /* One allocation for the whole animation, so that the picture handed to each frame can point
-   * straight into it rather than a frame being unpacked once per frame out of a Java array. */
-  uint32_t* argb = imagify_to_argb(frames, count * (size_t)frame_count);
-  if (argb == NULL) {
-    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_MEMORY, "out of memory");
-  }
-
   WebPAnimEncoderOptions enc_options;
   if (!WebPAnimEncoderOptionsInit(&enc_options)) {
-    WebPFree(argb);
+    if (owns_argb) {
+      WebPFree((void*)(uintptr_t)argb);
+    }
     return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_INTERNAL,
         "libwebp would not initialise its animation encoder");
   }
@@ -657,7 +828,9 @@ int imagify_webp_encode_animation(const uint8_t* frames, int frame_count, int wi
 
   WebPAnimEncoder* encoder = WebPAnimEncoderNew(width, height, &enc_options);
   if (encoder == NULL) {
-    WebPFree(argb);
+    if (owns_argb) {
+      WebPFree((void*)(uintptr_t)argb);
+    }
     return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_MEMORY,
         "libwebp would not start an animation encoder");
   }
@@ -679,7 +852,7 @@ int imagify_webp_encode_animation(const uint8_t* frames, int frame_count, int wi
     picture.use_argb = 1;
     picture.width = width;
     picture.height = height;
-    picture.argb = argb + (size_t)i * count;
+    picture.argb = (uint32_t*)(uintptr_t)(argb + (size_t)i * count);
     picture.argb_stride = width;
     ok = WebPAnimEncoderAdd(encoder, &picture, (int)timestamp, &config);
     WebPPictureFree(&picture);
@@ -706,7 +879,9 @@ int imagify_webp_encode_animation(const uint8_t* frames, int frame_count, int wi
     ok = 0;
   }
   WebPAnimEncoderDelete(encoder);
-  WebPFree(argb);
+  if (owns_argb) {
+    WebPFree((void*)(uintptr_t)argb);
+  }
 
   if (!ok) {
     WebPDataClear(&assembled);
@@ -722,6 +897,53 @@ int imagify_webp_encode_animation(const uint8_t* frames, int frame_count, int wi
   *encoded = (uint8_t*)assembled.bytes;
   *encoded_length = assembled.size;
   return IMAGIFY_WEBP_OK;
+}
+
+int imagify_webp_encode_animation(const uint8_t* frames, int frame_count, int width, int height,
+    const int* delays, int quality, int lossless, int loop_count, int method, uint8_t** encoded,
+    size_t* encoded_length, char* message, size_t message_capacity) {
+  if (frames == NULL || delays == NULL || encoded == NULL || encoded_length == NULL) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
+        "no animation to encode");
+  }
+  *encoded = NULL;
+  *encoded_length = 0;
+
+  size_t count = 0;
+  const int argument_error = imagify_animation_argument_error(frame_count, width, height, loop_count,
+      quality, method, &count, message, message_capacity);
+  if (argument_error != IMAGIFY_WEBP_OK) {
+    return argument_error;
+  }
+
+  /* One allocation for the whole animation, so that the picture handed to each frame can point
+   * straight into it rather than a frame being unpacked once per frame out of a Java array. */
+  uint32_t* argb = imagify_to_argb(frames, count * (size_t)frame_count);
+  if (argb == NULL) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_MEMORY, "out of memory");
+  }
+  return imagify_encode_animation_argb_words(argb, frame_count, width, height, delays, quality,
+      lossless, loop_count, method, count, 1, encoded, encoded_length, message, message_capacity);
+}
+
+int imagify_webp_encode_animation_argb(const uint32_t* frames, int frame_count, int width, int height,
+    const int* delays, int quality, int lossless, int loop_count, int method, uint8_t** encoded,
+    size_t* encoded_length, char* message, size_t message_capacity) {
+  if (frames == NULL || delays == NULL || encoded == NULL || encoded_length == NULL) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
+        "no animation to encode");
+  }
+  *encoded = NULL;
+  *encoded_length = 0;
+
+  size_t count = 0;
+  const int argument_error = imagify_animation_argument_error(frame_count, width, height, loop_count,
+      quality, method, &count, message, message_capacity);
+  if (argument_error != IMAGIFY_WEBP_OK) {
+    return argument_error;
+  }
+  return imagify_encode_animation_argb_words(frames, frame_count, width, height, delays, quality,
+      lossless, loop_count, method, count, 0, encoded, encoded_length, message, message_capacity);
 }
 
 void imagify_webp_free(void* buffer) {

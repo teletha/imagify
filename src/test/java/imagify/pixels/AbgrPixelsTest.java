@@ -18,6 +18,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.awt.image.DataBufferInt;
 import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
@@ -27,12 +28,16 @@ import java.util.Vector;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests the conversion between {@code BufferedImage} and the A, B, G, R byte order the native
- * codecs are given on both sides of the boundary.
+ * codecs are given on both sides of the boundary, and between a {@code BufferedImage} and the
+ * {@code 0xAARRGGBB} words {@code libwebp} reads them in.
  *
  * <p>These are the only tests that run on every machine: they need no native library, and they
  * cover the one place where this library could silently swap a colour channel.
@@ -250,10 +255,135 @@ class AbgrPixelsTest {
         }
     }
 
+    // ------------------------------------------------------------------ the 0xAARRGGBB words
+
+    @Test
+    @DisplayName("a TYPE_INT_ARGB image hands out its own array, which is the point of it")
+    void argbWordsAreTheImageItsOwn() {
+        BufferedImage image = new BufferedImage(4, 3, BufferedImage.TYPE_INT_ARGB);
+        image.setRGB(1, 1, 0x80112233);
+
+        int[] words = AbgrPixels.argbWords(image);
+
+        assertNotNull(words, "an image of this type is one run of words and should say so");
+        assertSame(((DataBufferInt) image.getRaster().getDataBuffer()).getData(), words,
+                "the words have to be the image's own array, or nothing has been saved by asking");
+        assertEquals(4 * 3, words.length);
+        assertEquals(0x80112233, words[1 * 4 + 1]);
+    }
+
+    @Test
+    @DisplayName("a wrapped image of exactly its own size is still one run of words")
+    void aWrappedImageOfItsOwnSizeQualifies() {
+        // This is what a view of the whole image looks like: the same type, the same raster, and a
+        // data buffer of exactly the image's size because the view happens to cover all of it. It
+        // is genuinely contiguous, so handing it over is correct rather than merely lucky.
+        BufferedImage parent = new BufferedImage(4, 3, BufferedImage.TYPE_INT_ARGB);
+        WritableRaster whole = parent.getRaster().createWritableChild(0, 0, 4, 3, 0, 0, null);
+        BufferedImage view = new BufferedImage(parent.getColorModel(), whole, false, null);
+
+        int[] words = AbgrPixels.argbWords(view);
+        assertNotNull(words, "a view of the entire image is still one run of words");
+    }
+
+    @Test
+    @DisplayName("a view of part of a larger image does not, or the parent would be read from the middle")
+    void argbWordsRefuseAView() {
+        BufferedImage parent = new BufferedImage(8, 6, BufferedImage.TYPE_INT_ARGB);
+        WritableRaster window = parent.getRaster().createWritableChild(2, 3, 4, 3, 0, 0, null);
+        BufferedImage view = new BufferedImage(parent.getColorModel(), window, false, null);
+
+        // A subimage reports TYPE_INT_ARGB, so the image type alone cannot be the whole of the test.
+        assertEquals(BufferedImage.TYPE_INT_ARGB, view.getType(),
+                "if this ever stops being true the test below is not testing what it says");
+        assertNull(AbgrPixels.argbWords(view),
+                "the parent's data buffer is six rows of eight words, and reading the first "
+                        + "4 * 3 of them would encode the wrong picture");
+    }
+
+    @Test
+    @DisplayName("an image whose words are not in libwebp's order does not qualify")
+    void argbWordsRefuseTheOtherLayouts() {
+        assertNull(AbgrPixels.argbWords(new BufferedImage(4, 3, BufferedImage.TYPE_4BYTE_ABGR)),
+                "ABGR bytes are not 0xAARRGGBB words, and reading them as words swaps red for blue");
+        assertNull(AbgrPixels.argbWords(new BufferedImage(4, 3, BufferedImage.TYPE_INT_RGB)),
+                "an INT_RGB word has a zero alpha byte, and libwebp would store it as transparent");
+        assertNull(AbgrPixels.argbWords(new BufferedImage(4, 3, BufferedImage.TYPE_INT_ARGB_PRE)),
+                "a premultiplied word's colour is not its own, and storing it changes the picture");
+        assertNull(AbgrPixels.argbWords(new BufferedImage(4, 3, BufferedImage.TYPE_INT_BGR)));
+    }
+
+    @Test
+    @DisplayName("a RenderedImage that is not a BufferedImage does not qualify")
+    void argbWordsRefuseAPlainRenderedImage() {
+        BufferedImage image = new BufferedImage(4, 3, BufferedImage.TYPE_INT_ARGB);
+        image.setRGB(0, 0, 0xFF445566);
+
+        // Hiding the image behind the interface is the only way to reach the branch, and the reason
+        // for the branch is that only a BufferedImage is known to hold a data buffer whose shape
+        // can be checked at all.
+        assertNull(AbgrPixels.argbWords(new FakeRenderedImage(image, 0, 0)));
+    }
+
+    @Test
+    @DisplayName("reading a region as words gives the words of exactly those pixels")
+    void toArgbWordsReadsTheRegion() {
+        BufferedImage image = new BufferedImage(5, 4, BufferedImage.TYPE_INT_ARGB);
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 5; x++) {
+                image.setRGB(x, y, 0xFF000000 | x * 0x00110000 | y * 0x00001100);
+            }
+        }
+        int[] whole = AbgrPixels.toArgbWords(image, 0, 0, 5, 4);
+        int[] region = AbgrPixels.toArgbWords(image, 2, 1, 2, 2);
+
+        assertEquals(4, region.length);
+        for (int row = 0; row < 2; row++) {
+            for (int column = 0; column < 2; column++) {
+                assertEquals(whole[(1 + row) * 5 + 2 + column], region[row * 2 + column],
+                        "pixel " + column + " of row " + row);
+            }
+        }
+    }
+
+    @Test
+    @DisplayName("reading the whole image as words is the image's own array when it can be")
+    void toArgbWordsOfTheWholeImageIsTheWords() {
+        BufferedImage image = new BufferedImage(5, 4, BufferedImage.TYPE_INT_ARGB);
+
+        assertSame(AbgrPixels.argbWords(image), AbgrPixels.toArgbWords(image, 0, 0, 5, 4),
+                "asking for the whole image of a whole image should not copy it");
+    }
+
+    @Test
+    @DisplayName("wrapping words into an image copies them and loses nothing")
+    void toArgbImageCopiesTheWords() {
+        int[] words = new int[12];
+        for (int i = 0; i < words.length; i++) {
+            words[i] = 0xFF000000 | i * 0x00010001;
+        }
+
+        BufferedImage image = AbgrPixels.toArgbImage(words, 4, 3);
+        assertEquals(BufferedImage.TYPE_INT_ARGB, image.getType());
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 4; x++) {
+                assertEquals(words[y * 4 + x], image.getRGB(x, y), "pixel " + x + "," + y);
+            }
+        }
+    }
+
+    @Test
+    @DisplayName("wrapping too few words is rejected with the size that was expected")
+    void toArgbImageRejectsAShortArray() {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,
+                () -> AbgrPixels.toArgbImage(new int[11], 4, 3));
+
+        assertTrue(thrown.getMessage().contains("12"), thrown.getMessage());
+    }
+
     @Test
     @DisplayName("a grey image is expanded to colour instead of being copied verbatim")
-    void byteGrayIsNotCopiedVerbatim() {
-        // TYPE_BYTE_GRAY is a single bank of bytes too, so only the declared image type tells the
+    void byteGrayIsNotCopiedVerbatim() {        // TYPE_BYTE_GRAY is a single bank of bytes too, so only the declared image type tells the
         // two apart. Copying it verbatim would turn grey levels into a red and blue tint.
         BufferedImage source = new BufferedImage(2, 1, BufferedImage.TYPE_BYTE_GRAY);
         source.getRaster().setPixel(0, 0, new int[] { 0xff });

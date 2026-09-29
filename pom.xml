@@ -5,7 +5,8 @@
 	<version>1.1.0</version>
 	<packaging>jar</packaging>
 	<name>imagify</name>
-	<description>AVIF encoding and decoding for Java, backed by libavif.
+	<description>
+AVIF encoding and decoding for Java, backed by libavif.
 
 JPEG encoding and decoding for Java, backed by
 [jpegli](https://github.com/google/jpegli).
@@ -40,7 +41,7 @@ aside and the JDK&apos;s own JPEG reader and writer take over, so
 
 ## Decode
 
-    byte[] avif = Files.readAllBytes(Path.of(&quot;photo.avif&quot;));
+    byte[] avif = Files.readAllBytes(Path.of("photo.avif"));
     DecodedImage result = AvifCodec.decode(avif);
     BufferedImage image = result.image();
     AvifImageInfo info = result.info();
@@ -50,17 +51,17 @@ aside and the JDK&apos;s own JPEG reader and writer take over, so
     byte[] avif = AvifCodec.encode(image, 75, 4);
     // quality 0 (smallest) to 100 (lossless)
     // speed   0 (slowest) to 10 (fastest)
-    Files.write(Path.of(&quot;out.avif&quot;), avif);
+    Files.write(Path.of("out.avif"), avif);
 
 ## ImageIO
 
-    BufferedImage image = ImageIO.read(new File(&quot;photo.avif&quot;));
-    ImageIO.write(image, &quot;avif&quot;, new File(&quot;out.avif&quot;));
+    BufferedImage image = ImageIO.read(new File("photo.avif"));
+    ImageIO.write(image, "avif", new File("out.avif"));
 
 ## JPEG
 
-    BufferedImage image = ImageIO.read(new File(&quot;photo.jpg&quot;));
-    ImageIO.write(image, &quot;jpeg&quot;, new File(&quot;out.jpg&quot;));
+    BufferedImage image = ImageIO.read(new File("photo.jpg"));
+    ImageIO.write(image, "jpeg", new File("out.jpg"));
 
     byte[] jpeg = JpegliCodec.encode(image, 85);
     // quality 1 (smallest) to 100 (most detail)
@@ -95,8 +96,8 @@ needs the picture has to flatten the image first.
 
 ## ICO
 
-    BufferedImage image = ImageIO.read(new File(&quot;app.ico&quot;));
-    ImageIO.write(image, &quot;ico&quot;, new File(&quot;out.ico&quot;));
+    BufferedImage image = ImageIO.read(new File("app.ico"));
+    ImageIO.write(image, "ico", new File("out.ico"));
 
 The writer stores a 32-bit BGRA bitmap with an AND mask derived
 from the alpha channel, so transparency is preserved. The reader
@@ -104,11 +105,15 @@ decodes the entry closest to 256x256.
 
 ## WebP
 
-    BufferedImage image = ImageIO.read(new File(&quot;photo.webp&quot;));
-    ImageIO.write(image, &quot;webp&quot;, new File(&quot;out.webp&quot;));
+    BufferedImage image = ImageIO.read(new File("photo.webp"));
+    ImageIO.write(image, "webp", new File("out.webp"));
 
     byte[] webp = WebpCodec.encode(image, 80, false);
-    // quality 0 (smallest) to 100, ignored when lossless
+    // quality 0 (smallest) to 100. In lossless mode libwebp reads it as
+    // an amount of effort rather than a fidelity, so 0 is quick and 100
+    // is thorough, and neither loses a pixel.
+    byte[] quick = WebpCodec.encode(image, 80, false,
+            ImageFormat.Webp.DEFAULT_COMPRESSION_METHOD - 4);
     List&lt;BufferedImage&gt; frames =
         WebpCodec.decodeAnimation(animated);
 
@@ -118,6 +123,25 @@ output is selected by choosing the `WebP Lossless` compression
 type of the write parameter, or by passing `true` to
 `WebpCodec.encode`. An animated file is read as one image per
 frame, each already composited onto the canvas.
+
+The encoding effort is libwebp&apos;s `method`, 0 to 6, and it is
+the only setting that makes a lossy encode cheaper: everything
+else in `WebPConfig` was measured and none of it buys time at
+the same quality. On a 498x280 photograph at quality 75, method
+2 is 2.7x quicker than method 4 for 4.3% more bytes; on a
+1600x1200 gradient, method 0 is 4.9x quicker for 3.9% more
+bytes. The default is libwebp&apos;s own method 4, so a file written
+here is a file `cwebp` writes from the same options. Through
+the `ImageIO` plug-in it is set on the format:
+
+    ImageFormat fast = ImageFormat.WEBP.compressionMethod(2);
+    ImageIO.write(image, "webp", out);   // with a format of your own
+
+To write many images at once, across every core:
+
+    ImageWriter.toBytes(images, ImageFormat.WEBP, 0.8);
+    ImageWriter.toFiles(images, ImageFormat.WEBP, 0.8, paths);
+    // both take a thread count, and neither changes what comes out
 
 The codec is bound with Java&apos;s own Foreign Function &amp; Memory
 API, so on JDK 24 and newer a program using it from the class
@@ -129,7 +153,7 @@ later release:
 
 ## SVG
 
-    BufferedImage image = ImageIO.read(new File(&quot;icon.svg&quot;));
+    BufferedImage image = ImageIO.read(new File("icon.svg"));
 
 SVG is read only. It is rasterised with JSVG at the size declared
 by the document, so resizing is a separate step.

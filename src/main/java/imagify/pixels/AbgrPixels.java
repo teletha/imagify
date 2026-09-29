@@ -12,8 +12,10 @@ package imagify.pixels;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBufferByte;
+import java.awt.image.DataBufferInt;
 import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
+import java.awt.image.SinglePixelPackedSampleModel;
 
 /**
  * Moves pixels between {@code BufferedImage} and the tightly packed {@code A, B, G, R} byte order
@@ -238,6 +240,126 @@ public final class AbgrPixels {
         }
         return buffer.getSize() == raster.getWidth() * raster.getHeight() * 4
                 && buffer.getData().length >= expected;
+    }
+
+    private static int words(int width, int height) {
+        return Math.multiplyExact(width, height);
+    }
+
+    /**
+     * Reads a region of an image as tightly packed {@code 0xAARRGGBB} words.
+     *
+     * <p>The counterpart of {@link #toAbgrBytes} for the codecs whose native side wants words rather
+     * than bytes, and of {@link #argbWords} for the case where the image does not already hold them.
+     *
+     * @param source the image to read
+     * @param x left edge of the region, in image coordinates
+     * @param y top edge of the region, in image coordinates
+     * @param width region width
+     * @param height region height
+     * @return {@code width * height} words of {@code 0xAARRGGBB}, row by row
+     */
+    public static int[] toArgbWords(RenderedImage source, int x, int y, int width, int height) {
+        if (argbWords(source) != null && x == 0 && y == 0
+                && source.getWidth() == width && source.getHeight() == height) {
+            // argbWords has already established that the whole image is one contiguous run, so the
+            // region is the image and its own array is the answer.
+            return ((DataBufferInt) ((BufferedImage) source).getRaster().getDataBuffer()).getData();
+        }
+        int[] argb = new int[words(width, height)];
+        getArgb(source, x, y, width, height, argb);
+        return argb;
+    }
+
+    /**
+     * The words behind an image, when the image already is one tightly packed run of
+     * {@code 0xAARRGGBB} words and nothing has to be done to them.
+     *
+     * <p>{@code libwebp} reads its pixels in that layout and not the A, B, G, R byte order this class
+     * hands the other codecs, so a caller that has a {@link BufferedImage#TYPE_INT_ARGB} can hand its
+     * own array straight over rather than have it shuffled into a byte array that the native side
+     * then shuffles back. This is the check that says whether that is true of a given image, and it
+     * is deliberately strict.
+     *
+     * <p>It is strict for the same reason {@link #isPacked} is: an image type says what a whole
+     * image looks like and says nothing about a view onto part of a larger one, which inherits the
+     * parent's colour model, reports the same type, and may be a window rather than the whole. A
+     * caller given the words of a view would encode the parent from the middle, so the size, the
+     * offset, the sample stride and the sample model are all checked rather than the type alone.
+     *
+     * <p>{@link BufferedImage#TYPE_INT_ARGB_PRE} is excluded along with everything else: its words
+     * are the same shape, but premultiplied against their own alpha, and handing those to an encoder
+     * that does not expect them stores colours that are not the ones the image shows.
+     *
+     * @param source the image to inspect
+     * @return the image's own array of words, or {@code null} when it is not already in that layout
+     */
+    public static int[] argbWords(RenderedImage source) {
+        if (!(source instanceof BufferedImage image)
+                || image.getType() != BufferedImage.TYPE_INT_ARGB) {
+            return null;
+        }
+        Raster raster = image.getRaster();
+        int expected = words(image.getWidth(), image.getHeight());
+        if (raster.getMinX() != 0 || raster.getMinY() != 0
+                || raster.getWidth() != image.getWidth()
+                || raster.getHeight() != image.getHeight()) {
+            return null;
+        }
+        // One int per pixel is structural for this sample model, so the only stride that can differ
+        // from the width is the one between rows, and a raster whose rows are further apart than the
+        // image is wide is not a single run of words.
+        if (raster.getSampleModel() instanceof SinglePixelPackedSampleModel model
+                && model.getScanlineStride() != image.getWidth()) {
+            return null;
+        }
+        if (!(raster.getDataBuffer() instanceof DataBufferInt buffer)
+                || buffer.getNumBanks() != 1
+                || buffer.getOffset() != 0
+                || buffer.getSize() < expected) {
+            return null;
+        }
+        int[] all = buffer.getData();
+        // The size comparison again is the part that catches a view: a window of a larger image
+        // reports the same type and a smaller data buffer than its own width times height.
+        return buffer.getSize() == raster.getWidth() * raster.getHeight() && all.length >= expected
+                ? all
+                : null;
+    }
+
+    /**
+     * Wraps tightly packed {@code 0xAARRGGBB} words into a new image.
+     *
+     * <p>The words are already in the layout a {@link BufferedImage#TYPE_INT_ARGB} raster holds, so
+     * this is a single {@link System#arraycopy} of an array onto an array rather than the per-pixel
+     * shuffle {@link #toBufferedImage} exists to do. The copy itself cannot be avoided: a
+     * {@code BufferedImage} allocates its own data buffer and offers no way of handing it one, so
+     * the words are copied into that buffer rather than referenced by it.
+     *
+     * @param argb at least {@code width * height} words, laid out row by row
+     * @param width image width
+     * @param height image height
+     * @return a {@link BufferedImage#TYPE_INT_ARGB} image holding those words
+     * @throws IllegalArgumentException when {@code argb} is too short
+     */
+    public static BufferedImage toArgbImage(int[] argb, int width, int height) {
+        int expected = words(width, height);
+        if (argb.length < expected) {
+            throw new IllegalArgumentException("expected " + expected
+                    + " words for a " + width + "x" + height + " image but got " + argb.length);
+        }
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        DataBufferInt buffer = (DataBufferInt) image.getRaster().getDataBuffer();
+        // A freshly created TYPE_INT_ARGB image has a data buffer of exactly its own size starting at
+        // its own first pixel. Should the JDK ever say otherwise the fallback below keeps this
+        // method correct rather than returning a picture of somebody else's pixels.
+        if (buffer.getNumBanks() == 1 && buffer.getOffset() == 0
+                && buffer.getSize() == expected && buffer.getData().length == expected) {
+            System.arraycopy(argb, 0, buffer.getData(), 0, expected);
+            return image;
+        }
+        image.setRGB(0, 0, width, height, argb, 0, width);
+        return image;
     }
 
     private static int bytes(int width, int height) {

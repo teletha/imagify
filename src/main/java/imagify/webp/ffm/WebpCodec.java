@@ -68,7 +68,26 @@ import static java.lang.System.getLogger;
  */
 public final class WebpCodec {
 
+    /**
+     * The quality an encode uses when a caller does not name one, which is
+     * {@code libwebp}'s own {@code WEBP_QUALITY_DEFAULT}.
+     */
     public static final int DEFAULT_QUALITY = WebpLibrary.DEFAULT_QUALITY;
+
+    /** The smallest {@code quality} an encode accepts. */
+    public static final int MIN_QUALITY = WebpLibrary.MIN_QUALITY;
+
+    /** The largest {@code quality} an encode accepts. */
+    public static final int MAX_QUALITY = WebpLibrary.MAX_QUALITY;
+
+    /**
+     * The quickest encoding effort {@code libwebp} accepts, and the one {@code method} is measured
+     * against in {@link #encode(RenderedImage, int, boolean, int)}.
+     */
+    public static final int MIN_METHOD = WebpLibrary.MIN_METHOD;
+
+    /** The most thorough encoding effort {@code libwebp} accepts. */
+    public static final int MAX_METHOD = WebpLibrary.MAX_METHOD;
 
     private static final Logger log = getLogger(WebpCodec.class.getName());
 
@@ -88,7 +107,13 @@ public final class WebpCodec {
     private static final String CHUNK_ANMF = "ANMF";
 
     private static final int LOSSLESS_HEADER_LENGTH = 128;
-    private static final int DEFAULT_COMPRESSION_METHOD = 4;
+
+    /**
+     * The encoding effort used when a caller does not name one: libwebp's own
+     * {@code WEBP_PRESET_DEFAULT} value of 4, and the one that is a reasonable answer for a file
+     * being written rather than produced as fast as it can be.
+     */
+    public static final int DEFAULT_COMPRESSION_METHOD = 4;
 
     private WebpCodec() {
         // utility class
@@ -296,6 +321,29 @@ public final class WebpCodec {
     // ----------------------------------------------------------------------------------- encoding
 
     public static byte[] encode(RenderedImage source, int quality, boolean lossless) throws WebpException {
+        return encode(source, quality, lossless, DEFAULT_COMPRESSION_METHOD);
+    }
+
+    /**
+     * Encodes an image, choosing how hard the encoder tries.
+     *
+     * <p>{@code method} is libwebp's own effort scale and runs against
+     * {@link #MIN_METHOD} and {@link #MAX_METHOD}. Lower is faster and produces a larger file, and
+     * the difference is large enough to be worth naming: on a 1600x1200 photograph, method 0 takes
+     * roughly a quarter of the time method 4 does and gives up about a third more bytes. Neither end
+     * is wrong and the choice is a caller's, which is why the default of
+     * {@value #DEFAULT_COMPRESSION_METHOD} is only a default and not a fixed point.
+     *
+     * @param source the image to encode
+     * @param quality {@link #MIN_QUALITY} to {@link #MAX_QUALITY}; a fidelity to trade away, or, with
+     *        {@code lossless}, how hard to try to make the file small
+     * @param lossless whether to store the pixels without loss
+     * @param method {@link #MIN_METHOD} to {@link #MAX_METHOD}
+     * @return the encoded file
+     * @throws WebpException when the library is unavailable or libwebp refuses the image
+     */
+    public static byte[] encode(RenderedImage source, int quality, boolean lossless, int method)
+            throws WebpException {
         WebpLibrary lib = requireLibrary();
         if (source == null) {
             throw new WebpException("no image to encode");
@@ -305,28 +353,31 @@ public final class WebpCodec {
         if (width <= 0 || height <= 0) {
             throw new WebpException("cannot encode a " + width + "x" + height + " image");
         }
-        byte[] abgr = AbgrPixels.toAbgrBytes(source, 0, 0, width, height, 1, 1);
+        int effort = clamp(method, WebpLibrary.MIN_METHOD, WebpLibrary.MAX_METHOD);
+        // An image that is already a run of 0xAARRGGBB words is handed to the native library as
+        // itself. The array is the image's own, so the segment over it is only read and the caller
+        // has to keep the image alive for the length of the call, which it is by being a parameter
+        // here. Everything else is packed into bytes first.
+        int[] words = lib.hasArgbEntryPoints() ? AbgrPixels.argbWords(source) : null;
+        byte[] abgr = words == null ? AbgrPixels.toAbgrBytes(source, 0, 0, width, height, 1, 1) : null;
         try (Arena arena = Arena.ofConfined()) {
-            MemorySegment pixels = arena.allocate(abgr.length);
-            pixels.copyFrom(MemorySegment.ofArray(abgr));
+            MemorySegment pixels = words != null
+                    ? MemorySegment.ofArray(words)
+                    : copy(arena, abgr);
             MemorySegment message = arena.allocate(WebpLibrary.MESSAGE_LENGTH);
             MemorySegment encoded = arena.allocate(ValueLayout.ADDRESS);
             MemorySegment encodedLength = arena.allocate(ValueLayout.JAVA_LONG);
-            int status = lib.imagify_webp_encode(pixels, width, height, clamp(quality),
-                        lossless ? 1 : 0, DEFAULT_COMPRESSION_METHOD, encoded, encodedLength, message,
-                        WebpLibrary.MESSAGE_LENGTH);
-            check(lib, status, message, "imagify_webp_encode()");
-            MemorySegment file = encoded.get(ValueLayout.ADDRESS, 0);
-            int length = Math.toIntExact(encodedLength.get(ValueLayout.JAVA_LONG, 0));
-            if (file.address() == 0 || length <= 0) {
-                lib.imagify_webp_free(file);
-                throw new WebpException("imagify_webp_encode() did not produce any output");
-            }
-            try {
-                return file.reinterpret(length).toArray(ValueLayout.JAVA_BYTE);
-            } finally {
-                lib.imagify_webp_free(file);
-            }
+            int status = words != null
+                    ? lib.imagify_webp_encode_argb(pixels, width, height, clamp(quality),
+                            lossless ? 1 : 0, effort, encoded, encodedLength, message,
+                            WebpLibrary.MESSAGE_LENGTH)
+                    : lib.imagify_webp_encode(pixels, width, height, clamp(quality),
+                            lossless ? 1 : 0, effort, encoded, encodedLength, message,
+                            WebpLibrary.MESSAGE_LENGTH);
+            check(lib, status, message, words != null
+                    ? "imagify_webp_encode_argb()"
+                    : "imagify_webp_encode()");
+            return collect(lib, encoded, encodedLength, "imagify_webp_encode()");
         }
     }
 
@@ -352,25 +403,43 @@ public final class WebpCodec {
             throw new WebpException("cannot encode a " + width + "x" + height + " animation");
         }
         int count = frames.size();
-        long frameBytes = (long) width * height * 4;
-        long total = frameBytes * count;
+        long frameWords = (long) width * height;
+        long total = frameWords * count;
         if (total > Integer.MAX_VALUE - 8L) {
             throw new WebpException("the animation is too large to hold in memory");
         }
-        byte[] abgr = new byte[(int) total];
-        int offset = 0;
-        for (BufferedImage frame : frames) {
-            if (frame == null || frame.getWidth() != width || frame.getHeight() != height) {
+        // One buffer for the whole animation, because the native encoder wants the frames one after
+        // another and a run of its own is cheaper than a thousand little ones. Whether it is words
+        // or bytes is decided once, by the first frame that cannot be used as it is: a single frame
+        // of a different kind would have to be converted anyway, and converting it into a buffer of
+        // the other kind is what the code below does by copying the ones that could have been kept.
+        int[] words = lib.hasArgbEntryPoints() ? new int[(int) total] : null;
+        byte[] abgr = words == null ? new byte[(int) total * 4] : null;
+        for (int frame = 0; frame < count; frame++) {
+            BufferedImage image = frames.get(frame);
+            if (image == null || image.getWidth() != width || image.getHeight() != height) {
                 throw new WebpException("every frame must be " + width + "x" + height);
             }
-            byte[] row = AbgrPixels.toAbgrBytes(frame, 0, 0, width, height, 1, 1);
-            System.arraycopy(row, 0, abgr, offset, row.length);
-            offset += row.length;
+            int at = (int) (frame * frameWords);
+            if (words != null) {
+                int[] own = AbgrPixels.argbWords(image);
+                if (own != null) {
+                    System.arraycopy(own, 0, words, at, (int) frameWords);
+                } else {
+                    System.arraycopy(AbgrPixels.toArgbWords(image, 0, 0, width, height),
+                            0, words, at, (int) frameWords);
+                }
+            } else {
+                int atByte = frame * (int) frameWords * 4;
+                byte[] row = AbgrPixels.toAbgrBytes(image, 0, 0, width, height, 1, 1);
+                System.arraycopy(row, 0, abgr, atByte, row.length);
+            }
         }
 
         try (Arena arena = Arena.ofConfined()) {
-            MemorySegment pixels = arena.allocate(abgr.length);
-            pixels.copyFrom(MemorySegment.ofArray(abgr));
+            MemorySegment pixels = words != null
+                    ? MemorySegment.ofArray(words)
+                    : copy(arena, abgr);
             MemorySegment delays = arena.allocate((long) count * Integer.BYTES);
             for (int i = 0; i < count; i++) {
                 delays.set(ValueLayout.JAVA_INT, (long) i * Integer.BYTES, delaysMs[i]);
@@ -378,21 +447,18 @@ public final class WebpCodec {
             MemorySegment message = arena.allocate(WebpLibrary.MESSAGE_LENGTH);
             MemorySegment encoded = arena.allocate(ValueLayout.ADDRESS);
             MemorySegment encodedLength = arena.allocate(ValueLayout.JAVA_LONG);
-            int status = lib.imagify_webp_encode_animation(pixels, count, width, height, delays,
-                        clamp(quality), lossless ? 1 : 0, loopCount, compressionMethod, encoded,
-                        encodedLength, message, WebpLibrary.MESSAGE_LENGTH);
-            check(lib, status, message, "imagify_webp_encode_animation()");
-            MemorySegment file = encoded.get(ValueLayout.ADDRESS, 0);
-            int length = Math.toIntExact(encodedLength.get(ValueLayout.JAVA_LONG, 0));
-            if (file.address() == 0 || length <= 0) {
-                lib.imagify_webp_free(file);
-                throw new WebpException("imagify_webp_encode_animation() did not produce any output");
-            }
-            try {
-                return file.reinterpret(length).toArray(ValueLayout.JAVA_BYTE);
-            } finally {
-                lib.imagify_webp_free(file);
-            }
+            int effort = clamp(compressionMethod, WebpLibrary.MIN_METHOD, WebpLibrary.MAX_METHOD);
+            int status = words != null
+                    ? lib.imagify_webp_encode_animation_argb(pixels, count, width, height, delays,
+                            clamp(quality), lossless ? 1 : 0, loopCount, effort, encoded,
+                            encodedLength, message, WebpLibrary.MESSAGE_LENGTH)
+                    : lib.imagify_webp_encode_animation(pixels, count, width, height, delays,
+                            clamp(quality), lossless ? 1 : 0, loopCount, effort, encoded,
+                            encodedLength, message, WebpLibrary.MESSAGE_LENGTH);
+            check(lib, status, message, words != null
+                    ? "imagify_webp_encode_animation_argb()"
+                    : "imagify_webp_encode_animation()");
+            return collect(lib, encoded, encodedLength, "imagify_webp_encode_animation()");
         }
     }
 
@@ -401,6 +467,12 @@ public final class WebpCodec {
     public static BufferedImage decode(byte[] encoded) throws WebpException {
         WebpLibrary lib = requireLibrary();
         Objects.requireNonNull(encoded, "no data to decode");
+        if (lib.hasArgbEntryPoints()) {
+            BufferedImage direct = decodeIntoWords(lib, encoded);
+            if (direct != null) {
+                return direct;
+            }
+        }
         try (Arena arena = Arena.ofConfined()) {
             MemorySegment input = input(encoded, arena);
             MemorySegment message = arena.allocate(WebpLibrary.MESSAGE_LENGTH);
@@ -427,6 +499,42 @@ public final class WebpCodec {
                 lib.imagify_webp_free(pixels);
             }
         }
+    }
+
+    /**
+     * Decodes straight into an array of words, and answers {@code null} for anything this cannot do
+     * so that the caller falls back rather than fails.
+     *
+     * <p>The only thing that cannot be done here is an animation, which has no single image to
+     * decode and which the other entry point refuses as well; being told that is not a failure of
+     * this path, it is the path not applying, and the caller already has a way of reading the
+     * frames. The size has to be known before the buffer can be allocated, so the headers are read
+     * first, which the entry point reads again for its own report.
+     */
+    private static BufferedImage decodeIntoWords(WebpLibrary lib, byte[] encoded) throws WebpException {
+        WebpImageInfo info = readHeader(encoded);
+        if (info.hasAnimation()) {
+            return null;
+        }
+        int width = info.width();
+        int height = info.height();
+        long count = (long) width * height;
+        if (width <= 0 || height <= 0 || count > Integer.MAX_VALUE) {
+            return null;
+        }
+        int[] words = new int[(int) count];
+        try (Arena arena = Arena.ofConfined()) {
+            MemorySegment input = input(encoded, arena);
+            MemorySegment message = arena.allocate(WebpLibrary.MESSAGE_LENGTH);
+            MemorySegment features = arena.allocate(WebpLibrary.WEBP_FEATURES_LAYOUT);
+            check(lib, lib.imagify_webp_decode_into_argb(input, encoded.length,
+                    MemorySegment.ofArray(words), width, features, message, WebpLibrary.MESSAGE_LENGTH),
+                    message, "imagify_webp_decode_into_argb()");
+        }
+        // The alpha type is chosen the same way it is on the other path, from whether the file
+        // carries a channel rather than from whether the decoded words happen to be opaque, so that
+        // a file with no channel comes back as the JDK's opaque type and not as an ARGB one.
+        return normalise(AbgrPixels.toArgbImage(words, width, height), info.hasAlpha());
     }
 
     public record DecodedWebp(WebpImageInfo info, List<BufferedImage> frames, int[] delaysMs) {
@@ -581,8 +689,52 @@ public final class WebpCodec {
         return memory;
     }
 
+    /**
+     * Copies an array the native side is not allowed to see into the arena it is called with.
+     *
+     * <p>Native code here reads through {@code const} pointers it does not write to, so a segment
+     * over a Java array would do, and this is only used where the array was built for the call and
+     * nothing else refers to it. It stays because a caller of {@code imagify_webp_encode} is not
+     * obliged to have been careful, and the arena costs one copy of an array that is about to be
+     * freed anyway.
+     */
+    private static MemorySegment copy(Arena arena, byte[] bytes) {
+        MemorySegment memory = arena.allocate(Math.max(bytes.length, 1));
+        memory.copyFrom(MemorySegment.ofArray(bytes));
+        return memory;
+    }
+
+    /**
+     * Takes the buffer an encode entry point wrote into a byte array and hands the buffer back.
+     *
+     * @param lib the library, for the free
+     * @param encoded receives the pointer the entry point wrote
+     * @param encodedLength receives the length the entry point wrote
+     * @param operation the entry point's name, for the message when it produced nothing
+     * @return the encoded file
+     * @throws WebpException when the entry point reported success but produced nothing
+     */
+    private static byte[] collect(WebpLibrary lib, MemorySegment encoded, MemorySegment encodedLength,
+            String operation) throws WebpException {
+        MemorySegment file = encoded.get(ValueLayout.ADDRESS, 0);
+        int length = Math.toIntExact(encodedLength.get(ValueLayout.JAVA_LONG, 0));
+        if (file.address() == 0 || length <= 0) {
+            lib.imagify_webp_free(file);
+            throw new WebpException(operation + " did not produce any output");
+        }
+        try {
+            return file.reinterpret(length).toArray(ValueLayout.JAVA_BYTE);
+        } finally {
+            lib.imagify_webp_free(file);
+        }
+    }
+
     private static int clamp(int quality) {
         return Math.max(WebpLibrary.MIN_QUALITY, Math.min(WebpLibrary.MAX_QUALITY, quality));
+    }
+
+    private static int clamp(int value, int low, int high) {
+        return Math.max(low, Math.min(high, value));
     }
 
     private static void check(WebpLibrary lib, int status, MemorySegment message, String operation)
