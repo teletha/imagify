@@ -17,6 +17,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.awt.image.DataBufferByte;
 import java.awt.image.DataBufferInt;
 import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
@@ -246,6 +247,42 @@ class AbgrPixelsTest {
                 assertEquals(parent.getRGB(4 + x, y), copy.getRGB(x, y), "pixel " + x + "," + y);
             }
         }
+    }
+
+    // ----------------------------------------------------- direct backing array detection
+
+    @Test
+    @DisplayName("a TYPE_4BYTE_ABGR image hands out its own byte array")
+    void abgrBytesAreTheImageItsOwn() {
+        BufferedImage image = new BufferedImage(3, 2, BufferedImage.TYPE_4BYTE_ABGR);
+        image.setRGB(1, 0, 0x80112233);
+
+        byte[] bytes = AbgrPixels.abgrBytesOrNull(image);
+
+        assertNotNull(bytes, "a plain TYPE_4BYTE_ABGR image should expose its backing bytes");
+        assertSame(((DataBufferByte) image.getRaster().getDataBuffer()).getData(), bytes);
+        assertEquals(3 * 2 * 4, bytes.length);
+    }
+
+    @Test
+    @DisplayName("a TYPE_3BYTE_BGR image hands out its own byte array")
+    void bgrBytesAreTheImageItsOwn() {
+        BufferedImage image = new BufferedImage(3, 2, BufferedImage.TYPE_3BYTE_BGR);
+        image.setRGB(1, 0, 0xff112233);
+
+        byte[] bytes = AbgrPixels.bgrBytesOrNull(image);
+
+        assertNotNull(bytes, "a plain TYPE_3BYTE_BGR image should expose its backing bytes");
+        assertSame(((DataBufferByte) image.getRaster().getDataBuffer()).getData(), bytes);
+        assertEquals(3 * 2 * 3, bytes.length);
+    }
+
+    @Test
+    @DisplayName("other image types do not hand out byte backing arrays")
+    void otherTypesHaveNoByteBacking() {
+        assertNull(AbgrPixels.abgrBytesOrNull(new BufferedImage(2, 2, BufferedImage.TYPE_INT_ARGB)));
+        assertNull(AbgrPixels.bgrBytesOrNull(new BufferedImage(2, 2, BufferedImage.TYPE_4BYTE_ABGR)));
+        assertNull(AbgrPixels.bgrBytesOrNull(new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB)));
     }
 
     // ------------------------------------------------------------------ the 0xAARRGGBB words

@@ -13,9 +13,11 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBufferByte;
 import java.awt.image.DataBufferInt;
+import java.awt.image.PixelInterleavedSampleModel;
 import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.awt.image.SinglePixelPackedSampleModel;
+import java.awt.image.WritableRaster;
 
 /**
  * Moves pixels between {@code BufferedImage} and the tightly packed {@code A, B, G, R} byte order
@@ -285,6 +287,82 @@ public final class AbgrPixels {
         }
         return buffer.getSize() == raster.getWidth() * raster.getHeight() * 4
                 && buffer.getData().length >= expected;
+    }
+
+    /**
+     * Returns the image's live A, B, G, R byte backing when it is a plain
+     * {@code TYPE_4BYTE_ABGR} raster — the layout {@code libavif} reads and the WebP byte encoder
+     * reads — so it can be handed to the native side without a conversion pass; otherwise
+     * {@code null}.
+     *
+     * <p>The returned array is the image's live storage and must never be modified.
+     */
+    public static byte[] abgrBytesOrNull(BufferedImage image) {
+        if (image.getType() != BufferedImage.TYPE_4BYTE_ABGR) {
+            return null;
+        }
+        WritableRaster raster = image.getRaster();
+        if (raster.getSampleModelTranslateX() != 0 || raster.getSampleModelTranslateY() != 0) {
+            return null;
+        }
+        if (!(raster.getSampleModel() instanceof PixelInterleavedSampleModel sampleModel)) {
+            return null;
+        }
+        int width = image.getWidth();
+        int height = image.getHeight();
+        if (sampleModel.getPixelStride() != 4 || sampleModel.getScanlineStride() != width * 4
+                || sampleModel.getWidth() != width || sampleModel.getHeight() != height) {
+            return null;
+        }
+        int[] bandOffsets = sampleModel.getBandOffsets();
+        if (bandOffsets.length != 4 || bandOffsets[0] != 3 || bandOffsets[1] != 2
+                || bandOffsets[2] != 1 || bandOffsets[3] != 0) {
+            return null;
+        }
+        DataBufferByte buffer = (DataBufferByte) raster.getDataBuffer();
+        if (buffer.getNumBanks() != 1 || buffer.getOffset() != 0
+                || buffer.getSize() != width * height * 4) {
+            return null;
+        }
+        return buffer.getData();
+    }
+
+    /**
+     * Returns the image's live B, G, R byte backing when it is a plain {@code TYPE_3BYTE_BGR}
+     * raster — the layout libwebp's {@code WebPPictureImportBGR} and libavif's
+     * {@code AVIF_RGB_FORMAT_BGR} read — so it can be handed to the native side without a
+     * conversion pass; otherwise {@code null}.
+     *
+     * <p>The returned array is the image's live storage and must never be modified.
+     */
+    public static byte[] bgrBytesOrNull(BufferedImage image) {
+        if (image.getType() != BufferedImage.TYPE_3BYTE_BGR) {
+            return null;
+        }
+        WritableRaster raster = image.getRaster();
+        if (raster.getSampleModelTranslateX() != 0 || raster.getSampleModelTranslateY() != 0) {
+            return null;
+        }
+        if (!(raster.getSampleModel() instanceof PixelInterleavedSampleModel sampleModel)) {
+            return null;
+        }
+        int width = image.getWidth();
+        int height = image.getHeight();
+        if (sampleModel.getPixelStride() != 3 || sampleModel.getScanlineStride() != width * 3
+                || sampleModel.getWidth() != width || sampleModel.getHeight() != height) {
+            return null;
+        }
+        int[] bandOffsets = sampleModel.getBandOffsets();
+        if (bandOffsets.length != 3 || bandOffsets[0] != 2 || bandOffsets[1] != 1
+                || bandOffsets[2] != 0) {
+            return null;
+        }
+        DataBufferByte buffer = (DataBufferByte) raster.getDataBuffer();
+        if (buffer.getNumBanks() != 1 || buffer.getOffset() != 0
+                || buffer.getSize() != width * height * 3) {
+            return null;
+        }
+        return buffer.getData();
     }
 
     private static int words(int width, int height) {

@@ -161,21 +161,30 @@ public final class AvifSequence implements AutoCloseable {
         ensureTable();
         check(index);
         try (Arena arena = Arena.ofConfined()) {
-            MemorySegment pixels = arena.allocate(ValueLayout.ADDRESS);
-            MemorySegment length = arena.allocate(ValueLayout.JAVA_LONG);
             MemorySegment width = arena.allocate(ValueLayout.JAVA_INT);
             MemorySegment height = arena.allocate(ValueLayout.JAVA_INT);
-            if (shim.sequenceFrame(sequence, index, threads, pixels, length, width, height) != 0) {
-                throw new AvifException("avif could not decode frame " + index);
+            int frameWidth = widths[index];
+            int frameHeight = heights[index];
+            byte[] abgr;
+            if (shim.hasSequenceFrameInto()) {
+                abgr = new byte[frameWidth * frameHeight * 4];
+                if (shim.sequenceFrameInto(sequence, index, threads, MemorySegment.ofArray(abgr),
+                        abgr.length, width, height) != 0) {
+                    throw new AvifException("avif could not decode frame " + index);
+                }
+            } else {
+                MemorySegment pixels = arena.allocate(ValueLayout.ADDRESS);
+                MemorySegment length = arena.allocate(ValueLayout.JAVA_LONG);
+                if (shim.sequenceFrame(sequence, index, threads, pixels, length, width, height) != 0) {
+                    throw new AvifException("avif could not decode frame " + index);
+                }
+                MemorySegment buffer = pixels.get(ValueLayout.ADDRESS, 0);
+                int count = (int) length.get(ValueLayout.JAVA_LONG, 0);
+                if (buffer.address() == 0 || count <= 0) {
+                    throw new AvifException("avif produced no pixels for frame " + index);
+                }
+                abgr = buffer.reinterpret(count).toArray(ValueLayout.JAVA_BYTE);
             }
-            MemorySegment buffer = pixels.get(ValueLayout.ADDRESS, 0);
-            int count = (int) length.get(ValueLayout.JAVA_LONG, 0);
-            if (buffer.address() == 0 || count <= 0) {
-                throw new AvifException("avif produced no pixels for frame " + index);
-            }
-            // The single read out of the shim's buffer and into the image that wraps it, which is
-            // the one the JNA binding made twice.
-            byte[] abgr = buffer.reinterpret(count).toArray(ValueLayout.JAVA_BYTE);
             return AbgrPixels.toBufferedImage(abgr,
                     width.get(ValueLayout.JAVA_INT, 0), height.get(ValueLayout.JAVA_INT, 0));
         }

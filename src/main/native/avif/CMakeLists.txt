@@ -140,7 +140,9 @@ set(IMAGIFY_AVIF_SYMBOLS
   imagify_avif_picture_create
   imagify_avif_picture_destroy
   imagify_avif_picture_from_abgr
+  imagify_avif_picture_from_bgr
   imagify_avif_picture_to_abgr
+  imagify_avif_picture_to_abgr_into
   imagify_avif_picture_pixels
   imagify_avif_picture_pixels_free
   imagify_avif_picture_info
@@ -152,6 +154,7 @@ set(IMAGIFY_AVIF_SYMBOLS
   imagify_avif_sequence_read
   imagify_avif_sequence_sizes
   imagify_avif_sequence_frame
+  imagify_avif_sequence_frame_into
   imagify_avif_free)
 
 # The libavif entry points the shim calls. Every one of them has been in libavif since 1.0.0, which

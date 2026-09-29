@@ -47,7 +47,11 @@ public final class AvifShim {
 
     private final MethodHandle pictureFromAbgr;
 
+    private final MethodHandle pictureFromBgr;
+
     private final MethodHandle pictureToAbgr;
+
+    private final MethodHandle pictureToAbgrInto;
 
     private final MethodHandle pictureInfo;
 
@@ -66,6 +70,8 @@ public final class AvifShim {
     private final MethodHandle sequenceSizes;
 
     private final MethodHandle sequenceFrame;
+
+    private final MethodHandle sequenceFrameInto;
 
     private final MethodHandle free;
 
@@ -98,8 +104,16 @@ public final class AvifShim {
         // what the other path costs.
         this.pictureFromAbgr = downcall(linker, lookup, "imagify_avif_picture_from_abgr", FunctionDescriptor
                 .of(JAVA_INT, ADDRESS, ADDRESS, JAVA_INT, JAVA_INT), Linker.Option.critical(true));
+        // Fast path for TYPE_3BYTE_BGR: the band order is already B, G, R, so libavif can read the
+        // backing array directly with AVIF_RGB_FORMAT_BGR.
+        this.pictureFromBgr = optionalDowncall(linker, lookup, "imagify_avif_picture_from_bgr", FunctionDescriptor
+                .of(JAVA_INT, ADDRESS, ADDRESS, JAVA_INT, JAVA_INT), Linker.Option.critical(true));
         this.pictureToAbgr = downcall(linker, lookup, "imagify_avif_picture_to_abgr", FunctionDescriptor
                 .of(JAVA_INT, ADDRESS, JAVA_INT, ADDRESS, ADDRESS));
+        // Decode straight into a Java byte[] that the caller has already allocated, avoiding the
+        // C-side malloc and the copy into a Java array.
+        this.pictureToAbgrInto = optionalDowncall(linker, lookup, "imagify_avif_picture_to_abgr_into", FunctionDescriptor
+                .of(JAVA_INT, ADDRESS, JAVA_INT, ADDRESS, JAVA_LONG), Linker.Option.critical(true));
         // Fifteen answers into one block rather than fifteen pointers, so the shape of the call is
         // the shim's and not this binding's. The positions are named in AvifConstants and in the
         // shim's header, and they are an ABI that both sides read by name.
@@ -122,6 +136,8 @@ public final class AvifShim {
         this.sequenceSizes = downcall(linker, lookup, "imagify_avif_sequence_sizes", FunctionDescriptor.of(JAVA_INT, ADDRESS, ADDRESS));
         this.sequenceFrame = downcall(linker, lookup, "imagify_avif_sequence_frame", FunctionDescriptor
                 .of(JAVA_INT, ADDRESS, JAVA_INT, JAVA_INT, ADDRESS, ADDRESS, ADDRESS, ADDRESS));
+        this.sequenceFrameInto = optionalDowncall(linker, lookup, "imagify_avif_sequence_frame_into", FunctionDescriptor
+                .of(JAVA_INT, ADDRESS, JAVA_INT, JAVA_INT, ADDRESS, JAVA_LONG, ADDRESS, ADDRESS), Linker.Option.critical(true));
         this.free = downcall(linker, lookup, "imagify_avif_free", FunctionDescriptor.ofVoid(ADDRESS));
     }
 
@@ -189,6 +205,29 @@ public final class AvifShim {
     }
 
     /**
+     * Whether the loaded shim has the BGR encode entry point.
+     */
+    public boolean hasPictureFromBgr() {
+        return pictureFromBgr != null;
+    }
+
+    /**
+     * Converts tightly packed B, G, R bytes into a picture's planes, without a copy.
+     *
+     * @throws IllegalStateException when the loaded shim does not export the entry point
+     */
+    public int pictureFromBgr(MemorySegment picture, MemorySegment pixels, int rowBytes, int chromaDownsampling) {
+        if (pictureFromBgr == null) {
+            throw new IllegalStateException("the loaded AVIF shim has no imagify_avif_picture_from_bgr()");
+        }
+        try {
+            return (int) pictureFromBgr.invokeExact(picture, pixels, rowBytes, chromaDownsampling);
+        } catch (Throwable t) {
+            throw new IllegalStateException("imagify_avif_picture_from_bgr() failed", t);
+        }
+    }
+
+    /**
      * Converts a picture's planes into tightly packed A, B, G, R bytes the caller can read once.
      *
      * @param picture the picture to read
@@ -202,6 +241,30 @@ public final class AvifShim {
             return (int) pictureToAbgr.invokeExact(picture, maxThreads, pixels, length);
         } catch (Throwable t) {
             throw new IllegalStateException("imagify_avif_picture_to_abgr() failed", t);
+        }
+    }
+
+    /**
+     * Whether the loaded shim has the decode-into entry point.
+     */
+    public boolean hasPictureToAbgrInto() {
+        return pictureToAbgrInto != null;
+    }
+
+    /**
+     * Converts a picture's planes into tightly packed A, B, G, R bytes the caller has already
+     * allocated.
+     *
+     * @throws IllegalStateException when the loaded shim does not export the entry point
+     */
+    public int pictureToAbgrInto(MemorySegment picture, int maxThreads, MemorySegment pixels, long length) {
+        if (pictureToAbgrInto == null) {
+            throw new IllegalStateException("the loaded AVIF shim has no imagify_avif_picture_to_abgr_into()");
+        }
+        try {
+            return (int) pictureToAbgrInto.invokeExact(picture, maxThreads, pixels, length);
+        } catch (Throwable t) {
+            throw new IllegalStateException("imagify_avif_picture_to_abgr_into() failed", t);
         }
     }
 
@@ -339,6 +402,29 @@ public final class AvifShim {
         }
     }
 
+    /**
+     * Whether the loaded shim has the frame-decode-into entry point.
+     */
+    public boolean hasSequenceFrameInto() {
+        return sequenceFrameInto != null;
+    }
+
+    /**
+     * Decodes one frame of a sequence into a caller-allocated buffer.
+     *
+     * @throws IllegalStateException when the loaded shim does not export the entry point
+     */
+    public int sequenceFrameInto(MemorySegment sequence, int index, int maxThreads, MemorySegment pixels, long length, MemorySegment width, MemorySegment height) {
+        if (sequenceFrameInto == null) {
+            throw new IllegalStateException("the loaded AVIF shim has no imagify_avif_sequence_frame_into()");
+        }
+        try {
+            return (int) sequenceFrameInto.invokeExact(sequence, index, maxThreads, pixels, length, width, height);
+        } catch (Throwable t) {
+            throw new IllegalStateException("imagify_avif_sequence_frame_into() failed", t);
+        }
+    }
+
     public void free(MemorySegment buffer) {
         try {
             free.invokeExact(buffer);
@@ -350,5 +436,17 @@ public final class AvifShim {
     private static MethodHandle downcall(Linker linker, SymbolLookup lookup, String symbol, FunctionDescriptor descriptor, Linker.Option... options) {
         return linker.downcallHandle(lookup.find(symbol)
                 .orElseThrow(() -> new IllegalArgumentException("the AVIF shim does not export " + symbol)), descriptor, options);
+    }
+
+    private static MethodHandle optionalDowncall(Linker linker, SymbolLookup lookup, String symbol, FunctionDescriptor descriptor, Linker.Option... options) {
+        MemorySegment address = lookup.find(symbol).orElse(null);
+        if (address == null) {
+            return null;
+        }
+        try {
+            return linker.downcallHandle(address, descriptor, options);
+        } catch (Throwable t) {
+            throw new IllegalStateException("cannot create downcall handle for " + symbol, t);
+        }
     }
 }

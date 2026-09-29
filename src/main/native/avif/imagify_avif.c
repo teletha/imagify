@@ -191,7 +191,7 @@ void imagify_avif_picture_destroy(imagify_avif_picture* picture) {
  * @param chroma_downsampling an AVIF_CHROMA_DOWNSAMPLING_* value, or -1 for libavif's own
  */
 static int imagify_avif_rgb(avifRGBImage* rgb, const avifImage* image, const uint8_t* pixels,
-    int row_bytes, int chroma_downsampling) {
+    int row_bytes, avifRGBFormat format, int chroma_downsampling) {
     memset(rgb, 0, sizeof(*rgb));
     avifRGBImageSetDefaults(rgb, (avifImage*)image);
     /*
@@ -200,7 +200,7 @@ static int imagify_avif_rgb(avifRGBImage* rgb, const avifImage* image, const uin
      * without a shuffle. The formats libavif would otherwise produce read as R, G, B, A, and reading
      * A, B, G, R as though it were that swaps red and blue in both directions without failing.
      */
-    rgb->format = AVIF_RGB_FORMAT_ABGR;
+    rgb->format = format;
     rgb->depth = 8;
     /* avifRGBImageSetDefaults() hard codes RGBA/8, so the stride is derived again from the format. */
     rgb->rowBytes = (uint32_t)row_bytes;
@@ -224,7 +224,22 @@ int imagify_avif_picture_from_abgr(imagify_avif_picture* picture, const uint8_t*
         return IMAGIFY_AVIF_ERR_ARGUMENT;
     }
     avifRGBImage rgb;
-    imagify_avif_rgb(&rgb, picture->image, pixels, row_bytes, chroma_downsampling);
+    imagify_avif_rgb(&rgb, picture->image, pixels, row_bytes, AVIF_RGB_FORMAT_ABGR, chroma_downsampling);
+    return imagify_avif_status(NULL, 0, avifImageRGBToYUV(picture->image, &rgb));
+}
+
+int imagify_avif_picture_from_bgr(imagify_avif_picture* picture, const uint8_t* pixels,
+    int row_bytes, int chroma_downsampling) {
+    if (picture == NULL || pixels == NULL || row_bytes <= 0) {
+        return IMAGIFY_AVIF_ERR_ARGUMENT;
+    }
+    const int width = (int)picture->image->width;
+    const int height = (int)picture->image->height;
+    if (row_bytes < width * 3) {
+        return IMAGIFY_AVIF_ERR_ARGUMENT;
+    }
+    avifRGBImage rgb;
+    imagify_avif_rgb(&rgb, picture->image, pixels, row_bytes, AVIF_RGB_FORMAT_BGR, chroma_downsampling);
     return imagify_avif_status(NULL, 0, avifImageRGBToYUV(picture->image, &rgb));
 }
 
@@ -257,7 +272,7 @@ int imagify_avif_picture_to_abgr(imagify_avif_picture* picture, int max_threads,
     const size_t total = (size_t)width * (size_t)height * pixel_size;
 
     avifRGBImage rgb;
-    imagify_avif_rgb(&rgb, picture->image, NULL, (int)(width * pixel_size), -1);
+    imagify_avif_rgb(&rgb, picture->image, NULL, (int)(width * pixel_size), AVIF_RGB_FORMAT_ABGR, -1);
     /* One allocation, and it is the only buffer the picture's pixels pass through on the way out.
      * The caller reads it once, into the BufferedImage it wraps, so the JNA path's second copy, of
      * the byte array into the image's own data buffer, has nothing to be a copy of. */
@@ -285,6 +300,25 @@ int imagify_avif_picture_to_abgr(imagify_avif_picture* picture, int max_threads,
     *out = buffer;
     *out_length = total;
     return IMAGIFY_AVIF_OK;
+}
+
+int imagify_avif_picture_to_abgr_into(imagify_avif_picture* picture, int max_threads,
+    uint8_t* out, size_t out_length) {
+    if (picture == NULL || out == NULL) {
+        return IMAGIFY_AVIF_ERR_ARGUMENT;
+    }
+
+    const int width = (int)picture->image->width;
+    const int height = (int)picture->image->height;
+    const size_t total = (size_t)width * (size_t)height * 4u;
+    if (out_length < total) {
+        return IMAGIFY_AVIF_ERR_ARGUMENT;
+    }
+
+    avifRGBImage rgb;
+    imagify_avif_rgb(&rgb, picture->image, out, (int)(width * 4u), AVIF_RGB_FORMAT_ABGR, -1);
+    rgb.maxThreads = (max_threads > 1) ? max_threads : 1;
+    return imagify_avif_status(NULL, 0, avifImageYUVToRGB(picture->image, &rgb));
 }
 
 const uint8_t* imagify_avif_picture_pixels(const imagify_avif_picture* picture, size_t* out_length) {
@@ -524,7 +558,7 @@ int imagify_avif_animation_encode(int frame_count, const uint8_t* frames, const 
         /* The stride is the frame's own width, not the picture's, and the picture is created at
          * that width, so the two agree and a sequence cannot end up with ragged frames. */
         imagify_avif_rgb(&rgb, image, frames + (size_t)i * frame_bytes, width * 4,
-            chroma_downsampling);
+            AVIF_RGB_FORMAT_ABGR, chroma_downsampling);
         result = avifImageRGBToYUV(image, &rgb);
         if (result == AVIF_RESULT_OK) {
             /* The timescale is 1000, so a duration in milliseconds is the number of timescales a
@@ -743,7 +777,7 @@ int imagify_avif_sequence_frame(imagify_avif_sequence* sequence, int index, int 
         return IMAGIFY_AVIF_ERR_MEMORY;
     }
     avifRGBImage rgb;
-    imagify_avif_rgb(&rgb, image, NULL, width * 4, -1);
+    imagify_avif_rgb(&rgb, image, NULL, width * 4, AVIF_RGB_FORMAT_ABGR, -1);
     rgb.pixels = buffer;
     rgb.maxThreads = (max_threads > 1) ? max_threads : 1;
     const avifResult result = avifImageYUVToRGB(image, &rgb);
@@ -753,6 +787,42 @@ int imagify_avif_sequence_frame(imagify_avif_sequence* sequence, int index, int 
     }
     *out = buffer;
     *out_length = total;
+    *out_width = width;
+    *out_height = height;
+    return IMAGIFY_AVIF_OK;
+}
+
+int imagify_avif_sequence_frame_into(imagify_avif_sequence* sequence, int index, int max_threads,
+    uint8_t* out, size_t out_length, int* out_width, int* out_height) {
+    if (sequence == NULL || sequence->decoder == NULL || out == NULL || out_width == NULL
+        || out_height == NULL) {
+        return IMAGIFY_AVIF_ERR_ARGUMENT;
+    }
+    if (index < 0 || index >= sequence->decoder->imageCount) {
+        return imagify_avif_fail(NULL, 0, IMAGIFY_AVIF_ERR_ARGUMENT,
+            "there is no frame at that position");
+    }
+    const avifResult seeked = imagify_avif_sequence_seek(sequence, index);
+    if (seeked != AVIF_RESULT_OK) {
+        return imagify_avif_status(NULL, 0, seeked);
+    }
+    const avifImage* image = sequence->decoder->image;
+    if (image == NULL || image->width == 0 || image->height == 0) {
+        return imagify_avif_fail(NULL, 0, IMAGIFY_AVIF_ERR_CORRUPT, "the frame could not be decoded");
+    }
+    const int width = (int)image->width;
+    const int height = (int)image->height;
+    const size_t total = (size_t)width * (size_t)height * 4u;
+    if (out_length < total) {
+        return IMAGIFY_AVIF_ERR_ARGUMENT;
+    }
+    avifRGBImage rgb;
+    imagify_avif_rgb(&rgb, image, out, width * 4, AVIF_RGB_FORMAT_ABGR, -1);
+    rgb.maxThreads = (max_threads > 1) ? max_threads : 1;
+    const avifResult result = avifImageYUVToRGB(image, &rgb);
+    if (result != AVIF_RESULT_OK) {
+        return imagify_avif_status(NULL, 0, result);
+    }
     *out_width = width;
     *out_height = height;
     return IMAGIFY_AVIF_OK;

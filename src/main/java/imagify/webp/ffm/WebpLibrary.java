@@ -213,6 +213,12 @@ public final class WebpLibrary {
             ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG
     );
 
+    /** Function descriptor for {@code imagify_webp_encode_bgr}. */
+    public static final FunctionDescriptor ENCODE_BGR_DESC = FunctionDescriptor.of(
+            ValueLayout.JAVA_INT,
+            ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG
+    );
+
     /** Function descriptor for {@code imagify_webp_read_animation}. */
     public static final FunctionDescriptor READ_ANIMATION_DESC = FunctionDescriptor.of(
             ValueLayout.JAVA_INT,
@@ -281,6 +287,7 @@ public final class WebpLibrary {
     private final MethodHandle encodeArgbHandle;
     private final MethodHandle encodeAnimationArgbHandle;
     private final MethodHandle decodeIntoArgbHandle;
+    private final MethodHandle encodeBgrHandle;
 
     /**
      * Creates a new FFM binding for the native library identified by {@code lookup}.
@@ -296,14 +303,17 @@ public final class WebpLibrary {
         this.webpVersionHandle = resolveSymbol(lookup, "imagify_webp_webp_version", WEBP_VERSION_DESC);
         this.readFeaturesHandle = resolveSymbol(lookup, "imagify_webp_read_features", READ_FEATURES_DESC);
         this.decodeHandle = resolveSymbol(lookup, "imagify_webp_decode", DECODE_DESC);
-        this.encodeHandle = resolveSymbol(lookup, "imagify_webp_encode", ENCODE_DESC);
+        /* The byte encode entry points are called with heap segments (Java byte[]), so they are
+         * marked critical to avoid an extra arena copy of the pixel buffer. */
+        this.encodeHandle = resolveSymbol(lookup, "imagify_webp_encode", ENCODE_DESC, Linker.Option.critical(true));
         this.readAnimationHandle = resolveSymbol(lookup, "imagify_webp_read_animation", READ_ANIMATION_DESC);
         this.decodeAnimationHandle = resolveSymbol(lookup, "imagify_webp_decode_animation", DECODE_ANIMATION_DESC);
-        this.encodeAnimationHandle = resolveSymbol(lookup, "imagify_webp_encode_animation", ENCODE_ANIMATION_DESC);
+        this.encodeAnimationHandle = resolveSymbol(lookup, "imagify_webp_encode_animation", ENCODE_ANIMATION_DESC, Linker.Option.critical(true));
         this.freeHandle = resolveSymbol(lookup, "imagify_webp_free", FREE_DESC);
         this.encodeArgbHandle = resolveOptionalSymbol(lookup, "imagify_webp_encode_argb", ENCODE_ARGB_DESC);
         this.encodeAnimationArgbHandle = resolveOptionalSymbol(lookup, "imagify_webp_encode_animation_argb", ENCODE_ANIMATION_ARGB_DESC);
         this.decodeIntoArgbHandle = resolveOptionalSymbol(lookup, "imagify_webp_decode_into_argb", DECODE_INTO_ARGB_DESC);
+        this.encodeBgrHandle = resolveOptionalSymbol(lookup, "imagify_webp_encode_bgr", ENCODE_BGR_DESC);
     }
 
     /**
@@ -320,6 +330,15 @@ public final class WebpLibrary {
     public boolean hasArgbEntryPoints() {
         return encodeArgbHandle != null && encodeAnimationArgbHandle != null
                 && decodeIntoArgbHandle != null;
+    }
+
+    /**
+     * Whether the loaded library has the BGR byte encode entry point.
+     *
+     * @return {@code true} when {@link #imagify_webp_encode_bgr} can be called
+     */
+    public boolean hasBgrEntryPoint() {
+        return encodeBgrHandle != null;
     }
 
     // ----------------------------------------------------------------------- abi version
@@ -452,6 +471,22 @@ public final class WebpLibrary {
         }
     }
 
+    /**
+     * Calls {@code imagify_webp_encode_bgr}.
+     *
+     * @throws IllegalStateException when the loaded library does not export the entry point
+     */
+    public int imagify_webp_encode_bgr(MemorySegment pixels, int width, int height, int quality, int lossless, int method, MemorySegment encoded, MemorySegment encodedLength, MemorySegment message, long messageCapacity) {
+        if (encodeBgrHandle == null) {
+            throw new IllegalStateException("the loaded WebP library has no imagify_webp_encode_bgr(); it was built before that entry point was added");
+        }
+        try {
+            return (int) encodeBgrHandle.invoke(pixels, width, height, quality, lossless, method, encoded, encodedLength, message, messageCapacity);
+        } catch (Throwable t) {
+            throw new RuntimeException("imagify_webp_encode_bgr() failed", t);
+        }
+    }
+
     private static void requireArgb(MethodHandle handle, String name) {
         if (handle == null) {
             throw new IllegalStateException("the loaded WebP library has no " + name
@@ -527,10 +562,24 @@ public final class WebpLibrary {
      * @throws IllegalStateException if the symbol cannot be found
      */
     private static MethodHandle resolveSymbol(SymbolLookup lookup, String name, FunctionDescriptor descriptor) {
+        return resolveSymbol(lookup, name, descriptor, new Linker.Option[0]);
+    }
+
+    /**
+     * Resolves a native symbol by name and creates a downcall handle for it.
+     *
+     * @param lookup the symbol lookup
+     * @param name the symbol name
+     * @param descriptor the function descriptor
+     * @param options the linker options for the downcall handle
+     * @return a downcall handle for the symbol
+     * @throws IllegalStateException if the symbol cannot be found
+     */
+    private static MethodHandle resolveSymbol(SymbolLookup lookup, String name, FunctionDescriptor descriptor, Linker.Option... options) {
         MemorySegment symbol = lookup.find(name)
                 .orElseThrow(() -> new IllegalStateException("cannot find native symbol: " + name));
         try {
-            return LINKER.downcallHandle(symbol, descriptor);
+            return LINKER.downcallHandle(symbol, descriptor, options);
         } catch (Throwable t) {
             throw new IllegalStateException("cannot create downcall handle for " + name, t);
         }

@@ -353,23 +353,46 @@ public final class WebpCodec {
             throw new WebpException("cannot encode a " + width + "x" + height + " image");
         }
         int effort = clamp(method, WebpLibrary.MIN_METHOD, WebpLibrary.MAX_METHOD);
-        // An image that is already a run of 0xAARRGGBB words is handed to the native library as
-        // itself. The array is the image's own, so the segment over it is only read and the caller
-        // has to keep the image alive for the length of the call, which it is by being a parameter
-        // here. Everything else is packed into bytes first.
-        int[] words = lib.hasArgbEntryPoints() ? AbgrPixels.argbWords(source) : null;
-        byte[] abgr = words == null ? AbgrPixels.toAbgrBytes(source, 0, 0, width, height, 1, 1) : null;
+        boolean hasAlpha = source.getColorModel() != null && source.getColorModel().hasAlpha();
+
+        // Try the zero-copy paths first: BGR bytes for opaque images, ARGB words for everything
+        // else that already has them, and finally the image's own ABGR bytes or a packed copy.
+        byte[] bgr = null;
+        if (!hasAlpha && source instanceof BufferedImage image && lib.hasBgrEntryPoint()) {
+            bgr = AbgrPixels.bgrBytesOrNull(image);
+        }
+        int[] words = bgr == null && lib.hasArgbEntryPoints() ? AbgrPixels.argbWords(source) : null;
+        byte[] abgr = null;
+        if (bgr == null && words == null && source instanceof BufferedImage image) {
+            abgr = AbgrPixels.abgrBytesOrNull(image);
+        }
+        if (bgr == null && words == null && abgr == null) {
+            abgr = new byte[width * height * 4];
+            AbgrPixels.toAbgrBytes(source, 0, 0, width, height, 1, 1, abgr, 0);
+        }
+
         try (Arena arena = Arena.ofConfined()) {
-            MemorySegment pixels = words != null ? MemorySegment.ofArray(words) : copy(arena, abgr);
             MemorySegment message = arena.allocate(WebpLibrary.MESSAGE_LENGTH);
             MemorySegment encoded = arena.allocate(ValueLayout.ADDRESS);
             MemorySegment encodedLength = arena.allocate(ValueLayout.JAVA_LONG);
-            int status = words != null
-                    ? lib.imagify_webp_encode_argb(pixels, width, height, clamp(quality), lossless ? 1
-                            : 0, effort, encoded, encodedLength, message, WebpLibrary.MESSAGE_LENGTH)
-                    : lib.imagify_webp_encode(pixels, width, height, clamp(quality), lossless ? 1
-                            : 0, effort, encoded, encodedLength, message, WebpLibrary.MESSAGE_LENGTH);
-            check(lib, status, message, words != null ? "imagify_webp_encode_argb()" : "imagify_webp_encode()");
+            int q = clamp(quality);
+            int losslessFlag = lossless ? 1 : 0;
+            int status;
+            String operation;
+            if (bgr != null) {
+                status = lib.imagify_webp_encode_bgr(MemorySegment.ofArray(bgr), width, height, q, losslessFlag,
+                        effort, encoded, encodedLength, message, WebpLibrary.MESSAGE_LENGTH);
+                operation = "imagify_webp_encode_bgr()";
+            } else if (words != null) {
+                status = lib.imagify_webp_encode_argb(MemorySegment.ofArray(words), width, height, q, losslessFlag,
+                        effort, encoded, encodedLength, message, WebpLibrary.MESSAGE_LENGTH);
+                operation = "imagify_webp_encode_argb()";
+            } else {
+                status = lib.imagify_webp_encode(MemorySegment.ofArray(abgr), width, height, q, losslessFlag,
+                        effort, encoded, encodedLength, message, WebpLibrary.MESSAGE_LENGTH);
+                operation = "imagify_webp_encode()";
+            }
+            check(lib, status, message, operation);
             return collect(lib, encoded, encodedLength, "imagify_webp_encode()");
         }
     }
@@ -428,7 +451,7 @@ public final class WebpCodec {
         }
 
         try (Arena arena = Arena.ofConfined()) {
-            MemorySegment pixels = words != null ? MemorySegment.ofArray(words) : copy(arena, abgr);
+            MemorySegment pixels = words != null ? MemorySegment.ofArray(words) : MemorySegment.ofArray(abgr);
             MemorySegment delays = arena.allocate((long) count * Integer.BYTES);
             for (int i = 0; i < count; i++) {
                 delays.set(ValueLayout.JAVA_INT, (long) i * Integer.BYTES, delaysMs[i]);
@@ -658,21 +681,6 @@ public final class WebpCodec {
         if (encoded.length > 0) {
             memory.copyFrom(MemorySegment.ofArray(encoded));
         }
-        return memory;
-    }
-
-    /**
-     * Copies an array the native side is not allowed to see into the arena it is called with.
-     *
-     * <p>Native code here reads through {@code const} pointers it does not write to, so a segment
-     * over a Java array would do, and this is only used where the array was built for the call and
-     * nothing else refers to it. It stays because a caller of {@code imagify_webp_encode} is not
-     * obliged to have been careful, and the arena costs one copy of an array that is about to be
-     * freed anyway.
-     */
-    private static MemorySegment copy(Arena arena, byte[] bytes) {
-        MemorySegment memory = arena.allocate(Math.max(bytes.length, 1));
-        memory.copyFrom(MemorySegment.ofArray(bytes));
         return memory;
     }
 
