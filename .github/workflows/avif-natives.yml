@@ -154,6 +154,7 @@ jobs:
         # arm64 does not want, or compiles aom_dsp/x86 and fails in immintrin.h. Naming the target
         # also keeps the result from depending on which runner shell happens to be in use.
         # libavif sets this itself for macOS arm64, to the same value.
+        shell: bash
         run: |
           args=(
             -S libavif -B build -G Ninja
@@ -170,38 +171,8 @@ jobs:
           cmake "${args[@]}"
 
       - name: Build
-        run: cmake --build build --target avif
-
-      - name: Rename what the loaders will look for
-        # The shim records the SONAME of the library it links against, and the two Unix loaders
-        # resolve a dependency by that name rather than against the directory the loading module
-        # sits in. libavif builds itself the conventional name, libavif.so.16 on Linux and
-        # libavif.16.dylib under @rpath on macOS, and the jar ships neither, because the files are
-        # named for the platform and the architecture so that six of them fit in one directory. A
-        # stock soname is therefore a shim that loads and then cannot find avifVersion.
-        #
-        # This renames it after the build rather than through CMAKE_SHARED_LIBRARY_SONAME_C_FLAG,
-        # and the reason is that libavif sets its own SOVERSION, so the flag is added to CMake's
-        # -soname rather than replacing it and the linker concatenates the two. That is not a guess:
-        # passing the flag produced a SONAME of "libavif-linux-x64.solibavif.so.16", and the
-        # self-contained check below is what caught it. Rewriting the finished binary is unambiguous.
-        #
-        # macOS wants @loader_path rather than @rpath because that already means "beside the shim",
-        # and both files are unpacked into one directory. install_name_tool ships with the toolchain;
-        # patchelf is installed above because it does not.
         shell: bash
-        run: |
-          set -euo pipefail
-          lib=$(find build -type f \( -name 'libavif.so' -o -name 'libavif.so.*' \
-            -o -name 'libavif*.dylib' -o -name 'avif*.dylib' \) | head -1)
-          test -n "$lib" || { echo "::error::no libavif shared library was produced under build/"; exit 1; }
-          if [ "${{ runner.os }}" = "Linux" ]; then
-            patchelf --set-soname "libavif-${{ matrix.target }}.so" "$lib"
-            echo "linux:  $(patchelf --print-soname "$lib")"
-          elif [ "${{ runner.os }}" = "macOS" ]; then
-            install_name_tool -id "@loader_path/libavif-${{ matrix.target }}.dylib" "$lib"
-            echo "macos:  $(otool -D "$lib" | tail -1 | awk '{print $1}')"
-          fi
+        run: cmake --build build --target avif
 
       - name: Collect
         # One name pattern for every platform. The library is libavif.so.16 on Linux,
@@ -238,6 +209,7 @@ jobs:
       # IMAGIFY_AVIF_HEADER_DIR the checkout's include directory, because the two are not next to
       # each other here.
       - name: Configure the shim
+        shell: bash
         run: >
           cmake -S src/main/native/avif -B shim-build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
@@ -246,7 +218,60 @@ jobs:
           -DIMAGIFY_AVIF_HEADER_DIR=$PWD/libavif/include
 
       - name: Build the shim
+        shell: bash
         run: cmake --build shim-build
+
+      - name: Point the shim at the libavif it ships beside
+        # The shim records the SONAME of the library it linked against, and the two Unix loaders
+        # resolve a dependency by that name rather than against the directory the loading module
+        # sits in. libavif builds itself the conventional name, libavif.so.16 on Linux and
+        # libavif.16.dylib under @rpath on macOS, and the jar ships neither, because the files are
+        # named for the platform and the architecture so that six of them fit in one directory. Left
+        # alone this is a shim that loads and then cannot find avifVersion.
+        #
+        # The name is rewritten on the shim rather than on libavif, and both of the alternatives
+        # were tried first. Passing CMAKE_SHARED_LIBRARY_SONAME_C_FLAG is a flag CMake hands to
+        # nothing, because avif.h is a C header and the library is C++; passing its CXX twin is
+        # additive, because libavif sets its own SOVERSION, and the linker concatenates the two into
+        # a SONAME of libavif-linux-x64.solibif.so.16. Rewriting the finished libavif with patchelf
+        # does rename it, and then leaves DT_STRTAB outside every PT_LOAD, which the self-contained
+        # check refuses to read. The shim is 140 KB rather than 10 MB and is the module that
+        # actually needs the name, so it is the one that is rewritten.
+        #
+        # macOS wants @loader_path rather than @rpath because that already means "beside the shim",
+        # and both files are unpacked into one directory. install_name_tool ships with the toolchain;
+        # patchelf is installed above because it does not.
+        #
+        # The old name is read out of the shim rather than written here, so that this keeps working
+        # when libavif changes its own versioning, which is the thing that moved twice already.
+        shell: bash
+        run: |
+          set -euo pipefail
+          shim=""
+          for candidate in shim-build/imagifyavif.${{ matrix.ext }} shim-build/libimagifyavif.${{ matrix.ext }}; do
+            if [ -f "$candidate" ]; then shim="$candidate"; break; fi
+          done
+          test -n "$shim" || { echo "::error::no shim was produced under shim-build/"; exit 1; }
+          if [ "${{ runner.os }}" = "Linux" ]; then
+            for needed in $(patchelf --print-needed "$shim"); do
+              case "$needed" in
+                libavif*)
+                  patchelf --replace-needed "$needed" "libavif-${{ matrix.target }}.so" "$shim"
+                  ;;
+              esac
+            done
+            echo "needs: $(patchelf --print-needed "$shim" | tr '\n' ' ')"
+            echo "runpath: $(patchelf --print-rpath "$shim")"
+          elif [ "${{ runner.os }}" = "macOS" ]; then
+            for needed in $(otool -L "$shim" | tail -n +2 | awk '{print $1}'); do
+              case "$needed" in
+                *libavif*)
+                  install_name_tool -change "$needed" "@loader_path/libavif-${{ matrix.target }}.dylib" "$shim"
+                  ;;
+              esac
+            done
+            echo "needs: $(otool -L "$shim" | tail -n +2 | awk '{print $1}' | tr '\n' ' ')"
+          fi
 
       - name: Collect the shim
         # CMake puts no prefix on a DLL, so this is libimagifyavif.so and libimagifyavif.dylib on the
