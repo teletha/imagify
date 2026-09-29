@@ -66,7 +66,6 @@ class AnimatedGifToWebpTest {
             if (result.passed) passedGifs++;
         }
 
-        System.out.printf("  Summary: %d/%d GIFs passed, %d total frames%n", passedGifs, gifs.size(), totalFrames);
         assertEquals(gifs.size(), passedGifs, "all GIFs should pass conversion");
     }
 
@@ -160,10 +159,6 @@ class AnimatedGifToWebpTest {
         Files.createDirectories(resizedDir);
         Path outFile = resizedDir.resolve(gif.getFileName().toString().replace(".gif", "_resized.webp"));
         Files.write(outFile, webpBytes);
-
-        System.out.printf("  Resized %d frames from %dx%d to %dx%d: %d bytes, PSNR=%.1f, SSIM=%.4f%n", resizedFrames.size(), originalFrames
-                .get(0)
-                .getWidth(), originalFrames.get(0).getHeight(), targetW, targetH, webpBytes.length, avgPsnr, avgSsim);
     }
 
     // ------------------------------------------------------------------ conversion
@@ -238,9 +233,6 @@ class AnimatedGifToWebpTest {
         Files.createDirectories(outDir);
         Path outFile = outDir.resolve(gif.getFileName().toString().replace(".gif", ".webp"));
         Files.write(outFile, webpBytes);
-
-        System.out.printf("  %s: %d frames, %d bytes, PSNR=%.1f dB, SSIM=%.4f, encode/decode OK%n", gif.getFileName(), originalFrames
-                .size(), webpBytes.length, avgPsnr, avgSsim);
 
         return new ConvertResult(originalFrames.size(), webpBytes.length, info.hasAnimation(), avgPsnr, avgSsim, true);
     }

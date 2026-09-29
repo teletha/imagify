@@ -70,7 +70,6 @@ class SvgToIcoTest {
             count++;
         }
         assertTrue(count > 0, "no SVG files were found in " + SVG_DIR);
-        System.out.println("ICO files written: " + count + " → " + outDir.toAbsolutePath());
     }
 
     @org.junit.jupiter.api.Test
@@ -117,7 +116,6 @@ class SvgToIcoTest {
         assertNotNull(image, "failed to read default_file.svg");
         assertTrue(image.getWidth() > 0);
         assertTrue(image.getHeight() > 0);
-        System.out.println("default_file.svg → " + image.getWidth() + "x" + image.getHeight());
     }
 
     private static List<File> svgFiles(Path svgPath) throws Exception {

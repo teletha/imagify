@@ -89,10 +89,6 @@ class AnimatedGifToAvifTest {
         AvifImageInfo info = AvifCodec.readHeader(avifBytes);
         assertEquals(frames.get(0).getWidth(), info.width(), "AVIF width mismatch");
         assertEquals(frames.get(0).getHeight(), info.height(), "AVIF height mismatch");
-
-        System.out.printf("  Converted %d frames from GIF to AVIF: %d bytes, dimensions=%dx%d%n",
-                frames.size(), avifBytes.length,
-                frames.get(0).getWidth(), frames.get(0).getHeight());
     }
 
     @Test
@@ -141,11 +137,6 @@ class AnimatedGifToAvifTest {
         Files.createDirectories(resizedDir);
         Path outFile = resizedDir.resolve(gif.getFileName().toString().replace(".gif", "_resized.avif"));
         Files.write(outFile, avifBytes);
-
-        System.out.printf("  Resized %d frames from %dx%d to %dx%d: %d bytes%n",
-                resizedFrames.size(),
-                originalFrames.get(0).getWidth(), originalFrames.get(0).getHeight(),
-                targetW, targetH, avifBytes.length);
     }
 
     @Test
@@ -204,9 +195,6 @@ class AnimatedGifToAvifTest {
         Files.createDirectories(fidelityDir);
         Path outFile = fidelityDir.resolve(gif.getFileName().toString().replace(".gif", ".avif"));
         Files.write(outFile, avifBytes);
-
-        System.out.printf("  Fidelity check: %d frames checked, PSNR=%.1f, SSIM=%.4f%n",
-                validFrames, avgPsnr, avgSsim);
     }
 
     @Test

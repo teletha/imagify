@@ -87,9 +87,6 @@ class AnimatedWebpAvifConversionTest {
         Files.createDirectories(reportDir);
         Path outFile = reportDir.resolve(gif.getFileName().toString().replace(".gif", ".webp-to-avif.avif"));
         Files.write(outFile, avifBytes);
-
-        System.out.printf("  WebP->AVIF: %d frames, WebP=%d bytes, AVIF=%d bytes%n",
-                avifFrames.size(), webpBytes.length, avifBytes.length);
     }
 
     @Test
@@ -140,9 +137,6 @@ class AnimatedWebpAvifConversionTest {
         Files.createDirectories(reportDir);
         Path outFile = reportDir.resolve(gif.getFileName().toString().replace(".gif", ".avif-to-webp.webp"));
         Files.write(outFile, webpBytes);
-
-        System.out.printf("  AVIF->WebP: %d frames, AVIF=%d bytes, WebP=%d bytes%n",
-                webpFrames.size(), avifBytes.length, webpBytes.length);
     }
 
     @Test
@@ -189,8 +183,6 @@ class AnimatedWebpAvifConversionTest {
         Files.createDirectories(reportDir);
         Path outFile = reportDir.resolve(gif.getFileName().toString().replace(".gif", ".roundtrip.webp"));
         Files.write(outFile, webp2);
-
-        System.out.printf("  Round-trip: %d frames, WebP->AVIF->WebP OK%n", webpResult.size());
     }
 
     @Test
@@ -237,8 +229,6 @@ class AnimatedWebpAvifConversionTest {
         Files.createDirectories(reportDir);
         Path outFile = reportDir.resolve(gif.getFileName().toString().replace(".gif", ".roundtrip.avif"));
         Files.write(outFile, avif2);
-
-        System.out.printf("  Round-trip: %d frames, AVIF->WebP->AVIF OK%n", avifResult.size());
     }
 
     // ------------------------------------------------------------------ helpers
