@@ -9,17 +9,17 @@
  */
 package imagify.svg;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.net.URISyntaxException;
-import java.util.Iterator;
+import java.net.URL;
 
-import static org.junit.jupiter.api.Assertions.*;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 
 class SvgImageIOTest {
 

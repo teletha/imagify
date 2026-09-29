@@ -9,17 +9,18 @@
  */
 package imagify.jpeg;
 
-import imagify.jpeg.jna.JpegliCodec;
-
-import javax.imageio.ImageReader;
-import javax.imageio.spi.ImageReaderSpi;
-import javax.imageio.stream.ImageInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
+
+import javax.imageio.ImageReader;
+import javax.imageio.spi.ImageReaderSpi;
+import javax.imageio.stream.ImageInputStream;
+
+import imagify.jpeg.jna.JpegliCodec;
 
 /**
  * Registers {@link JpegImageReader} with {@code ImageIO}.

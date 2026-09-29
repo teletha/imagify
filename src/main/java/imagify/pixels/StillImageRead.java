@@ -9,9 +9,6 @@
  */
 package imagify.pixels;
 
-import javax.imageio.IIOException;
-import javax.imageio.ImageReadParam;
-import javax.imageio.ImageTypeSpecifier;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -19,6 +16,10 @@ import java.awt.image.ColorModel;
 import java.awt.image.Raster;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.imageio.IIOException;
+import javax.imageio.ImageReadParam;
+import javax.imageio.ImageTypeSpecifier;
 
 /**
  * Applies a {@link ImageReadParam} to an image that has already been decoded.

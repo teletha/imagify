@@ -9,12 +9,12 @@
  */
 package imagify.ico;
 
+import java.awt.image.RenderedImage;
+import java.util.Locale;
+
 import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriter;
 import javax.imageio.spi.ImageWriterSpi;
-import javax.imageio.stream.ImageOutputStream;
-import java.awt.image.RenderedImage;
-import java.util.Locale;
 
 /**
  * Registers {@link IcoImageWriter} with {@code ImageIO}.

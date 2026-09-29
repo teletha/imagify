@@ -11,6 +11,7 @@ package imagify.jpeg;
 
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
+
 import org.w3c.dom.Node;
 
 /**

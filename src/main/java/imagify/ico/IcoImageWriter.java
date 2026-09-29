@@ -9,20 +9,19 @@
  */
 package imagify.ico;
 
-import javax.imageio.IIOException;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.metadata.IIOMetadata;
-import javax.imageio.spi.ImageWriterSpi;
-import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+
+import javax.imageio.IIOException;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.spi.ImageWriterSpi;
+import javax.imageio.stream.ImageOutputStream;
 
 /**
  * {@link ImageWriter} that encodes images as {@code .ico}.

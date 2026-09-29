@@ -9,8 +9,8 @@
  */
 package imagify.jpeg;
 
-import imagify.jpeg.jna.JpegliCodec;
-import imagify.jpeg.jna.JpegliLibrary;
+import java.awt.image.RenderedImage;
+import java.io.IOException;
 
 import javax.imageio.IIOException;
 import javax.imageio.IIOImage;
@@ -18,10 +18,11 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.metadata.IIOMetadata;
-import javax.imageio.stream.ImageOutputStream;
 import javax.imageio.spi.ImageWriterSpi;
-import java.awt.image.RenderedImage;
-import java.io.IOException;
+import javax.imageio.stream.ImageOutputStream;
+
+import imagify.jpeg.jna.JpegliCodec;
+import imagify.jpeg.jna.JpegliLibrary;
 
 /**
  * {@link ImageWriter} that encodes images as JPEG using

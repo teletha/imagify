@@ -9,11 +9,6 @@
  */
 package imagify.webp;
 
-import imagify.ImageFormat;
-import imagify.ImageWriter;
-import imagify.pixels.AbgrPixels;
-import imagify.webp.ffm.WebpCodec;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
@@ -29,6 +24,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import imagify.ImageFormat;
+import imagify.ImageWriter;
+import imagify.pixels.AbgrPixels;
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * Tests the three things that make the WebP encoder faster than it was, each of which changes what

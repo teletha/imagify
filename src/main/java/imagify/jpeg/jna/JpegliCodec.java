@@ -9,6 +9,14 @@
  */
 package imagify.jpeg.jna;
 
+import static java.lang.System.*;
+
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
+import java.nio.file.Path;
+
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
@@ -19,14 +27,6 @@ import com.sun.jna.ptr.PointerByReference;
 import imagify.jpeg.JpegException;
 import imagify.jpeg.JpegImageInfo;
 import imagify.pixels.AbgrPixels;
-
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
-import java.nio.file.Path;
-
-import static java.lang.System.getLogger;
 
 /**
  * Entry point to the {@code jpegli} based JPEG codec.

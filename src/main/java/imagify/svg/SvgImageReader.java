@@ -9,9 +9,13 @@
  */
 package imagify.svg;
 
-import com.github.weisj.jsvg.SVGDocument;
-import com.github.weisj.jsvg.parser.SVGLoader;
-import com.github.weisj.jsvg.view.ViewBox;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageReader;
@@ -19,15 +23,10 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
+
+import com.github.weisj.jsvg.SVGDocument;
+import com.github.weisj.jsvg.parser.SVGLoader;
+import com.github.weisj.jsvg.view.ViewBox;
 
 /**
  * {@link ImageReader} for {@code .svg} files, backed by <a href="https://github.com/weisJ/jsvg">JSVG</a>.

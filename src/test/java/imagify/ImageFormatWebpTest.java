@@ -12,7 +12,6 @@ package imagify;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
-import imagify.webp.ffm.WebpCodec;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -26,6 +25,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * Tests that {@link ImageFormat#WEBP} behaves like every other format in the public API, that is

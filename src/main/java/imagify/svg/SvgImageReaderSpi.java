@@ -9,15 +9,16 @@
  */
 package imagify.svg;
 
-import javax.imageio.ImageReader;
-import javax.imageio.spi.ImageReaderSpi;
-import javax.imageio.stream.ImageInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
+
+import javax.imageio.ImageReader;
+import javax.imageio.spi.ImageReaderSpi;
+import javax.imageio.stream.ImageInputStream;
 
 /**
  * Registers {@link SvgImageReader} with {@code ImageIO}.

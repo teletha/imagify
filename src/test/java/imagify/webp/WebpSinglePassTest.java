@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import imagify.webp.ffm.WebpCodec;
 
 

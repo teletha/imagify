@@ -9,8 +9,6 @@
  */
 package imagify.webp;
 
-import imagify.webp.ffm.WebpCodec;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
@@ -44,6 +42,8 @@ import javax.imageio.stream.ImageOutputStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * Tests the WebP {@code ImageIO} integration: service registration, format recognition, the reader,

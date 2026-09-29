@@ -9,14 +9,14 @@
  */
 package imagify.webp;
 
-import imagify.webp.ffm.WebpCodec;
+import java.awt.image.RenderedImage;
+import java.util.Locale;
 
-import javax.imageio.IIOException;
 import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriter;
 import javax.imageio.spi.ImageWriterSpi;
-import java.awt.image.RenderedImage;
-import java.util.Locale;
+
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * Registers {@link WebpImageWriter} with {@code ImageIO}.

@@ -9,15 +9,6 @@
  */
 package imagify;
 
-import imagify.jpeg.JpegImageReader;
-import imagify.jpeg.JpegImageReaderSpi;
-import imagify.jpeg.jna.JpegliCodec;
-import imagify.webp.ffm.WebpCodec;
-
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
-import javax.imageio.metadata.IIOMetadata;
-import javax.imageio.metadata.IIOMetadataNode;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -27,6 +18,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.metadata.IIOMetadataNode;
+import javax.imageio.stream.ImageInputStream;
+
+import imagify.jpeg.JpegImageReader;
+import imagify.jpeg.JpegImageReaderSpi;
+import imagify.jpeg.jna.JpegliCodec;
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * Reads images from various sources with automatic format detection.

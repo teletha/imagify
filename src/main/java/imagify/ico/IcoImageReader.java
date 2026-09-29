@@ -9,6 +9,13 @@
  */
 package imagify.ico;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.imageio.IIOException;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -16,12 +23,6 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.nio.ByteOrder;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * {@link ImageReader} for {@code .ico} files, implemented in pure Java.

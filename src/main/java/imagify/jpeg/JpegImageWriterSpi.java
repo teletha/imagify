@@ -9,13 +9,14 @@
  */
 package imagify.jpeg;
 
-import imagify.jpeg.jna.JpegliCodec;
+import java.awt.image.RenderedImage;
+import java.util.Locale;
 
 import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriter;
 import javax.imageio.spi.ImageWriterSpi;
-import java.awt.image.RenderedImage;
-import java.util.Locale;
+
+import imagify.jpeg.jna.JpegliCodec;
 
 /**
  * Registers {@link JpegImageWriter} with {@code ImageIO}.

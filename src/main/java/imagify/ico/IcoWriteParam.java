@@ -9,8 +9,9 @@
  */
 package imagify.ico;
 
-import javax.imageio.ImageWriteParam;
 import java.util.Locale;
+
+import javax.imageio.ImageWriteParam;
 
 /**
  * Write parameter for {@link IcoImageWriter}.

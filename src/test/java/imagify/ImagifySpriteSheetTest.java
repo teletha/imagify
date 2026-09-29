@@ -2,14 +2,12 @@ package imagify;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.awt.image.BufferedImage;
 import java.awt.Color;
-import java.io.ByteArrayInputStream;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

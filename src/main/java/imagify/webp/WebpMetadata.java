@@ -9,11 +9,12 @@
  */
 package imagify.webp;
 
-import imagify.webp.ffm.WebpCodec;
-
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
+
 import org.w3c.dom.Node;
+
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * Read only {@link IIOMetadata} holding the WebP specific properties as well as their translation

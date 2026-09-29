@@ -9,8 +9,12 @@
  */
 package imagify.jpeg;
 
-import imagify.jpeg.jna.JpegliCodec;
-import imagify.pixels.StillImageRead;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageReadParam;
@@ -19,12 +23,9 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+
+import imagify.jpeg.jna.JpegliCodec;
+import imagify.pixels.StillImageRead;
 
 /**
  * {@link ImageReader} for JPEG images, backed by <a href="https://github.com/google/jpegli">jpegli</a>.

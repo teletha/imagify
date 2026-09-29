@@ -9,17 +9,18 @@
  */
 package imagify.webp;
 
-import imagify.webp.ffm.WebpCodec;
-
-import javax.imageio.ImageReader;
-import javax.imageio.spi.ImageReaderSpi;
-import javax.imageio.stream.ImageInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
+
+import javax.imageio.ImageReader;
+import javax.imageio.spi.ImageReaderSpi;
+import javax.imageio.stream.ImageInputStream;
+
+import imagify.webp.ffm.WebpCodec;
 
 /**
  * Registers {@link WebpImageReader} with {@code ImageIO}.
