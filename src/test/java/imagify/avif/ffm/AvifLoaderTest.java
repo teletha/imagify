@@ -225,6 +225,25 @@ class AvifLoaderTest {
     }
 
     @Test
+    @DisplayName("AVIF being unavailable is always explained")
+    void unavailableIsNeverUnexplained() {
+        // A shim for one platform and a libavif for six is the state a build that ran the natives
+        // workflow for the library but not for the shim leaves behind, and from the outside that is
+        // indistinguishable from any other way of failing to load. So every way of giving up has to
+        // leave a reason, and this is what catches the ones that do not: it is a no-op where the
+        // library loads, and a failure on the platform where it does not.
+        //
+        // The other refusals cannot be provoked from here to be checked the same way, because the
+        // loader binds once and caches it, so a system property set afterwards changes nothing. That
+        // is the intended behaviour rather than a limitation of the test.
+        if (!AvifCodec.isAvailable()) {
+            String reason = AvifCodec.getUnavailableReason();
+            assertNotNull(reason, "AVIF is not available and getUnavailableReason() returned null");
+            assertFalse(reason.isBlank(), "AVIF is not available and the reason is blank");
+        }
+    }
+
+    @Test
     @DisplayName("both bundled resources for this platform, if any, are real binaries")
     void bundledResourcesAreNotPointerFiles() {
         // Absent is the normal state until the avif-natives workflow fills the directory in. What must

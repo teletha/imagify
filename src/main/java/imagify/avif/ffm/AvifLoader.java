@@ -81,7 +81,7 @@ final class AvifLoader {
                 // An UnsatisfiedLinkError is the ordinary case of a library for another platform,
                 // and a SecurityException the ordinary case of a restricted runtime. Both mean the
                 // same thing to a caller, which is that AVIF is not available.
-                unavailable = t.getMessage() == null ? t.toString() : t.getMessage();
+                unavailable = describe(t);
                 log.log(Level.DEBUG, "libavif is not available", t);
             }
             return shim;
@@ -94,16 +94,30 @@ final class AvifLoader {
         return unavailable;
     }
 
+    /**
+     * A reason a caller can act on, from an exception or from a plain refusal to load.
+     *
+     * <p>Every way of failing says something, and "AVIF is not available" with no more is the one
+     * that cannot be acted on: a missing resource, a platform with no bundled binary and a library
+     * that would not load all look identical from the outside otherwise. A null reason here is a
+     * loader path that returns without recording why, which is a bug in the path rather than a
+     * situation the caller can guess at.
+     */
+    private static String describe(Throwable t) {
+        String message = t.getMessage();
+        return message == null || message.isBlank() ? t.toString() : message;
+    }
+
     private static AvifShim bind() {
         String platform = platform(System.getProperty("os.name"));
         String cpu = cpu(System.getProperty("os.arch"));
         if (platform == null || cpu == null) {
-            log.log(Level.DEBUG, "no bundled libavif for this platform");
-            return null;
+            return refuse("this jar bundles no libavif for " + System.getProperty("os.name") + " on "
+                    + System.getProperty("os.arch") + ", and imagify supports Windows, macOS and Linux"
+                    + " on x64 and arm64");
         }
         if (!Boolean.parseBoolean(System.getProperty(BUNDLED_PROPERTY, "true"))) {
-            log.log(Level.DEBUG, "the bundled libavif is disabled by -D{0}=false", BUNDLED_PROPERTY);
-            return null;
+            return refuse("the bundled libavif is turned off by -D" + BUNDLED_PROPERTY + "=false");
         }
         String avif = "libavif-" + platform + "-" + cpu + fileName(platform);
         String shim = "imagifyavif-" + platform + "-" + cpu + fileName(platform);
@@ -115,11 +129,19 @@ final class AvifLoader {
         try {
             directory = Files.createTempDirectory("imagify-avif-");
         } catch (IOException e) {
-            log.log(Level.DEBUG, "cannot create a directory for the AVIF libraries", e);
-            return null;
+            return refuse("cannot create a directory to unpack " + shim + " into: " + describe(e));
         }
-        if (unpack(directory, avif) == null || unpack(directory, shim) == null) {
-            return null;
+        // The two are named apart in the reason because only one of them being missing is the
+        // ordinary case, and it is the one a user can fix: the shim ships with this jar while
+        // libavif is fetched by the natives workflow, so a build that ran without it has a libavif
+        // for every platform and a shim for one.
+        if (unpack(directory, avif) == null) {
+            return refuse(avif + " is not in this jar");
+        }
+        if (unpack(directory, shim) == null) {
+            return refuse(shim + " is not in this jar, so there is nothing to bind libavif through. "
+                    + "Both files are built by the avif-natives workflow and belong side by side in "
+                    + "src/main/resources/imagify/avif/native/.");
         }
         // libavif first, so that the shim's import of it is already satisfied.
         System.load(directory.resolve(avif).toString());
@@ -127,6 +149,19 @@ final class AvifLoader {
         System.load(shimFile.toString());
         log.log(Level.DEBUG, "loaded the AVIF shim from {0}", shimFile);
         return new AvifShim(SymbolLookup.loaderLookup());
+    }
+
+    /**
+     * Records why there is no shim and reports that there is none.
+     *
+     * <p>Always {@code null}, so every caller that gives up has to say why on the way out. A loader
+     * that returned null without saying anything is how a jar ends up reporting
+     * {@code "libavif is not available: null"} to someone who cannot tell what to do about it.
+     */
+    private static AvifShim refuse(String reason) {
+        unavailable = reason;
+        log.log(Level.DEBUG, "libavif is not available: {0}", reason);
+        return null;
     }
 
     /**
@@ -141,7 +176,6 @@ final class AvifLoader {
     static Path unpack(Path directory, String resource) {
         try (var in = AvifLoader.class.getResourceAsStream(RESOURCE_ROOT + resource)) {
             if (in == null) {
-                log.log(Level.DEBUG, "the bundled {0} is not in this jar", resource);
                 return null;
             }
             Path file = directory.resolve(resource);

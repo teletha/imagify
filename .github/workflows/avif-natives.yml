@@ -27,12 +27,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { target: windows-x64,  os: windows-2022,      ext: dll,   arch: x64,   cpu: x86_64 }
-          - { target: windows-arm64, os: windows-11-arm,    ext: dll,   arch: arm64, cpu: arm64 }
-          - { target: linux-x64,    os: ubuntu-24.04,      ext: so,                 cpu: x86_64 }
-          - { target: linux-arm64,  os: ubuntu-24.04-arm,  ext: so,                 cpu: arm64 }
-          - { target: macos-x64,    os: macos-15-intel,    ext: dylib,              cpu: x86_64 }
-          - { target: macos-arm64,  os: macos-14,          ext: dylib,              cpu: arm64 }
+          - { target: windows-x64,  os: windows-2022,      ext: dll,   arch: x64,   cpu: x86_64, dep: "libavif-windows-x64.dll" }
+          - { target: windows-arm64, os: windows-11-arm,    ext: dll,   arch: arm64, cpu: arm64,   dep: "libavif-windows-arm64.dll" }
+          - { target: linux-x64,    os: ubuntu-24.04,      ext: so,                 cpu: x86_64, soname: "-Wl,-soname,libavif-linux-x64.so", dep: "libavif-linux-x64.so" }
+          - { target: linux-arm64,  os: ubuntu-24.04-arm,  ext: so,                 cpu: arm64,   soname: "-Wl,-soname,libavif-linux-arm64.so", dep: "libavif-linux-arm64.so" }
+          - { target: macos-x64,    os: macos-15-intel,    ext: dylib,              cpu: x86_64, soname: "-install_name,@loader_path/libavif-macos-x64.dylib", dep: "@loader_path/libavif-macos-x64.dylib" }
+          - { target: macos-arm64,  os: macos-14,          ext: dylib,              cpu: arm64,   soname: "-install_name,@loader_path/libavif-macos-arm64.dylib", dep: "@loader_path/libavif-macos-arm64.dylib" }
     steps:
       - uses: actions/checkout@v4
 
@@ -144,6 +144,16 @@ jobs:
         # redistributable rather than from Windows, so a user who has installed nothing would be
         # missing them. CMake ignores the variable on the Unix targets.
         #
+        # CMAKE_SHARED_LIBRARY_SONAME_C_FLAG is set on the two Unix targets so that libavif records
+        # the name the jar stores it under rather than the conventional libavif.so.16 or
+        # libavif.16.dylib. The shim records whatever SONAME the library it links against has, and
+        # the two Unix loaders resolve a dependency by that name rather than against the directory
+        # the loading module sits in, so a stock soname here is a shim that loads and then cannot
+        # find avifVersion. Windows needs nothing: it resolves a module's imports against the
+        # directory of the module being loaded, and the import library's name is set separately.
+        # macOS wants @loader_path rather than @rpath because that already means "beside the shim",
+        # and both files are unpacked into one directory.
+        #
         # AOM_TARGET_CPU is passed rather than left to libaom's own detection, which reads
         # CMAKE_SYSTEM_PROCESSOR. On Windows that comes from the environment, and the steps here
         # run under Git Bash, which is an x64 process even on the ARM64 image, so CMake reports
@@ -151,17 +161,27 @@ jobs:
         # arm64 does not want, or compiles aom_dsp/x86 and fails in immintrin.h. Naming the target
         # also keeps the result from depending on which runner shell happens to be in use.
         # libavif sets this itself for macOS arm64, to the same value.
-        run: >
-          cmake -S libavif -B build -G Ninja
-          -DCMAKE_BUILD_TYPE=Release
-          -DBUILD_SHARED_LIBS=ON
-          -DAVIF_BUILD_APPS=OFF
-          -DAVIF_BUILD_TESTS=OFF
-          -DAVIF_LIBYUV=LOCAL
-          -DAVIF_LIBSHARPYUV=LOCAL
-          -DAVIF_CODEC_AOM=LOCAL
-          -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
-          -DAOM_TARGET_CPU=${{ matrix.cpu }}
+        #
+        # The soname is empty on Windows, where the flag has no meaning, and passing an empty
+        # -D would leave the variable defined and empty rather than unset, which would silence the
+        # default. So the whole line is built per platform and only added where there is one.
+        run: |
+          args=(
+            -S libavif -B build -G Ninja
+            -DCMAKE_BUILD_TYPE=Release
+            -DBUILD_SHARED_LIBS=ON
+            -DAVIF_BUILD_APPS=OFF
+            -DAVIF_BUILD_TESTS=OFF
+            -DAVIF_LIBYUV=LOCAL
+            -DAVIF_LIBSHARPYUV=LOCAL
+            -DAVIF_CODEC_AOM=LOCAL
+            -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+            "-DAOM_TARGET_CPU=${{ matrix.cpu }}"
+          )
+          if [ -n "${{ matrix.soname }}" ]; then
+            args+=("-DCMAKE_SHARED_LIBRARY_SONAME_C_FLAG=${{ matrix.soname }}")
+          fi
+          cmake "${args[@]}"
 
       - name: Build
         run: cmake --build build --target avif
@@ -185,6 +205,64 @@ jobs:
         # everywhere. objdump and otool are not present on the Windows runners and dumpbin needs an
         # MSVC environment, which used to make this step pass without ever looking at the library.
         run: python .github/scripts/check-self-contained.py "dist/libavif-${{ matrix.target }}.${{ matrix.ext }}"
+
+      # --- the shim -------------------------------------------------------------------------------------
+      #
+      # imagify.avif.ffm is a C shim over libavif rather than a direct binding, and it ships as a
+      # second file per platform. The reason is one line of the FFM ABI: a heap segment, which is
+      # what a Java array becomes, cannot be stored into a pointer-typed struct field, and
+      # avifRGBImage.pixels is exactly such a field. An entry point that takes the pixels as its own
+      # argument, called with Linker.Option.critical set, is what makes an encode possible without
+      # copying the image first. See src/main/native/avif/imagify_avif.c.
+      #
+      # It is built here rather than beside the libavif build because it is built *against* one: it
+      # imports the avif* symbols rather than linking them, which is what keeps it 140 KB instead of
+      # a second copy of a 10 MB library. IMAGIFY_AVIF_SOURCE_DIR is the libavif build tree and
+      # IMAGIFY_AVIF_HEADER_DIR the checkout's include directory, because the two are not next to
+      # each other here.
+      - name: Configure the shim
+        run: >
+          cmake -S src/main/native/avif -B shim-build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+          -DIMAGIFY_AVIF_SOURCE_DIR=$PWD/build
+          -DIMAGIFY_AVIF_HEADER_DIR=$PWD/libavif/include
+
+      - name: Build the shim
+        run: cmake --build shim-build
+
+      - name: Collect the shim
+        # CMake puts no prefix on a DLL, so this is libimagifyavif.so and libimagifyavif.dylib on the
+        # two Unix targets and imagifyavif.dll on Windows. The jar wants them named for the platform
+        # and the architecture, because the shim's import table names libavif that way and the loader
+        # looks for it beside the shim.
+        shell: bash
+        run: |
+          for candidate in shim-build/imagifyavif.${{ matrix.ext }} shim-build/libimagifyavif.${{ matrix.ext }}; do
+            if [ -f "$candidate" ]; then
+              cp "$candidate" "dist/imagifyavif-${{ matrix.target }}.${{ matrix.ext }}"
+              break
+            fi
+          done
+          test -f "dist/imagifyavif-${{ matrix.target }}.${{ matrix.ext }}" || {
+            echo "::error::no shim was produced under shim-build/"; exit 1; }
+          ls -l dist
+
+      - name: Reject a shim that depends on anything but libavif
+        # The shim is expected to import one thing that the check above would reject: the libavif
+        # sitting next to it in the jar. That is the whole design rather than a link that went wrong,
+        # so it is named explicitly instead of being loosened into a pattern, and everything else
+        # still fails the build. The allow list is per file, so this does not weaken the libavif
+        # check above.
+        #
+        # The name is per platform because it is not the same string in all three containers. A PE
+        # records a bare file name, an ELF a bare SONAME, and a Mach-O whatever install name libavif
+        # was configured with, which on macOS is the @loader_path form. The check compares the
+        # recorded name against this list literally, so each platform has to state its own.
+        run: >
+          python .github/scripts/check-self-contained.py
+          "dist/imagifyavif-${{ matrix.target }}.${{ matrix.ext }}"
+          --allow "${{ matrix.dep }}"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -210,7 +288,9 @@ jobs:
           name: avif-natives
           body: |
             Rolling build of the `libavif` shared libraries bundled in `imagify`, built from
-            `${{ env.AVIF_VERSION }}`.
+            `${{ env.AVIF_VERSION }}`, and of the `imagifyavif` shim that binds them.
 
-            Drop these files into `src/main/resources/imagify/avif/native/`.
+            Drop both files for a platform into `src/main/resources/imagify/avif/native/`. They
+            have to go in together: the shim imports libavif by file name, and the loader
+            resolves that name among the files sitting beside the shim.
           files: dist/*

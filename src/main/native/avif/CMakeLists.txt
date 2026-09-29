@@ -88,14 +88,26 @@ endif()
 # only been configured has it in the source tree, so all three are offered. Finding the header and
 # the library independently is deliberate: they can come from one install or from a build tree beside
 # a checkout, and a version that disagreed would be a wrong struct layout rather than a build error.
-find_path(IMAGIFY_AVIF_INCLUDE_DIR
-  NAMES avif/avif.h
-  HINTS "${IMAGIFY_AVIF_SOURCE_DIR}/include" "${IMAGIFY_AVIF_SOURCE_DIR}/../include"
-        "${IMAGIFY_AVIF_SOURCE_DIR}/.." "${IMAGIFY_AVIF_SOURCE_DIR}"
-  NO_DEFAULT_PATH)
+#
+# The cache variable is the third case and the one the CI uses: a libavif build tree and its checkout
+# are in different places, so -DIMAGIFY_AVIF_SOURCE_DIR=build finds the library under build/ and the
+# header is at the checkout's include/ rather than anywhere near it. Naming the header explicitly is
+# what that needs, and it is a hint that is overridden rather than replaced, so a caller who only has
+# one directory keeps the search above.
+set(IMAGIFY_AVIF_HEADER_DIR "" CACHE PATH "The directory holding avif/avif.h, if it is not under IMAGIFY_AVIF_SOURCE_DIR")
+if(IMAGIFY_AVIF_HEADER_DIR)
+  set(IMAGIFY_AVIF_INCLUDE_DIR "${IMAGIFY_AVIF_HEADER_DIR}")
+else()
+  find_path(IMAGIFY_AVIF_INCLUDE_DIR
+    NAMES avif/avif.h
+    HINTS "${IMAGIFY_AVIF_SOURCE_DIR}/include" "${IMAGIFY_AVIF_SOURCE_DIR}/../include"
+          "${IMAGIFY_AVIF_SOURCE_DIR}/.." "${IMAGIFY_AVIF_SOURCE_DIR}"
+    NO_DEFAULT_PATH)
+endif()
 if(NOT IMAGIFY_AVIF_INCLUDE_DIR)
   message(FATAL_ERROR
-    "No avif/avif.h under -DIMAGIFY_AVIF_SOURCE_DIR=${IMAGIFY_AVIF_SOURCE_DIR} or one level above it.")
+    "No avif/avif.h under -DIMAGIFY_AVIF_SOURCE_DIR=${IMAGIFY_AVIF_SOURCE_DIR} or one level above it.\n"
+    "Point -DIMAGIFY_AVIF_HEADER_DIR at the directory that contains avif/avif.h if it is elsewhere.")
 endif()
 
 # The libavif release this was built against, for the diagnostic AvifCodec.getVersion() reports. It
@@ -192,6 +204,10 @@ if(WIN32)
   file(GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/imagify_avif_imports.def"
     CONTENT "${IMAGIFY_AVIF_DEF_CONTENT}")
 
+  # Windows resolves a module's imports against the directory of the module being loaded, so
+  # recording the bare file name is already enough. The two Unix targets need more, below.
+  # -------------------------------------------------------------------------------------------
+
   # /DEF is what makes the DLL itself export the list. A .def that is only handed to the linker for
   # the import library does not change what the DLL exports.
   set(IMAGIFY_AVIF_EXPORT_DEF_CONTENT "LIBRARY imagifyavif\r\nEXPORTS\r\n")
@@ -220,10 +236,38 @@ if(WIN32)
   target_link_libraries(imagify_avif PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/libavif_import.lib")
   target_link_options(imagify_avif PRIVATE "/DEF:${CMAKE_CURRENT_BINARY_DIR}/imagify_avif.def")
 else()
-  # On the two Unix targets a shared library is a valid link input, and the recorded dependency is
-  # the soname, which the loader resolves in the usual way. Setting the soname to the bundled file
-  # name rather than to this build's own is what makes that resolution land on the copy in the jar.
+  # The two Unix targets resolve a module's dependencies by name rather than against the directory
+  # the module sits in, which is the opposite of Windows and is the whole of what is left to arrange.
+  #
+  # The name the shim records is libavif's SONAME, not the file it was linked against, and libavif
+  # builds itself the conventional one: libavif.so.16 on Linux, libavif.16.dylib on macOS. The jar
+  # ships neither of those, because the files are named for the platform and the architecture so that
+  # six of them can sit in one directory. So a shim linked against a stock libavif records a name
+  # that nothing in the jar answers to, and it fails to load on every platform but the one this was
+  # hand-built on.
+  #
+  # IMAGIFY_AVIF_SONAME_C_FLAG is how that is fixed from the outside. libavif is configured with
+  # -DCMAKE_SHARED_LIBRARY_SONAME_C_FLAG pointing at the bundled name, which is what the caller has
+  # to do; this variable is only how the flag reaches it. The workflow passes:
+  #   Linux   -Wl,-soname,libavif-linux-x64.so
+  #   macOS   -install_name,@loader_path/libavif-macos-x64.dylib
+  # macOS needs no rpath because @loader_path is the directory of the loading module, which is the
+  # unpacked directory holding both files. Linux does, because a bare DT_NEEDED name is searched in
+  # RUNPATH, then LD_LIBRARY_PATH, then the loader's cache, and never beside the shim, so $ORIGIN is
+  # what puts it there. The two dollars and the backslash keep CMake from expanding $ORIGIN as one
+  # of its own variables.
   target_link_libraries(imagify_avif PRIVATE "${IMAGIFY_AVIF_LIBRARY}")
+  if(NOT APPLE)
+    # Setting BUILD_RPATH replaces the absolute build tree path CMake would otherwise put in the
+    # RUNPATH, rather than adding to it, so the shim has exactly one search location and it is the
+    # one it will be unpacked into. BUILD_RPATH_USE_ORIGIN is what stops CMake expanding $ORIGIN.
+    set_target_properties(imagify_avif PROPERTIES
+      BUILD_RPATH "$ORIGIN"
+      BUILD_RPATH_USE_ORIGIN ON
+      INSTALL_RPATH "$ORIGIN")
+  endif()
+  # macOS needs no rpath at all: the install name libavif is configured with is @loader_path, which
+  # dyld reads as the directory of the loading module, and both files are unpacked into one.
 endif()
 
 target_compile_definitions(imagify_avif
