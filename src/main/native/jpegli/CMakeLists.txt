@@ -99,10 +99,26 @@ set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 # the libjpeg62 wrapper has no colour management in it.
 add_subdirectory("${IMAGIFY_JPEGLI_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/jpegli" EXCLUDE_FROM_ALL)
 
-# The jpegli version this was built from, for the diagnostic JpegliCodec.getVersion() reports. A
-# caller pinning a commit should say what it pinned, because `git describe` has no tags to work
-# from: jpegli publishes neither tags nor releases.
-if(NOT IMAGIFY_JPEGLI_VERSION)
+# The jpegli version this was built from, for the diagnostic JpegliCodec.getVersion() reports.
+#
+# It is written here rather than passed in with -D, and that is a fix rather than a style. A workflow
+# step with no shell: key runs under pwsh on a Windows runner, and PowerShell hands a native command
+# -DIMAGIFY_JPEGLI_VERSION=0.12.0 as two arguments, -DIMAGIFY_JPEGLI_VERSION=0 and .12.0. cmake
+# caches the 0, prints "Ignoring extra path from command line: .12.0", and carries on. 0 is falsy, so
+# the fallback below answers a commit hash instead, and every Windows jpegli this project has built
+# has reported JpegliCodec.getVersion() as 031a007 rather than as 0.12.0. A value that never goes
+# near a shell cannot be taken apart.
+#
+# A caller pinning a commit should change this line, because `git describe` has no tags to work from:
+# jpegli publishes neither tags nor releases. The -D override is still honoured, and checked, for a
+# caller who is building against a different jpegli. A value with fewer than two parts is refused,
+# since every jpegli release has had a major.minor for as long as there have been releases, and a
+# single number is the shape a split -DIMAGIFY_JPEGLI_VERSION=0.12.0 leaves behind. A value with none
+# at all is not a failure, it is a build that opted out of saying which jpegli it came from, and it
+# says so.
+set(IMAGIFY_JPEGLI_VERSION "0.12.0" CACHE STRING
+    "The jpegli release version that JpegliCodec.getVersion() reports")
+if(IMAGIFY_JPEGLI_VERSION STREQUAL "")
   find_program(IMAGIFY_JPEGLI_GIT git)
   if(IMAGIFY_JPEGLI_GIT)
     execute_process(
@@ -113,8 +129,16 @@ if(NOT IMAGIFY_JPEGLI_VERSION)
       ERROR_QUIET)
   endif()
 endif()
-if(NOT IMAGIFY_JPEGLI_VERSION)
+if(IMAGIFY_JPEGLI_VERSION STREQUAL "")
   set(IMAGIFY_JPEGLI_VERSION "unknown")
+elseif(NOT IMAGIFY_JPEGLI_VERSION MATCHES "^[0-9]+\\.[0-9]+(\\.[0-9]+)*$")
+  message(FATAL_ERROR
+    "IMAGIFY_JPEGLI_VERSION is [${IMAGIFY_JPEGLI_VERSION}], which is not a version number.\n"
+    "The usual cause is a shell that split the argument in two. PowerShell passes\n"
+    "  -DIMAGIFY_JPEGLI_VERSION=0.12.0\n"
+    "to a native command as -DIMAGIFY_JPEGLI_VERSION=0 and .12.0, which cmake then reports as\n"
+    "\"Ignoring extra path from command line: .12.0\". Quote the whole argument:\n"
+    "  \"-DIMAGIFY_JPEGLI_VERSION=0.12.0\"")
 endif()
 
 # --- the libjpeg62 compatibility layer --------------------------------------------------------------

@@ -105,6 +105,13 @@ jobs:
           brew install ninja || true
           ninja --version
 
+      - name: Check the version the build will report
+        # The version is written in src/main/native/jpegli/CMakeLists.txt and nowhere on a command
+        # line, because a value on a command line is a value a shell can take apart. This step is
+        # what stops the copy in the workflow and the copy the build reads from drifting apart when
+        # JPEGLI_COMMIT is bumped above without editing the CMakeLists.
+        run: python .github/scripts/check-codec-version.py jpegli "${{ env.JPEGLI_VERSION }}"
+
       - name: Configure
         # src/main/native/jpegli is an overlay rather than a fork of jpegli's build: jpegli only declares
         # its libjpeg62 compatible target where the linker understands a version script, which
@@ -115,13 +122,16 @@ jobs:
         # that is the one being replaced, and highway linked in statically: a shared library loaded
         # by absolute path out of a temporary directory cannot be counted on to find a sibling.
         #
-        # The version is passed in rather than derived, because `git describe` has no tags to work
-        # from and would report the short commit hash as the jpegli version.
+        # The version is not passed in, because a workflow step with no shell: key runs under pwsh on
+        # a Windows runner and PowerShell hands a native command -DIMAGIFY_JPEGLI_VERSION=0.12.0 as
+        # two arguments, -DIMAGIFY_JPEGLI_VERSION=0 and .12.0. cmake keeps the 0, which is falsy, so
+        # the fallback below runs instead and every Windows jpegli this project has built has
+        # reported JpegliCodec.getVersion() as a commit hash rather than as 0.12.0. The value lives in
+        # the CMakeLists, where a shell cannot reach it, and the step before checks the two agree.
         run: >
           cmake -S src/main/native/jpegli -B build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DIMAGIFY_JPEGLI_SOURCE_DIR=${{ github.workspace }}/jpegli
-          -DIMAGIFY_JPEGLI_VERSION=${{ env.JPEGLI_VERSION }}
 
       - name: Build
         # imagify_jpegli is the shim plus the static jpegli and highway behind it. There is no

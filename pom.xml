@@ -262,6 +262,16 @@ another revision of it.</description>
 				<configuration>
 					<argLine>-ea   -Dfile.encoding=UTF-8</argLine>
 					<reportFormat>plain</reportFormat>
+					<!--
+						The "timing" tag is for the tests that read a clock to say how large a prize
+						something is. The suite runs four ways concurrent (see
+						src/test/resources/junit-platform.properties), so a wall clock reading taken
+						under the GIF and AVIF suites is a reading of the machine rather than of the
+						code, and on a two core CI runner it is off by a factor of two either way.
+						Whatever those tests are watching for a property is pinned somewhere else,
+						where nothing can be argued with it. The -Ptiming profile puts them back.
+					-->
+					<excludedGroups>timing</excludedGroups>
 					<consoleOutputReporter>
 						<disable>true</disable>
 					</consoleOutputReporter>
@@ -303,4 +313,32 @@ another revision of it.</description>
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<!--
+			Puts the tests that read a clock back into the run, which the ordinary build leaves out.
+			They are measurements rather than properties, and the suite is four ways concurrent, so
+			what they report is a fact about the machine as much as about the code. They are worth
+			running when the question is "how much did this buy" and not when the question is "is it
+			still correct"; the properties they sit next to are in the ordinary run either way.
+
+				mvn test -Ptiming
+		-->
+		<profile>
+			<id>timing</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<!-- Overrides rather than merges: the empty value has to replace the
+							     exclusion above, not sit beside it, or the profile would be a
+							     no-op that still excluded everything it was meant to include. -->
+							<excludedGroups combine.self="override"/>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

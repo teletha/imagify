@@ -27,6 +27,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -46,8 +47,9 @@ import org.junit.jupiter.api.Test;
  * The second is the lossless quality. {@code libwebp} reads its {@code quality} as an amount of
  * effort in lossless mode rather than as a fidelity, and pinning it to a preset was throwing that
  * away: a lossless encode measured 3.5x faster than the same encode through the preset. The property
- * worth pinning is that the two ends of the range now differ in file size, cost visibly different
- * amounts of time, and both still round trip to the same pixels.
+ * worth pinning is that the two ends of the range now differ in file size and both still round trip
+ * to the same pixels. The size of the prize in time is measured in a tagged class of its own, since
+ * that is the one claim here no file size can be used to settle.
  * </p>
  *
  * <p>
@@ -289,7 +291,54 @@ class WebpWordPathTest {
         }
 
         @Test
-        @DisplayName("and the quicker end is a good deal less work, which is the point of it")
+        @DisplayName("and both of them keep every pixel, which is what lossless is for")
+        void bothEndsRoundTripExactly() throws Exception {
+            BufferedImage image = blocks();
+            int[] expected = pixels(image);
+
+            for (int quality : new int[] { WebpCodec.MIN_QUALITY, 50, WebpCodec.MAX_QUALITY }) {
+                BufferedImage decoded = WebpCodec.decode(WebpCodec.encode(image, quality, true));
+                assertArrayEquals(expected, pixels(decoded), "quality " + quality + " lost a pixel");
+            }
+        }
+
+        @Test
+        @DisplayName("a lossy encode is still a lossy one, whatever the quality says")
+        void lossyIsStillLossy() throws Exception {
+            BufferedImage image = gradient(61, 12);
+
+            byte[] encoded = WebpCodec.encode(image, WebpCodec.MAX_QUALITY, false);
+            assertFalse(WebpCodec.isLossless(encoded), "a quality of 100 does not make an encode lossless");
+        }
+    }
+
+    /**
+     * What the lossless effort setting buys, as a measurement rather than as a property.
+     *
+     * <p>
+     * This is the only test here that reads a clock, and it is kept out of the ordinary run for that
+     * reason. {@code junit-platform.properties} runs the suite four ways concurrent, and on a CI
+     * runner the only thing heavier than this encode is the GIF and AVIF suites running beside it,
+     * so a wall clock reading here is a reading of the runner rather than of the encoder. It has
+     * already failed that way: on a two core runner the two ends came back 145 ms and 112 ms with
+     * nothing wrong with either, because the regression it watches for had not been built into the
+     * native library the runner loads yet.
+     * </p>
+     *
+     * <p>
+     * The property that regression actually breaks is pinned without a clock in
+     * {@link LosslessQuality}: quality pinned to 100 makes the two ends of the range produce the same
+     * file, and file size cannot be argued with. This is here to record the size of the prize, and
+     * to be run on purpose with {@code mvn test -Ptiming} when someone wants to see it.
+     * </p>
+     */
+    @Nested
+    @DisplayName("the quicker end of the range is less work, which is why it is worth threading through")
+    class LosslessEffortCost {
+
+        @Test
+        @Tag("timing")
+        @DisplayName("the two ends of the range cost different amounts of time")
         void theQuickEndIsQuicker() throws Exception {
             BufferedImage image = blocks();
             // Timed after a warm-up, because the first call into a native encoder is the JIT and not
@@ -311,27 +360,6 @@ class WebpWordPathTest {
             assertTrue(thorough > quick * 3 / 2, () -> "effort " + WebpCodec.MIN_QUALITY + " took "
                     + quick / 1_000_000.0 + " ms and effort " + WebpCodec.MAX_QUALITY + " took "
                     + thorough / 1_000_000.0 + " ms, so the setting is not reaching the search");
-        }
-
-        @Test
-        @DisplayName("and both of them keep every pixel, which is what lossless is for")
-        void bothEndsRoundTripExactly() throws Exception {
-            BufferedImage image = blocks();
-            int[] expected = pixels(image);
-
-            for (int quality : new int[] { WebpCodec.MIN_QUALITY, 50, WebpCodec.MAX_QUALITY }) {
-                BufferedImage decoded = WebpCodec.decode(WebpCodec.encode(image, quality, true));
-                assertArrayEquals(expected, pixels(decoded), "quality " + quality + " lost a pixel");
-            }
-        }
-
-        @Test
-        @DisplayName("a lossy encode is still a lossy one, whatever the quality says")
-        void lossyIsStillLossy() throws Exception {
-            BufferedImage image = gradient(61, 12);
-
-            byte[] encoded = WebpCodec.encode(image, WebpCodec.MAX_QUALITY, false);
-            assertFalse(WebpCodec.isLossless(encoded), "a quality of 100 does not make an encode lossless");
         }
     }
 

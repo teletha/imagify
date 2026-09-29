@@ -94,13 +94,39 @@ add_subdirectory("${IMAGIFY_WEBP_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/webp"
 
 # The libwebp release this was built from, for the diagnostic WebpCodec.getVersion() reports.
 #
-# It is passed in rather than worked out, because the one version libwebp's own build does settle on
-# is its library version: set_version() in its root CMakeLists.txt turns the libtool -version-info
-# out of src/Makefile.am into a VERSION property, and at tag v1.6.0 that is 1.0.6, which is a real
-# libwebp version and not the one that was built. A checkout's git tag would say it correctly, but a
-# caller who downloaded an archive has no tags to read.
-if(NOT IMAGIFY_WEBP_VERSION)
+# It is written here rather than passed in with -D, because that is the whole fix for a bug that
+# shipped in every Windows library this project has ever built. A workflow step with no shell: key
+# runs under pwsh on a Windows runner, and PowerShell hands a native command the argument
+# -DIMAGIFY_WEBP_VERSION=1.6.0 as two arguments: -DIMAGIFY_WEBP_VERSION=1 and .6.0. cmake caches the
+# 1, prints "Ignoring extra path from command line: .6.0", which reads like noise rather than like a
+# broken build, and carries on. The shim is then compiled with the version string "1" and every one
+# of those libraries answered WebpCodec.getVersion() with "1". A value that never goes near a shell
+# cannot be taken apart, so the version lives in this file and the workflow passes nothing.
+#
+# It is not read out of the libwebp checkout either, because the one version libwebp's own build
+# settles on is its library version: set_version() in its root CMakeLists.txt turns the libtool
+# -version-info out of src/Makefile.am into a VERSION property, and at tag v1.6.0 that is 1.0.6,
+# which is a real libwebp version and not the one that was built. A checkout's git tag would say it
+# correctly, but a caller who downloaded an archive has no tags to read.
+#
+# The -D override is still honoured, for a caller who is building against a different libwebp, and it
+# is checked, because the one thing that must not happen again is a broken value reaching a shipped
+# library. A version with fewer than two parts is refused: every libwebp release tag has had a
+# major.minor since 0.1.0, and a single number is the shape a split -DIMAGIFY_WEBP_VERSION=1.6.0
+# leaves behind. A value with none at all is not a failure, it is a build that opted out of saying
+# which libwebp it came from, and it says so.
+set(IMAGIFY_WEBP_VERSION "1.6.0" CACHE STRING
+    "The libwebp release version that WebpCodec.getVersion() reports")
+if(IMAGIFY_WEBP_VERSION STREQUAL "")
   set(IMAGIFY_WEBP_VERSION "unknown")
+elseif(NOT IMAGIFY_WEBP_VERSION MATCHES "^[0-9]+\\.[0-9]+(\\.[0-9]+)*$")
+  message(FATAL_ERROR
+    "IMAGIFY_WEBP_VERSION is [${IMAGIFY_WEBP_VERSION}], which is not a version number.\n"
+    "The usual cause is a shell that split the argument in two. PowerShell passes\n"
+    "  -DIMAGIFY_WEBP_VERSION=1.6.0\n"
+    "to a native command as -DIMAGIFY_WEBP_VERSION=1 and .6.0, which cmake then reports as\n"
+    "\"Ignoring extra path from command line: .6.0\". Quote the whole argument:\n"
+    "  \"-DIMAGIFY_WEBP_VERSION=1.6.0\"")
 endif()
 
 find_package(Threads REQUIRED)
