@@ -9,7 +9,7 @@
  */
 
 /*
- * A flat C ABI over the public libwebp API, for the JNA binding in imagify.webp.jna.
+ * A flat C ABI over the public libwebp API, for the FFM binding in imagify.webp.ffm.
  *
  * libwebp's C API is public, has no error callbacks and never unwinds, so a binding could in
  * principle talk to it directly, and a previous version of this jar did: it went through a third

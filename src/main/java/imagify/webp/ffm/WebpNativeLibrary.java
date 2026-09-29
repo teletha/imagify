@@ -7,13 +7,16 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package imagify.webp.jna;
+package imagify.webp.ffm;
+
+import static java.lang.System.*;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.lang.foreign.Linker;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,39 +24,18 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Locale;
 
-import static java.lang.System.getLogger;
-
 /**
  * Locates the {@code libwebp} based shared library that ships inside this jar and unpacks it so
  * that the platform dynamic linker can load it.
  *
  * <p>A shared library cannot be mapped straight out of a jar, so the resource is copied to a
- * temporary directory and loaded from there by its absolute path, which is the same trick
- * {@code imagify.avif.jna.AvifNativeLibrary} uses for {@code libavif} and
- * {@code imagify.jpeg.jna.JpegliNativeLibrary} uses for {@code jpegli}, and which is where the
- * layout below comes from.
+ * temporary directory and loaded from there by its absolute path using {@link System#load(String)},
+ * which is then visible to {@link Linker#nativeLinker()}.
  *
  * <p>The bundled binaries live under {@value #RESOURCE_ROOT} and are named after the platform they
- * were built for:
+ * were built for.
  *
- * <pre>
- * imagifywebp-windows-x64.dll
- * imagifywebp-windows-arm64.dll
- * imagifywebp-linux-x64.so
- * imagifywebp-linux-arm64.so
- * imagifywebp-macos-x64.dylib
- * imagifywebp-macos-arm64.dylib
- * </pre>
- *
- * <p>See {@code src/main/native/webp/CMakeLists.txt} for how they are built. The short version is that
- * they are statically linked against libwebp, so that they have no further dependencies at all: on
- * Windows the loader resolves the dependencies of a {@code LoadLibrary}ed module against the
- * directory of the executable and against {@code PATH} only, never against the directory of the
- * module itself.
- *
- * <p>Nothing here ever throws. A platform without a bundled library, a missing resource and a full
- * temporary directory all simply mean "not bundled", which leaves {@link WebpCodec} free to fall
- * back to a library installed on the system.
+ * <p>See {@code src/main/native/webp/CMakeLists.txt} for how they are built.
  */
 final class WebpNativeLibrary {
 
@@ -71,6 +53,7 @@ final class WebpNativeLibrary {
     private static final Object LOCK = new Object();
 
     private static volatile boolean resolved;
+
     private static volatile Path extracted;
 
     private WebpNativeLibrary() {
@@ -81,7 +64,7 @@ final class WebpNativeLibrary {
      * Unpacks the bundled shared library for the current platform.
      *
      * @return the absolute path of the unpacked library, or {@code null} when this platform has no
-     * bundled library, the bundled library is disabled or it could not be unpacked
+     *         bundled library, the bundled library is disabled or it could not be unpacked
      */
     static Path extract() {
         Path path = extracted;
@@ -118,14 +101,6 @@ final class WebpNativeLibrary {
         return unpack(resourceNameOf(platform, cpu), fileName(platform));
     }
 
-    /**
-     * Copies a classpath resource below {@value #RESOURCE_ROOT} to a temporary directory.
-     *
-     * @param resource the file name of the resource
-     * @param fileName the name to give the copy, which is what the dynamic linker is asked for
-     * @return the absolute path of the copy, or {@code null} when there is no such resource or it
-     * could not be written
-     */
     static Path unpack(String resource, String fileName) {
         try (InputStream in = WebpNativeLibrary.class.getResourceAsStream(RESOURCE_ROOT + resource)) {
             if (in == null) {
@@ -146,37 +121,16 @@ final class WebpNativeLibrary {
         }
     }
 
-    /**
-     * Returns the name of the classpath resource that holds the shared library for the given
-     * platform, for example {@code imagifywebp-linux-x64.so}.
-     *
-     * @param osName the value of the {@code os.name} system property
-     * @param arch the value of the {@code os.arch} system property
-     * @return the resource name, or {@code null} when the platform is not supported
-     */
     static String resourceName(String osName, String arch) {
         String platform = platform(osName);
         String cpu = cpu(arch);
         return platform == null || cpu == null ? null : resourceNameOf(platform, cpu);
     }
 
-    /**
-     * Returns the name of the classpath resource for an already resolved platform.
-     *
-     * @param platform {@code windows}, {@code macos} or {@code linux}
-     * @param cpu {@code x64} or {@code arm64}
-     * @return the resource name
-     */
     private static String resourceNameOf(String platform, String cpu) {
         return "imagifywebp-" + platform + "-" + cpu + extension(platform);
     }
 
-    /**
-     * Returns the short platform key used in resource names.
-     *
-     * @param osName the value of the {@code os.name} system property
-     * @return {@code windows}, {@code macos}, {@code linux}, or {@code null} when unrecognised
-     */
     static String platform(String osName) {
         if (osName == null) {
             return null;
@@ -194,42 +148,27 @@ final class WebpNativeLibrary {
         return null;
     }
 
-    /**
-     * Returns the short CPU key used in resource names.
-     *
-     * @param arch the value of the {@code os.arch} system property
-     * @return {@code x64}, {@code arm64}, or {@code null} when unrecognised
-     */
     static String cpu(String arch) {
         if (arch == null) {
             return null;
         }
         return switch (arch.toLowerCase(Locale.ROOT)) {
-            case "amd64", "x86_64", "x64" -> "x64";
-            case "aarch64", "arm64" -> "arm64";
-            default -> null;
+        case "amd64", "x86_64", "x64" -> "x64";
+        case "aarch64", "arm64" -> "arm64";
+        default -> null;
         };
     }
 
     private static String extension(String platform) {
         return switch (platform) {
-            case "windows" -> ".dll";
-            case "macos" -> ".dylib";
-            default -> ".so";
+        case "windows" -> ".dll";
+        case "macos" -> ".dylib";
+        default -> ".so";
         };
     }
 
-    /**
-     * Returns the file name the library is unpacked as, which is the name the platform dynamic
-     * linker knows it by.
-     *
-     * @param platform {@code windows}, {@code macos} or {@code linux}
-     * @return the plain file name
-     */
     static String fileName(String platform) {
-        return "windows".equals(platform)
-                ? "imagifywebp" + extension(platform)
-                : "libimagifywebp" + extension(platform);
+        return "windows".equals(platform) ? "imagifywebp" + extension(platform) : "libimagifywebp" + extension(platform);
     }
 
     private static void deleteOnExit(Path directory) {
@@ -249,8 +188,6 @@ final class WebpNativeLibrary {
                     }
                 });
             } catch (IOException e) {
-                // The library is still mapped at this point, so on Windows this normally fails.
-                // Leaving the temporary directory behind is the lesser evil.
                 log.log(Level.DEBUG, "cannot delete " + directory, e);
             }
         }, "imagify-webp-cleanup"));

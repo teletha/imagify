@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Assumptions;
 import imagify.avif.AvifException;
 import imagify.avif.jna.AvifCodec;
 import imagify.avif.jna.AvifLibrary;
-import imagify.webp.jna.WebpCodec;
+import imagify.webp.ffm.WebpCodec;
 import imagify.webp.WebpException;
 
 /**

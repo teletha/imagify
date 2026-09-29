@@ -2,17 +2,25 @@
 
 ## [Unreleased]
 
+### ⚠ Breaking change
+
+* `imagify.webp.WebpCodec` moved from `imagify.webp.jna.WebpCodec` to
+  `imagify.webp.ffm.WebpCodec`, replacing JNA with Java's Foreign Function &amp; Memory
+  API (JEP 454). The public API of the class is unchanged; only the import and the
+  internal implementation changed. Update the import, and drop the `webp4j-core`
+  dependency if one was declared for the WebP plug-in. The `jna` dependency itself
+  stays, because the AVIF and JPEG plug-ins still use it.
+
+  The WebP codec is bound through `java.lang.foreign`, so a program on JDK 24 or newer
+  that uses it from the class path is asked to allow native access. Nothing fails
+  without it, but the JDK warns on every run and will block the call in a later
+  release:
+
+      java --enable-native-access=ALL-UNNAMED -cp ... YourApp
+
 ### Features
 
 * encode and decode WebP with a bundled `libwebp`, dropped `webp4j`
-
-### ⚠ Breaking change
-
-* `imagify.webp.WebpCodec` moved to `imagify.webp.jna.WebpCodec`, alongside `AvifCodec` and
-  `JpegliCodec`. The public API of the class is unchanged; the import is what changed. The
-  `webp4j-core` dependency is gone, replaced by a bundled `libwebp` shim built for the same six
-  platforms the other codecs ship for. Update the import and, if one was declared, drop the
-  `webp4j-core` dependency.
 
 ## [1.0.3](https://github.com/teletha/imagify/compare/1.0.2...1.0.3) (2026-09-26)
 

@@ -131,12 +131,20 @@ public class Project extends bee.api.Project {
                     List<BufferedImage> frames =
                         WebpCodec.decodeAnimation(animated);
 
-                The direct API lives in `imagify.webp.jna.WebpCodec`, alongside
+                The direct API lives in `imagify.webp.ffm.WebpCodec`, alongside
                 the `imagify.webp` ImageIO plug-in it backs. Lossless `VP8L`
                 output is selected by choosing the `WebP Lossless` compression
                 type of the write parameter, or by passing `true` to
                 `WebpCodec.encode`. An animated file is read as one image per
                 frame, each already composited onto the canvas.
+
+                The codec is bound with Java's own Foreign Function & Memory
+                API, so on JDK 24 and newer a program using it from the class
+                path is asked to allow native access. Nothing fails without it,
+                but the JDK warns on every run and will block the call in a
+                later release:
+
+                    java --enable-native-access=ALL-UNNAMED -cp ... YourApp
 
                 ## SVG
 

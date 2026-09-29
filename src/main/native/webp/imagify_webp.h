@@ -9,7 +9,7 @@
  */
 
 /*
- * A flat C ABI over the public libwebp API, for the JNA binding in imagify.webp.jna. See
+ * A flat C ABI over the public libwebp API, for the FFM binding in imagify.webp.ffm. See
  * imagify_webp.c for why this layer exists at all.
  */
 

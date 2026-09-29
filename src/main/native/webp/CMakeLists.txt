@@ -6,7 +6,7 @@
 #
 #          http://opensource.org/licenses/mit-license.php
 
-# Builds the shared library that imagify.webp.jna loads, for all six targets this jar supports.
+# Builds the shared library that imagify.webp.ffm loads, for all six targets this jar supports.
 #
 # libwebp is a set of static libraries, so nothing here re-declares what upstream declares. Unlike
 # the jpegli overlay next door, which exists because jpegli only builds its libjpeg62 library on the

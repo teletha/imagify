@@ -16,9 +16,9 @@ package imagify.webp;
  * @param height canvas height in pixels
  * @param hasAlpha whether the bitstream carries a non premultiplied alpha channel
  * @param hasAnimation whether the file holds an animation rather than a single still frame
- * @param format one of {@link imagify.webp.jna.WebpCodec#FORMAT_VP8},
- *        {@link imagify.webp.jna.WebpCodec#FORMAT_VP8L} or
- *        {@link imagify.webp.jna.WebpCodec#FORMAT_VP8X}
+ * @param format one of {@link imagify.webp.ffm.WebpCodec#FORMAT_VP8},
+ *        {@link imagify.webp.ffm.WebpCodec#FORMAT_VP8L} or
+ *        {@link imagify.webp.ffm.WebpCodec#FORMAT_VP8X}
  * @param frameCount number of frames, 1 for a still image and the frame count for an animation
  * @param loopCount how often the animation repeats, 0 meaning forever, only set for an animation
  */

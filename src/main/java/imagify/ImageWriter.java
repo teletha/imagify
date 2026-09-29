@@ -15,7 +15,7 @@ import imagify.avif.jna.AvifLibrary;
 import imagify.jpeg.JpegException;
 import imagify.jpeg.jna.JpegliCodec;
 import imagify.jpeg.jna.JpegliLibrary;
-import imagify.webp.jna.WebpCodec;
+import imagify.webp.ffm.WebpCodec;
 import imagify.webp.WebpException;
 import imagify.webp.WebpImageWriterSpi;
 

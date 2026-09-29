@@ -9,7 +9,7 @@
  */
 package imagify.webp;
 
-import imagify.webp.jna.WebpCodec;
+import imagify.webp.ffm.WebpCodec;
 
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
