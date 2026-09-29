@@ -236,7 +236,7 @@ another revision of it.</description>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.5.2</version>
 				<configuration>
-					<argLine>-ea   -Dfile.encoding=UTF-8 --enable-native-access=ALL-UNNAMED</argLine>
+					<argLine>-ea   -Dfile.encoding=UTF-8</argLine>
 					<reportFormat>plain</reportFormat>
 					<consoleOutputReporter>
 						<disable>true</disable>
