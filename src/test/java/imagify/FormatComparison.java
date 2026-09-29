@@ -226,8 +226,10 @@ class FormatComparison {
 
     /**
      * Encodes and decodes one WebP setting through every available backend and logs what each one
-     * made of it. Only the selected backend writes files, because only its result is in the report,
-     * and a run is meant to leave a report rather than a second copy of everything in it.
+     * made of it. Both backends receive the same quality / lossless / method arguments so the
+     * comparison is fair; webp4j is skipped for lossless because its lossless path does not
+     * produce a true lossless result on all images (probe: round-trip pixel mismatches on the
+     * test PNGs), so only FFM is asked for that setting.
      */
     private static Webp webp(String id, BufferedImage image, int[] reference, int width, int height, Path file, String format, int quality, boolean lossless, WebpWay selected)
             throws IOException, WebpException {
@@ -236,6 +238,10 @@ class FormatComparison {
 
         for (WebpWay way : WebpWay.values()) {
             if (!way.isAvailable()) {
+                continue;
+            }
+            if (lossless && way == WebpWay.WEBP4J) {
+                System.out.printf("  %-1s %-8s skipped (lossless: webp4j does not produce a true lossless result on all images)%n", way == selected ? "*" : "", way.title());
                 continue;
             }
 
