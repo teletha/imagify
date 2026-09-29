@@ -176,6 +176,28 @@ int imagify_webp_encode(const uint8_t* pixels, int width, int height, int qualit
     int method, uint8_t** encoded, size_t* encoded_length, char* message, size_t message_capacity);
 
 /*
+ * Encodes tightly packed B, G, R bytes as a complete WebP file, without a copy of the pixels on
+ * the Java side.
+ *
+ * This is the fast path for ImageIO's most common opaque output format, {@code TYPE_3BYTE_BGR}.
+ * The bytes are read where they lie and imported into libwebp with WebPPictureImportBGR.
+ *
+ * @param pixels width * height * 3 bytes in B, G, R order
+ * @param width the image width, at least 1
+ * @param height the image height, at least 1
+ * @param quality IMAGIFY_WEBP_MIN_QUALITY to IMAGIFY_WEBP_MAX_QUALITY
+ * @param lossless nonzero to store the pixels without loss
+ * @param method IMAGIFY_WEBP_MIN_METHOD to IMAGIFY_WEBP_MAX_METHOD
+ * @param encoded receives the buffer to free with imagify_webp_free, or NULL on failure
+ * @param encoded_length receives the number of bytes at *encoded
+ * @param message receives a description of a failure, and is left untouched on success
+ * @param message_capacity the size of message in bytes
+ * @return IMAGIFY_WEBP_OK, or a status that says what went wrong
+ */
+int imagify_webp_encode_bgr(const uint8_t* pixels, int width, int height, int quality, int lossless,
+    int method, uint8_t** encoded, size_t* encoded_length, char* message, size_t message_capacity);
+
+/*
  * Encodes 0xAARRGGBB words as a complete WebP file, without a copy of the pixels.
  *
  * The same encode as imagify_webp_encode, and the same options in the same range, with the pixels

@@ -281,20 +281,28 @@ public final class AvifCodec {
             }
             try {
                 AvifImageInfo info = describe(shim, picture, arena);
-                MemorySegment pixels = arena.allocate(ValueLayout.ADDRESS);
-                MemorySegment length = arena.allocate(ValueLayout.JAVA_LONG);
-                status = shim.pictureToAbgr(picture, threads, pixels, length);
-                if (status != 0) {
-                    throw new AvifException("avif colour conversion failed (" + status + ")");
+                byte[] abgr;
+                if (shim.hasPictureToAbgrInto()) {
+                    // Decode straight into the array that will back the returned image.
+                    abgr = new byte[info.width() * info.height() * 4];
+                    status = shim.pictureToAbgrInto(picture, threads, MemorySegment.ofArray(abgr), abgr.length);
+                    if (status != 0) {
+                        throw new AvifException("avif colour conversion failed (" + status + ")");
+                    }
+                } else {
+                    MemorySegment pixels = arena.allocate(ValueLayout.ADDRESS);
+                    MemorySegment length = arena.allocate(ValueLayout.JAVA_LONG);
+                    status = shim.pictureToAbgr(picture, threads, pixels, length);
+                    if (status != 0) {
+                        throw new AvifException("avif colour conversion failed (" + status + ")");
+                    }
+                    MemorySegment buffer = pixels.get(ValueLayout.ADDRESS, 0);
+                    int count = (int) length.get(ValueLayout.JAVA_LONG, 0);
+                    if (buffer.address() == 0 || count <= 0) {
+                        throw new AvifException("libavif produced no pixels");
+                    }
+                    abgr = buffer.reinterpret(count).toArray(ValueLayout.JAVA_BYTE);
                 }
-                MemorySegment buffer = pixels.get(ValueLayout.ADDRESS, 0);
-                int count = (int) length.get(ValueLayout.JAVA_LONG, 0);
-                if (buffer.address() == 0 || count <= 0) {
-                    throw new AvifException("libavif produced no pixels");
-                }
-                // This is the single read, and the one the JNA binding made twice: the bytes go
-                // from the shim's buffer into the image's own data buffer with no byte[] in between.
-                byte[] abgr = buffer.reinterpret(count).toArray(ValueLayout.JAVA_BYTE);
                 return new DecodedImage(
                         AbgrPixels.toBufferedImage(abgr, info.width(), info.height()), info);
             } finally {
@@ -374,8 +382,23 @@ public final class AvifCodec {
             throw new AvifException("cannot encode a " + width + "x" + height + " image");
         }
         int yuvFormat = pixelFormat >= 0 ? pixelFormat : PIXEL_FORMAT_YUV444;
-        byte[] pixels = AbgrPixels.toAbgrBytes(source, 0, 0, width, height, 1, 1);
-        int rowBytes = width * 4;
+
+        // Try to hand the image's own backing array to libavif. TYPE_4BYTE_ABGR is already A, B, G,
+        // R; TYPE_3BYTE_BGR is already B, G, R. Only fall back to a packed ABGR copy when the
+        // source is neither or is a subimage/view.
+        boolean hasAlpha = source.getColorModel() != null && source.getColorModel().hasAlpha();
+        byte[] abgr = null;
+        byte[] bgr = null;
+        if (source instanceof BufferedImage image) {
+            abgr = AbgrPixels.abgrBytesOrNull(image);
+            if (abgr == null && !hasAlpha && shim.hasPictureFromBgr()) {
+                bgr = AbgrPixels.bgrBytesOrNull(image);
+            }
+        }
+        if (abgr == null && bgr == null) {
+            abgr = new byte[width * height * 4];
+            AbgrPixels.toAbgrBytes(source, 0, 0, width, height, 1, 1, abgr, 0);
+        }
 
         try (Arena arena = Arena.ofConfined()) {
             MemorySegment picture = shim.pictureCreate(width, height, 8, yuvFormat);
@@ -386,8 +409,14 @@ public final class AvifCodec {
                 // The zero copy, and the reason the shim exists. The pixels are the caller's own
                 // array, handed over as a heap segment and pinned by the call rather than copied:
                 // the shim reads it in place, so the bytes never go through a native buffer at all.
-                int status = shim.pictureFromAbgr(picture, MemorySegment.ofArray(pixels), rowBytes,
-                        chromaDownsampling);
+                int status;
+                if (bgr != null) {
+                    status = shim.pictureFromBgr(picture, MemorySegment.ofArray(bgr), width * 3,
+                            chromaDownsampling);
+                } else {
+                    status = shim.pictureFromAbgr(picture, MemorySegment.ofArray(abgr), width * 4,
+                            chromaDownsampling);
+                }
                 if (status != 0) {
                     throw new AvifException("avif colour conversion failed (" + status + ")");
                 }

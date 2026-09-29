@@ -179,6 +179,7 @@ set(IMAGIFY_WEBP_SYMBOLS
   imagify_webp_read_features
   imagify_webp_decode
   imagify_webp_encode
+  imagify_webp_encode_bgr
   imagify_webp_read_animation
   imagify_webp_decode_animation
   imagify_webp_encode_animation

@@ -114,6 +114,19 @@ int imagify_avif_picture_from_abgr(imagify_avif_picture* picture, const uint8_t*
     int row_bytes, int chroma_downsampling);
 
 /*
+ * Converts tightly packed B, G, R bytes into the picture's YUV planes, without a copy on the Java
+ * side. This is the fast path for {@code TYPE_3BYTE_BGR} images.
+ *
+ * @param picture the picture to fill
+ * @param pixels width * height * 3 bytes in B, G, R order
+ * @param row_bytes the stride of the pixels, which is width * 3 for tightly packed 8 bit BGR
+ * @param chroma_downsampling an AVIF_CHROMA_DOWNSAMPLING_* value, or -1 for libavif's own
+ * @return an IMAGIFY_AVIF_* status
+ */
+int imagify_avif_picture_from_bgr(imagify_avif_picture* picture, const uint8_t* pixels,
+    int row_bytes, int chroma_downsampling);
+
+/*
  * Converts the picture's YUV and alpha planes back into tightly packed A, B, G, R bytes.
  *
  * The pixels are written into a buffer this library allocates and hands back, so a caller that wants
@@ -127,6 +140,20 @@ int imagify_avif_picture_from_abgr(imagify_avif_picture* picture, const uint8_t*
  */
 int imagify_avif_picture_to_abgr(imagify_avif_picture* picture, int max_threads, uint8_t** out,
     size_t* out_length);
+
+/*
+ * Converts the picture's YUV and alpha planes back into tightly packed A, B, G, R bytes that the
+ * caller has already allocated. This removes the C-side allocation and the copy into a Java byte[]
+ * that imagify_avif_picture_to_abgr performs.
+ *
+ * @param picture the picture to read
+ * @param max_threads the number of threads the YUV to RGB conversion may use, 0 or less for one
+ * @param out the caller's buffer, which must be at least width * height * 4 bytes
+ * @param out_length the size of out in bytes
+ * @return an IMAGIFY_AVIF_* status
+ */
+int imagify_avif_picture_to_abgr_into(imagify_avif_picture* picture, int max_threads,
+    uint8_t* out, size_t out_length);
 
 /*
  * The A, B, G, R bytes of the last imagify_avif_picture_to_abgr call, in one buffer, as an
@@ -269,6 +296,21 @@ int imagify_avif_sequence_sizes(imagify_avif_sequence* sequence, int* sizes);
  */
 int imagify_avif_sequence_frame(imagify_avif_sequence* sequence, int index, int max_threads,
     uint8_t** out, size_t* out_length, int* out_width, int* out_height);
+
+/*
+ * Decodes one frame into tightly packed A, B, G, R bytes that the caller has already allocated.
+ *
+ * @param sequence the open sequence
+ * @param index the frame to decode
+ * @param max_threads the number of threads the conversion may use, 0 or less for one
+ * @param out the caller's buffer, which must be at least width * height * 4 bytes
+ * @param out_length the size of out in bytes
+ * @param out_width receives the frame's width in pixels
+ * @param out_height receives the frame's height in pixels
+ * @return an IMAGIFY_AVIF_* status
+ */
+int imagify_avif_sequence_frame_into(imagify_avif_sequence* sequence, int index, int max_threads,
+    uint8_t* out, size_t out_length, int* out_width, int* out_height);
 
 /*
  * Releases a buffer this library allocated, such as one handed back by an encode.

@@ -565,6 +565,67 @@ int imagify_webp_encode_argb(const uint32_t* pixels, int width, int height, int 
       encoded_length, message, message_capacity);
 }
 
+int imagify_webp_encode_bgr(const uint8_t* pixels, int width, int height, int quality,
+    int lossless, int method, uint8_t** encoded, size_t* encoded_length, char* message,
+    size_t message_capacity) {
+  if (pixels == NULL || encoded == NULL || encoded_length == NULL) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT, "no image to encode");
+  }
+  *encoded = NULL;
+  *encoded_length = 0;
+
+  if (width <= 0 || height <= 0 || width > WEBP_MAX_DIMENSION || height > WEBP_MAX_DIMENSION) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_UNSUPPORTED,
+        "libwebp will not encode a picture this size");
+  }
+  if (!imagify_encode_options_valid(quality, method)) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
+        "quality and method are outside the ranges libwebp accepts");
+  }
+
+  WebPConfig config;
+  if (!imagify_make_config(&config, quality, lossless, method)) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_ARGUMENT,
+        "libwebp rejected the encoding options");
+  }
+
+  WebPPicture picture;
+  if (!WebPPictureInit(&picture)) {
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_INTERNAL,
+        "libwebp would not initialise a picture");
+  }
+  picture.use_argb = lossless ? 1 : 0;
+  picture.width = width;
+  picture.height = height;
+
+  WebPMemoryWriter writer;
+  WebPMemoryWriterInit(&writer);
+  picture.writer = WebPMemoryWrite;
+  picture.custom_ptr = &writer;
+
+  int imported = WebPPictureImportBGR(&picture, pixels, width * 3);
+  const int ok = imported && WebPEncode(&config, &picture);
+  const int error_code = (int)picture.error_code;
+  WebPPictureFree(&picture);
+
+  if (!ok) {
+    WebPMemoryWriterClear(&writer);
+    if (message != NULL && message_capacity > 0) {
+      snprintf(message, message_capacity, "libwebp would not encode the image (error code %d)",
+          error_code);
+    }
+    return IMAGIFY_WEBP_ERR_INTERNAL;
+  }
+  if (writer.mem == NULL || writer.size == 0) {
+    WebPMemoryWriterClear(&writer);
+    return imagify_fail(message, message_capacity, IMAGIFY_WEBP_ERR_INTERNAL,
+        "libwebp encoded nothing");
+  }
+  *encoded = writer.mem;
+  *encoded_length = writer.size;
+  return IMAGIFY_WEBP_OK;
+}
+
 /* --------------------------------------------------------------------------------------------- */
 /* animations                                                                                      */
 /* --------------------------------------------------------------------------------------------- */
