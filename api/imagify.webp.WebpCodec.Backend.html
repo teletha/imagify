@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<meta content="Explains how to use Imagify and its API. " name="description"/>
+		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<title>Imagify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="CB">
+		<header class="l" date="2026-09-29">
+			<h1 class="U"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="d"><a href="api/main.html" id="API"><svg class="package">
+						<use href="main.svg#package"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify/discussions" id="Community" target="_blank"><svg class="user">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="https://github.com/teletha/imagify" id="Repository" target="_blank"><svg class="github">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="m"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<nav class="b"></nav>
+		<article class="DB" id="Article">
+			<section class="KB"><code class="IB">imagify.webp</code>
+				<h2 class="Enum t"><code class="h">WebpCodec.Backend</code></h2>
+				<div class="N">
+					<ul class="E G">
+						<li><code><a aria-label="java.lang.Enum 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Enum.html">Enum</a><code class="parameters"><code><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></code></code></li>
+					</ul>
+					<ul class="E H">
+						<li><code><a aria-label="java.lang.Comparable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Comparable.html">Comparable</a><code class="parameters"><code><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></code></code></li>
+						<li><code><a aria-label="java.lang.constant.Constable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/constant/Constable.html">Constable</a></code></li>
+						<li><code><a aria-label="java.io.Serializable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></li>
+					</ul>
+				</div><span class="A"><p>The two ways this library reaches <code>libwebp</code>.</p><p>Each one knows whether it can be used in this JVM and why not, which is what the choice
+ between them is made on.
+</p>
+				</span></section>
+			<section class="KB" id="FFM">
+				<h2 class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">FFM</code><i class="w"><code class="return"><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></i></h2><span class="A"><code>libwebp</code> through Java&apos;s Foreign Function &amp; Memory API, in
+ <code>imagify.webp.ffm</code>. The default, and the one that can be told how hard to try.</span></section>
+			<section class="KB" id="WEBP4J">
+				<h2 class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">WEBP4J</code><i class="w"><code class="return"><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></i></h2><span class="A"><code>libwebp</code> through JNI and <code>webp4j</code>, in <code>imagify.webp.webp4j</code>. It needs
+ no third party native access flag, and it cannot be told how hard to encode a still
+ image.</span></section>
+			<section class="KB" id="values()">
+				<h2 class="L"><i class="STATIC PUBLIC"></i><code class="h">values</code><code class="P">()</code><i class="w"><code array="fix"><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></i></h2>
+				<table class="c">
+					<tr class="q">
+						<td><code array="fix"><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="KB" id="valueOf(java.lang.String)">
+				<h2 class="L"><i class="STATIC PUBLIC"></i><code class="h">valueOf</code><code class="P">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="w"><code><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></i></h2>
+				<table class="c">
+					<tr class="g">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code></td>
+						<td></td>
+					</tr>
+					<tr class="q">
+						<td><code><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="KB" id="isAvailable()">
+				<h2 class="L"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="h">isAvailable</code><code class="P">()</code><i class="w"><code>boolean</code></i></h2>
+				<table class="c">
+					<tr class="q">
+						<td><code>boolean</code></td>
+						<td><span><p>whether this backend can be used in this JVM</p></span></td>
+					</tr>
+				</table>
+			</section>
+			<section class="KB" id="getUnavailableReason()">
+				<h2 class="L"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="h">getUnavailableReason</code><code class="P">()</code><i class="w"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="c">
+					<tr class="q">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td><span><p>why this backend cannot be used, or <code>null</code> when it can</p></span></td>
+					</tr>
+				</table>
+			</section>
+			<section class="KB" id="title()">
+				<h2 class="L"><i class="PUBLIC"></i><code class="h">title</code><code class="P">()</code><i class="w"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="c">
+					<tr class="q">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td><span><p>the name <code><a aria-label="imagify.webp.WebpCodec" href="api/imagify.webp.WebpCodec.html#BACKEND_PROPERTY">#BACKEND_PROPERTY</a></code> spells this backend with</p></span></td>
+					</tr>
+				</table>
+			</section>
+			<section class="KB" id="of(java.lang.String)">
+				<h2 class="L"><i class="STATIC PUBLIC"></i><code class="h">of</code><code class="P">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="w"><code><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></i></h2>
+				<table class="c">
+					<tr class="g">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code></td>
+						<td><span><p>a backend name, in any case</p></span></td>
+					</tr>
+					<tr class="q">
+						<td><code><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></td>
+						<td><span><p>the backend of that name, or <code>null</code> when it names neither of them</p></span></td>
+					</tr>
+				</table>
+			</section>
+		</article>
+		<aside class="T">
+			<div class="LB">
+				<h5 class="a">Static Fields</h5>
+				<ul>
+					<li class="V"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.WebpCodec.Backend.html#FFM">FFM</a></code><i class="s"><code class="return"><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></i></li>
+					<li class="V"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.webp.WebpCodec.Backend.html#WEBP4J">WEBP4J</a></code><i class="s"><code class="return"><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></i></li>
+				</ul>
+				<h5 class="a">Static Methods</h5>
+				<ul>
+					<li class="V"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.Backend.html#values()">values</a></code><code class="P">()</code><i class="s"><code array="fix"><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></i></li>
+					<li class="V"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.Backend.html#valueOf(java.lang.String)">valueOf</a></code><code class="P">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="s"><code><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></i></li>
+					<li class="V"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.Backend.html#of(java.lang.String)">of</a></code><code class="P">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="s"><code><a aria-label="imagify.webp.WebpCodec.Backend" href="api/imagify.webp.WebpCodec.Backend.html">Backend</a></code></i></li>
+				</ul>
+				<h5 class="a">Methods</h5>
+				<ul>
+					<li class="V"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.WebpCodec.Backend.html#isAvailable()">isAvailable</a></code><code class="P">()</code><i class="s"><code>boolean</code></i></li>
+					<li class="V"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/imagify.webp.WebpCodec.Backend.html#getUnavailableReason()">getUnavailableReason</a></code><code class="P">()</code><i class="s"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="V"><i class="PUBLIC"></i><code><a href="api/imagify.webp.WebpCodec.Backend.html#title()">title</a></code><code class="P">()</code><i class="s"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="v">
+			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
+		</footer>
+	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
+</html>

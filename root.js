@@ -11,6 +11,7 @@ const root = {
 		"imagify.jpeg.jna",
 		"imagify.webp",
 		"imagify.webp.ffm",
+		"imagify.webp.webp4j",
 		"imagify.pixels"
 	],
 	"types": [
@@ -360,18 +361,33 @@ const root = {
 			"type": "Class"
 		},
 		{
-			"name": "WebpCodec.DecodedWebp",
-			"packageName": "imagify.webp.ffm",
-			"type": "Record"
-		},
-		{
 			"name": "WebpImageReader",
 			"packageName": "imagify.webp",
 			"type": "Class"
 		},
 		{
+			"name": "DecodedWebp",
+			"packageName": "imagify.webp",
+			"type": "Record"
+		},
+		{
+			"name": "WebpCodec",
+			"packageName": "imagify.webp",
+			"type": "Class"
+		},
+		{
+			"name": "WebpCodec.Backend",
+			"packageName": "imagify.webp",
+			"type": "Enum"
+		},
+		{
 			"name": "WebpImageReaderSpi",
 			"packageName": "imagify.webp",
+			"type": "Class"
+		},
+		{
+			"name": "WebpCodec",
+			"packageName": "imagify.webp.webp4j",
 			"type": "Class"
 		},
 		{
