@@ -177,7 +177,7 @@ size the document declares, so resizing is a separate step.
 
 ## Native libraries
 
-AVIF, WebP and JPEG are bound with Java's own Foreign Function &
+AVIF, WebP and JPEG are bound with Java's own Foreign Function &amp;
 Memory API (JEP 454). Their shared libraries are bundled for Windows,
 macOS and Linux on x64 and arm64, and unpacked automatically on first
 use, so nothing has to be installed and no third party jar has to be
@@ -211,6 +211,8 @@ Supported `libavif` versions: `1.0.0` to `1.4.x`. `JpegliCodec` and
 `WebpCodec` bind a flat C ABI of their own rather than jpegli's or
 libwebp's, and refuse a library built against another revision of it.
 <p align="right"><a href="#top">back to top</a></p>
+
+
 
 
 
