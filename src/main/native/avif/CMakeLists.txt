@@ -246,13 +246,20 @@ else()
   # that nothing in the jar answers to, and it fails to load on every platform but the one this was
   # hand-built on.
   #
-  # IMAGIFY_AVIF_SONAME_C_FLAG is how that is fixed from the outside. libavif is configured with
-  # CMAKE_SHARED_LIBRARY_SONAME_C_FLAG and its CXX twin pointing at the bundled name, which is what
-  # the caller has to do; the C++ one is the one that matters, because avif.h is a C header but the
-  # library behind it is C++, and the C flag on its own is handed to nothing. The workflow passes
-  # for the two Unix targets:
-  #   Linux   -Wl,-soname,libavif-linux-x64.so
-  #   macOS   -install_name,@loader_path/libavif-macos-x64.dylib
+  # What the loaders will look for is libavif's SONAME, not the file this linked against, and
+  # libavif builds itself the conventional one: libavif.so.16 on Linux, libavif.16.dylib on macOS.
+  # The jar ships neither, because the files are named for the platform and the architecture so that
+  # six of them can sit in one directory. So a shim linked against a stock libavif records a name
+  # that nothing in the jar answers to, and it fails to load on every platform but the one it was
+  # built on.
+  #
+  # The caller renames it, after building libavif and before building this:
+  #   Linux   patchelf --set-soname libavif-linux-x64.so <libavif>
+  #   macOS   install_name_tool -id @loader_path/libavif-macos-x64.dylib <libavif>
+  # It cannot be done from here, or through CMAKE_SHARED_LIBRARY_SONAME_C_FLAG, because libavif
+  # sets its own SOVERSION and the flag is then added to CMake's -soname rather than replacing it.
+  # The linker concatenates the two and the SONAME comes out as libavif-linux-x64.solibavif.so.16.
+  #
   # macOS needs no rpath because @loader_path is the directory of the loading module, which is the
   # unpacked directory holding both files. Linux does, because a bare DT_NEEDED name is searched in
   # RUNPATH, then LD_LIBRARY_PATH, then the loader's cache, and never beside the shim, so $ORIGIN is
