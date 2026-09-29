@@ -368,6 +368,36 @@ class ImagifyTest {
         assertEquals(1, Imagify.read(file).frameCount());
     }
 
+    @Test
+    @DisplayName("width and height report the size of the image")
+    void reportsSize(@TempDir Path dir) throws IOException {
+        BufferedImage src = makeImage(20, 10);
+        Path file = dir.resolve("input.png");
+        Files.write(file, toBytes(src, ImageFormat.PNG));
+
+        Imagify pipe = Imagify.read(file);
+        assertEquals(20, pipe.width());
+        assertEquals(10, pipe.height());
+        assertEquals(pipe.toBufferedImage().getWidth(), pipe.width());
+        assertEquals(pipe.toBufferedImage().getHeight(), pipe.height());
+    }
+
+    @Test
+    @DisplayName("width and height follow a transform")
+    void sizeFollowsTransform(@TempDir Path dir) throws IOException {
+        BufferedImage src = makeImage(20, 10);
+        Path file = dir.resolve("input.png");
+        Files.write(file, toBytes(src, ImageFormat.PNG));
+
+        Imagify pipe = Imagify.read(file).resize(8, 4);
+        assertEquals(8, pipe.width());
+        assertEquals(4, pipe.height());
+
+        Imagify cropped = Imagify.read(file).crop(2, 1, 6, 5);
+        assertEquals(6, cropped.width());
+        assertEquals(5, cropped.height());
+    }
+
     // ------------------------------------------------------- toStillImage
 
     @Test

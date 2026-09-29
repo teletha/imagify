@@ -957,4 +957,28 @@ public final class Imagify {
     public int frameCount() {
         return frameSequence.frameCount();
     }
+
+    /**
+     * Returns the width of the image, which is the width of its first frame.
+     *
+     * <p>
+     * Every frame of a sequence is the same size, since the transforms that change a size apply to
+     * all of them, so the first frame answers for the sequence.
+     * </p>
+     *
+     * @return the width in pixels
+     */
+    public int width() {
+        return frameSequence.toBufferedImage().getWidth();
+    }
+
+    /**
+     * Returns the height of the image, which is the height of its first frame.
+     *
+     * @return the height in pixels
+     * @see #width()
+     */
+    public int height() {
+        return frameSequence.toBufferedImage().getHeight();
+    }
 }

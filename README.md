@@ -55,6 +55,12 @@ repeats:
     List<BufferedImage> images = frames.frames();
     int[] delays = frames.delaysMs();
 
+`width` and `height` report the size of the first frame, which is the
+size of every frame of a sequence:
+
+    int width = pipe.width();
+    int height = pipe.height();
+
 Reading only the header is cheaper than decoding when the size is all
 that is wanted:
 
