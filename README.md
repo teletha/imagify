@@ -7,200 +7,210 @@
 </p>
 
 ## Summary
-AVIF encoding and decoding for Java, backed by libavif.
+Imagify reads, transforms and writes images through one small fluent API.
+AVIF, WebP and JPEG are encoded and decoded by bundled native libraries;
+PNG, GIF, BMP and ICO go through the JDK's image I/O; SVG can be read.
 
-JPEG encoding and decoding for Java, backed by
-[jpegli](https://github.com/google/jpegli).
+    Imagify.read(input)
+           .resize(800, 600)
+           .writeTo(output);
 
-Also provides an `ImageIO` plug-in for ICO files, one for WebP
-backed by libwebp, and a read-only `ImageIO` plug-in that
-rasterises SVG through JSVG.
+## Quick start
 
-## Loading
+A pipeline is read, transform, write, and every step returns the same
+pipeline so calls chain:
 
-The native `libavif` shared library is bundled for Windows, macOS
-and Linux on x64 and arm64. It is unpacked automatically on first
-use, so no installation is required.
+    Imagify
+        .read(Path.of("photo.jpg"))
+        .resizeToFill(1200, 630)
+        .writeTo(Path.of("hero.avif"));
 
-    -Dimagify.avif.bundled=false   # ignore the bundled library,
-                                    # use a system libavif instead
+`ImageReader` and `ImageWriter` are the lower level entry points. They
+answer decoded frames and encoded bytes rather than a pipeline:
 
-The `jpegli` library is bundled and unpacked the same way.
+    FrameSequence frames = ImageReader.read(bytes);
+    byte[] png = ImageWriter.toBytes(image, ImageFormat.PNG, 0.9);
 
-    -Dimagify.jpeg.bundled=false   # ignore the bundled library,
-                                    # use a system jpegli instead
-
-It is bound through Java's own Foreign Function &amp; Memory API,
-so there is no third party jar to declare, and an image already
-in `TYPE_4BYTE_ABGR` is encoded where it lies rather than copied
-into native memory first.
-
-The native `libwebp` library is bundled the same way.
-
-    -Dimagify.webp.bundled=false  # ignore the bundled library,
-                                    # use a system libwebp instead
-
-None of them is required for JPEG to work. When one of them is
-missing for the running platform, the `ImageIO` plug-in steps
-aside and the JDK's own JPEG reader and writer take over, so
-`ImageIO.read()` of a JPEG never fails because of it.
-
-## Decode
-
-    byte[] avif = Files.readAllBytes(Path.of("photo.avif"));
-    DecodedImage result = AvifCodec.decode(avif);
-    BufferedImage image = result.image();
-    AvifImageInfo info = result.info();
-
-## Encode
-
-    byte[] avif = AvifCodec.encode(image, 75, 4);
-    // quality 0 (smallest) to 100 (lossless)
-    // speed   0 (slowest) to 10 (fastest)
-    Files.write(Path.of("out.avif"), avif);
-
-## ImageIO
+Everything is also registered as an `ImageIO` plug-in, so the ordinary
+`ImageIO.read` and `ImageIO.write` work with the format names:
 
     BufferedImage image = ImageIO.read(new File("photo.avif"));
-    ImageIO.write(image, "avif", new File("out.avif"));
-
-## JPEG
-
-    BufferedImage image = ImageIO.read(new File("photo.jpg"));
-    ImageIO.write(image, "jpeg", new File("out.jpg"));
-
-    byte[] jpeg = JpegliCodec.encode(image, 85);
-    // quality 1 (smallest) to 100 (most detail)
-
-jpegli produces a smaller file than the JDK's encoder at the
-same visual quality, which is why it is here at all.
-
-A JPEG has two settings an `ImageWriteParam` has nowhere to
-put, and both are on the format rather than on a single write:
-
-    ImageFormat.JPEG.subsampling(Subsampling.S444)
-    ImageFormat.JPEG.optimizeHuffmanTables(true)
-    ImageWriter.toBytes(image, format, 0.9);
-
-`subsampling` is how finely the two colour-difference channels
-are stored, and it costs nothing in the quality argument.
-`optimizeHuffmanTables` computes the entropy coder tables from
-the image, which is a smaller file for the very same pixels.
-
-A caller driving `ImageIO` directly reaches both through
-`JpegWriteParam`, which is what `getDefaultWriteParam()`
-answers:
-
-    JpegWriteParam param = (JpegWriteParam)
-        writer.getDefaultWriteParam();
-    param.setSubsampling(Subsampling.S444);
-
-JPEG has no alpha channel. An encode discards the alpha byte,
-so a transparent image is written against whatever colour sits
-behind it, and a decode comes back fully opaque. A caller that
-needs the picture has to flatten the image first.
-
-## ICO
-
-    BufferedImage image = ImageIO.read(new File("app.ico"));
-    ImageIO.write(image, "ico", new File("out.ico"));
-
-The writer stores a 32-bit BGRA bitmap with an AND mask derived
-from the alpha channel, so transparency is preserved. The reader
-decodes the entry closest to 256x256.
-
-## WebP
-
-    BufferedImage image = ImageIO.read(new File("photo.webp"));
     ImageIO.write(image, "webp", new File("out.webp"));
 
-    byte[] webp = WebpCodec.encode(image, 80, false);
-    // quality 0 (smallest) to 100. In lossless mode libwebp
-    // reads it as an amount of effort rather than a fidelity,
-    // so 0 is quick and 100 is thorough, and neither loses a
-    // pixel.
-    byte[] quick = WebpCodec.encode(image, 80, false,
-            ImageFormat.Webp.DEFAULT_COMPRESSION_METHOD - 4);
-    List<BufferedImage> frames =
-        WebpCodec.decodeAnimation(animated);
+## Read
 
-The direct API lives in `imagify.webp.ffm.WebpCodec`, alongside
-the `imagify.webp` ImageIO plug-in it backs. Lossless `VP8L`
-output is selected by choosing the `WebP Lossless` compression
-type of the write parameter, or by passing `true` to
-`WebpCodec.encode`. An animated file is read as one image per
-frame, each already composited onto the canvas.
+`Imagify.read` accepts a `Path`, a `byte[]`, an `InputStream` or an
+already decoded `BufferedImage`. The format is detected from the header,
+so the caller does not name it. Passing several sources, or adding more
+with `add`, makes each one a frame of a single sequence:
 
-The encoding effort is libwebp's `method`, 0 to 6, and it is
-the only setting that makes a lossy encode cheaper: everything
-else in `WebPConfig` was measured and none of it buys time at
-the same quality. On a 498x280 photograph at quality 75, method
-2 is 2.7x quicker than method 4 for 4.3% more bytes; on a
-1600x1200 gradient, method 0 is 4.9x quicker for 3.9% more
-bytes. The default is libwebp's own method 4, so a file written
-here is a file `cwebp` writes from the same options. Through
-the `ImageIO` plug-in it is set on the format:
+    Imagify.read(Path.of("frame-1.png"), Path.of("frame-2.png"));
 
-    ImageFormat fast = ImageFormat.WEBP.compressionMethod(2);
-    ImageIO.write(image, "webp", out);   // with a format of your own
+`ImageReader.read` returns the decoded `FrameSequence` directly, which
+carries the frames, how long each is shown and how often the sequence
+repeats:
 
-To write many images at once, across every core:
+    FrameSequence frames = ImageReader.read(Path.of("animation.gif"));
+    List<BufferedImage> images = frames.frames();
+    int[] delays = frames.delaysMs();
 
-    ImageWriter.toBytes(images, ImageFormat.WEBP, 0.8);
-    ImageWriter.toFiles(images, ImageFormat.WEBP, 0.8, paths);
-    // both take a thread count, and neither changes what comes out
-
-### WebP
-
-WebP is bound with Java's own Foreign Function & Memory API,
-so there is no third party jar to declare: the bundled
-`libwebp` is unpacked on first use, and `WebpCodec` encodes and
-decodes a lossy or a lossless still and an animation either way.
-
-It is bound through `java.lang.foreign`, so on JDK 24 and newer
-a program that uses it from the class path is asked to allow
-native access. Nothing fails without it, but the JDK warns on
-every run and will block the call in a later release:
-
-    java --enable-native-access=ALL-UNNAMED -cp ... YourApp
-
-How hard the encoder tries is a caller's to decide, through
-`ImageFormat.Webp.compressionMethod(int)`.
-
-## SVG
-
-    BufferedImage image = ImageIO.read(new File("icon.svg"));
-
-SVG is read only. It is rasterised with JSVG at the size declared
-by the document, so resizing is a separate step.
-
-## Header-only read
+Reading only the header is cheaper than decoding when the size is all
+that is wanted:
 
     AvifImageInfo info = AvifCodec.readHeader(avif);
     WebpImageInfo info = WebpCodec.readHeader(webp);
     JpegImageInfo info = JpegliCodec.readHeader(jpeg);
 
-## Availability
+## Transform
+
+Every transform applies to every frame of a sequence and leaves its
+timing alone. The resizing methods differ in what they do with a source
+whose shape is not the target's:
+
+    .resize(800, 600)                 // stretch to exactly 800x600
+    .resize(0.5)                      // scale both edges by a factor
+    .resizeToFit(1920)                // longest edge 1920, ratio kept
+    .resizeInside(800, 600)           // fit inside, never enlarge
+    .resizeToFill(800, 600)           // fill the box, crop the overflow
+    .padTo(800, 600)                  // fill the box, add transparent area
+    .padTo(800, 600, Color.WHITE);    // ... or add a colour
+
+Each takes a `ResizeAlgorithm` when the default is not what is wanted:
+
+    .resize(800, 600, ResizeAlgorithm.BILINEAR);
+
+The rest are `crop`, `rotate`, `flipHorizontal` and `flipVertical`, plus
+`map` for an operation of your own:
+
+    .crop(10, 10, 400, 300)
+    .rotate(90)
+    .flipHorizontal()
+    .map(image -> myOperation(image));
+
+Two steps change what the sequence is rather than what a frame looks
+like:
+
+    .toStillImage()          // keep only the first frame
+    .asSpriteSheet(8)        // lay every frame out in a grid of 8 columns
+    .asAnimation(8, 4, 100)  // cut that grid back into 100 ms frames
+
+## Write
+
+`writeTo(Path)` takes the format from the file extension.
+`writeToBytes` and `writeTo(OutputStream, ...)` are the same without a
+file. A quality of `0.0` (smallest) to `1.0` (largest) can be given, and
+so can the format:
+
+    .writeToBytes(ImageFormat.AVIF)
+    .writeToBytes(ImageFormat.WEBP, 0.8)
+    .writeTo(path, ImageFormat.PNG);
+
+Writing is automatic about animation: a sequence with more than one frame
+written to a format that supports animation becomes one, and anything
+else becomes its first frame.
+
+    Imagify.read(gif).writeTo(Path.of("animation.webp"));
+    Imagify.read(gif).toStillImage().writeTo(Path.of("poster.jpg"));
+
+To encode many images at once, across every core:
+
+    List<byte[]> encoded = ImageWriter.toBytes(images, ImageFormat.WEBP, 0.8);
+    ImageWriter.toFiles(images, ImageFormat.WEBP, 0.8, paths);
+    // both take a thread count, and neither changes what comes out
+
+## Format settings
+
+The quality argument is the one setting every format shares. The rest
+belong to a format and are set on the format value, which is immutable,
+so asking for one hands back a new format.
+
+### AVIF
+
+    ImageFormat.AVIF.speed(8)          // 0 (slowest, best) to 10 (fastest)
+    ImageFormat.AVIF.alphaQuality(90)  // 0 to 100, 100 keeps every value
+    ImageFormat.AVIF.subsampling(ImageFormat.Avif.Subsampling.YUV420)
+    ImageFormat.AVIF.chromaDownsampling(ImageFormat.Avif.ChromaDownsampling.SHARP_YUV)
+
+A quality of 100 is lossless. Speed trades time for bytes: on a 517x380
+photograph at quality 60, speed 6 takes 142 ms and speed 8 takes 47 ms.
+A still image is YUV444 unless asked otherwise, an animation YUV420.
+
+### WebP
+
+    ImageFormat.WEBP.lossless()        // VP8L, pixel for pixel
+    ImageFormat.WEBP.compressionMethod(2)
+
+In lossless mode the quality is read as an amount of effort rather than
+a fidelity, so 0 is quick and 100 is thorough and neither loses a pixel.
+The compression method is libwebp's `method`, 0 to 6; method 2 is 2.7x
+quicker than the default 4 for 4.3% more bytes.
+
+### JPEG
+
+    ImageFormat.JPEG.subsampling(ImageFormat.Jpeg.Subsampling.S444)
+    ImageFormat.JPEG.optimizeHuffmanTables(true)
+
+`subsampling` is how finely the two colour-difference channels are
+stored, and it costs nothing in the quality argument.
+`optimizeHuffmanTables` computes the entropy coder tables from the image,
+which is a smaller file for the very same pixels.
+
+A JPEG has no alpha channel: an encode discards the alpha byte, and a
+decode comes back fully opaque, so flatten the image first if that
+matters.
+
+A caller driving `ImageIO` directly reaches the same two settings
+through the write parameter:
+
+    JpegWriteParam param = (JpegWriteParam) writer.getDefaultWriteParam();
+    param.setSubsampling(Subsampling.S444);
+
+### PNG
+
+    ImageFormat.PNG.compressionLevel(9)  // 0 (quick) to 9 (smallest)
+
+### ICO and SVG
+
+ICO is read and written through `ImageIO`, and the 32-bit alpha of a
+file is preserved. SVG is read only: it is rasterised with JSVG at the
+size the document declares, so resizing is a separate step.
+
+## Native libraries
+
+AVIF, WebP and JPEG are bound with Java's own Foreign Function &
+Memory API (JEP 454). Their shared libraries are bundled for Windows,
+macOS and Linux on x64 and arm64, and unpacked automatically on first
+use, so nothing has to be installed and no third party jar has to be
+declared.
+
+    -Dimagify.avif.bundled=false   # use a system libavif instead
+    -Dimagify.jpeg.bundled=false   # use a system jpegli instead
+    -Dimagify.webp.bundled=false   # use a system libwebp instead
+
+Nothing is fatal about a missing library. The `ImageIO` plug-in for the
+format steps aside, a JPEG falls back to the JDK's own reader and writer,
+and a call that needs the codec directly fails with a reason:
 
     if (!AvifCodec.isAvailable()) {
         System.err.println(AvifCodec.getUnavailableReason());
     }
-    if (!JpegliCodec.isAvailable()) {
-        System.err.println(JpegliCodec.getUnavailableReason());
-    }
-    if (!WebpCodec.isAvailable()) {
-        System.err.println(WebpCodec.getUnavailableReason());
-    }
+
+Where a system library is used, put it on the platform's search path, or
+on `java.library.path`.
+
+Because the binding is `java.lang.foreign`, a program on JDK 24 or newer
+that uses it from the class path is asked to allow native access. Nothing
+fails without it, but the JDK warns on every run and will block the call
+in a later release:
+
+    java --enable-native-access=ALL-UNNAMED -cp ... YourApp
 
 ## Version
 
-Supported `libavif` versions: `1.0.0` to `1.4.x`. `JpegliCodec`
-and `WebpCodec` bind a flat C ABI of their own rather than
-jpegli's or libwebp's, and refuse a library built against
-another revision of it.
+Supported `libavif` versions: `1.0.0` to `1.4.x`. `JpegliCodec` and
+`WebpCodec` bind a flat C ABI of their own rather than jpegli's or
+libwebp's, and refuse a library built against another revision of it.
 <p align="right"><a href="#top">back to top</a></p>
-
-
 
 
 
