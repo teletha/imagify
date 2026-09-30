@@ -8,7 +8,7 @@
 
 ## Summary
 Imagify reads, transforms and writes images through one small fluent API.
-AVIF, WebP and JPEG are encoded and decoded by bundled native libraries;
+AVIF, WebP and JPEG are encoded and decoded by native libraries fetched on demand;
 PNG, GIF, BMP and ICO go through the JDK's image I/O; SVG can be read.
 
     Imagify.read(input)
@@ -186,18 +186,34 @@ size the document declares, so resizing is a separate step.
 ## Native libraries
 
 AVIF, WebP and JPEG are bound with Java's own Foreign Function &amp;
-Memory API (JEP 454). Their shared libraries are bundled for Windows,
-macOS and Linux on x64 and arm64, and unpacked automatically on first
-use, so nothing has to be installed and no third party jar has to be
-declared.
+Memory API (JEP 454). Their shared libraries do not sit inside the jar:
+they are fetched from a GitHub release the first time a format is used,
+one file per platform for Windows, macOS and Linux on x64 and arm64, and
+kept in a local cache afterwards, so nothing has to be installed and no
+third party jar has to be declared. The release a format fetches from is
+named by the `tag` in its `native.properties`, which is also the tag the
+natives workflow publishes under, so the two cannot drift apart.
 
-    -Dimagify.avif.bundled=false   # use a system libavif instead
-    -Dimagify.jpeg.bundled=false   # use a system jpegli instead
-    -Dimagify.webp.bundled=false   # use a system libwebp instead
+The cache defaults to `~/.imagify/natives` and is keyed by the release
+tag and the file name, so a library is downloaded once and reused until
+the directory is deleted. Where and whether anything is fetched, and what
+is fetched, is configurable:
 
-Nothing is fatal about a missing library. The `ImageIO` plug-in for the
-format steps aside, a JPEG falls back to the JDK's own reader and writer,
-and a call that needs the codec directly fails with a reason:
+    -Dimagify.native.cache=/path/to/cache   # where downloads are cached
+    -Dimagify.native.download=false         # never download; use a system library
+    -Dimagify.native.url=https://mirror/... # where to fetch from
+    -Dimagify.avif.library=/path/to/avif.so # one explicit library, no download
+    -Dimagify.jpeg.library=/path/to/jpegli.so
+    -Dimagify.webp.library=/path/to/libwebp.so
+    -Dimagify.avif.bundled=false            # use a system libavif instead
+    -Dimagify.jpeg.bundled=false            # use a system jpegli instead
+    -Dimagify.webp.bundled=false            # use a system libwebp instead
+
+The first use of a format needs a network connection; after that it is
+served from the cache. Nothing is fatal about a missing library. The
+`ImageIO` plug-in for the format steps aside, a JPEG falls back to the
+JDK's own reader and writer, and a call that needs the codec directly
+fails with a reason:
 
     if (!AvifCodec.isAvailable()) {
         System.err.println(AvifCodec.getUnavailableReason());
