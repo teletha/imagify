@@ -28,6 +28,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.ResourceLock;
+import org.junit.jupiter.api.parallel.Resources;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -46,7 +48,15 @@ import com.sun.net.httpserver.HttpServer;
  * <p>The {@code imagify.*} properties are the only real state the resolution reads, and each test
  * restores them afterwards, so a property a test left behind cannot change the resolution of the
  * test that runs next.
+ *
+ * <p>The suite runs its tests in parallel (see {@code junit-platform.properties}), and every test
+ * here rewrites the {@code imagify.*} properties, which are process wide. Two of them must never
+ * run side by side: one would assert a resolution while a neighbour is mid-way through replacing a
+ * property it just set. The {@link ResourceLock} on the system properties makes the platform hold
+ * this class's tests apart from one another, and from any other test that claims the same resource,
+ * instead of relying on the restore above to clean up after a race that already happened.
  */
+@ResourceLock(Resources.SYSTEM_PROPERTIES)
 class NativeRepositoryTest {
 
     /** The properties the tests below change, each restored in {@link #restoreProperties()}. */
