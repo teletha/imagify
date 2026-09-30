@@ -1,11 +1,13 @@
 name: avif-natives
 
-# Builds the imagifyavif shared library that ships inside the jar and attaches it to a rolling
-# release named "avif-natives". See src/main/resources/imagify/avif/native/README.md.
+# Builds the imagifyavif shared library and publishes it under the immutable tag that
+# src/main/resources/imagify/avif/native/native.properties names, which is also the tag the runtime
+# fetches it from. See that directory's README.md.
 #
 #   gh workflow run avif-natives.yml
 #
-# Then drop the downloaded files into src/main/resources/imagify/avif/native/ and commit them.
+# The release is published once: republishing an existing tag fails on purpose, and a rebuild of the
+# same libavif version is published under the same tag plus a dash suffix.
 #
 # One file per platform, which is the same shape the libwebp shim has: libavif is compiled here as a
 # static library and linked into the shim, so there is nothing beside it to resolve at run time. The
@@ -16,9 +18,6 @@ name: avif-natives
 
 on:
   workflow_dispatch:
-  schedule:
-    # Rebuild monthly so the bundled libavif tracks upstream security fixes.
-    - cron: "37 5 1 * *"
 
 permissions:
   contents: write
@@ -250,22 +249,56 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - uses: actions/download-artifact@v4
         with:
           path: dist
           merge-multiple: true
-      - name: Publish
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: avif-natives
-          name: avif-natives
-          body: |
-            Rolling build of the `imagifyavif` libraries bundled in `imagify`, which contain
-            `libavif` built from `${{ env.AVIF_VERSION }}` and linked in.
 
-            Drop the file for a platform into `src/main/resources/imagify/avif/native/`. There is
-            one per platform and nothing to put beside it: libavif is inside it.
+      - name: Resolve the release tag
+        # The tag is never assembled in this workflow: the one place it may live is the
+        # native.properties inside the jar, which is also what every runtime reads to know where to
+        # fetch from. It is a tag of the native libraries, not of imagify.
+        id: tag
+        run: |
+          tag=$(sed -n 's/^tag *= *\(.*\)$/\1/p' src/main/resources/imagify/avif/native/native.properties)
+          test -n "$tag" || { echo "::error::native.properties has no tag to publish"; exit 1; }
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Check the tag against the pinned version
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          expected="avif-natives-${AVIF_VERSION#v}"
+          [ "$TAG" = "$expected" ] || { echo "::error::native.properties says '$TAG' but the build pins libavif ${{ env.AVIF_VERSION }}, so it must be '$expected'"; exit 1; }
+
+      - name: Refuse to republish an immutable tag
+        # A release a client has already cached must never change under it, so a tag that exists is
+        # a hard stop rather than an overwrite. A rebuild of the same version publishes under the
+        # same tag plus a dash suffix and bumps native.properties in the same commit.
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::error::the release $TAG already exists and is immutable. Bump the tag in native.properties (for example to ${TAG}-2), commit it, and run this workflow again."
+            exit 1
+          fi
+
+      - name: Publish
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: ${{ steps.tag.outputs.tag }}
+          overwrite_files: false
+          body: |
+            The `imagifyavif` shared library of `imagify`, which contains `libavif` built from
+            `${{ env.AVIF_VERSION }}` and linked in.
+
+            The jar fetches the file for the platform it runs on from this release, once, and caches
+            it. The release is immutable, so publishing this tag again fails on purpose.
           files: dist/*

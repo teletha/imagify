@@ -40,17 +40,18 @@ import imagify.pixels.AbgrPixels;
  * every other format, and the facade falls back to the JDK's own JPEG support. Use
  * {@link #isAvailable()} to find out which of the two a given call will use.
  *
- * <p>Prebuilt shared libraries for Windows, macOS and Linux, in both 64 bit flavours, ship inside
- * this jar and are unpacked on demand, so installing anything is not required. Should this jar hold
- * no library for the current platform, a jpegli based one found the usual way is used instead: point
- * the {@code java.library.path} system property (or the platform specific {@code PATH} /
- * {@code LD_LIBRARY_PATH}) at the directory that holds it.
+ * <p>Shared libraries for Windows, macOS and Linux, in both 64 bit flavours, are fetched on first
+ * use from the GitHub release the codec's {@code native.properties} names, and are cached locally,
+ * so installing anything is not required. Should none be available for the current platform — an
+ * unsupported one, an unpublished release, a blocked download — a jpegli based one found the usual
+ * way is used instead: point the {@code java.library.path} system property (or the platform
+ * specific {@code PATH} / {@code LD_LIBRARY_PATH}) at the directory that holds it.
  *
  * <pre>
  * java -Djava.library.path=/usr/local/lib -cp ... YourApp
  * </pre>
  *
- * <p>Set {@code -Dimagify.jpeg.bundled=false} to ignore the bundled library and always look for one
+ * <p>Set {@code -Dimagify.jpeg.bundled=false} to ignore the managed library and always look for one
  * installed on the system.
  *
  * <p>An encode whose source is already a {@link BufferedImage#TYPE_4BYTE_ABGR} image hands its own
@@ -122,12 +123,12 @@ public final class JpegliCodec {
                 library = load();
             } catch (Throwable t) {
                 failure = describe(t);
-                log.log(Level.WARNING, "The jpegli JPEG codec is disabled: {0}. This jar ships a "
-                        + "jpegli for Windows, macOS and Linux on x64 and arm64, so either your "
-                        + "platform is not one of those or the bundled library could not be "
-                        + "unpacked. You can also point -Djava.library.path at a directory that "
-                        + "holds one. JPEG keeps working either way, through the JDK's own "
-                        + "support.", failure);
+                log.log(Level.WARNING, "The jpegli JPEG codec is disabled: {0}. Its library is "
+                        + "fetched on first use from a GitHub release for Windows, macOS and Linux "
+                        + "on x64 and arm64, so either your platform is not one of those, the fetch "
+                        + "failed, or downloads are turned off. You can also point -Djava.library.path "
+                        + "at a directory that holds one. JPEG keeps working either way, through the "
+                        + "JDK's own support.", failure);
             }
             loaded = true;
             return library;
@@ -149,20 +150,32 @@ public final class JpegliCodec {
     }
 
     private static JpegliLibrary load() {
-        Path bundled = JpegliNativeLibrary.extract();
-        JpegliLibrary lib = bundled == null ? loadSystem() : loadBundled(bundled);
+        Path managed = JpegliNativeLibrary.extract();
+        String managedReason = JpegliNativeLibrary.reason();
+        try {
+            JpegliLibrary lib = managed == null ? loadSystem() : loadManaged(managed);
 
-        // A library built against a different revision of the header would answer these calls with
-        // arguments read from the wrong offsets, so the check has to happen before the first one
-        // rather than being discovered as garbage pixels.
-        String abi = lib.imagify_jpegli_abi_version();
-        if (!JpegliLibrary.ABI_VERSION.equals(abi)) {
-            throw new IllegalStateException("the jpegli library speaks ABI version " + abi
-                    + " but this jar speaks " + JpegliLibrary.ABI_VERSION);
+            // A library built against a different revision of the header would answer these calls
+            // with arguments read from the wrong offsets, so the check has to happen before the
+            // first one rather than being discovered as garbage pixels.
+            String abi = lib.imagify_jpegli_abi_version();
+            if (!JpegliLibrary.ABI_VERSION.equals(abi)) {
+                throw new IllegalStateException("the jpegli library speaks ABI version " + abi
+                        + " but this jar speaks " + JpegliLibrary.ABI_VERSION);
+            }
+            log.log(Level.DEBUG, "using jpegli {0}{1}", lib.imagify_jpegli_jpegli_version(),
+                    managed == null ? " from system" : " from " + managed);
+            return lib;
+        } catch (Throwable t) {
+            if (managedReason == null) {
+                throw t;
+            }
+            // The managed library is what this jar would normally use, so when it could not be
+            // obtained the failing fallback to a system library is explained by how the managed one
+            // failed, which is where the actionable cause is.
+            throw new IllegalStateException("the jpegli library could not be fetched (" + managedReason
+                    + "), and no jpegli from the system could be loaded either", t);
         }
-        log.log(Level.DEBUG, "using jpegli {0}{1}", lib.imagify_jpegli_jpegli_version(),
-                bundled == null ? " from system" : " from " + bundled);
-        return lib;
     }
 
     /**
@@ -174,15 +187,15 @@ public final class JpegliCodec {
         return new JpegliLibrary(Linker.nativeLinker().defaultLookup());
     }
 
-    private static JpegliLibrary loadBundled(Path bundled) {
-        System.load(bundled.toString());
+    private static JpegliLibrary loadManaged(Path managed) {
+        System.load(managed.toString());
         Linker linker = Linker.nativeLinker();
         // The symbols are resolved once and the downcall handles that capture them are then held
         // for as long as this class lives, which outlives the thread that loaded the library and is
         // called from every one of them. A confined arena would tie the symbols to the loading
         // thread, so the library is opened against the global arena instead, which is what a
         // process wide codec wants anyway.
-        SymbolLookup lookup = linker.defaultLookup().or(SymbolLookup.libraryLookup(bundled, Arena.global()));
+        SymbolLookup lookup = linker.defaultLookup().or(SymbolLookup.libraryLookup(managed, Arena.global()));
         return new JpegliLibrary(lookup);
     }
 

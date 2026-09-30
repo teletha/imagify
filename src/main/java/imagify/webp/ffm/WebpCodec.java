@@ -46,17 +46,18 @@ import imagify.webp.WebpImageInfo;
  * {@link javax.imageio} providers that ship with a JDK 13 or newer. Use {@link #isAvailable()} to
  * find out which of the two a given call will use.
  *
- * <p>Prebuilt shared libraries for Windows, macOS and Linux, in both 64 bit flavours, ship inside
- * this jar and are unpacked on demand, so installing anything is not required. Should this jar hold
- * no library for the current platform, a {@code libwebp} based one found the usual way is used
- * instead: point the {@code java.library.path} system property (or the platform specific
- * {@code PATH} / {@code LD_LIBRARY_PATH}) at the directory that holds it.
+ * <p>Shared libraries for Windows, macOS and Linux, in both 64 bit flavours, are fetched on first
+ * use from the GitHub release the codec's {@code native.properties} names, and are cached locally,
+ * so installing anything is not required. Should none be available for the current platform — an
+ * unsupported one, an unpublished release, a blocked download — a {@code libwebp} based one found
+ * the usual way is used instead: point the {@code java.library.path} system property (or the
+ * platform specific {@code PATH} / {@code LD_LIBRARY_PATH}) at the directory that holds it.
  *
  * <pre>
  * java -Djava.library.path=/usr/local/lib -cp ... YourApp
  * </pre>
  *
- * <p>Set {@code -Dimagify.webp.bundled=false} to ignore the bundled library and always look for one
+ * <p>Set {@code -Dimagify.webp.bundled=false} to ignore the managed library and always look for one
  * installed on the system.
  *
  * <p>Images are always converted to the tightly packed {@code A, B, G, R} layout the native library
@@ -171,7 +172,12 @@ public final class WebpCodec {
                 library = load();
             } catch (Throwable t) {
                 failure = describe(t);
-                log.log(Level.WARNING, "The WebP codec is disabled: {0}. This jar ships a WebP " + "codec for Windows, macOS and Linux on x64 and arm64, so either your " + "platform is not one of those or the bundled library could not be " + "unpacked. You can also point -Djava.library.path at a directory that " + "holds one. ImageIO falls back to the JDK's own WebP support either " + "way.", failure);
+                log.log(Level.WARNING, "The WebP codec is disabled: {0}. Its library is fetched on "
+                        + "first use from a GitHub release for Windows, macOS and Linux on x64 and "
+                        + "arm64, so either your platform is not one of those, the fetch failed, or "
+                        + "downloads are turned off. You can also point -Djava.library.path at a "
+                        + "directory that holds one. ImageIO falls back to the JDK's own WebP "
+                        + "support either way.", failure);
             }
             loaded = true;
             return library;
@@ -187,16 +193,28 @@ public final class WebpCodec {
     }
 
     private static WebpLibrary load() {
-        Path bundled = WebpNativeLibrary.extract();
-        WebpLibrary lib = bundled == null ? loadSystem() : loadBundled(bundled);
+        Path managed = WebpNativeLibrary.extract();
+        String managedReason = WebpNativeLibrary.reason();
+        try {
+            WebpLibrary lib = managed == null ? loadSystem() : loadManaged(managed);
 
-        String abi = lib.imagify_webp_abi_version();
-        if (!WebpLibrary.ABI_VERSION.equals(abi)) {
-            throw new IllegalStateException("the WebP library speaks ABI version " + abi + " but this jar speaks " + WebpLibrary.ABI_VERSION);
+            String abi = lib.imagify_webp_abi_version();
+            if (!WebpLibrary.ABI_VERSION.equals(abi)) {
+                throw new IllegalStateException("the WebP library speaks ABI version " + abi + " but this jar speaks " + WebpLibrary.ABI_VERSION);
+            }
+            log.log(Level.DEBUG, "using libwebp {0}{1}", lib.imagify_webp_webp_version(), managed == null ? " from system"
+                    : " from " + managed);
+            return lib;
+        } catch (Throwable t) {
+            if (managedReason == null) {
+                throw t;
+            }
+            // The managed library is what this jar would normally use, so when it could not be
+            // obtained the failing fallback to a system library is explained by how the managed one
+            // failed, which is where the actionable cause is.
+            throw new IllegalStateException("the WebP library could not be fetched (" + managedReason
+                    + "), and no libwebp from the system could be loaded either", t);
         }
-        log.log(Level.DEBUG, "using libwebp {0}{1}", lib.imagify_webp_webp_version(), bundled == null ? " from system"
-                : " from " + bundled);
-        return lib;
     }
 
     private static WebpLibrary loadSystem() {
@@ -205,8 +223,8 @@ public final class WebpCodec {
         return new WebpLibrary(lookup);
     }
 
-    private static WebpLibrary loadBundled(Path bundled) {
-        System.load(bundled.toString());
+    private static WebpLibrary loadManaged(Path managed) {
+        System.load(managed.toString());
         Linker linker = Linker.nativeLinker();
         // The symbols are resolved once and the downcall handles that capture them are then held
         // for as long as this class lives, which outlives the thread that loaded the library and is
@@ -214,7 +232,7 @@ public final class WebpCodec {
         // thread, and every call from another thread would fail on it, so the library is opened
         // against the global arena instead. Nothing is ever unmapped this way, which is what a
         // process wide codec wants anyway.
-        SymbolLookup lookup = linker.defaultLookup().or(SymbolLookup.libraryLookup(bundled, Arena.global()));
+        SymbolLookup lookup = linker.defaultLookup().or(SymbolLookup.libraryLookup(managed, Arena.global()));
         return new WebpLibrary(lookup);
     }
 

@@ -21,8 +21,8 @@ import imagify.webp.ffm.WebpCodec;
 /**
  * Registers {@link WebpImageWriter} with {@code ImageIO}.
  *
- * <p>Encoding needs the native {@code libwebp} library, which this jar bundles and unpacks on first
- * use. To keep {@code ImageIO} usable when that library is absent,
+ * <p>Encoding needs the native {@code libwebp} library, which this jar fetches on first use. To
+ * keep {@code ImageIO} usable when that library is absent,
  * {@link #canEncodeImage(RenderedImage)} answers {@code false} in that case, which makes
  * {@code ImageIO.write()} return {@code false} instead of failing hard.
  */

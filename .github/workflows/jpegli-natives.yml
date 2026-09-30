@@ -1,17 +1,16 @@
 name: jpegli-natives
 
-# Builds the jpegli shared libraries that ship inside the jar and attaches them to a rolling
-# release named "jpegli-natives". See src/main/resources/imagify/jpeg/native/README.md.
+# Builds the jpegli shared libraries and publishes them under the immutable tag that
+# src/main/resources/imagify/jpeg/native/native.properties names, which is also the tag the runtime
+# fetches them from. See that directory's README.md.
 #
 #   gh workflow run jpegli-natives.yml
 #
-# Then drop the downloaded files into src/main/resources/imagify/jpeg/native/ and commit them.
+# The release is published once: republishing an existing tag fails on purpose, and a rebuild of the
+# same jpegli version is published under the same tag plus a dash suffix.
 
 on:
   workflow_dispatch:
-  schedule:
-    # Rebuild monthly so the bundled jpegli tracks upstream security fixes.
-    - cron: "11 5 1 * *"
 
 permissions:
   contents: write
@@ -170,22 +169,57 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - uses: actions/download-artifact@v4
         with:
           path: dist
           merge-multiple: true
-      - name: Publish
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: jpegli-natives
-          name: jpegli-natives
-          body: |
-            Rolling build of the `jpegli` shared libraries bundled in `imagify`, built from jpegli
-            ${{ env.JPEGLI_VERSION }} at `${{ env.JPEGLI_COMMIT }}`. jpegli publishes neither tags nor
-            releases, so the commit is the pin.
 
-            Drop these files into `src/main/resources/imagify/jpeg/native/`.
+      - name: Resolve the release tag
+        # The tag is never assembled in this workflow: the one place it may live is the
+        # native.properties inside the jar, which is also what every runtime reads to know where to
+        # fetch from. It is a tag of the native libraries, not of imagify.
+        id: tag
+        run: |
+          tag=$(sed -n 's/^tag *= *\(.*\)$/\1/p' src/main/resources/imagify/jpeg/native/native.properties)
+          test -n "$tag" || { echo "::error::native.properties has no tag to publish"; exit 1; }
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Check the tag against the pinned version
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          expected="jpegli-natives-${{ env.JPEGLI_VERSION }}"
+          [ "$TAG" = "$expected" ] || { echo "::error::native.properties says '$TAG' but the build pins jpegli ${{ env.JPEGLI_VERSION }} at ${{ env.JPEGLI_COMMIT }}, so it must be '$expected'"; exit 1; }
+
+      - name: Refuse to republish an immutable tag
+        # A release a client has already cached must never change under it, so a tag that exists is
+        # a hard stop rather than an overwrite. A rebuild of the same version publishes under the
+        # same tag plus a dash suffix and bumps native.properties in the same commit.
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::error::the release $TAG already exists and is immutable. Bump the tag in native.properties (for example to ${TAG}-2), commit it, and run this workflow again."
+            exit 1
+          fi
+
+      - name: Publish
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: ${{ steps.tag.outputs.tag }}
+          overwrite_files: false
+          body: |
+            The `jpegli` shared libraries of `imagify`, built from jpegli ${{ env.JPEGLI_VERSION }} at
+            `${{ env.JPEGLI_COMMIT }}`. jpegli publishes neither tags nor releases, so the commit is
+            the pin.
+
+            The jar fetches the file for the platform it runs on from this release, once, and caches
+            it. The release is immutable, so publishing this tag again fails on purpose.
           files: dist/*

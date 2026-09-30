@@ -11,41 +11,40 @@ package imagify.webp.ffm;
 
 import static java.lang.System.*;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
-import java.lang.foreign.Linker;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Locale;
+
+import imagify.ffm.NativeRepository;
+import imagify.ffm.NativeRepository.NativeCodec;
 
 /**
- * Locates the {@code libwebp} based shared library that ships inside this jar and unpacks it so
- * that the platform dynamic linker can load it.
+ * Locates the {@code libwebp} based shared library that backs this codec and fetches it on first
+ * use.
  *
- * <p>A shared library cannot be mapped straight out of a jar, so the resource is copied to a
- * temporary directory and loaded from there by its absolute path using {@link System#load(String)},
- * which is then visible to {@link Linker#nativeLinker()}.
+ * <p>The library is not inside the jar. It is built by the {@code webp-natives} workflow and
+ * published as a GitHub release whose tag is the only thing the jar knows about it:
+ * {@value #RESOURCE_ROOT}native.properties names the release. {@link NativeRepository} downloads
+ * the file for the platform the codec runs on into a local cache the first time one is asked for,
+ * and it is loaded from there by its absolute path using {@link System#load(String)}, which makes it
+ * visible to {@link java.lang.foreign.Linker#nativeLinker()}.
  *
- * <p>The bundled binaries live under {@value #RESOURCE_ROOT} and are named after the platform they
- * were built for.
+ * <p>Nothing here ever throws. An unsupported platform, a release that has not been published and a
+ * download that fails all mean "no managed library", and the reason is kept for the codec to report;
+ * a missing managed library leaves the codec free to fall back to a library installed on the
+ * system.
  *
- * <p>See {@code src/main/native/webp/CMakeLists.txt} for how they are built.
+ * <p>See {@code src/main/native/webp/CMakeLists.txt} for how the libraries are built.
  */
 final class WebpNativeLibrary {
 
     private static final Logger log = getLogger(WebpNativeLibrary.class.getName());
 
-    /** Classpath directory that holds the per platform shared libraries. */
+    /** Classpath directory that holds the per format release metadata. */
     static final String RESOURCE_ROOT = "/imagify/webp/native/";
 
     /**
-     * Set this system property to {@code false} to ignore the bundled library and always look for a
+     * Set this system property to {@code false} to ignore the managed library and always look for a
      * {@code libwebp} based one installed on the system.
      */
     static final String BUNDLED_PROPERTY = "imagify.webp.bundled";
@@ -56,15 +55,18 @@ final class WebpNativeLibrary {
 
     private static volatile Path extracted;
 
+    private static volatile String reason;
+
     private WebpNativeLibrary() {
         // utility class
     }
 
     /**
-     * Unpacks the bundled shared library for the current platform.
+     * Resolves the managed shared library for the current platform, downloading it when it is not in
+     * the cache, at most once.
      *
-     * @return the absolute path of the unpacked library, or {@code null} when this platform has no
-     *         bundled library, the bundled library is disabled or it could not be unpacked
+     * @return the absolute path of the library, or {@code null} when this platform has no library,
+     *         the managed library is disabled or it could not be obtained
      */
     static Path extract() {
         Path path = extracted;
@@ -75,121 +77,31 @@ final class WebpNativeLibrary {
             if (resolved) {
                 return extracted;
             }
-            try {
-                extracted = unpack();
-            } catch (Throwable t) {
-                log.log(Level.DEBUG, "cannot unpack the bundled WebP library", t);
-            }
+            extracted = resolve();
             resolved = true;
             return extracted;
         }
     }
 
-    private static Path unpack() {
+    /** @return why the last {@link #extract()} refused, or {@code null} when it found a library */
+    static String reason() {
+        return reason;
+    }
+
+    private static Path resolve() {
         if (!Boolean.parseBoolean(System.getProperty(BUNDLED_PROPERTY, "true"))) {
-            log.log(Level.DEBUG, "the bundled WebP library is disabled by -D{0}=false", BUNDLED_PROPERTY);
-            return null;
+            return refuse("the managed WebP library is turned off by -D" + BUNDLED_PROPERTY + "=false");
         }
-        String osName = System.getProperty("os.name");
-        String arch = System.getProperty("os.arch");
-        String platform = platform(osName);
-        String cpu = cpu(arch);
-        if (platform == null || cpu == null) {
-            log.log(Level.DEBUG, "no bundled WebP library for {0}/{1}", osName, arch);
-            return null;
+        Path path = NativeRepository.resolve(NativeCodec.WEBP);
+        if (path == null) {
+            return refuse(NativeRepository.lastReason(NativeCodec.WEBP));
         }
-        return unpack(resourceNameOf(platform, cpu), fileName(platform));
+        return path;
     }
 
-    static Path unpack(String resource, String fileName) {
-        try (InputStream in = WebpNativeLibrary.class.getResourceAsStream(RESOURCE_ROOT + resource)) {
-            if (in == null) {
-                log.log(Level.DEBUG, "the bundled WebP library {0} is not in this jar", RESOURCE_ROOT + resource);
-                return null;
-            }
-            Path directory = Files.createTempDirectory("imagify-webp-");
-            Path file = directory.resolve(fileName);
-            try (OutputStream out = Files.newOutputStream(file)) {
-                in.transferTo(out);
-            }
-            deleteOnExit(directory);
-            log.log(Level.DEBUG, "unpacked the bundled WebP library to {0}", file);
-            return file.toAbsolutePath();
-        } catch (IOException e) {
-            log.log(Level.DEBUG, "cannot unpack the bundled WebP library " + resource, e);
-            return null;
-        }
-    }
-
-    static String resourceName(String osName, String arch) {
-        String platform = platform(osName);
-        String cpu = cpu(arch);
-        return platform == null || cpu == null ? null : resourceNameOf(platform, cpu);
-    }
-
-    private static String resourceNameOf(String platform, String cpu) {
-        return "imagifywebp-" + platform + "-" + cpu + extension(platform);
-    }
-
-    static String platform(String osName) {
-        if (osName == null) {
-            return null;
-        }
-        String name = osName.toLowerCase(Locale.ROOT);
-        if (name.contains("windows")) {
-            return "windows";
-        }
-        if (name.contains("mac") || name.contains("darwin")) {
-            return "macos";
-        }
-        if (name.contains("linux")) {
-            return "linux";
-        }
+    private static Path refuse(String refuseReason) {
+        reason = refuseReason;
+        log.log(Level.DEBUG, "no managed WebP library: {0}", refuseReason);
         return null;
-    }
-
-    static String cpu(String arch) {
-        if (arch == null) {
-            return null;
-        }
-        return switch (arch.toLowerCase(Locale.ROOT)) {
-        case "amd64", "x86_64", "x64" -> "x64";
-        case "aarch64", "arm64" -> "arm64";
-        default -> null;
-        };
-    }
-
-    private static String extension(String platform) {
-        return switch (platform) {
-        case "windows" -> ".dll";
-        case "macos" -> ".dylib";
-        default -> ".so";
-        };
-    }
-
-    static String fileName(String platform) {
-        return "windows".equals(platform) ? "imagifywebp" + extension(platform) : "libimagifywebp" + extension(platform);
-    }
-
-    private static void deleteOnExit(Path directory) {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                Files.walkFileTree(directory, new SimpleFileVisitor<>() {
-                    @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                        Files.deleteIfExists(file);
-                        return FileVisitResult.CONTINUE;
-                    }
-
-                    @Override
-                    public FileVisitResult postVisitDirectory(Path dir, IOException failure) throws IOException {
-                        Files.deleteIfExists(dir);
-                        return FileVisitResult.CONTINUE;
-                    }
-                });
-            } catch (IOException e) {
-                log.log(Level.DEBUG, "cannot delete " + directory, e);
-            }
-        }, "imagify-webp-cleanup"));
     }
 }

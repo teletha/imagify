@@ -11,58 +11,44 @@ package imagify.jpeg.ffm;
 
 import static java.lang.System.*;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Locale;
+
+import imagify.ffm.NativeRepository;
+import imagify.ffm.NativeRepository.NativeCodec;
 
 /**
- * Locates the jpegli based shared library that ships inside this jar and unpacks it so that the
- * platform dynamic linker can load it.
+ * Locates the jpegli shared library that backs this codec and fetches it on first use.
  *
- * <p>A shared library cannot be mapped straight out of a jar, so the resource is copied to a
- * temporary directory and loaded from there by its absolute path, which is the same trick
+ * <p>The library is not inside the jar. It is built by the {@code jpegli-natives} workflow and
+ * published as a GitHub release whose tag is the only thing the jar knows about it:
+ * {@value #RESOURCE_ROOT}native.properties names the release. {@link NativeRepository} downloads
+ * the file for the platform the codec runs on into a local cache the first time one is asked for,
+ * and it is loaded from there by its absolute path, which is the same trick
  * {@code imagify.webp.ffm.WebpNativeLibrary} uses for {@code libwebp} and which is where the layout
  * below comes from.
  *
- * <p>The bundled binaries live under {@value #RESOURCE_ROOT} and are named after the platform they
- * were built for:
- *
- * <pre>
- * libjpegli-windows-x64.dll
- * libjpegli-windows-arm64.dll
- * libjpegli-linux-x64.so
- * libjpegli-linux-arm64.so
- * libjpegli-macos-x64.dylib
- * libjpegli-macos-arm64.dylib
- * </pre>
- *
- * <p>See {@code src/main/native/jpegli/CMakeLists.txt} for how they are built. The short version is
- * that they are statically linked against jpegli and highway, so that they have no further
+ * <p>The libraries are statically linked against jpegli and highway, so that they have no further
  * dependencies at all: on Windows the loader resolves the dependencies of a {@code LoadLibrary}ed
  * module against the directory of the executable and against {@code PATH} only, never against the
- * directory of the module itself.
+ * directory of the module itself, which is why a library that needed siblings could not be fetched
+ * into a cache and linked to them.
  *
- * <p>Nothing here ever throws. A platform without a bundled library, a missing resource and a full
- * temporary directory all simply mean "not bundled", which leaves {@link JpegliCodec} free to fall
- * back to a library installed on the system.
+ * <p>Nothing here ever throws. An unsupported platform, a release that has not been published and a
+ * download that fails all mean "no managed library", and the reason is kept for the codec to report;
+ * a missing managed library leaves the codec free to fall back to a library installed on the
+ * system.
  */
 final class JpegliNativeLibrary {
 
     private static final Logger log = getLogger(JpegliNativeLibrary.class.getName());
 
-    /** Classpath directory that holds the per platform shared libraries. */
+    /** Classpath directory that holds the per format release metadata. */
     static final String RESOURCE_ROOT = "/imagify/jpeg/native/";
 
     /**
-     * Set this system property to {@code false} to ignore the bundled library and always look for a
+     * Set this system property to {@code false} to ignore the managed library and always look for a
      * jpegli based one installed on the system.
      */
     static final String BUNDLED_PROPERTY = "imagify.jpeg.bundled";
@@ -70,17 +56,21 @@ final class JpegliNativeLibrary {
     private static final Object LOCK = new Object();
 
     private static volatile boolean resolved;
+
     private static volatile Path extracted;
+
+    private static volatile String reason;
 
     private JpegliNativeLibrary() {
         // utility class
     }
 
     /**
-     * Unpacks the bundled shared library for the current platform.
+     * Resolves the managed shared library for the current platform, downloading it when it is not in
+     * the cache, at most once.
      *
-     * @return the absolute path of the unpacked library, or {@code null} when this platform has no
-     * bundled library, the bundled library is disabled or it could not be unpacked
+     * @return the absolute path of the library, or {@code null} when this platform has no library,
+     *         the managed library is disabled or it could not be obtained
      */
     static Path extract() {
         Path path = extracted;
@@ -91,165 +81,31 @@ final class JpegliNativeLibrary {
             if (resolved) {
                 return extracted;
             }
-            try {
-                extracted = unpack();
-            } catch (Throwable t) {
-                log.log(Level.DEBUG, "cannot unpack the bundled jpegli library", t);
-            }
+            extracted = resolve();
             resolved = true;
             return extracted;
         }
     }
 
-    private static Path unpack() {
+    /** @return why the last {@link #extract()} refused, or {@code null} when it found a library */
+    static String reason() {
+        return reason;
+    }
+
+    private static Path resolve() {
         if (!Boolean.parseBoolean(System.getProperty(BUNDLED_PROPERTY, "true"))) {
-            log.log(Level.DEBUG, "the bundled jpegli library is disabled by -D{0}=false", BUNDLED_PROPERTY);
-            return null;
+            return refuse("the managed jpegli library is turned off by -D" + BUNDLED_PROPERTY + "=false");
         }
-        String osName = System.getProperty("os.name");
-        String arch = System.getProperty("os.arch");
-        String platform = platform(osName);
-        String cpu = cpu(arch);
-        if (platform == null || cpu == null) {
-            log.log(Level.DEBUG, "no bundled jpegli library for {0}/{1}", osName, arch);
-            return null;
+        Path path = NativeRepository.resolve(NativeCodec.JPEGLI);
+        if (path == null) {
+            return refuse(NativeRepository.lastReason(NativeCodec.JPEGLI));
         }
-        return unpack(resourceNameOf(platform, cpu), fileName(platform));
+        return path;
     }
 
-    /**
-     * Copies a classpath resource below {@value #RESOURCE_ROOT} to a temporary directory.
-     *
-     * @param resource the file name of the resource
-     * @param fileName the name to give the copy, which is what the dynamic linker is asked for
-     * @return the absolute path of the copy, or {@code null} when there is no such resource or it
-     * could not be written
-     */
-    static Path unpack(String resource, String fileName) {
-        try (InputStream in = JpegliNativeLibrary.class.getResourceAsStream(RESOURCE_ROOT + resource)) {
-            if (in == null) {
-                log.log(Level.DEBUG, "the bundled jpegli library {0} is not in this jar", RESOURCE_ROOT + resource);
-                return null;
-            }
-            Path directory = Files.createTempDirectory("imagify-jpeg-");
-            Path file = directory.resolve(fileName);
-            try (OutputStream out = Files.newOutputStream(file)) {
-                in.transferTo(out);
-            }
-            deleteOnExit(directory);
-            log.log(Level.DEBUG, "unpacked the bundled jpegli library to {0}", file);
-            return file.toAbsolutePath();
-        } catch (IOException e) {
-            log.log(Level.DEBUG, "cannot unpack the bundled jpegli library " + resource, e);
-            return null;
-        }
-    }
-
-    /**
-     * Returns the name of the classpath resource that holds the shared library for the given
-     * platform, for example {@code libjpegli-linux-x64.so}.
-     *
-     * @param osName the value of the {@code os.name} system property
-     * @param arch the value of the {@code os.arch} system property
-     * @return the resource name, or {@code null} when the platform is not supported
-     */
-    static String resourceName(String osName, String arch) {
-        String platform = platform(osName);
-        String cpu = cpu(arch);
-        return platform == null || cpu == null ? null : resourceNameOf(platform, cpu);
-    }
-
-    /**
-     * Returns the name of the classpath resource for an already resolved platform.
-     *
-     * @param platform {@code windows}, {@code macos} or {@code linux}
-     * @param cpu {@code x64} or {@code arm64}
-     * @return the resource name
-     */
-    private static String resourceNameOf(String platform, String cpu) {
-        return "libjpegli-" + platform + "-" + cpu + extension(platform);
-    }
-
-    /**
-     * Returns the short platform key used in resource names.
-     *
-     * @param osName the value of the {@code os.name} system property
-     * @return {@code windows}, {@code macos}, {@code linux}, or {@code null} when unrecognised
-     */
-    static String platform(String osName) {
-        if (osName == null) {
-            return null;
-        }
-        String name = osName.toLowerCase(Locale.ROOT);
-        if (name.contains("windows")) {
-            return "windows";
-        }
-        if (name.contains("mac") || name.contains("darwin")) {
-            return "macos";
-        }
-        if (name.contains("linux")) {
-            return "linux";
-        }
+    private static Path refuse(String refuseReason) {
+        reason = refuseReason;
+        log.log(Level.DEBUG, "no managed jpegli library: {0}", refuseReason);
         return null;
-    }
-
-    /**
-     * Returns the short CPU key used in resource names.
-     *
-     * @param arch the value of the {@code os.arch} system property
-     * @return {@code x64}, {@code arm64}, or {@code null} when unrecognised
-     */
-    static String cpu(String arch) {
-        if (arch == null) {
-            return null;
-        }
-        return switch (arch.toLowerCase(Locale.ROOT)) {
-            case "amd64", "x86_64", "x64" -> "x64";
-            case "aarch64", "arm64" -> "arm64";
-            default -> null;
-        };
-    }
-
-    private static String extension(String platform) {
-        return switch (platform) {
-            case "windows" -> ".dll";
-            case "macos" -> ".dylib";
-            default -> ".so";
-        };
-    }
-
-    /**
-     * Returns the file name the library is unpacked as, which is the name the platform dynamic
-     * linker knows it by.
-     *
-     * @param platform {@code windows}, {@code macos} or {@code linux}
-     * @return the plain file name
-     */
-    static String fileName(String platform) {
-        return "windows".equals(platform) ? "jpegli" + extension(platform) : "libjpegli" + extension(platform);
-    }
-
-    private static void deleteOnExit(Path directory) {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                Files.walkFileTree(directory, new SimpleFileVisitor<>() {
-                    @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                        Files.deleteIfExists(file);
-                        return FileVisitResult.CONTINUE;
-                    }
-
-                    @Override
-                    public FileVisitResult postVisitDirectory(Path dir, IOException failure) throws IOException {
-                        Files.deleteIfExists(dir);
-                        return FileVisitResult.CONTINUE;
-                    }
-                });
-            } catch (IOException e) {
-                // The library is still mapped at this point, so on Windows this normally fails.
-                // Leaving the temporary directory behind is the lesser evil.
-                log.log(Level.DEBUG, "cannot delete " + directory, e);
-            }
-        }, "imagify-jpeg-cleanup"));
     }
 }

@@ -31,7 +31,7 @@ import javax.imageio.stream.ImageInputStream;
 import imagify.webp.ffm.WebpCodec;
 
 /**
- * {@link ImageReader} for WebP images, backed by a bundled {@code libwebp}.
+ * {@link ImageReader} for WebP images, backed by a {@code libwebp} the jar fetches on first use.
  *
  * <p>A still image is reported as one image. An animation is reported as one image per frame, with
  * every frame already composited onto the canvas, so frame {@code n} is a full size picture rather

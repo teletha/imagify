@@ -15,7 +15,7 @@ import java.io.Serial;
  * Signals that a WebP operation failed.
  *
  * <p>The most common causes are a missing or unloadable {@code libwebp} native library, which this
- * jar bundles and unpacks on first use, and malformed input.
+ * jar fetches on first use, and malformed input.
  */
 public class WebpException extends Exception {
 

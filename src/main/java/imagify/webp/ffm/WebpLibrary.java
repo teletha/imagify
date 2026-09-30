@@ -37,8 +37,8 @@ public final class WebpLibrary {
      *
      * <p>Deliberately not {@code webp}. libwebp builds {@code libwebp.so}, which is also the name
      * of every system {@code libwebp} on Linux, so two of those can end up mapped in one process.
-     * This jar has no reason to interoperate with a system libwebp, so the bundled library is given
-     * a name of its own.
+     * This jar has no reason to interoperate with a system libwebp, so the library it publishes is
+     * given a name of its own.
      */
     public static final String LIBRARY_NAME = "imagifywebp";
 

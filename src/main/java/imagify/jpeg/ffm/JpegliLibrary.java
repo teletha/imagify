@@ -41,7 +41,7 @@ public final class JpegliLibrary {
      * <p>Deliberately not {@code jpeg}. jpegli's own libjpeg62 compatible library is named
      * {@code libjpeg.so.62}, which is also the name of every system libjpeg on Linux, and two of
      * those can end up mapped in one process. This jar has no reason to interoperate with a system
-     * libjpeg, so the bundled library is given a name of its own.
+     * libjpeg, so the library it publishes is given a name of its own.
      */
     public static final String LIBRARY_NAME = "jpegli";
 

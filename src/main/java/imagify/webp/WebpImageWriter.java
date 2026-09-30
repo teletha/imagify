@@ -25,7 +25,8 @@ import javax.imageio.stream.ImageOutputStream;
 import imagify.webp.ffm.WebpCodec;
 
 /**
- * {@link ImageWriter} that encodes images as WebP using a bundled {@code libwebp}.
+ * {@link ImageWriter} that encodes images as WebP using a {@code libwebp} the jar fetches on first
+ * use.
  *
  * <p>
  * Any non empty {@link RenderedImage} can be encoded. The quality comes from the compression
