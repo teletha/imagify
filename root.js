@@ -5,6 +5,7 @@ const root = {
 		"imagify.avif.ffm",
 		"imagify.avif",
 		"imagify",
+		"imagify.ffm",
 		"imagify.svg",
 		"imagify.ico",
 		"imagify.jpeg.ffm",
@@ -147,6 +148,16 @@ const root = {
 		{
 			"name": "ImageFormat.Jpeg.Subsampling",
 			"packageName": "imagify",
+			"type": "Enum"
+		},
+		{
+			"name": "NativeRepository",
+			"packageName": "imagify.ffm",
+			"type": "Class"
+		},
+		{
+			"name": "NativeRepository.NativeCodec",
+			"packageName": "imagify.ffm",
 			"type": "Enum"
 		},
 		{

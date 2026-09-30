@@ -20,9 +20,9 @@
 		<link href="main.css" rel="stylesheet"/>
 	</head>
 	<body class="w">
-		<header class="M" date="2026-09-29">
-			<h1 class="N"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="O"><a href="api/main.html" id="API"><svg class="package">
+		<header class="q" date="2026-09-30">
+			<h1 class="S"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,16 +35,16 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="P"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="j"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="t"></nav>
+		<nav class="b"></nav>
 		<article class="x" id="Article">
-			<div class="JB">
+			<div class="n">
 				<section class="A">
 					<h2>Imagify API Overview</h2>
 					<p>This page provides a concise overview of the available APIs, including their purpose, key functionalities, and usage patterns. It serves as a starting point for developers to understand how to integrate and interact with the system effectively.</p>
@@ -127,6 +127,11 @@ Magic bytes: 0x89 0x50 0x4E 0x47 0x0D 0x0A 0x1A 0x0A</td>
 								<td><code><a href="api/imagify.ImageFormat.Jpeg.html">ImageFormat.Jpeg</a></code></td>
 								<td>JPEG format (.jpg, .jpeg). Lossy compression. No alpha support.
 Magic bytes: no reliable header (starts with 0xFF 0xD8).</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/imagify.ffm.NativeRepository.html">NativeRepository</a></code></td>
+								<td>Resolves the shared library that backs an AVIF, WebP or JPEG codec, fetching it from a GitHub
+release the first time it is needed.</td>
 							</tr>
 							<tr>
 								<td><code><a href="api/imagify.ImageReader.html">ImageReader</a></code></td>
@@ -267,6 +272,11 @@ format enumeration writes it down.</td>
 own sampling factors are usually written down.</td>
 							</tr>
 							<tr>
+								<td><code><a href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeRepository.NativeCodec</a></code></td>
+								<td>One codec with a managed native library, which is everything the resolution below needs to
+know about a format:</td>
+							</tr>
+							<tr>
 								<td><code><a href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></td>
 								<td>High-quality image resampling algorithms for resizing.
 Each algorithm provides a kernel function and a support radius.</td>
@@ -324,7 +334,7 @@ Each algorithm provides a kernel function and a support radius.</td>
 			</div>
 		</article>
 		<aside class="y"></aside>
-		<footer class="W">
+		<footer class="L">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
