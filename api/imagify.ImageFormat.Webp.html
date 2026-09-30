@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="w">
-		<header class="q" date="2026-09-30">
-			<h1 class="S"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
+	<body class="m">
+		<header class="b" date="2026-09-30">
+			<h1 class="c"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="Q"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="j"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="d"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="b"></nav>
-		<article class="x" id="Article">
-			<section class="n"><code class="c">imagify</code>
-				<h2 class="Class t"><code class="U">ImageFormat.Webp</code></h2>
-				<div class="J">
+		<nav class="U"></nav>
+		<article class="n" id="Article">
+			<section class="W"><code class="DB">imagify</code>
+				<h2 class="Class j"><code class="s">ImageFormat.Webp</code></h2>
+				<div class="BB">
 					<ul class="E G">
 						<li><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></li>
 					</ul>
@@ -73,55 +73,55 @@ Magic bytes: &quot;RIFF....&quot; + &quot;WEBP&quot;</p><p>
  going through the ImageIO plug-in, because an <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">javax.imageio.ImageWriteParam</a></code> has no
  room for it.
  </p></span></section>
-			<section class="n" id="DEFAULT_COMPRESSION_METHOD">
-				<h2 class="HB"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="U">DEFAULT_COMPRESSION_METHOD</code><i class="d"><code class="return">int</code></i></h2><span class="A"><p>The effort the encoder puts in when the format does not name one, which is what
+			<section class="W" id="DEFAULT_COMPRESSION_METHOD">
+				<h2 class="u"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="s">DEFAULT_COMPRESSION_METHOD</code><i class="X"><code class="return">int</code></i></h2><span class="A"><p>The effort the encoder puts in when the format does not name one, which is what
 <code>libwebp</code> and the <code>gif2webp</code> tool use.</p></span></section>
-			<section class="n" id="lossless">
-				<h2 class="HB"><i class="FINAL"><i class="PUBLIC"></i></i><code class="U">lossless</code><i class="d"><code class="return">boolean</code></i></h2><span class="A"><p>Whether the pixels are stored without loss.</p><p>
+			<section class="W" id="lossless">
+				<h2 class="u"><i class="FINAL"><i class="PUBLIC"></i></i><code class="s">lossless</code><i class="X"><code class="return">boolean</code></i></h2><span class="A"><p>Whether the pixels are stored without loss.</p><p>
  Note that lossless does not mean the quality is ignored. It means the quality is read as
  an amount of effort rather than as a fidelity to trade away, which is <code>libwebp</code>&apos;s
  own doing and not this library&apos;s: a lossless file at quality 0 is a small file that is
  still the same picture, and one at quality 100 is a large one.
  </p></span></section>
-			<section class="n" id="compressionMethod">
-				<h2 class="HB"><i class="FINAL"><i class="PUBLIC"></i></i><code class="U">compressionMethod</code><i class="d"><code class="return">int</code></i></h2><span class="A"><p>How hard the encoder tries, <code>0</code> being the quickest and <code>6</code> the most thorough.</p><p>
+			<section class="W" id="compressionMethod">
+				<h2 class="u"><i class="FINAL"><i class="PUBLIC"></i></i><code class="s">compressionMethod</code><i class="X"><code class="return">int</code></i></h2><span class="A"><p>How hard the encoder tries, <code>0</code> being the quickest and <code>6</code> the most thorough.</p><p>
  More effort buys a smaller file for the same quality at the cost of a slower encode. This
  is <code>libwebp</code>&apos;s <code>method</code>, and it is honoured for a still image as well as for
  an animation. The difference is large enough to be worth naming: on a 1600x1200
  photograph, method 0 takes roughly a quarter of the time method 4 does and gives up about
  a third more bytes.
  </p></span></section>
-			<section class="n" id="lossless()">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="U">lossless</code><code class="v">()</code><i class="d"><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></h2>
-				<table class="LB">
-					<tr class="BB">
+			<section class="W" id="lossless()">
+				<h2 class="u"><i class="PUBLIC"></i><code class="s">lossless</code><code class="M">()</code><i class="X"><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></h2>
+				<table class="J">
+					<tr class="K">
 						<td><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></td>
 						<td><span><p>the lossless flavour of this format, whose <code>VP8L</code> bitstream keeps every
 pixel as it was given</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="n" id="compressionMethod(int)">
-				<h2 class="HB"><i class="PUBLIC"></i><code class="U">compressionMethod</code><code class="v">(<code>int</code><code class="parameterName">method</code>)</code><i class="d"><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></h2>
-				<table class="LB">
-					<tr class="M">
+			<section class="W" id="compressionMethod(int)">
+				<h2 class="u"><i class="PUBLIC"></i><code class="s">compressionMethod</code><code class="M">(<code>int</code><code class="parameterName">method</code>)</code><i class="X"><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></h2>
+				<table class="J">
+					<tr class="L">
 						<td><code>int</code><code class="parameterName">method</code></td>
 						<td><span><p>how hard the encoder tries, 0 (quickest) to 6 (most thorough)</p></span></td>
 					</tr>
-					<tr class="BB">
+					<tr class="K">
 						<td><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></td>
 						<td><span><p>this format asking the encoder for that much effort</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="n" id="equals(java.lang.Object)">
-				<h2 class="HB"><i class="OVERRIDE PUBLIC"></i><code class="U">equals</code><code class="v">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="d"><code>boolean</code></i></h2>
-				<table class="LB">
-					<tr class="M">
+			<section class="W" id="equals(java.lang.Object)">
+				<h2 class="u"><i class="OVERRIDE PUBLIC"></i><code class="s">equals</code><code class="M">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="X"><code>boolean</code></i></h2>
+				<table class="J">
+					<tr class="L">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code></td>
 						<td></td>
 					</tr>
-					<tr class="BB">
+					<tr class="K">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
@@ -130,37 +130,37 @@ pixel as it was given</p></span></td>
  written
  with more effort is not the same value as a lossy one written with less.
  </p></span></section>
-			<section class="n" id="hashCode()">
-				<h2 class="HB"><i class="OVERRIDE PUBLIC"></i><code class="U">hashCode</code><code class="v">()</code><i class="d"><code>int</code></i></h2>
-				<table class="LB">
-					<tr class="BB">
+			<section class="W" id="hashCode()">
+				<h2 class="u"><i class="OVERRIDE PUBLIC"></i><code class="s">hashCode</code><code class="M">()</code><i class="X"><code>int</code></i></h2>
+				<table class="J">
+					<tr class="K">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="y">
-			<div class="W">
-				<h5 class="s">Static Fields</h5>
+		<aside class="g">
+			<div class="o">
+				<h5 class="Z">Static Fields</h5>
 				<ul>
-					<li class="X"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.Webp.html#DEFAULT_COMPRESSION_METHOD">DEFAULT_COMPRESSION_METHOD</a></code><i class="u"><code class="return">int</code></i></li>
+					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Webp.html#DEFAULT_COMPRESSION_METHOD">DEFAULT_COMPRESSION_METHOD</a></code><i class="S"><code class="return">int</code></i></li>
 				</ul>
-				<h5 class="s">Fields</h5>
+				<h5 class="Z">Fields</h5>
 				<ul>
-					<li class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Webp.html#lossless">lossless</a></code><i class="u"><code class="return">boolean</code></i></li>
-					<li class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Webp.html#compressionMethod">compressionMethod</a></code><i class="u"><code class="return">int</code></i></li>
+					<li class="p"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Webp.html#lossless">lossless</a></code><i class="S"><code class="return">boolean</code></i></li>
+					<li class="p"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Webp.html#compressionMethod">compressionMethod</a></code><i class="S"><code class="return">int</code></i></li>
 				</ul>
-				<h5 class="s">Methods</h5>
+				<h5 class="Z">Methods</h5>
 				<ul>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Webp.html#lossless()">lossless</a></code><code class="v">()</code><i class="u"><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></li>
-					<li class="X"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Webp.html#compressionMethod(int)">compressionMethod</a></code><code class="v">(<code>int</code><code class="parameterName">method</code>)</code><i class="u"><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></li>
-					<li class="X"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Webp.html#equals(java.lang.Object)">equals</a></code><code class="v">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="u"><code>boolean</code></i></li>
-					<li class="X"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Webp.html#hashCode()">hashCode</a></code><code class="v">()</code><i class="u"><code>int</code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Webp.html#lossless()">lossless</a></code><code class="M">()</code><i class="S"><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Webp.html#compressionMethod(int)">compressionMethod</a></code><code class="M">(<code>int</code><code class="parameterName">method</code>)</code><i class="S"><code><a aria-label="imagify.ImageFormat.Webp" href="api/imagify.ImageFormat.Webp.html">Webp</a></code></i></li>
+					<li class="p"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Webp.html#equals(java.lang.Object)">equals</a></code><code class="M">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="S"><code>boolean</code></i></li>
+					<li class="p"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Webp.html#hashCode()">hashCode</a></code><code class="M">()</code><i class="S"><code>int</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="L">
+		<footer class="k">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
