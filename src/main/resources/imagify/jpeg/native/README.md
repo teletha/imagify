@@ -65,3 +65,18 @@ cmake --build build --target imagify_jpegli
 
 The workflow reproduces this for all six platforms, with the commit and the version it reports
 pinned at the top of the workflow.
+
+## Licenses
+
+The shim links `jpegli`, `hwy` (highway) and `lcms2` (Little-CMS) in, and the jar carries each
+library's license beside this README:
+
+| File | Library | License | Upstream |
+| --- | --- | --- | --- |
+| `LICENSE-jpegli.txt` | jpegli @ `031a0077` | BSD-3-Clause | `LICENSE` in google/jpegli |
+| `LICENSE-highway.txt` | highway | Apache-2.0 / BSD-3-Clause (dual) | `LICENSE` in google/highway |
+| `LICENSE-lcms.txt` | Little-CMS | MIT | `LICENSE` in mm2/Little-CMS |
+
+jpegli builds against `third_party/lcms` unless `JPEGLI_ENABLE_SKCMS` is set, and the workflow
+does not set it, so Little-CMS is the color engine in the binary. The texts ship in the jar and
+are expected to stay there: `NativeRepositoryTest` pins them.

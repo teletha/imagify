@@ -75,3 +75,19 @@ cmake --build shim-build
 
 The workflow reproduces this for all six platforms; the version of libavif it checks out is the pin
 at the top of the workflow.
+
+## Licenses
+
+The shim links `libavif`, `libaom`, `libyuv` and `libsharpyuv` in, all statically, and the jar
+carries each library's license beside this README:
+
+| File | Library | License | Upstream |
+| --- | --- | --- | --- |
+| `LICENSE-libavif.txt` | libavif v1.4.2 | BSD-2-Clause | `LICENSE` in AOMediaCodec/libavif @ `v1.4.2` |
+| `LICENSE-libaom.txt` | libaom | BSD-2-Clause | `LICENSE` in the Alliance for Open Media's aom |
+| `LICENSE-libyuv.txt` | libyuv | BSD-3-Clause | `LICENSE` in the LibYuv project |
+| `LICENSE-libsharpyuv.txt` | libsharpyuv | BSD-3-Clause | the `sharpyuv` component of webmproject/libwebp |
+
+`LICENSE-libavif.txt` also carries the notices of the sources libavif vendors (notably
+`src/obu.c` of dav1d), because a BSD license makes the notice travel with the code. The texts
+ship in the jar and are expected to stay there: `NativeRepositoryTest` pins them.

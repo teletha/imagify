@@ -63,3 +63,15 @@ cmake --build build --target imagify_webp
 
 The workflow replaces the version on the command line above and checks it against the CMakeLists
 before building, so the library reports the version it was actually built from.
+
+## Licenses
+
+The shim links `libwebp` in, and the jar carries that library's license beside this README:
+
+| File | Library | License | Upstream |
+| --- | --- | --- | --- |
+| `LICENSE-libwebp.txt` | libwebp v1.6.0 | BSD-3-Clause | `COPYING` in webmproject/libwebp @ `v1.6.0` |
+
+`libwebp` is one self-contained tag and pulls nothing else in, so one notice is all the binary
+needs. A BSD license requires the notice to travel with the code, and the text above therefore
+ships in the jar and is expected to stay there: `NativeRepositoryTest` pins it.

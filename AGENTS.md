@@ -53,8 +53,11 @@ gh workflow run webp-natives.yml      # ネイティブ再ビルド (同様に a
   `imagify.<fmt>.library`（明示パス）、`imagify.<fmt>.bundled=false`（managed 無効化）。
 - FFM を使うため、JDK 24 以降では `--enable-native-access=ALL-UNNAMED` を付けると
   警告が出ない（surefire の `argLine` には入っていない）。
-- 配布バイナリ（Release assets）のライセンス: libwebp は BSD-3-Clause、jpegli/highway は
-  Apache-2.0、Little-CMS は MIT。再配布時は upstream の LICENSE を保持する。
+- 配布バイナリ（Release assets）のライセンス: libwebp / libyuv / libsharpyuv は BSD-3-Clause、
+  libavif / libaom は BSD-2-Clause、jpegli は BSD-3-Clause、highway は Apache-2.0 /
+  BSD-3-Clause デュアル、Little-CMS は MIT。各ライセンスの原文は
+  `src/main/resources/imagify/<codec>/native/LICENSE-*.txt` に置いて jar に同梱する
+  （`NativeRepositoryTest` が存在をピン留め）。再配布時は upstream の LICENSE を保持する。
 
 ## 禁止事項（既存コードから確認できるもの）
 

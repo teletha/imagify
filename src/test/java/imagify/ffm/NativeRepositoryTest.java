@@ -14,12 +14,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -337,5 +339,24 @@ class NativeRepositoryTest {
         // cache name would be taken for the real library by the next resolve, with no way to tell.
         assertFalse(Files.exists(NativeRepository.cacheFile(JPEGLI, NativeRepository.tag(JPEGLI), asset)),
                 "a partial download left a file the cache would take for the library");
+    }
+
+    @Test
+    @DisplayName("every native directory ships the license of what it links")
+    void everyNativeDirectoryShipsTheLicenseOfWhatItLinks() throws IOException {
+        Map<NativeRepository.NativeCodec, List<String>> licenses = Map.of(
+                WEBP, List.of("LICENSE-libwebp.txt"),
+                AVIF, List.of("LICENSE-libavif.txt", "LICENSE-libaom.txt", "LICENSE-libyuv.txt",
+                        "LICENSE-libsharpyuv.txt"),
+                JPEGLI, List.of("LICENSE-jpegli.txt", "LICENSE-highway.txt", "LICENSE-lcms.txt"));
+        for (NativeRepository.NativeCodec codec : licenses.keySet()) {
+            for (String license : licenses.get(codec)) {
+                String resource = "/imagify/" + codec.format() + "/native/" + license;
+                try (InputStream in = NativeRepositoryTest.class.getResourceAsStream(resource)) {
+                    assertNotNull(in, resource + " does not ship in the jar");
+                    assertFalse(in.readAllBytes().length == 0, resource + " is empty");
+                }
+            }
+        }
     }
 }
