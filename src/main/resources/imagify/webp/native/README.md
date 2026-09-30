@@ -71,7 +71,10 @@ The shim links `libwebp` in, and the jar carries that library's license beside t
 | File | Library | License | Upstream |
 | --- | --- | --- | --- |
 | `LICENSE-libwebp.txt` | libwebp v1.6.0 | BSD-3-Clause | `COPYING` in webmproject/libwebp @ `v1.6.0` |
+| `LICENSE-libsharpyuv.txt` | libsharpyuv | BSD-3-Clause | `COPYING` in webmproject/libwebp (its `sharpyuv` component) |
 
-`libwebp` is one self-contained tag and pulls nothing else in, so one notice is all the binary
-needs. A BSD license requires the notice to travel with the code, and the text above therefore
-ships in the jar and is expected to stay there: `NativeRepositoryTest` pins it.
+The encoder links `sharpyuv` in behind `libwebp`, so the delivery carries both notices. The tag is
+one self-contained checkout — the tools are turned off and nothing outside it is fetched — so
+these two are all the binary needs. A BSD license requires the notice to travel with the code, and
+the texts above therefore ship in the jar and are expected to stay there: `NativeRepositoryTest`
+pins them.

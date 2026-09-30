@@ -22,8 +22,8 @@
 # The fourth library upstream builds, sharpyuv, is a dependency of the encoder and is linked in
 # behind it without being named here.
 #
-# libwebp is Apache 2.0 with a BSD 3 clause carve-out for the code it took from libjpeg-turbo, so
-# unlike the Little-CMS that comes with jpegli it redistributes with the result.
+# libwebp and sharpyuv are both BSD-3-Clause (the repository's COPYING), so they redistribute with
+# the result, and the notices ride in the jar as LICENSE-libwebp.txt and LICENSE-libsharpyuv.txt.
 
 cmake_minimum_required(VERSION 3.16...3.27)
 project(imagify-webp LANGUAGES C)

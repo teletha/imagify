@@ -345,10 +345,10 @@ class NativeRepositoryTest {
     @DisplayName("every native directory ships the license of what it links")
     void everyNativeDirectoryShipsTheLicenseOfWhatItLinks() throws IOException {
         Map<NativeRepository.NativeCodec, List<String>> licenses = Map.of(
-                WEBP, List.of("LICENSE-libwebp.txt"),
+                WEBP, List.of("LICENSE-libwebp.txt", "LICENSE-libsharpyuv.txt"),
                 AVIF, List.of("LICENSE-libavif.txt", "LICENSE-libaom.txt", "LICENSE-libyuv.txt",
                         "LICENSE-libsharpyuv.txt"),
-                JPEGLI, List.of("LICENSE-jpegli.txt", "LICENSE-highway.txt", "LICENSE-lcms.txt"));
+                JPEGLI, List.of("LICENSE-jpegli.txt", "LICENSE-highway.txt"));
         for (NativeRepository.NativeCodec codec : licenses.keySet()) {
             for (String license : licenses.get(codec)) {
                 String resource = "/imagify/" + codec.format() + "/native/" + license;
