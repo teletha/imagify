@@ -9,6 +9,9 @@
  */
 package imagify;
 
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,6 +26,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageInputStream;
+
+import org.w3c.dom.Node;
 
 import imagify.jpeg.JpegImageReader;
 import imagify.jpeg.JpegImageReaderSpi;
@@ -175,7 +180,7 @@ public final class ImageReader {
             throw new IOException("no ImageReader for format: " + format.getFormatName());
         }
         try {
-            reader.setInput(stream, false, true);
+            reader.setInput(stream, false, false);
             int numFrames;
             try {
                 numFrames = reader.getNumImages(true);
@@ -183,6 +188,12 @@ public final class ImageReader {
                 // Reader doesn't support multi-frame; treat as single image
                 BufferedImage frame = reader.read(0);
                 return new FrameSequence(List.of(frame), new int[]{1000}, 0);
+            }
+            if (format == ImageFormat.GIF) {
+                // A GIF frame is a rectangle placed at an offset on the logical screen and drawn over
+                // whatever the frames before it left there, so the frames a reader hands out one at a
+                // time are not all the same size and are not the animation. Composite them.
+                return readGif(reader, numFrames);
             }
             var frames = new ArrayList<BufferedImage>(numFrames);
             int[] delaysMs = new int[numFrames];
@@ -244,6 +255,167 @@ public final class ImageReader {
         } finally {
             reader.dispose();
         }
+    }
+
+    /**
+     * Assembles the frames of an animated GIF onto its logical screen.
+     *
+     * <p>A GIF frame is a rectangle placed at an offset on a canvas of the size the file declares,
+     * and it is composited over whatever the frames before it left there. A reader that hands out
+     * one frame at a time answers with each frame's own rectangle, which is a different size per
+     * frame and is not an animation any encoder here accepts. This runs the compositing the format
+     * describes, so every frame comes back the size of the logical screen.
+     *
+     * @param reader a reader already positioned on the file
+     * @param numFrames how many frames the reader reports
+     * @return the composited frames, their delays and the loop count
+     * @throws IOException when a frame cannot be read
+     */
+    private static FrameSequence readGif(javax.imageio.ImageReader reader, int numFrames)
+            throws IOException {
+        List<BufferedImage> raw = new ArrayList<>(numFrames);
+        List<IIOMetadata> metadata = new ArrayList<>(numFrames);
+        for (int i = 0; i < numFrames; i++) {
+            raw.add(reader.read(i));
+            metadata.add(reader.getImageMetadata(i));
+        }
+        BufferedImage canvas = new BufferedImage(gifCanvasSize(reader, raw, metadata, true),
+                gifCanvasSize(reader, raw, metadata, false), BufferedImage.TYPE_INT_ARGB);
+        List<BufferedImage> frames = new ArrayList<>(numFrames);
+        int[] delaysMs = new int[numFrames];
+        Rectangle previous = null;
+        String previousDisposal = "none";
+        BufferedImage previousSnapshot = null;
+        for (int i = 0; i < numFrames; i++) {
+            BufferedImage frame = raw.get(i);
+            String disposal = gifValue(metadata.get(i), "GraphicControlExtension", "disposalMethod", "none");
+            int atX = gifNumber(metadata.get(i), "ImageDescriptor", "imageLeftPosition", 0);
+            int atY = gifNumber(metadata.get(i), "ImageDescriptor", "imageTopPosition", 0);
+
+            // The disposal the previous frame asked for is applied before this frame is drawn.
+            if (previous != null) {
+                if ("restoreToBackgroundColor".equals(previousDisposal)) {
+                    clear(canvas, previous);
+                } else if ("restoreToPrevious".equals(previousDisposal) && previousSnapshot != null) {
+                    canvas = copy(previousSnapshot);
+                }
+            }
+            BufferedImage snapshot = "restoreToPrevious".equals(disposal) ? copy(canvas) : null;
+            Graphics2D graphics = canvas.createGraphics();
+            try {
+                graphics.drawImage(frame, atX, atY, null);
+            } finally {
+                graphics.dispose();
+            }
+            frames.add(copy(canvas));
+            delaysMs[i] = readFrameDelay(metadata.get(i));
+            previous = new Rectangle(atX, atY, frame.getWidth(), frame.getHeight());
+            previousDisposal = disposal;
+            previousSnapshot = snapshot;
+        }
+        return new FrameSequence(frames, delaysMs, readLoopCount(ImageFormat.GIF, reader.getStreamMetadata()));
+    }
+
+    /**
+     * @param width whether the width is wanted, in which case the height is answered
+     * @return the logical screen size, or the smallest canvas the frames fit in when the file does
+     *         not declare one this reader can see
+     */
+    private static int gifCanvasSize(javax.imageio.ImageReader reader, List<BufferedImage> raw,
+            List<IIOMetadata> metadata, boolean width) {
+        String attribute = width ? "logicalScreenWidth" : "logicalScreenHeight";
+        int declared = gifNumber(streamMetadata(reader), "LogicalScreenDescriptor", attribute, 0);
+        int needed = 1;
+        for (int i = 0; i < raw.size(); i++) {
+            BufferedImage frame = raw.get(i);
+            String position = width ? "imageLeftPosition" : "imageTopPosition";
+            int at = gifNumber(metadata.get(i), "ImageDescriptor", position, 0);
+            needed = Math.max(needed, at + (width ? frame.getWidth() : frame.getHeight()));
+        }
+        return Math.max(declared, needed);
+    }
+
+    private static IIOMetadata streamMetadata(javax.imageio.ImageReader reader) {
+        try {
+            return reader.getStreamMetadata();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    /** Reads an integer attribute of the first element with the given name, or the fallback. */
+    private static int gifNumber(IIOMetadata metadata, String element, String attribute, int fallback) {
+        String value = gifValue(metadata, element, attribute, null);
+        if (value == null) {
+            return fallback;
+        }
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
+
+    /** Reads a string attribute of the first element with the given name, or the fallback. */
+    private static String gifValue(IIOMetadata metadata, String element, String attribute, String fallback) {
+        if (metadata == null) {
+            return fallback;
+        }
+        for (String format : metadata.getMetadataFormatNames()) {
+            try {
+                Node found = firstNode(metadata.getAsTree(format), element);
+                if (found != null) {
+                    Node value = found.getAttributes().getNamedItem(attribute);
+                    if (value != null) {
+                        return value.getNodeValue();
+                    }
+                }
+            } catch (Exception ignored) {
+                // A metadata format that cannot be described is not one to read a value from.
+            }
+        }
+        return fallback;
+    }
+
+    /** @return the first node named {@code name} at or below {@code node}, or {@code null} */
+    private static Node firstNode(Node node, String name) {
+        if (node == null) {
+            return null;
+        }
+        if (name.equals(node.getNodeName())) {
+            return node;
+        }
+        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+            Node found = firstNode(node.getChildNodes().item(i), name);
+            if (found != null) {
+                return found;
+            }
+        }
+        return null;
+    }
+
+    /** Erases a rectangle, which is what a GIF asks for with the restore-to-background disposal. */
+    private static void clear(BufferedImage image, Rectangle area) {
+        Graphics2D graphics = image.createGraphics();
+        try {
+            graphics.setComposite(AlphaComposite.Clear);
+            graphics.fillRect(area.x, area.y, area.width, area.height);
+        } finally {
+            graphics.dispose();
+        }
+    }
+
+    /** A copy, because a composited frame is a snapshot and the canvas goes on changing. */
+    private static BufferedImage copy(BufferedImage image) {
+        BufferedImage copy = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = copy.createGraphics();
+        try {
+            graphics.setComposite(AlphaComposite.Src);
+            graphics.drawImage(image, 0, 0, null);
+        } finally {
+            graphics.dispose();
+        }
+        return copy;
     }
 
     private static int readFrameDelay(IIOMetadata metadata) {
