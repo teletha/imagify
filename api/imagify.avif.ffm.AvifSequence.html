@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="t">
-		<header class="o" date="2026-09-30">
-			<h1 class="W"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
+	<body class="DB">
+		<header class="b" date="2026-10-01">
+			<h1 class="c"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="d"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="J"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="U"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="f"></nav>
-		<article class="u" id="Article">
-			<section class="V"><code class="DB">imagify.avif.ffm</code>
-				<h2 class="Class IB"><code class="w">AvifSequence</code></h2>
-				<div class="d">
+		<nav class="L"></nav>
+		<article class="O" id="Article">
+			<section class="a"><code class="FB">imagify.avif.ffm</code>
+				<h2 class="Class K"><code class="X">AvifSequence</code></h2>
+				<div class="P">
 					<ul class="E H">
 						<li><code><a aria-label="java.lang.AutoCloseable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/AutoCloseable.html">AutoCloseable</a></code></li>
 					</ul>
@@ -71,109 +71,109 @@
 						</p>
 					</p>
 				</span></section>
-			<section class="V" id="frameCount()">
-				<h2 class="U"><i class="PUBLIC"></i><code class="w">frameCount</code><code class="R">()</code><i class="a"><code>int</code></i></h2>
-				<table class="n">
-					<tr class="g">
+			<section class="a" id="frameCount()">
+				<h2 class="r"><i class="PUBLIC"></i><code class="X">frameCount</code><code class="g">()</code><i class="e"><code>int</code></i></h2>
+				<table class="Z">
+					<tr class="KB">
 						<td><code>int</code></td>
 						<td><span><p>the number of frames, which is 1 for a still image, read from the headers alone</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="V" id="loopCount()">
-				<h2 class="U"><i class="PUBLIC"></i><code class="w">loopCount</code><code class="R">()</code><i class="a"><code>int</code></i></h2>
-				<table class="n">
-					<tr class="g">
+			<section class="a" id="loopCount()">
+				<h2 class="r"><i class="PUBLIC"></i><code class="X">loopCount</code><code class="g">()</code><i class="e"><code>int</code></i></h2>
+				<table class="Z">
+					<tr class="KB">
 						<td><code>int</code></td>
 						<td><span><p>how often the sequence repeats, 0 meaning forever</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="V" id="info()">
-				<h2 class="U"><i class="PUBLIC"></i><code class="w">info</code><code class="R">()</code><i class="a"><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></i></h2>
-				<table class="n">
-					<tr class="g">
+			<section class="a" id="info()">
+				<h2 class="r"><i class="PUBLIC"></i><code class="X">info</code><code class="g">()</code><i class="e"><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></i></h2>
+				<table class="Z">
+					<tr class="KB">
 						<td><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></td>
 						<td><span><p>the properties of the file as a whole, taken from its first frame</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="V" id="width(int)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="w">width</code><code class="R">(<code>int</code><code class="parameterName">index</code>)</code><i class="a"><code>int</code></i></h2>
-				<table class="n">
-					<tr class="s">
+			<section class="a" id="width(int)">
+				<h2 class="r"><i class="PUBLIC"></i><code class="X">width</code><code class="g">(<code>int</code><code class="parameterName">index</code>)</code><i class="e"><code>int</code></i></h2>
+				<table class="Z">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td><span><p>the frame</p></span></td>
 					</tr>
-					<tr class="g">
+					<tr class="KB">
 						<td><code>int</code></td>
 						<td><span><p>the width of that frame in pixels</p></span></td>
 					</tr>
-					<tr class="Q">
+					<tr class="N">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="V" id="height(int)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="w">height</code><code class="R">(<code>int</code><code class="parameterName">index</code>)</code><i class="a"><code>int</code></i></h2>
-				<table class="n">
-					<tr class="s">
+			<section class="a" id="height(int)">
+				<h2 class="r"><i class="PUBLIC"></i><code class="X">height</code><code class="g">(<code>int</code><code class="parameterName">index</code>)</code><i class="e"><code>int</code></i></h2>
+				<table class="Z">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td><span><p>the frame</p></span></td>
 					</tr>
-					<tr class="g">
+					<tr class="KB">
 						<td><code>int</code></td>
 						<td><span><p>the height of that frame in pixels</p></span></td>
 					</tr>
-					<tr class="Q">
+					<tr class="N">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="V" id="durationMs(int)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="w">durationMs</code><code class="R">(<code>int</code><code class="parameterName">index</code>)</code><i class="a"><code>int</code></i></h2>
-				<table class="n">
-					<tr class="s">
+			<section class="a" id="durationMs(int)">
+				<h2 class="r"><i class="PUBLIC"></i><code class="X">durationMs</code><code class="g">(<code>int</code><code class="parameterName">index</code>)</code><i class="e"><code>int</code></i></h2>
+				<table class="Z">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td><span><p>the frame</p></span></td>
 					</tr>
-					<tr class="g">
+					<tr class="KB">
 						<td><code>int</code></td>
 						<td><span><p>how long that frame is shown, in milliseconds, never below 1</p></span></td>
 					</tr>
-					<tr class="Q">
+					<tr class="N">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="V" id="durationsMs()">
-				<h2 class="U"><i class="PUBLIC"></i><code class="w">durationsMs</code><code class="R">()</code><i class="a"><code array="fix">int</code></i></h2>
-				<table class="n">
-					<tr class="g">
+			<section class="a" id="durationsMs()">
+				<h2 class="r"><i class="PUBLIC"></i><code class="X">durationsMs</code><code class="g">()</code><i class="e"><code array="fix">int</code></i></h2>
+				<table class="Z">
+					<tr class="KB">
 						<td><code array="fix">int</code></td>
 						<td><span><p>how long every frame is shown, in milliseconds</p></span></td>
 					</tr>
-					<tr class="Q">
+					<tr class="N">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="V" id="frame(int)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="w">frame</code><code class="R">(<code>int</code><code class="parameterName">index</code>)</code><i class="a"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
-				<table class="n">
-					<tr class="s">
+			<section class="a" id="frame(int)">
+				<h2 class="r"><i class="PUBLIC"></i><code class="X">frame</code><code class="g">(<code>int</code><code class="parameterName">index</code>)</code><i class="e"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></h2>
+				<table class="Z">
+					<tr class="IB">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td><span><p>the frame to decode</p></span></td>
 					</tr>
-					<tr class="g">
+					<tr class="KB">
 						<td><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></td>
 						<td><span><p>the decoded frame</p></span></td>
 					</tr>
-					<tr class="Q">
+					<tr class="N">
 						<td><code><a aria-label="imagify.avif.AvifException" href="api/imagify.avif.AvifException.html">AvifException</a></code></td>
 						<td></td>
 					</tr>
@@ -183,27 +183,27 @@
  carries none.
 </p>
 				</span></section>
-			<section class="V" id="close()">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="w">close</code><code class="R">()</code><i class="a"><code>void</code></i></h2>
+			<section class="a" id="close()">
+				<h2 class="r"><i class="OVERRIDE PUBLIC"></i><code class="X">close</code><code class="g">()</code><i class="e"><code>void</code></i></h2>
 			</section>
 		</article>
-		<aside class="v">
-			<div class="c">
-				<h5 class="x">Methods</h5>
+		<aside class="i">
+			<div class="s">
+				<h5 class="BB">Methods</h5>
 				<ul>
-					<li class="y"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#frameCount()">frameCount</a></code><code class="R">()</code><i class="q"><code>int</code></i></li>
-					<li class="y"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#loopCount()">loopCount</a></code><code class="R">()</code><i class="q"><code>int</code></i></li>
-					<li class="y"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#info()">info</a></code><code class="R">()</code><i class="q"><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></i></li>
-					<li class="y"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#width(int)">width</a></code><code class="R">(<code>int</code><code class="parameterName">index</code>)</code><i class="q"><code>int</code></i></li>
-					<li class="y"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#height(int)">height</a></code><code class="R">(<code>int</code><code class="parameterName">index</code>)</code><i class="q"><code>int</code></i></li>
-					<li class="y"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#durationMs(int)">durationMs</a></code><code class="R">(<code>int</code><code class="parameterName">index</code>)</code><i class="q"><code>int</code></i></li>
-					<li class="y"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#durationsMs()">durationsMs</a></code><code class="R">()</code><i class="q"><code array="fix">int</code></i></li>
-					<li class="y"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#frame(int)">frame</a></code><code class="R">(<code>int</code><code class="parameterName">index</code>)</code><i class="q"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
-					<li class="y"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#close()">close</a></code><code class="R">()</code><i class="q"><code>void</code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#frameCount()">frameCount</a></code><code class="g">()</code><i class="CB"><code>int</code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#loopCount()">loopCount</a></code><code class="g">()</code><i class="CB"><code>int</code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#info()">info</a></code><code class="g">()</code><i class="CB"><code><a aria-label="imagify.avif.AvifImageInfo" href="api/imagify.avif.AvifImageInfo.html">AvifImageInfo</a></code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#width(int)">width</a></code><code class="g">(<code>int</code><code class="parameterName">index</code>)</code><i class="CB"><code>int</code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#height(int)">height</a></code><code class="g">(<code>int</code><code class="parameterName">index</code>)</code><i class="CB"><code>int</code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#durationMs(int)">durationMs</a></code><code class="g">(<code>int</code><code class="parameterName">index</code>)</code><i class="CB"><code>int</code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#durationsMs()">durationsMs</a></code><code class="g">()</code><i class="CB"><code array="fix">int</code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#frame(int)">frame</a></code><code class="g">(<code>int</code><code class="parameterName">index</code>)</code><i class="CB"><code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html">BufferedImage</a></code></i></li>
+					<li class="p"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.avif.ffm.AvifSequence.html#close()">close</a></code><code class="g">()</code><i class="CB"><code>void</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="O">
+		<footer class="R">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
