@@ -58,6 +58,10 @@ public final class AvifCodec {
      */
     public record DecodedImage(BufferedImage image, AvifImageInfo info) {
 
+        /**
+         * Rejects a half-built pair here rather than handing a caller a picture with no properties
+         * beside it, which is what a missing piece from the shim would otherwise look like.
+         */
         public DecodedImage {
             java.util.Objects.requireNonNull(image, "no image");
             java.util.Objects.requireNonNull(info, "no info");
@@ -67,6 +71,9 @@ public final class AvifCodec {
     // ------------------------------------------------------------------------------- availability
 
     /**
+     * Reports whether the native library was found and loaded, so a caller can fall back rather
+     * than catch.
+     *
      * @return whether AVIF can be used in this JVM
      */
     public static boolean isAvailable() {
@@ -74,6 +81,8 @@ public final class AvifCodec {
     }
 
     /**
+     * Says what stopped the native library from loading, for a caller that wants to print it.
+     *
      * @return why AVIF cannot be used, or {@code null} when it can
      */
     public static String getUnavailableReason() {
@@ -81,6 +90,9 @@ public final class AvifCodec {
     }
 
     /**
+     * Reports which libavif the loaded library was built from, which is worth having in a bug report
+     * because the shim is compiled against whichever header the build machine had.
+     *
      * @return the libavif release in use, or {@code null} when it is not available
      */
     public static String getVersion() {
@@ -89,6 +101,9 @@ public final class AvifCodec {
     }
 
     /**
+     * The thread count a caller gets when it asks for none: every core, and never fewer than one so
+     * that a machine reporting none still encodes.
+     *
      * @return the number of threads worth handing libavif on this machine
      */
     public static int defaultThreads() {
@@ -110,6 +125,8 @@ public final class AvifCodec {
     // -------------------------------------------------------------------------------- enum names
 
     /**
+     * The symbolic name of a pixel format, for a message rather than for parsing.
+     *
      * @param yuvFormat an {@code AVIF_PIXEL_FORMAT_*} value
      * @return the symbolic name, for example {@code "YUV420"}
      */
@@ -125,6 +142,8 @@ public final class AvifCodec {
     }
 
     /**
+     * The symbolic name of a YUV range.
+     *
      * @param value an {@code AVIF_RANGE_*} value
      * @return the symbolic name
      */
@@ -137,6 +156,8 @@ public final class AvifCodec {
     }
 
     /**
+     * The symbolic name of a chroma sample position.
+     *
      * @param value an {@code AVIF_CHROMA_SAMPLE_POSITION_*} value
      * @return the symbolic name
      */
@@ -150,6 +171,8 @@ public final class AvifCodec {
     }
 
     /**
+     * The symbolic name of a set of colour primaries, one of the three CICP enumerations.
+     *
      * @param value an {@code AVIF_COLOR_PRIMARIES_*} value
      * @return the symbolic name
      */
@@ -173,6 +196,9 @@ public final class AvifCodec {
     }
 
     /**
+     * The symbolic name of a transfer characteristics value, the CICP enumeration that says how
+     * light is encoded rather than what colour it is.
+     *
      * @param value an {@code AVIF_TRANSFER_CHARACTERISTICS_*} value
      * @return the symbolic name
      */
@@ -201,6 +227,9 @@ public final class AvifCodec {
     }
 
     /**
+     * The symbolic name of a matrix coefficients value, the CICP enumeration that says how YUV
+     * becomes RGB.
+     *
      * @param value an {@code AVIF_MATRIX_COEFFICIENTS_*} value
      * @return the symbolic name
      */

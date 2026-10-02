@@ -46,6 +46,8 @@ public class AvifImageWriter extends ImageWriter {
     private boolean wrote;
 
     /**
+     * Creates a writer for the {@code ImageIO} plug-in registry to hand the frames to.
+     *
      * @param originatingProvider the provider that created this writer
      */
     public AvifImageWriter(ImageWriterSpi originatingProvider) {

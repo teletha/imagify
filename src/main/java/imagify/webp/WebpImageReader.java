@@ -73,6 +73,8 @@ public class WebpImageReader extends ImageReader {
     private int[] delaysMs;
 
     /**
+     * Creates a reader for the {@code ImageIO} plug-in registry to hand the frames to.
+     *
      * @param originatingProvider the provider that created this reader
      */
     public WebpImageReader(ImageReaderSpi originatingProvider) {

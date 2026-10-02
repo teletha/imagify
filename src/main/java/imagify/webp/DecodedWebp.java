@@ -32,6 +32,10 @@ import java.util.List;
  */
 public record DecodedWebp(WebpImageInfo info, List<BufferedImage> frames, int[] delaysMs) {
 
+    /**
+     * Takes copies of the two collections here, so that the record cannot be changed afterwards
+     * through the list or the array the caller handed it.
+     */
     public DecodedWebp {
         frames = List.copyOf(frames);
         delaysMs = delaysMs == null ? null : delaysMs.clone();

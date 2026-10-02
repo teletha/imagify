@@ -66,6 +66,12 @@ public final class StillImageRead {
     public record Sample(int x, int y, int width, int height, int subX, int subY) {
 
         /**
+         * Whether the selection covers everything, unskipped. Decoders take a fast path in that one
+         * case and hand their pixels over without copying them, so this is the question every
+         * decoder asks before it can skip a conversion pass.
+         *
+         * @param sourceWidth the decoded image width
+         * @param sourceHeight the decoded image height
          * @return whether this sample is the whole image with no sub sampling, which is the only
          *         case where the pixels can be handed over as they are
          */

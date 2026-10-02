@@ -37,6 +37,11 @@ public class IcoImageWriter extends ImageWriter {
     private ImageOutputStream stream;
     private boolean wrote;
 
+    /**
+     * Creates a writer for the {@code ImageIO} plug-in registry to hand the frames to.
+     *
+     * @param originatingProvider the provider that created this writer
+     */
     public IcoImageWriter(ImageWriterSpi originatingProvider) {
         super(originatingProvider);
     }

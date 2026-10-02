@@ -19,7 +19,7 @@ import java.lang.invoke.MethodHandle;
 import java.nio.charset.StandardCharsets;
 
 /**
- * FFM binding for the C ABI in {@code src/main/native/jpegli/imagify_jpegli.h}.
+ * FFM binding for the C ABI in {@code native/jpegli/imagify_jpegli.h}.
  *
  * <p>This is the Foreign Function &amp; Memory API (JEP 454) counterpart to the JNA binding that
  * used to sit in {@code imagify.jpeg.jna}. It describes the function signatures of the
@@ -48,7 +48,7 @@ public final class JpegliLibrary {
     /**
      * The version of the C ABI this binding was written against, as
      * {@code IMAGIFY_JPEGLI_ABI_VERSION}
-     * in {@code src/main/native/jpegli/imagify_jpegli.h} spells it.
+     * in {@code native/jpegli/imagify_jpegli.h} spells it.
      *
      * <p>It is checked once when the library is loaded and nothing else depends on it, because the
      * only way it could ever be wrong is a library built against a different revision of the

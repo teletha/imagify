@@ -24,7 +24,7 @@ import java.awt.image.WritableRaster;
  * this library's native codecs want on both sides of the boundary.
  *
  * <p>That byte order is what {@code libavif} calls {@code AVIF_RGB_FORMAT_ABGR}, what the jpegli
- * shim in {@code src/main/native/imagify_jpegli.c} is given, and what a
+ * shim in {@code native/jpegli/imagify_jpegli.c} is given, and what a
  * {@link BufferedImage#TYPE_4BYTE_ABGR} raster holds in memory, so an image of that exact type can
  * be handed to and from the native code without touching a single byte. The correspondence is worth
  * stating because it is easy to assume the opposite: the raster declares band offsets of
@@ -296,6 +296,9 @@ public final class AbgrPixels {
      * {@code null}.
      *
      * <p>The returned array is the image's live storage and must never be modified.
+     *
+     * @param image the image whose backing is asked for
+     * @return the A, B, G, R bytes, or {@code null} when the layout is not exactly that
      */
     public static byte[] abgrBytesOrNull(BufferedImage image) {
         if (image.getType() != BufferedImage.TYPE_4BYTE_ABGR) {
@@ -334,6 +337,9 @@ public final class AbgrPixels {
      * conversion pass; otherwise {@code null}.
      *
      * <p>The returned array is the image's live storage and must never be modified.
+     *
+     * @param image the image whose backing is asked for
+     * @return the B, G, R bytes, or {@code null} when the layout is not exactly that
      */
     public static byte[] bgrBytesOrNull(BufferedImage image) {
         if (image.getType() != BufferedImage.TYPE_3BYTE_BGR) {
