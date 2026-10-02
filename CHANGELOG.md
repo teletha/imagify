@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/teletha/imagify/compare/1.1.0...1.2.0) (2026-10-02)
+
+
+### Features
+
+* fetch native libraries from GitHub releases on demand ([f1c6813](https://github.com/teletha/imagify/commit/f1c68135dfe752c5c07842e578aca7b1cb7d90dd))
+
+
+### Bug Fixes
+
+* composite GIF frames onto the logical screen ([5bd2843](https://github.com/teletha/imagify/commit/5bd284390f5100b7a4923f9fb98822a2d9682759))
+
 ## [1.1.0](https://github.com/teletha/imagify/compare/1.0.3...1.1.0) (2026-09-29)
 
 
