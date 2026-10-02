@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="DB">
-		<header class="b" date="2026-10-01">
-			<h1 class="c"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="d"><a href="api/main.html" id="API"><svg class="package">
+	<body class="S">
+		<header class="J" date="2026-10-02">
+			<h1 class="K"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="L"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="U"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="M"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="L"></nav>
-		<article class="O" id="Article">
-			<section class="a"><code class="FB">imagify.jpeg</code>
-				<h2 class="Class K"><code class="X">JpegWriteParam</code></h2>
-				<div class="P">
+		<nav class="V"></nav>
+		<article class="T" id="Article">
+			<section class="Y"><code class="BB">imagify.jpeg</code>
+				<h2 class="Class r"><code class="h">JpegWriteParam</code></h2>
+				<div class="FB">
 					<ul class="E G">
 						<li><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code></li>
 						<li><code><a aria-label="javax.imageio.IIOParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOParam.html">IIOParam</a></code></li>
@@ -66,100 +66,101 @@
 </p>
 					</p>
 				</span></section>
-			<section class="a" id="JpegWriteParam(java.util.Locale)">
-				<h2 class="r"><i class="PUBLIC"></i><code class="X">JpegWriteParam</code><code class="g">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code></h2>
-				<table class="Z">
-					<tr class="IB">
+			<section class="Y" id="JpegWriteParam(java.util.Locale)">
+				<h2 class="w"><i class="PUBLIC"></i><code class="h">JpegWriteParam</code><code class="p">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code></h2>
+				<table class="IB">
+					<tr class="u">
 						<td><code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code></td>
 						<td><span><p>the locale for message formatting</p></span></td>
 					</tr>
-				</table>
-			</section>
-			<section class="a" id="setSubsampling(imagify.ImageFormat.Jpeg.Subsampling)">
-				<h2 class="r"><i class="PUBLIC"></i><code class="X">setSubsampling</code><code class="g">(<code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="Z">
-					<tr class="IB">
+				</table><span class="A"><p>Builds the parameters for one encode, with this library&apos;s own defaults rather than the
+<code>ImageIO</code> ones, so that a caller driving <code>ImageIO</code> directly gets the same file as
+a caller of <code><a aria-label="imagify.ImageWriter" href="api/imagify.ImageWriter.html">imagify.ImageWriter</a></code>.</p></span></section>
+			<section class="Y" id="setSubsampling(imagify.ImageFormat.Jpeg.Subsampling)">
+				<h2 class="w"><i class="PUBLIC"></i><code class="h">setSubsampling</code><code class="p">(<code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="x"><code>void</code></i></h2>
+				<table class="IB">
+					<tr class="u">
 						<td><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code></td>
 						<td><span><p>how finely the two colour-difference channels are to be stored</p></span></td>
 					</tr>
-				</table>
-			</section>
-			<section class="a" id="getSubsampling()">
-				<h2 class="r"><i class="PUBLIC"></i><code class="X">getSubsampling</code><code class="g">()</code><i class="e"><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2>
-				<table class="Z">
-					<tr class="KB">
+				</table><span class="A"><p>Chooses how finely the two colour-difference channels are stored, which is the setting that
+decides how far a JPEG looks blurred next to the original.</p></span></section>
+			<section class="Y" id="getSubsampling()">
+				<h2 class="w"><i class="PUBLIC"></i><code class="h">getSubsampling</code><code class="p">()</code><i class="x"><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></h2>
+				<table class="IB">
+					<tr class="g">
 						<td><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></td>
 						<td><span><p>how finely the two colour-difference channels are stored, 4:2:0 unless asked otherwise</p></span></td>
 					</tr>
-				</table>
-			</section>
-			<section class="a" id="setOptimizeHuffmanTables(boolean)">
-				<h2 class="r"><i class="PUBLIC"></i><code class="X">setOptimizeHuffmanTables</code><code class="g">(<code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="Z">
-					<tr class="IB">
+				</table><span class="A"><p>Reports the colour-difference resolution in force, which is the one this library defaults to
+rather than the one <code>ImageIO</code> would pick.</p></span></section>
+			<section class="Y" id="setOptimizeHuffmanTables(boolean)">
+				<h2 class="w"><i class="PUBLIC"></i><code class="h">setOptimizeHuffmanTables</code><code class="p">(<code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="x"><code>void</code></i></h2>
+				<table class="IB">
+					<tr class="u">
 						<td><code>boolean</code><code class="parameterName">optimizeHuffmanTables</code></td>
 						<td><span><p>whether the entropy coder tables are to be computed from the
 image rather than taken from the standard set</p></span></td>
 					</tr>
-				</table>
-			</section>
-			<section class="a" id="getOptimizeHuffmanTables()">
-				<h2 class="r"><i class="PUBLIC"></i><code class="X">getOptimizeHuffmanTables</code><code class="g">()</code><i class="e"><code>boolean</code></i></h2>
-				<table class="Z">
-					<tr class="KB">
+				</table><span class="A"><p>Chooses between the standard entropy coder tables and ones computed from this image, which is
+what <code>ImageIO</code> has no room to express on its own.</p></span></section>
+			<section class="Y" id="getOptimizeHuffmanTables()">
+				<h2 class="w"><i class="PUBLIC"></i><code class="h">getOptimizeHuffmanTables</code><code class="p">()</code><i class="x"><code>boolean</code></i></h2>
+				<table class="IB">
+					<tr class="g">
 						<td><code>boolean</code></td>
 						<td><span><p>whether the entropy coder tables are computed from the image, which they are not
 unless a caller asks for the extra work</p></span></td>
 					</tr>
-				</table>
-			</section>
-			<section class="a" id="getCompressionQuality()">
-				<h2 class="r"><i class="OVERRIDE PUBLIC"></i><code class="X">getCompressionQuality</code><code class="g">()</code><i class="e"><code>float</code></i></h2>
-				<table class="Z">
-					<tr class="KB">
+				</table><span class="A"><p>Reports whether the encoder will compute entropy coder tables for this image, which it will not
+unless a caller has asked for the extra work.</p></span></section>
+			<section class="Y" id="getCompressionQuality()">
+				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="h">getCompressionQuality</code><code class="p">()</code><i class="x"><code>float</code></i></h2>
+				<table class="IB">
+					<tr class="g">
 						<td><code>float</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="a" id="getCompressionType()">
-				<h2 class="r"><i class="OVERRIDE PUBLIC"></i><code class="X">getCompressionType</code><code class="g">()</code><i class="e"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="Z">
-					<tr class="KB">
+			<section class="Y" id="getCompressionType()">
+				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="h">getCompressionType</code><code class="p">()</code><i class="x"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="IB">
+					<tr class="g">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="a" id="setCompressionMode(int)">
-				<h2 class="r"><i class="OVERRIDE PUBLIC"></i><code class="X">setCompressionMode</code><code class="g">(<code>int</code><code class="parameterName">mode</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="Z">
-					<tr class="IB">
+			<section class="Y" id="setCompressionMode(int)">
+				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="h">setCompressionMode</code><code class="p">(<code>int</code><code class="parameterName">mode</code>)</code><i class="x"><code>void</code></i></h2>
+				<table class="IB">
+					<tr class="u">
 						<td><code>int</code><code class="parameterName">mode</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="i">
-			<div class="s">
-				<h5 class="BB">Constructors</h5>
+		<aside class="W">
+			<div class="n">
+				<h5 class="EB">Constructors</h5>
 				<ul>
-					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#JpegWriteParam(java.util.Locale)">JpegWriteParam</a></code><code class="g">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code></li>
+					<li class="GB"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#JpegWriteParam(java.util.Locale)">JpegWriteParam</a></code><code class="p">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code></li>
 				</ul>
-				<h5 class="BB">Methods</h5>
+				<h5 class="EB">Methods</h5>
 				<ul>
-					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#setSubsampling(imagify.ImageFormat.Jpeg.Subsampling)">setSubsampling</a></code><code class="g">(<code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="CB"><code>void</code></i></li>
-					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#getSubsampling()">getSubsampling</a></code><code class="g">()</code><i class="CB"><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
-					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#setOptimizeHuffmanTables(boolean)">setOptimizeHuffmanTables</a></code><code class="g">(<code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="CB"><code>void</code></i></li>
-					<li class="p"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#getOptimizeHuffmanTables()">getOptimizeHuffmanTables</a></code><code class="g">()</code><i class="CB"><code>boolean</code></i></li>
-					<li class="p"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#getCompressionQuality()">getCompressionQuality</a></code><code class="g">()</code><i class="CB"><code>float</code></i></li>
-					<li class="p"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#getCompressionType()">getCompressionType</a></code><code class="g">()</code><i class="CB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="p"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#setCompressionMode(int)">setCompressionMode</a></code><code class="g">(<code>int</code><code class="parameterName">mode</code>)</code><i class="CB"><code>void</code></i></li>
+					<li class="GB"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#setSubsampling(imagify.ImageFormat.Jpeg.Subsampling)">setSubsampling</a></code><code class="p">(<code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code><code class="parameterName">subsampling</code>)</code><i class="N"><code>void</code></i></li>
+					<li class="GB"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#getSubsampling()">getSubsampling</a></code><code class="p">()</code><i class="N"><code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code></i></li>
+					<li class="GB"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#setOptimizeHuffmanTables(boolean)">setOptimizeHuffmanTables</a></code><code class="p">(<code>boolean</code><code class="parameterName">optimizeHuffmanTables</code>)</code><i class="N"><code>void</code></i></li>
+					<li class="GB"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#getOptimizeHuffmanTables()">getOptimizeHuffmanTables</a></code><code class="p">()</code><i class="N"><code>boolean</code></i></li>
+					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#getCompressionQuality()">getCompressionQuality</a></code><code class="p">()</code><i class="N"><code>float</code></i></li>
+					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#getCompressionType()">getCompressionType</a></code><code class="p">()</code><i class="N"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegWriteParam.html#setCompressionMode(int)">setCompressionMode</a></code><code class="p">(<code>int</code><code class="parameterName">mode</code>)</code><i class="N"><code>void</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="R">
+		<footer class="U">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

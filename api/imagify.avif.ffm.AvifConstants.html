@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="DB">
-		<header class="b" date="2026-10-01">
-			<h1 class="c"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="d"><a href="api/main.html" id="API"><svg class="package">
+	<body class="S">
+		<header class="J" date="2026-10-02">
+			<h1 class="K"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="L"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="U"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="M"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="L"></nav>
-		<article class="O" id="Article">
-			<section class="a"><code class="FB">imagify.avif.ffm</code>
-				<h2 class="Class K"><code class="X">AvifConstants</code></h2>
-				<div class="P"></div><span class="A"><p>The <code>AVIF_*</code> constants this binding names, taken from <code>avif.h</code> at tag v1.4.2.</p><p>They are here rather than in <code><a aria-label="imagify.avif.ffm.AvifShim" href="api/imagify.avif.ffm.AvifShim.html">AvifShim</a></code> because they are values and not entry points, and
+		<nav class="V"></nav>
+		<article class="T" id="Article">
+			<section class="Y"><code class="BB">imagify.avif.ffm</code>
+				<h2 class="Class r"><code class="h">AvifConstants</code></h2>
+				<div class="FB"></div><span class="A"><p>The <code>AVIF_*</code> constants this binding names, taken from <code>avif.h</code> at tag v1.4.2.</p><p>They are here rather than in <code><a aria-label="imagify.avif.ffm.AvifShim" href="api/imagify.avif.ffm.AvifShim.html">AvifShim</a></code> because they are values and not entry points, and
  because the shim is otherwise a wall of downcall handles with nowhere to put a constant that
  belongs to neither the calls nor the blocks of answers.
  
@@ -64,29 +64,25 @@
 						</p>
 					</p>
 				</span></section>
-			<section class="a" id="TRUE">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRUE</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRUE</code>.</span></section>
-			<section class="a" id="FALSE">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">FALSE</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_FALSE</code>.</span></section>
-			<section class="a" id="PIXEL_FORMAT_NONE">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">PIXEL_FORMAT_NONE</code><i class="e"><code class="return">int</code></i></h2><span class="A"><p>The <code>AVIF_PIXEL_FORMAT_*</code> values, which are a C enum and so start at zero with a
+			<section class="Y" id="TRUE">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRUE</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRUE</code>.</span></section>
+			<section class="Y" id="FALSE">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">FALSE</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_FALSE</code>.</span></section>
+			<section class="Y" id="PIXEL_FORMAT_NONE">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">PIXEL_FORMAT_NONE</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>The <code>AVIF_PIXEL_FORMAT_*</code> values, which are a C enum and so start at zero with a
 <code>NONE</code> in front of the formats. <code>NONE</code> is not a format libavif will create a
 picture at, so a zero handed to <code>imagify_avif_picture_create</code> is refused rather than
 treated as a default.</p></span></section>
-			<section class="a" id="PIXEL_FORMAT_YUV444">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">PIXEL_FORMAT_YUV444</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="PIXEL_FORMAT_YUV422">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">PIXEL_FORMAT_YUV422</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="PIXEL_FORMAT_YUV420">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">PIXEL_FORMAT_YUV420</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="PIXEL_FORMAT_YUV400">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">PIXEL_FORMAT_YUV400</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="RGB_FORMAT_ABGR">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">RGB_FORMAT_ABGR</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_RGB_FORMAT_ABGR</code>: the byte at offset 0 of a pixel is its alpha and the one at
+			<section class="Y" id="PIXEL_FORMAT_YUV444">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">PIXEL_FORMAT_YUV444</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_PIXEL_FORMAT_YUV444</code>: no chroma subsampling at all.</span></section>
+			<section class="Y" id="PIXEL_FORMAT_YUV422">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">PIXEL_FORMAT_YUV422</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_PIXEL_FORMAT_YUV422</code>: the two chroma samples halved horizontally.</span></section>
+			<section class="Y" id="PIXEL_FORMAT_YUV420">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">PIXEL_FORMAT_YUV420</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_PIXEL_FORMAT_YUV420</code>: both chroma samples halved, the usual choice.</span></section>
+			<section class="Y" id="PIXEL_FORMAT_YUV400">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">PIXEL_FORMAT_YUV400</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_PIXEL_FORMAT_YUV400</code>: luma only, so there is no colour in the file at all.</span></section>
+			<section class="Y" id="RGB_FORMAT_ABGR">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">RGB_FORMAT_ABGR</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_RGB_FORMAT_ABGR</code>: the byte at offset 0 of a pixel is its alpha and the one at
  offset 3 is its red.
 
  <p>This is the format the whole zero copy is arranged around, and the reason is
@@ -95,184 +91,130 @@ treated as a default.</p></span></section>
  over without a shuffle. The formats that read as R, G, B, A would swap red and blue in both
  directions, and would not fail while doing it.</p>
 				</span></section>
-			<section class="a" id="STRICT_PIXI_REQUIRED">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">STRICT_PIXI_REQUIRED</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_STRICT_PIXI_REQUIRED</code>.</span></section>
-			<section class="a" id="STRICT_CLAP_VALID">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">STRICT_CLAP_VALID</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_STRICT_CLAP_VALID</code>.</span></section>
-			<section class="a" id="ADD_IMAGE_FLAG_SINGLE">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">ADD_IMAGE_FLAG_SINGLE</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_ADD_IMAGE_FLAG_SINGLE</code>: the image is the only frame of the file.</span></section>
-			<section class="a" id="RANGE_LIMITED">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">RANGE_LIMITED</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="RANGE_FULL">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">RANGE_FULL</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="CHROMA_SAMPLE_POSITION_UNKNOWN">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">CHROMA_SAMPLE_POSITION_UNKNOWN</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="CHROMA_SAMPLE_POSITION_VERTICAL">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">CHROMA_SAMPLE_POSITION_VERTICAL</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="CHROMA_SAMPLE_POSITION_COLOCATED">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">CHROMA_SAMPLE_POSITION_COLOCATED</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_UNKNOWN">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_UNKNOWN</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_BT709">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_BT709</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_UNSPECIFIED">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_UNSPECIFIED</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_BT470M">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_BT470M</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_BT470BG">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_BT470BG</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_BT601">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_BT601</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_SMPTE240">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_SMPTE240</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_GENERIC_FILM">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_GENERIC_FILM</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_BT2020">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_BT2020</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_XYZ">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_XYZ</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_SMPTE431">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_SMPTE431</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="COLOR_PRIMARIES_SMPTE432">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_SMPTE432</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_SMPTE432</code>, which the header also spells DCI_P3.</span></section>
-			<section class="a" id="COLOR_PRIMARIES_EBU3213">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">COLOR_PRIMARIES_EBU3213</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_UNKNOWN">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_UNKNOWN</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_BT709">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_BT709</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_UNSPECIFIED">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_UNSPECIFIED</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_BT470M">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_BT470M</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_BT470BG">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_BT470BG</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_BT601">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_BT601</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_SMPTE240">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_SMPTE240</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_LINEAR">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_LINEAR</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_LOG100">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_LOG100</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_LOG100_SQRT10">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_LOG100_SQRT10</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_IEC61966">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_IEC61966</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_BT1361">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_BT1361</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_SRGB">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_SRGB</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_BT2020_10BIT">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_BT2020_10BIT</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_BT2020_12BIT">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_BT2020_12BIT</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_PQ">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_PQ</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_SMPTE428">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_SMPTE428</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="TRANSFER_HLG">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">TRANSFER_HLG</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_IDENTITY">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_IDENTITY</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_BT709">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_BT709</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_UNSPECIFIED">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_UNSPECIFIED</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_FCC">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_FCC</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_BT470BG">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_BT470BG</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_BT601">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_BT601</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_SMPTE240">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_SMPTE240</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_YCGCO">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_YCGCO</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_BT2020_NCL">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_BT2020_NCL</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_BT2020_CL">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_BT2020_CL</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_SMPTE2085">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_SMPTE2085</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_CHROMA_DERIVED_NCL">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_CHROMA_DERIVED_NCL</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_CHROMA_DERIVED_CL">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_CHROMA_DERIVED_CL</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="MATRIX_ICTCP">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">MATRIX_ICTCP</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="QUALITY_WORST">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">QUALITY_WORST</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_QUALITY_WORST</code>: the smallest file, and the one that loses the most.</span></section>
-			<section class="a" id="QUALITY_BEST">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">QUALITY_BEST</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_QUALITY_BEST</code>, which is also <code>AVIF_QUALITY_LOSSLESS</code>.</span></section>
-			<section class="a" id="QUALITY_LOSSLESS">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">QUALITY_LOSSLESS</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_QUALITY_LOSSLESS</code>, which is also <code><a aria-label="imagify.avif.ffm.AvifConstants" href="api/imagify.avif.ffm.AvifConstants.html#QUALITY_BEST">#QUALITY_BEST</a></code>.</span></section>
-			<section class="a" id="CHROMA_DOWNSAMPLING_AUTOMATIC">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">CHROMA_DOWNSAMPLING_AUTOMATIC</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="CHROMA_DOWNSAMPLING_FASTEST">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">CHROMA_DOWNSAMPLING_FASTEST</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="CHROMA_DOWNSAMPLING_BEST_QUALITY">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">CHROMA_DOWNSAMPLING_BEST_QUALITY</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="CHROMA_DOWNSAMPLING_AVERAGE">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">CHROMA_DOWNSAMPLING_AVERAGE</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="CHROMA_DOWNSAMPLING_SHARP_YUV">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">CHROMA_DOWNSAMPLING_SHARP_YUV</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="AVIF_SPEED_DEFAULT">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">AVIF_SPEED_DEFAULT</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_SPEED_DEFAULT</code>: leave the AV1 codec at its own speed settings.
+			<section class="Y" id="STRICT_PIXI_REQUIRED">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">STRICT_PIXI_REQUIRED</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_STRICT_PIXI_REQUIRED</code>.</span></section>
+			<section class="Y" id="STRICT_CLAP_VALID">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">STRICT_CLAP_VALID</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_STRICT_CLAP_VALID</code>.</span></section>
+			<section class="Y" id="ADD_IMAGE_FLAG_SINGLE">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">ADD_IMAGE_FLAG_SINGLE</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_ADD_IMAGE_FLAG_SINGLE</code>: the image is the only frame of the file.</span></section>
+			<section class="Y" id="RANGE_LIMITED">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">RANGE_LIMITED</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_RANGE_LIMITED</code>: Y [16..235] and UV [16..240] at 8 bits, the video convention.</span></section>
+			<section class="Y" id="RANGE_FULL">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">RANGE_FULL</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_RANGE_FULL</code>: [0..255] at 8 bits, which is what the RGB planes always hold.</span></section>
+			<section class="Y" id="CHROMA_SAMPLE_POSITION_UNKNOWN">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">CHROMA_SAMPLE_POSITION_UNKNOWN</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_CHROMA_SAMPLE_POSITION_UNKNOWN</code>, the header&apos;s reserved value.</span></section>
+			<section class="Y" id="CHROMA_SAMPLE_POSITION_VERTICAL">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">CHROMA_SAMPLE_POSITION_VERTICAL</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_CHROMA_SAMPLE_POSITION_VERTICAL</code>.</span></section>
+			<section class="Y" id="CHROMA_SAMPLE_POSITION_COLOCATED">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">CHROMA_SAMPLE_POSITION_COLOCATED</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_CHROMA_SAMPLE_POSITION_COLOCATED</code>.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_UNKNOWN">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_UNKNOWN</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_UNKNOWN</code>: reserved, used by libavif as a sentinel.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_BT709">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_BT709</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_BT709</code>, which the header also spells SRGB and IEC61966_2_4.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_UNSPECIFIED">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_UNSPECIFIED</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_UNSPECIFIED</code>.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_BT470M">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_BT470M</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_BT470M</code>.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_BT470BG">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_BT470BG</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_BT470BG</code>.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_BT601">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_BT601</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_BT601</code>.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_SMPTE240">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_SMPTE240</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_SMPTE240</code>.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_GENERIC_FILM">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_GENERIC_FILM</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_GENERIC_FILM</code>.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_BT2020">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_BT2020</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_BT2020</code>, which the header also spells BT2100.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_XYZ">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_XYZ</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_XYZ</code>, the CIE XYZ primaries.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_SMPTE431">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_SMPTE431</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_SMPTE431</code>.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_SMPTE432">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_SMPTE432</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_SMPTE432</code>, which the header also spells DCI_P3.</span></section>
+			<section class="Y" id="COLOR_PRIMARIES_EBU3213">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">COLOR_PRIMARIES_EBU3213</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_COLOR_PRIMARIES_EBU3213</code>, the EBU Tech. 3213 primaries.</span></section>
+			<section class="Y" id="TRANSFER_UNKNOWN">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_UNKNOWN</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_UNKNOWN</code>: reserved, used as a sentinel.</span></section>
+			<section class="Y" id="TRANSFER_BT709">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_BT709</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_BT709</code>.</span></section>
+			<section class="Y" id="TRANSFER_UNSPECIFIED">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_UNSPECIFIED</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_UNSPECIFIED</code>.</span></section>
+			<section class="Y" id="TRANSFER_BT470M">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_BT470M</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_BT470M</code>, which the header annotates as 2.2 gamma.</span></section>
+			<section class="Y" id="TRANSFER_BT470BG">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_BT470BG</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_BT470BG</code>, which the header annotates as 2.8 gamma.</span></section>
+			<section class="Y" id="TRANSFER_BT601">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_BT601</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_BT601</code>.</span></section>
+			<section class="Y" id="TRANSFER_SMPTE240">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_SMPTE240</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_SMPTE240</code>.</span></section>
+			<section class="Y" id="TRANSFER_LINEAR">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_LINEAR</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_LINEAR</code>.</span></section>
+			<section class="Y" id="TRANSFER_LOG100">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_LOG100</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_LOG100</code>.</span></section>
+			<section class="Y" id="TRANSFER_LOG100_SQRT10">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_LOG100_SQRT10</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_LOG100_SQRT10</code>.</span></section>
+			<section class="Y" id="TRANSFER_IEC61966">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_IEC61966</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_IEC61966</code>.</span></section>
+			<section class="Y" id="TRANSFER_BT1361">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_BT1361</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_BT1361</code>.</span></section>
+			<section class="Y" id="TRANSFER_SRGB">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_SRGB</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_SRGB</code>.</span></section>
+			<section class="Y" id="TRANSFER_BT2020_10BIT">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_BT2020_10BIT</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_BT2020_10BIT</code>.</span></section>
+			<section class="Y" id="TRANSFER_BT2020_12BIT">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_BT2020_12BIT</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_BT2020_12BIT</code>.</span></section>
+			<section class="Y" id="TRANSFER_PQ">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_PQ</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_PQ</code>, which the header also spells SMPTE2084.</span></section>
+			<section class="Y" id="TRANSFER_SMPTE428">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_SMPTE428</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_SMPTE428</code>.</span></section>
+			<section class="Y" id="TRANSFER_HLG">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">TRANSFER_HLG</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_TRANSFER_CHARACTERISTICS_HLG</code>.</span></section>
+			<section class="Y" id="MATRIX_IDENTITY">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_IDENTITY</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_IDENTITY</code>: G, B and R pass through unchanged.</span></section>
+			<section class="Y" id="MATRIX_BT709">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_BT709</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_BT709</code>.</span></section>
+			<section class="Y" id="MATRIX_UNSPECIFIED">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_UNSPECIFIED</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_UNSPECIFIED</code>.</span></section>
+			<section class="Y" id="MATRIX_FCC">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_FCC</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_FCC</code>.</span></section>
+			<section class="Y" id="MATRIX_BT470BG">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_BT470BG</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_BT470BG</code>.</span></section>
+			<section class="Y" id="MATRIX_BT601">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_BT601</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_BT601</code>.</span></section>
+			<section class="Y" id="MATRIX_SMPTE240">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_SMPTE240</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_SMPTE240</code>.</span></section>
+			<section class="Y" id="MATRIX_YCGCO">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_YCGCO</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_YCGCO</code>.</span></section>
+			<section class="Y" id="MATRIX_BT2020_NCL">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_BT2020_NCL</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_BT2020_NCL</code>, the non-constant luminance form.</span></section>
+			<section class="Y" id="MATRIX_BT2020_CL">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_BT2020_CL</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_BT2020_CL</code>, the constant luminance form.</span></section>
+			<section class="Y" id="MATRIX_SMPTE2085">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_SMPTE2085</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_SMPTE2085</code>.</span></section>
+			<section class="Y" id="MATRIX_CHROMA_DERIVED_NCL">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_CHROMA_DERIVED_NCL</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL</code>, for YC&apos;gC&apos;be.</span></section>
+			<section class="Y" id="MATRIX_CHROMA_DERIVED_CL">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_CHROMA_DERIVED_CL</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL</code>, for YC&apos;gC&apos;re.</span></section>
+			<section class="Y" id="MATRIX_ICTCP">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MATRIX_ICTCP</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_MATRIX_COEFFICIENTS_ICTCP</code>.</span></section>
+			<section class="Y" id="QUALITY_WORST">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">QUALITY_WORST</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_QUALITY_WORST</code>: the smallest file, and the one that loses the most.</span></section>
+			<section class="Y" id="QUALITY_BEST">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">QUALITY_BEST</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_QUALITY_BEST</code>, which is also <code>AVIF_QUALITY_LOSSLESS</code>.</span></section>
+			<section class="Y" id="QUALITY_LOSSLESS">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">QUALITY_LOSSLESS</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_QUALITY_LOSSLESS</code>, which is also <code><a aria-label="imagify.avif.ffm.AvifConstants" href="api/imagify.avif.ffm.AvifConstants.html#QUALITY_BEST">#QUALITY_BEST</a></code>.</span></section>
+			<section class="Y" id="CHROMA_DOWNSAMPLING_AUTOMATIC">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">CHROMA_DOWNSAMPLING_AUTOMATIC</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_CHROMA_DOWNSAMPLING_AUTOMATIC</code>: the header&apos;s own trade off, which is AVERAGE.</span></section>
+			<section class="Y" id="CHROMA_DOWNSAMPLING_FASTEST">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">CHROMA_DOWNSAMPLING_FASTEST</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_CHROMA_DOWNSAMPLING_FASTEST</code>: also AVERAGE, spelled as a speed choice.</span></section>
+			<section class="Y" id="CHROMA_DOWNSAMPLING_BEST_QUALITY">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">CHROMA_DOWNSAMPLING_BEST_QUALITY</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_CHROMA_DOWNSAMPLING_BEST_QUALITY</code>: also AVERAGE, spelled as a quality choice.</span></section>
+			<section class="Y" id="CHROMA_DOWNSAMPLING_AVERAGE">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">CHROMA_DOWNSAMPLING_AVERAGE</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_CHROMA_DOWNSAMPLING_AVERAGE</code>: the averaging filter.</span></section>
+			<section class="Y" id="CHROMA_DOWNSAMPLING_SHARP_YUV">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">CHROMA_DOWNSAMPLING_SHARP_YUV</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_CHROMA_DOWNSAMPLING_SHARP_YUV</code>: libsharpyuv, for 4:2:0 only.</span></section>
+			<section class="Y" id="AVIF_SPEED_DEFAULT">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">AVIF_SPEED_DEFAULT</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_SPEED_DEFAULT</code>: leave the AV1 codec at its own speed settings.
 
  <p>Negative, and that is not a placeholder. It is a legal value a caller may pass to mean
  &quot;whatever libavif thinks&quot;, and it is <em>not</em> what this library encodes with by default:
@@ -280,12 +222,12 @@ treated as a default.</p></span></section>
  <code><a aria-label="imagify.avif.ffm.AvifConstants" href="api/imagify.avif.ffm.AvifConstants.html#AVIF_SPEED_SLOWEST">#AVIF_SPEED_SLOWEST</a></code> and costs 4917 ms against 170 ms at <code><a aria-label="imagify.avif.ffm.AvifConstants" href="api/imagify.avif.ffm.AvifConstants.html#DEFAULT_SPEED">#DEFAULT_SPEED</a></code>, for a
  file of the same size. It is a legitimate answer to give and a terrible one to default to.</p>
 				</span></section>
-			<section class="a" id="AVIF_SPEED_SLOWEST">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">AVIF_SPEED_SLOWEST</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_SPEED_SLOWEST</code>: the most thorough, and the slowest.</span></section>
-			<section class="a" id="AVIF_SPEED_FASTEST">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">AVIF_SPEED_FASTEST</code><i class="e"><code class="return">int</code></i></h2><span class="A"><code>AVIF_SPEED_FASTEST</code>.</span></section>
-			<section class="a" id="DEFAULT_SPEED">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">DEFAULT_SPEED</code><i class="e"><code class="return">int</code></i></h2><span class="A"><p>The speed a still image is encoded at when the caller did not name one.</p><p>This is not libavif&apos;s <code><a aria-label="imagify.avif.ffm.AvifConstants" href="api/imagify.avif.ffm.AvifConstants.html#AVIF_SPEED_DEFAULT">#AVIF_SPEED_DEFAULT</a></code> and it is not
+			<section class="Y" id="AVIF_SPEED_SLOWEST">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">AVIF_SPEED_SLOWEST</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_SPEED_SLOWEST</code>: the most thorough, and the slowest.</span></section>
+			<section class="Y" id="AVIF_SPEED_FASTEST">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">AVIF_SPEED_FASTEST</code><i class="x"><code class="return">int</code></i></h2><span class="A"><code>AVIF_SPEED_FASTEST</code>.</span></section>
+			<section class="Y" id="DEFAULT_SPEED">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">DEFAULT_SPEED</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>The speed a still image is encoded at when the caller did not name one.</p><p>This is not libavif&apos;s <code><a aria-label="imagify.avif.ffm.AvifConstants" href="api/imagify.avif.ffm.AvifConstants.html#AVIF_SPEED_DEFAULT">#AVIF_SPEED_DEFAULT</a></code> and it is not
  <code><a aria-label="imagify.avif.ffm.AvifConstants" href="api/imagify.avif.ffm.AvifConstants.html#AVIF_SPEED_SLOWEST">#AVIF_SPEED_SLOWEST</a></code> either, both of which are what an unqualified &quot;default&quot; would
  suggest. It is a number this project chose, on a measurement: at 517x380 and quality 70 the
  encode is 170 ms at speed 6 against 4917 ms at speed 0, and the two produce a file of the same
@@ -293,15 +235,15 @@ treated as a default.</p></span></section>
  curve flattens.
 </p>
 				</span></section>
-			<section class="a" id="DEFAULT_QUALITY">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">DEFAULT_QUALITY</code><i class="e"><code class="return">int</code></i></h2><span class="A"><p>The quality a still image is encoded at when the caller did not name one.</p><p><code>libavif</code>&apos;s <code>AVIF_QUALITY_DEFAULT</code> is -1, which is an absence rather than a
+			<section class="Y" id="DEFAULT_QUALITY">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">DEFAULT_QUALITY</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>The quality a still image is encoded at when the caller did not name one.</p><p><code>libavif</code>&apos;s <code>AVIF_QUALITY_DEFAULT</code> is -1, which is an absence rather than a
  number, and an absent quality is not something to hand a codec that will happily invent one.
  60 is a choice, and it is a mid one: it is a little above the point where AVIF stops being
  visibly worse than the source and well below the point where the file stops being smaller.
 </p>
 				</span></section>
-			<section class="a" id="DEFAULT_ANIMATION_SPEED">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">DEFAULT_ANIMATION_SPEED</code><i class="e"><code class="return">int</code></i></h2><span class="A"><p>The speed an animation is encoded at when the caller did not name one.</p><p>An animation pays the encoder cost once per frame, so the speed that is a fair trade for a
+			<section class="Y" id="DEFAULT_ANIMATION_SPEED">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">DEFAULT_ANIMATION_SPEED</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>The speed an animation is encoded at when the caller did not name one.</p><p>An animation pays the encoder cost once per frame, so the speed that is a fair trade for a
  single image is a bad one for a hundred of them. Measured on the 58 frame 498x280 test
  animation at quality 70, going from <code><a aria-label="imagify.avif.ffm.AvifConstants" href="api/imagify.avif.ffm.AvifConstants.html#DEFAULT_SPEED">#DEFAULT_SPEED</a></code> to this value took the encode from
  **6556 ms to 436 ms** and made the file <em>smaller</em>, **574 kB to 413 kB**, at the same
@@ -313,162 +255,147 @@ treated as a default.</p></span></section>
 </p>
 					</p>
 				</span></section>
-			<section class="a" id="THREADING_PIXEL_THRESHOLD">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">THREADING_PIXEL_THRESHOLD</code><i class="e"><code class="return">int</code></i></h2><span class="A"><p>The number of images decoded as a rough threshold above which threading is worth handing to
+			<section class="Y" id="THREADING_PIXEL_THRESHOLD">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">THREADING_PIXEL_THRESHOLD</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>The number of images decoded as a rough threshold above which threading is worth handing to
 libavif, and below which it is not.</p><p>A thousand threads&apos; worth of setup is not free, and the conversion a decode ends in is a
  single pass over the picture, so a small image is faster on one thread. The threshold is the
  same one the JNA binding it replaces used, and it is in pixels rather than in bytes because
  that is what decides how much work there is.
 </p>
 				</span></section>
-			<section class="a" id="INFO_WIDTH">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_WIDTH</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_HEIGHT">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_HEIGHT</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_DEPTH">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_DEPTH</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_YUV_FORMAT">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_YUV_FORMAT</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_YUV_RANGE">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_YUV_RANGE</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_CHROMA_SAMPLE_POSITION">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_CHROMA_SAMPLE_POSITION</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_COLOR_PRIMARIES">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_COLOR_PRIMARIES</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_TRANSFER_CHARACTERISTICS">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_TRANSFER_CHARACTERISTICS</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_MATRIX_COEFFICIENTS">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_MATRIX_COEFFICIENTS</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_HAS_ALPHA">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_HAS_ALPHA</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_ROTATION_DEGREES">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_ROTATION_DEGREES</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_MIRRORED">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_MIRRORED</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_ICC_SIZE">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_ICC_SIZE</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_EXIF_SIZE">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_EXIF_SIZE</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_XMP_SIZE">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_XMP_SIZE</code><i class="e"><code class="return">int</code></i></h2>
-			</section>
-			<section class="a" id="INFO_COUNT">
-				<h2 class="r"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="X">INFO_COUNT</code><i class="e"><code class="return">int</code></i></h2><span class="A"><p>How many four byte slots <code>imagify_avif_picture_info</code> fills in.</p></span></section>
+			<section class="Y" id="INFO_WIDTH">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_WIDTH</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 0: <code>width</code>.</p></span></section>
+			<section class="Y" id="INFO_HEIGHT">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_HEIGHT</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 1: <code>height</code>.</p></span></section>
+			<section class="Y" id="INFO_DEPTH">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_DEPTH</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 2: <code>depth</code>, the bits per sample the file declares.</p></span></section>
+			<section class="Y" id="INFO_YUV_FORMAT">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_YUV_FORMAT</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 3: <code>yuvFormat</code>, an <code>AVIF_PIXEL_FORMAT_*</code> value.</p></span></section>
+			<section class="Y" id="INFO_YUV_RANGE">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_YUV_RANGE</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 4: <code>yuvRange</code>, an <code>AVIF_RANGE_*</code> value.</p></span></section>
+			<section class="Y" id="INFO_CHROMA_SAMPLE_POSITION">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_CHROMA_SAMPLE_POSITION</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 5: <code>yuvChromaSamplePosition</code>, an <code>AVIF_CHROMA_SAMPLE_POSITION_*</code> value.</p></span></section>
+			<section class="Y" id="INFO_COLOR_PRIMARIES">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_COLOR_PRIMARIES</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 6: <code>colorPrimaries</code>, an <code>AVIF_COLOR_PRIMARIES_*</code> value.</p></span></section>
+			<section class="Y" id="INFO_TRANSFER_CHARACTERISTICS">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_TRANSFER_CHARACTERISTICS</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 7: <code>transferCharacteristics</code>, an <code>AVIF_TRANSFER_CHARACTERISTICS_*</code> value.</p></span></section>
+			<section class="Y" id="INFO_MATRIX_COEFFICIENTS">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_MATRIX_COEFFICIENTS</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 8: <code>matrixCoefficients</code>, an <code>AVIF_MATRIX_COEFFICIENTS_*</code> value.</p></span></section>
+			<section class="Y" id="INFO_HAS_ALPHA">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_HAS_ALPHA</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 9: <code>hasAlpha</code>, libavif&apos;s <code>AVIF_TRUE</code> or <code>AVIF_FALSE</code>.</p></span></section>
+			<section class="Y" id="INFO_ROTATION_DEGREES">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_ROTATION_DEGREES</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 10: <code>irot.angle * 90</code>, the counter-clockwise rotation in degrees.</p></span></section>
+			<section class="Y" id="INFO_MIRRORED">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_MIRRORED</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 11: <code>imir.axis</code>, 1 for a left/right mirror and 0 for a top/bottom one.</p></span></section>
+			<section class="Y" id="INFO_ICC_SIZE">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_ICC_SIZE</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 12: <code>icc.size</code>, the length of the ICC profile.</p></span></section>
+			<section class="Y" id="INFO_EXIF_SIZE">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_EXIF_SIZE</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 13: <code>exif.size</code>, the length of the Exif payload.</p></span></section>
+			<section class="Y" id="INFO_XMP_SIZE">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_XMP_SIZE</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>Slot 14: <code>xmp.size</code>, the length of the XMP payload.</p></span></section>
+			<section class="Y" id="INFO_COUNT">
+				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">INFO_COUNT</code><i class="x"><code class="return">int</code></i></h2><span class="A"><p>How many four byte slots <code>imagify_avif_picture_info</code> fills in.</p></span></section>
 		</article>
-		<aside class="i">
-			<div class="s">
-				<h5 class="BB">Static Fields</h5>
+		<aside class="W">
+			<div class="n">
+				<h5 class="EB">Static Fields</h5>
 				<ul>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRUE">TRUE</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#FALSE">FALSE</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#PIXEL_FORMAT_NONE">PIXEL_FORMAT_NONE</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#PIXEL_FORMAT_YUV444">PIXEL_FORMAT_YUV444</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#PIXEL_FORMAT_YUV422">PIXEL_FORMAT_YUV422</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#PIXEL_FORMAT_YUV420">PIXEL_FORMAT_YUV420</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#PIXEL_FORMAT_YUV400">PIXEL_FORMAT_YUV400</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#RGB_FORMAT_ABGR">RGB_FORMAT_ABGR</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#STRICT_PIXI_REQUIRED">STRICT_PIXI_REQUIRED</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#STRICT_CLAP_VALID">STRICT_CLAP_VALID</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#ADD_IMAGE_FLAG_SINGLE">ADD_IMAGE_FLAG_SINGLE</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#RANGE_LIMITED">RANGE_LIMITED</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#RANGE_FULL">RANGE_FULL</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_SAMPLE_POSITION_UNKNOWN">CHROMA_SAMPLE_POSITION_UNKNOWN</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_SAMPLE_POSITION_VERTICAL">CHROMA_SAMPLE_POSITION_VERTICAL</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_SAMPLE_POSITION_COLOCATED">CHROMA_SAMPLE_POSITION_COLOCATED</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_UNKNOWN">COLOR_PRIMARIES_UNKNOWN</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_BT709">COLOR_PRIMARIES_BT709</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_UNSPECIFIED">COLOR_PRIMARIES_UNSPECIFIED</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_BT470M">COLOR_PRIMARIES_BT470M</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_BT470BG">COLOR_PRIMARIES_BT470BG</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_BT601">COLOR_PRIMARIES_BT601</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_SMPTE240">COLOR_PRIMARIES_SMPTE240</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_GENERIC_FILM">COLOR_PRIMARIES_GENERIC_FILM</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_BT2020">COLOR_PRIMARIES_BT2020</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_XYZ">COLOR_PRIMARIES_XYZ</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_SMPTE431">COLOR_PRIMARIES_SMPTE431</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_SMPTE432">COLOR_PRIMARIES_SMPTE432</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_EBU3213">COLOR_PRIMARIES_EBU3213</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_UNKNOWN">TRANSFER_UNKNOWN</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT709">TRANSFER_BT709</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_UNSPECIFIED">TRANSFER_UNSPECIFIED</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT470M">TRANSFER_BT470M</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT470BG">TRANSFER_BT470BG</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT601">TRANSFER_BT601</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_SMPTE240">TRANSFER_SMPTE240</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_LINEAR">TRANSFER_LINEAR</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_LOG100">TRANSFER_LOG100</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_LOG100_SQRT10">TRANSFER_LOG100_SQRT10</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_IEC61966">TRANSFER_IEC61966</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT1361">TRANSFER_BT1361</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_SRGB">TRANSFER_SRGB</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT2020_10BIT">TRANSFER_BT2020_10BIT</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT2020_12BIT">TRANSFER_BT2020_12BIT</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_PQ">TRANSFER_PQ</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_SMPTE428">TRANSFER_SMPTE428</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_HLG">TRANSFER_HLG</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_IDENTITY">MATRIX_IDENTITY</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_BT709">MATRIX_BT709</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_UNSPECIFIED">MATRIX_UNSPECIFIED</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_FCC">MATRIX_FCC</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_BT470BG">MATRIX_BT470BG</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_BT601">MATRIX_BT601</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_SMPTE240">MATRIX_SMPTE240</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_YCGCO">MATRIX_YCGCO</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_BT2020_NCL">MATRIX_BT2020_NCL</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_BT2020_CL">MATRIX_BT2020_CL</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_SMPTE2085">MATRIX_SMPTE2085</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_CHROMA_DERIVED_NCL">MATRIX_CHROMA_DERIVED_NCL</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_CHROMA_DERIVED_CL">MATRIX_CHROMA_DERIVED_CL</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_ICTCP">MATRIX_ICTCP</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#QUALITY_WORST">QUALITY_WORST</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#QUALITY_BEST">QUALITY_BEST</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#QUALITY_LOSSLESS">QUALITY_LOSSLESS</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_DOWNSAMPLING_AUTOMATIC">CHROMA_DOWNSAMPLING_AUTOMATIC</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_DOWNSAMPLING_FASTEST">CHROMA_DOWNSAMPLING_FASTEST</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_DOWNSAMPLING_BEST_QUALITY">CHROMA_DOWNSAMPLING_BEST_QUALITY</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_DOWNSAMPLING_AVERAGE">CHROMA_DOWNSAMPLING_AVERAGE</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_DOWNSAMPLING_SHARP_YUV">CHROMA_DOWNSAMPLING_SHARP_YUV</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#AVIF_SPEED_DEFAULT">AVIF_SPEED_DEFAULT</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#AVIF_SPEED_SLOWEST">AVIF_SPEED_SLOWEST</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#AVIF_SPEED_FASTEST">AVIF_SPEED_FASTEST</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#DEFAULT_SPEED">DEFAULT_SPEED</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#DEFAULT_QUALITY">DEFAULT_QUALITY</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#DEFAULT_ANIMATION_SPEED">DEFAULT_ANIMATION_SPEED</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#THREADING_PIXEL_THRESHOLD">THREADING_PIXEL_THRESHOLD</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_WIDTH">INFO_WIDTH</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_HEIGHT">INFO_HEIGHT</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_DEPTH">INFO_DEPTH</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_YUV_FORMAT">INFO_YUV_FORMAT</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_YUV_RANGE">INFO_YUV_RANGE</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_CHROMA_SAMPLE_POSITION">INFO_CHROMA_SAMPLE_POSITION</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_COLOR_PRIMARIES">INFO_COLOR_PRIMARIES</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_TRANSFER_CHARACTERISTICS">INFO_TRANSFER_CHARACTERISTICS</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_MATRIX_COEFFICIENTS">INFO_MATRIX_COEFFICIENTS</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_HAS_ALPHA">INFO_HAS_ALPHA</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_ROTATION_DEGREES">INFO_ROTATION_DEGREES</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_MIRRORED">INFO_MIRRORED</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_ICC_SIZE">INFO_ICC_SIZE</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_EXIF_SIZE">INFO_EXIF_SIZE</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_XMP_SIZE">INFO_XMP_SIZE</a></code><i class="CB"><code class="return">int</code></i></li>
-					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_COUNT">INFO_COUNT</a></code><i class="CB"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRUE">TRUE</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#FALSE">FALSE</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#PIXEL_FORMAT_NONE">PIXEL_FORMAT_NONE</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#PIXEL_FORMAT_YUV444">PIXEL_FORMAT_YUV444</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#PIXEL_FORMAT_YUV422">PIXEL_FORMAT_YUV422</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#PIXEL_FORMAT_YUV420">PIXEL_FORMAT_YUV420</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#PIXEL_FORMAT_YUV400">PIXEL_FORMAT_YUV400</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#RGB_FORMAT_ABGR">RGB_FORMAT_ABGR</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#STRICT_PIXI_REQUIRED">STRICT_PIXI_REQUIRED</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#STRICT_CLAP_VALID">STRICT_CLAP_VALID</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#ADD_IMAGE_FLAG_SINGLE">ADD_IMAGE_FLAG_SINGLE</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#RANGE_LIMITED">RANGE_LIMITED</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#RANGE_FULL">RANGE_FULL</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_SAMPLE_POSITION_UNKNOWN">CHROMA_SAMPLE_POSITION_UNKNOWN</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_SAMPLE_POSITION_VERTICAL">CHROMA_SAMPLE_POSITION_VERTICAL</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_SAMPLE_POSITION_COLOCATED">CHROMA_SAMPLE_POSITION_COLOCATED</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_UNKNOWN">COLOR_PRIMARIES_UNKNOWN</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_BT709">COLOR_PRIMARIES_BT709</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_UNSPECIFIED">COLOR_PRIMARIES_UNSPECIFIED</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_BT470M">COLOR_PRIMARIES_BT470M</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_BT470BG">COLOR_PRIMARIES_BT470BG</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_BT601">COLOR_PRIMARIES_BT601</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_SMPTE240">COLOR_PRIMARIES_SMPTE240</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_GENERIC_FILM">COLOR_PRIMARIES_GENERIC_FILM</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_BT2020">COLOR_PRIMARIES_BT2020</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_XYZ">COLOR_PRIMARIES_XYZ</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_SMPTE431">COLOR_PRIMARIES_SMPTE431</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_SMPTE432">COLOR_PRIMARIES_SMPTE432</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#COLOR_PRIMARIES_EBU3213">COLOR_PRIMARIES_EBU3213</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_UNKNOWN">TRANSFER_UNKNOWN</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT709">TRANSFER_BT709</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_UNSPECIFIED">TRANSFER_UNSPECIFIED</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT470M">TRANSFER_BT470M</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT470BG">TRANSFER_BT470BG</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT601">TRANSFER_BT601</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_SMPTE240">TRANSFER_SMPTE240</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_LINEAR">TRANSFER_LINEAR</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_LOG100">TRANSFER_LOG100</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_LOG100_SQRT10">TRANSFER_LOG100_SQRT10</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_IEC61966">TRANSFER_IEC61966</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT1361">TRANSFER_BT1361</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_SRGB">TRANSFER_SRGB</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT2020_10BIT">TRANSFER_BT2020_10BIT</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_BT2020_12BIT">TRANSFER_BT2020_12BIT</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_PQ">TRANSFER_PQ</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_SMPTE428">TRANSFER_SMPTE428</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#TRANSFER_HLG">TRANSFER_HLG</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_IDENTITY">MATRIX_IDENTITY</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_BT709">MATRIX_BT709</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_UNSPECIFIED">MATRIX_UNSPECIFIED</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_FCC">MATRIX_FCC</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_BT470BG">MATRIX_BT470BG</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_BT601">MATRIX_BT601</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_SMPTE240">MATRIX_SMPTE240</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_YCGCO">MATRIX_YCGCO</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_BT2020_NCL">MATRIX_BT2020_NCL</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_BT2020_CL">MATRIX_BT2020_CL</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_SMPTE2085">MATRIX_SMPTE2085</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_CHROMA_DERIVED_NCL">MATRIX_CHROMA_DERIVED_NCL</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_CHROMA_DERIVED_CL">MATRIX_CHROMA_DERIVED_CL</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#MATRIX_ICTCP">MATRIX_ICTCP</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#QUALITY_WORST">QUALITY_WORST</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#QUALITY_BEST">QUALITY_BEST</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#QUALITY_LOSSLESS">QUALITY_LOSSLESS</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_DOWNSAMPLING_AUTOMATIC">CHROMA_DOWNSAMPLING_AUTOMATIC</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_DOWNSAMPLING_FASTEST">CHROMA_DOWNSAMPLING_FASTEST</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_DOWNSAMPLING_BEST_QUALITY">CHROMA_DOWNSAMPLING_BEST_QUALITY</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_DOWNSAMPLING_AVERAGE">CHROMA_DOWNSAMPLING_AVERAGE</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#CHROMA_DOWNSAMPLING_SHARP_YUV">CHROMA_DOWNSAMPLING_SHARP_YUV</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#AVIF_SPEED_DEFAULT">AVIF_SPEED_DEFAULT</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#AVIF_SPEED_SLOWEST">AVIF_SPEED_SLOWEST</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#AVIF_SPEED_FASTEST">AVIF_SPEED_FASTEST</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#DEFAULT_SPEED">DEFAULT_SPEED</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#DEFAULT_QUALITY">DEFAULT_QUALITY</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#DEFAULT_ANIMATION_SPEED">DEFAULT_ANIMATION_SPEED</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#THREADING_PIXEL_THRESHOLD">THREADING_PIXEL_THRESHOLD</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_WIDTH">INFO_WIDTH</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_HEIGHT">INFO_HEIGHT</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_DEPTH">INFO_DEPTH</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_YUV_FORMAT">INFO_YUV_FORMAT</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_YUV_RANGE">INFO_YUV_RANGE</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_CHROMA_SAMPLE_POSITION">INFO_CHROMA_SAMPLE_POSITION</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_COLOR_PRIMARIES">INFO_COLOR_PRIMARIES</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_TRANSFER_CHARACTERISTICS">INFO_TRANSFER_CHARACTERISTICS</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_MATRIX_COEFFICIENTS">INFO_MATRIX_COEFFICIENTS</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_HAS_ALPHA">INFO_HAS_ALPHA</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_ROTATION_DEGREES">INFO_ROTATION_DEGREES</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_MIRRORED">INFO_MIRRORED</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_ICC_SIZE">INFO_ICC_SIZE</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_EXIF_SIZE">INFO_EXIF_SIZE</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_XMP_SIZE">INFO_XMP_SIZE</a></code><i class="N"><code class="return">int</code></i></li>
+					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.avif.ffm.AvifConstants.html#INFO_COUNT">INFO_COUNT</a></code><i class="N"><code class="return">int</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="R">
+		<footer class="U">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
