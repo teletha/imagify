@@ -50,12 +50,12 @@ so the change ships with the next imagify release.
 
 ## Building them
 
-The build is driven by `src/main/native/webp/CMakeLists.txt`, which is an overlay on libwebp's own
+The build is driven by `native/webp/CMakeLists.txt`, which is an overlay on libwebp's own
 build rather than a fork of it:
 
 ```
 git clone --branch v1.6.0 --depth 1 https://github.com/webmproject/libwebp
-cmake -S src/main/native/webp -B build \
+cmake -S native/webp -B build \
       -DCMAKE_BUILD_TYPE=Release \
       -DIMAGIFY_WEBP_SOURCE_DIR=$PWD/libwebp
 cmake --build build --target imagify_webp

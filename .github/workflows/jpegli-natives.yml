@@ -105,14 +105,14 @@ jobs:
           ninja --version
 
       - name: Check the version the build will report
-        # The version is written in src/main/native/jpegli/CMakeLists.txt and nowhere on a command
+        # The version is written in native/jpegli/CMakeLists.txt and nowhere on a command
         # line, because a value on a command line is a value a shell can take apart. This step is
         # what stops the copy in the workflow and the copy the build reads from drifting apart when
         # JPEGLI_COMMIT is bumped above without editing the CMakeLists.
         run: python .github/scripts/check-codec-version.py jpegli "${{ env.JPEGLI_VERSION }}"
 
       - name: Configure
-        # src/main/native/jpegli is an overlay rather than a fork of jpegli's build: jpegli only declares
+        # native/jpegli is an overlay rather than a fork of jpegli's build: jpegli only declares
         # its libjpeg62 compatible target where the linker understands a version script, which
         # excludes Windows and macOS, and the overlay re-declares it for all three with whatever the
         # local linker does understand. See the comments in that CMakeLists.txt.
@@ -128,7 +128,7 @@ jobs:
         # reported JpegliCodec.getVersion() as a commit hash rather than as 0.12.0. The value lives in
         # the CMakeLists, where a shell cannot reach it, and the step before checks the two agree.
         run: >
-          cmake -S src/main/native/jpegli -B build -G Ninja
+          cmake -S native/jpegli -B build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DIMAGIFY_JPEGLI_SOURCE_DIR=${{ github.workspace }}/jpegli
 

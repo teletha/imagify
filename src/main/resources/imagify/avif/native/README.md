@@ -8,7 +8,7 @@ is needed and loads it by absolute path, so users never have to install anything
 
 There is one file per platform and nothing to put beside it: libavif is linked into the shim, which
 is the same shape the WebP shim has. The two-file version was tried first and does not work; the
-reasoning is in `src/main/native/avif/CMakeLists.txt`.
+reasoning is in `native/avif/CMakeLists.txt`.
 
 ## The release the other side of this directory names
 
@@ -66,7 +66,7 @@ cmake -S libavif -B build -G Ninja \
       -DAVIF_LIBSHARPYUV=LOCAL \
       -DAVIF_CODEC_AOM=LOCAL
 cmake --build build --target avif_static
-cmake -S src/main/native/avif -B shim-build -G Ninja \
+cmake -S native/avif -B shim-build -G Ninja \
       -DCMAKE_BUILD_TYPE=Release \
       -DIMAGIFY_AVIF_SOURCE_DIR=$PWD/build \
       -DIMAGIFY_AVIF_HEADER_DIR=$PWD/libavif/include

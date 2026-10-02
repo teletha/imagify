@@ -50,14 +50,14 @@ so the change ships with the next imagify release.
 
 ## Building them
 
-The build is driven by `src/main/native/jpegli/CMakeLists.txt`, which is an overlay on jpegli's own
+The build is driven by `native/jpegli/CMakeLists.txt`, which is an overlay on jpegli's own
 build rather than a fork of it. jpegli publishes neither tags nor releases, so it is pinned to a
 commit:
 
 ```
 git clone --recurse-submodules https://github.com/google/jpegli
 git -C jpegli checkout 031a0077f5799a6041004267fc12b956c1f52a20
-cmake -S src/main/native/jpegli -B build \
+cmake -S native/jpegli -B build \
       -DCMAKE_BUILD_TYPE=Release \
       -DIMAGIFY_JPEGLI_SOURCE_DIR=$PWD/jpegli
 cmake --build build --target imagify_jpegli

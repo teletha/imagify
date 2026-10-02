@@ -14,7 +14,7 @@ name: avif-natives
 # earlier arrangement shipped libavif beside the shim and imported it, and the shim then recorded
 # libavif's SONAME, which is a name the jar cannot ship because its files are named for the platform
 # and the architecture. Three ways of renaming it were tried and all three fail; the reasoning is in
-# src/main/native/avif/CMakeLists.txt.
+# native/avif/CMakeLists.txt.
 
 on:
   workflow_dispatch:
@@ -194,7 +194,7 @@ jobs:
         # be stored into a pointer-typed struct field, and avifRGBImage.pixels is exactly such a
         # field. An entry point that takes the pixels as its own argument, called with
         # Linker.Option.critical set, is what makes an encode possible without copying the image
-        # first. See src/main/native/avif/imagify_avif.c.
+        # first. See native/avif/imagify_avif.c.
         #
         # The other is the thirteen libavif structures. A direct FFM binding needs a hand written
         # MemoryLayout for each, and a struct whose fields are in the wrong order does not fail, it
@@ -205,7 +205,7 @@ jobs:
         # checkout's include directory, because the two are not next to each other here.
         shell: bash
         run: >
-          cmake -S src/main/native/avif -B shim-build -G Ninja
+          cmake -S native/avif -B shim-build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
           -DIMAGIFY_AVIF_SOURCE_DIR=$PWD/build

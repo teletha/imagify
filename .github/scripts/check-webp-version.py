@@ -2,7 +2,7 @@
 """Fails when the version in the workflow is not the one the build will report.
 
 WebpCodec.getVersion() answers with the libwebp release version that the bundled library was built
-from, and that string is written into src/main/native/webp/CMakeLists.txt rather than passed to
+from, and that string is written into native/webp/CMakeLists.txt rather than passed to
 cmake on a command line. It used to be passed on a command line, and every Windows library this
 project built reported its version as "1": a workflow step with no shell: key runs under pwsh on a
 Windows runner, PowerShell hands a native command -DIMAGIFY_WEBP_VERSION=1.6.0 as two arguments,
@@ -52,7 +52,7 @@ def main(argv):
 
     expected = argv[1]
     root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    cmake = read(os.path.join(root, "src", "main", "native", "webp", "CMakeLists.txt"))
+    cmake = read(os.path.join(root, "native", "webp", "CMakeLists.txt"))
     if cmake is None:
         return 2
     workflow = read(os.path.join(root, ".github", "workflows", "webp-natives.yml"))
@@ -62,7 +62,7 @@ def main(argv):
     found = VERSION_PATTERN.search(cmake)
     if found is None:
         return fail("no set(IMAGIFY_WEBP_VERSION \"...\" CACHE ...) in "
-                    "src/main/native/webp/CMakeLists.txt, so the build will report \"unknown\" "
+                    "native/webp/CMakeLists.txt, so the build will report \"unknown\" "
                     "and this check cannot tell whether that is meant")
 
     in_build = found.group(1)
@@ -77,7 +77,7 @@ def main(argv):
     for name, value in (("WEBP_VERSION in the workflow", in_workflow.group(1)),
                         ("the version given on the command line", expected)):
         if value != in_build:
-            print(f"::error::the version written in src/main/native/webp/CMakeLists.txt is "
+            print(f"::error::the version written in native/webp/CMakeLists.txt is "
                   f"{in_build}, but {name} is {value}. A library built now would report itself as a "
                   f"libwebp it was not built from.", file=sys.stderr)
             return 1
