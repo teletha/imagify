@@ -51,6 +51,10 @@ public class WebpImageReaderSpi extends ImageReaderSpi {
      */
     private static final Class<?>[] INPUT_TYPES = { ImageInputStream.class };
 
+    /**
+     * Creates the provider for {@code ImageIO}, which instantiates it reflectively and therefore
+     * needs a public no-argument constructor here rather than a factory.
+     */
     public WebpImageReaderSpi() {
         // ImageReader.setInput() consults getInputTypes() to decide which sources it may hand over,
         // and the base class clones this field, so it has to be filled in even though every accessor
@@ -151,6 +155,9 @@ public class WebpImageReaderSpi extends ImageReaderSpi {
     }
 
     /**
+     * The reader class behind this provider, so that a caller holding the provider can reach the
+     * class itself without going through {@code ImageIO} a second time.
+     *
      * @return the reader this provider creates
      */
     public Class<WebpImageReader> getReaderClass() {

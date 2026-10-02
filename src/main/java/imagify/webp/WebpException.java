@@ -23,6 +23,9 @@ public class WebpException extends Exception {
     private static final long serialVersionUID = 1L;
 
     /**
+     * Creates an exception carrying only the detail message, for a failure libwebp reported in text
+     * and nothing else.
+     *
      * @param message the detail message
      */
     public WebpException(String message) {
@@ -30,6 +33,9 @@ public class WebpException extends Exception {
     }
 
     /**
+     * Creates an exception wrapping the failure it was given, for an error raised while fetching or
+     * loading the shared library rather than reported by it.
+     *
      * @param message the detail message
      * @param cause the underlying failure
      */

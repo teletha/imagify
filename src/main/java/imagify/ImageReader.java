@@ -44,7 +44,7 @@ import imagify.webp.ffm.WebpCodec;
  *   <li>Explicit {@link ImageFormat} parameter</li>
  *   <li>File extension</li>
  *   <li>Magic byte header</li>
- * </ol></p>
+ * </ol>
  *
  * <p>Returns a {@link FrameSequence} which contains one or more frames.
  * For single-image formats (JPEG, PNG, BMP), a single-frame sequence is returned.

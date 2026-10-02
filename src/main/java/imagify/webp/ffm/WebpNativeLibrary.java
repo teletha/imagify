@@ -34,7 +34,7 @@ import imagify.ffm.NativeRepository.NativeCodec;
  * a missing managed library leaves the codec free to fall back to a library installed on the
  * system.
  *
- * <p>See {@code src/main/native/webp/CMakeLists.txt} for how the libraries are built.
+ * <p>See {@code native/webp/CMakeLists.txt} for how the libraries are built.
  */
 final class WebpNativeLibrary {
 

@@ -45,6 +45,10 @@ public class AvifImageWriterSpi extends ImageWriterSpi {
     private static final String CLASS_NAME = "imagify.avif.AvifImageWriter";
     private static final String VENDOR_NAME = "https://github.com/teletha/imagify";
 
+    /**
+     * Creates the provider for {@code ImageIO}, which instantiates it reflectively and therefore
+     * needs a public no-argument constructor here rather than a factory.
+     */
     public AvifImageWriterSpi() {
         // ImageWriter.setOutput() consults getOutputTypes() to decide which destinations it may hand
         // over, and the base class clones this field, so it has to be filled in even though every
@@ -91,6 +95,9 @@ public class AvifImageWriterSpi extends ImageWriterSpi {
     }
 
     /**
+     * The writer class behind this provider, so that a caller holding the provider can reach the
+     * class itself without going through {@code ImageIO} a second time.
+     *
      * @return the writer this provider creates
      */
     public Class<AvifImageWriter> getWriterClass() {

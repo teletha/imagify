@@ -67,6 +67,8 @@ public class JpegImageReader extends ImageReader {
     private byte[] encoded;
 
     /**
+     * Creates a reader for the {@code ImageIO} plug-in registry to hand the frames to.
+     *
      * @param originatingProvider the provider that created this reader
      */
     public JpegImageReader(ImageReaderSpi originatingProvider) {

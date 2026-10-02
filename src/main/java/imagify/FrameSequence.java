@@ -49,6 +49,8 @@ public class FrameSequence {
     }
 
     /**
+     * The frames themselves, in the order they are meant to be played.
+     *
      * @return the frames in display order, never {@code null}
      */
     public List<BufferedImage> frames() {
@@ -56,6 +58,9 @@ public class FrameSequence {
     }
 
     /**
+     * The timing, one entry per frame, held as a copy so that a caller editing what it gets back
+     * cannot desynchronise the sequence.
+     *
      * @return how long each frame is shown in milliseconds, one entry per frame
      */
     public int[] delaysMs() {
@@ -63,6 +68,9 @@ public class FrameSequence {
     }
 
     /**
+     * How many times the whole sequence repeats, in the sense the container formats use: zero means
+     * it plays for ever rather than never.
+     *
      * @return how many times the animation repeats, 0 meaning forever
      */
     public int loopCount() {
@@ -70,6 +78,9 @@ public class FrameSequence {
     }
 
     /**
+     * The length of the sequence, which is always at least one because an empty one has nothing to
+     * describe.
+     *
      * @return the number of frames
      */
     public int frameCount() {

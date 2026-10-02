@@ -47,12 +47,16 @@ public final class AvifConstants {
      */
     public static final int PIXEL_FORMAT_NONE = 0;
 
+    /** {@code AVIF_PIXEL_FORMAT_YUV444}: no chroma subsampling at all. */
     public static final int PIXEL_FORMAT_YUV444 = 1;
 
+    /** {@code AVIF_PIXEL_FORMAT_YUV422}: the two chroma samples halved horizontally. */
     public static final int PIXEL_FORMAT_YUV422 = 2;
 
+    /** {@code AVIF_PIXEL_FORMAT_YUV420}: both chroma samples halved, the usual choice. */
     public static final int PIXEL_FORMAT_YUV420 = 3;
 
+    /** {@code AVIF_PIXEL_FORMAT_YUV400}: luma only, so there is no colour in the file at all. */
     public static final int PIXEL_FORMAT_YUV400 = 4;
 
     /**
@@ -90,105 +94,154 @@ public final class AvifConstants {
      * is 9, the same as AVIF_COLOR_PRIMARIES_BT2020, and AVIF_TRANSFER_CHARACTERISTICS_SMPTE2084 is
      * 16, the same as AVIF_TRANSFER_CHARACTERISTICS_PQ.
      */
+    /** {@code AVIF_RANGE_LIMITED}: Y [16..235] and UV [16..240] at 8 bits, the video convention. */
     public static final int RANGE_LIMITED = 0;
 
+    /** {@code AVIF_RANGE_FULL}: [0..255] at 8 bits, which is what the RGB planes always hold. */
     public static final int RANGE_FULL = 1;
 
+    /** {@code AVIF_CHROMA_SAMPLE_POSITION_UNKNOWN}, the header's reserved value. */
     public static final int CHROMA_SAMPLE_POSITION_UNKNOWN = 0;
 
+    /** {@code AVIF_CHROMA_SAMPLE_POSITION_VERTICAL}. */
     public static final int CHROMA_SAMPLE_POSITION_VERTICAL = 1;
 
+    /** {@code AVIF_CHROMA_SAMPLE_POSITION_COLOCATED}. */
     public static final int CHROMA_SAMPLE_POSITION_COLOCATED = 2;
 
+    /** {@code AVIF_COLOR_PRIMARIES_UNKNOWN}: reserved, used by libavif as a sentinel. */
     public static final int COLOR_PRIMARIES_UNKNOWN = 0;
 
+    /** {@code AVIF_COLOR_PRIMARIES_BT709}, which the header also spells SRGB and IEC61966_2_4. */
     public static final int COLOR_PRIMARIES_BT709 = 1;
 
+    /** {@code AVIF_COLOR_PRIMARIES_UNSPECIFIED}. */
     public static final int COLOR_PRIMARIES_UNSPECIFIED = 2;
 
+    /** {@code AVIF_COLOR_PRIMARIES_BT470M}. */
     public static final int COLOR_PRIMARIES_BT470M = 4;
 
+    /** {@code AVIF_COLOR_PRIMARIES_BT470BG}. */
     public static final int COLOR_PRIMARIES_BT470BG = 5;
 
+    /** {@code AVIF_COLOR_PRIMARIES_BT601}. */
     public static final int COLOR_PRIMARIES_BT601 = 6;
 
+    /** {@code AVIF_COLOR_PRIMARIES_SMPTE240}. */
     public static final int COLOR_PRIMARIES_SMPTE240 = 7;
 
+    /** {@code AVIF_COLOR_PRIMARIES_GENERIC_FILM}. */
     public static final int COLOR_PRIMARIES_GENERIC_FILM = 8;
 
+    /** {@code AVIF_COLOR_PRIMARIES_BT2020}, which the header also spells BT2100. */
     public static final int COLOR_PRIMARIES_BT2020 = 9;
 
+    /** {@code AVIF_COLOR_PRIMARIES_XYZ}, the CIE XYZ primaries. */
     public static final int COLOR_PRIMARIES_XYZ = 10;
 
+    /** {@code AVIF_COLOR_PRIMARIES_SMPTE431}. */
     public static final int COLOR_PRIMARIES_SMPTE431 = 11;
 
     /** {@code AVIF_COLOR_PRIMARIES_SMPTE432}, which the header also spells DCI_P3. */
     public static final int COLOR_PRIMARIES_SMPTE432 = 12;
 
+    /** {@code AVIF_COLOR_PRIMARIES_EBU3213}, the EBU Tech. 3213 primaries. */
     public static final int COLOR_PRIMARIES_EBU3213 = 22;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_UNKNOWN}: reserved, used as a sentinel. */
     public static final int TRANSFER_UNKNOWN = 0;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_BT709}. */
     public static final int TRANSFER_BT709 = 1;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_UNSPECIFIED}. */
     public static final int TRANSFER_UNSPECIFIED = 2;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_BT470M}, which the header annotates as 2.2 gamma. */
     public static final int TRANSFER_BT470M = 4;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_BT470BG}, which the header annotates as 2.8 gamma. */
     public static final int TRANSFER_BT470BG = 5;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_BT601}. */
     public static final int TRANSFER_BT601 = 6;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_SMPTE240}. */
     public static final int TRANSFER_SMPTE240 = 7;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_LINEAR}. */
     public static final int TRANSFER_LINEAR = 8;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_LOG100}. */
     public static final int TRANSFER_LOG100 = 9;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_LOG100_SQRT10}. */
     public static final int TRANSFER_LOG100_SQRT10 = 10;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_IEC61966}. */
     public static final int TRANSFER_IEC61966 = 11;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_BT1361}. */
     public static final int TRANSFER_BT1361 = 12;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_SRGB}. */
     public static final int TRANSFER_SRGB = 13;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_BT2020_10BIT}. */
     public static final int TRANSFER_BT2020_10BIT = 14;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_BT2020_12BIT}. */
     public static final int TRANSFER_BT2020_12BIT = 15;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_PQ}, which the header also spells SMPTE2084. */
     public static final int TRANSFER_PQ = 16;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_SMPTE428}. */
     public static final int TRANSFER_SMPTE428 = 17;
 
+    /** {@code AVIF_TRANSFER_CHARACTERISTICS_HLG}. */
     public static final int TRANSFER_HLG = 18;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_IDENTITY}: G, B and R pass through unchanged. */
     public static final int MATRIX_IDENTITY = 0;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_BT709}. */
     public static final int MATRIX_BT709 = 1;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_UNSPECIFIED}. */
     public static final int MATRIX_UNSPECIFIED = 2;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_FCC}. */
     public static final int MATRIX_FCC = 4;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_BT470BG}. */
     public static final int MATRIX_BT470BG = 5;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_BT601}. */
     public static final int MATRIX_BT601 = 6;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_SMPTE240}. */
     public static final int MATRIX_SMPTE240 = 7;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_YCGCO}. */
     public static final int MATRIX_YCGCO = 8;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_BT2020_NCL}, the non-constant luminance form. */
     public static final int MATRIX_BT2020_NCL = 9;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_BT2020_CL}, the constant luminance form. */
     public static final int MATRIX_BT2020_CL = 10;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_SMPTE2085}. */
     public static final int MATRIX_SMPTE2085 = 11;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL}, for YC'gC'be. */
     public static final int MATRIX_CHROMA_DERIVED_NCL = 12;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL}, for YC'gC're. */
     public static final int MATRIX_CHROMA_DERIVED_CL = 13;
 
+    /** {@code AVIF_MATRIX_COEFFICIENTS_ICTCP}. */
     public static final int MATRIX_ICTCP = 14;
 
     /** {@code AVIF_QUALITY_WORST}: the smallest file, and the one that loses the most. */
@@ -208,14 +261,19 @@ public final class AvifConstants {
      * all the averaging filter. Only SHARP_YUV selects a different one, and the header notes it is
      * available for 4:2:0 only and ignored for 4:2:2.
      */
+    /** {@code AVIF_CHROMA_DOWNSAMPLING_AUTOMATIC}: the header's own trade off, which is AVERAGE. */
     public static final int CHROMA_DOWNSAMPLING_AUTOMATIC = 0;
 
+    /** {@code AVIF_CHROMA_DOWNSAMPLING_FASTEST}: also AVERAGE, spelled as a speed choice. */
     public static final int CHROMA_DOWNSAMPLING_FASTEST = 1;
 
+    /** {@code AVIF_CHROMA_DOWNSAMPLING_BEST_QUALITY}: also AVERAGE, spelled as a quality choice. */
     public static final int CHROMA_DOWNSAMPLING_BEST_QUALITY = 2;
 
+    /** {@code AVIF_CHROMA_DOWNSAMPLING_AVERAGE}: the averaging filter. */
     public static final int CHROMA_DOWNSAMPLING_AVERAGE = 3;
 
+    /** {@code AVIF_CHROMA_DOWNSAMPLING_SHARP_YUV}: libsharpyuv, for 4:2:0 only. */
     public static final int CHROMA_DOWNSAMPLING_SHARP_YUV = 4;
 
     /**
@@ -295,34 +353,49 @@ public final class AvifConstants {
      * the header and why a field added to one side and not the other is a mistake to be caught by
      * reading them side by side rather than by a test failing.
      */
+    /** Slot 0: {@code width}. */
     public static final int INFO_WIDTH = 0;
 
+    /** Slot 1: {@code height}. */
     public static final int INFO_HEIGHT = 1;
 
+    /** Slot 2: {@code depth}, the bits per sample the file declares. */
     public static final int INFO_DEPTH = 2;
 
+    /** Slot 3: {@code yuvFormat}, an {@code AVIF_PIXEL_FORMAT_*} value. */
     public static final int INFO_YUV_FORMAT = 3;
 
+    /** Slot 4: {@code yuvRange}, an {@code AVIF_RANGE_*} value. */
     public static final int INFO_YUV_RANGE = 4;
 
+    /** Slot 5: {@code yuvChromaSamplePosition}, an {@code AVIF_CHROMA_SAMPLE_POSITION_*} value. */
     public static final int INFO_CHROMA_SAMPLE_POSITION = 5;
 
+    /** Slot 6: {@code colorPrimaries}, an {@code AVIF_COLOR_PRIMARIES_*} value. */
     public static final int INFO_COLOR_PRIMARIES = 6;
 
+    /** Slot 7: {@code transferCharacteristics}, an {@code AVIF_TRANSFER_CHARACTERISTICS_*} value. */
     public static final int INFO_TRANSFER_CHARACTERISTICS = 7;
 
+    /** Slot 8: {@code matrixCoefficients}, an {@code AVIF_MATRIX_COEFFICIENTS_*} value. */
     public static final int INFO_MATRIX_COEFFICIENTS = 8;
 
+    /** Slot 9: {@code hasAlpha}, libavif's {@code AVIF_TRUE} or {@code AVIF_FALSE}. */
     public static final int INFO_HAS_ALPHA = 9;
 
+    /** Slot 10: {@code irot.angle * 90}, the counter-clockwise rotation in degrees. */
     public static final int INFO_ROTATION_DEGREES = 10;
 
+    /** Slot 11: {@code imir.axis}, 1 for a left/right mirror and 0 for a top/bottom one. */
     public static final int INFO_MIRRORED = 11;
 
+    /** Slot 12: {@code icc.size}, the length of the ICC profile. */
     public static final int INFO_ICC_SIZE = 12;
 
+    /** Slot 13: {@code exif.size}, the length of the Exif payload. */
     public static final int INFO_EXIF_SIZE = 13;
 
+    /** Slot 14: {@code xmp.size}, the length of the XMP payload. */
     public static final int INFO_XMP_SIZE = 14;
 
     /** How many four byte slots {@code imagify_avif_picture_info} fills in. */

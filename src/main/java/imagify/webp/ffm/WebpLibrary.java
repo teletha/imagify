@@ -20,7 +20,7 @@ import java.lang.invoke.MethodHandle;
 import java.nio.charset.StandardCharsets;
 
 /**
- * FFM binding for the C ABI in {@code src/main/native/webp/imagify_webp.h}.
+ * FFM binding for the C ABI in {@code native/webp/imagify_webp.h}.
  *
  * <p>This is the Foreign Function &amp; Memory API (JEP 454) counterpart to the JNA binding.
  * It describes the function signatures and structure layouts needed to call the native
@@ -44,7 +44,7 @@ public final class WebpLibrary {
 
     /**
      * The version of the C ABI this binding was written against, as
-     * {@code IMAGIFY_WEBP_ABI_VERSION} in {@code src/main/native/webp/imagify_webp.h} spells it.
+     * {@code IMAGIFY_WEBP_ABI_VERSION} in {@code native/webp/imagify_webp.h} spells it.
      */
     public static final String ABI_VERSION = "1";
 
@@ -263,12 +263,24 @@ public final class WebpLibrary {
     /**
      * The properties of a WebP file's container headers, as reported by
      * {@link #imagify_webp_read_features}.
+     *
+     * @param width the canvas width in pixels
+     * @param height the canvas height in pixels
+     * @param hasAlpha whether the file carries an alpha channel
+     * @param hasAnimation whether the file is an animation rather than a single frame
+     * @param format a {@code WebPImageType} value: {@link #FORMAT_VP8X}, {@link #FORMAT_VP8} or
+     *               {@link #FORMAT_VP8L}
      */
     public record WebpFeaturesInfo(int width, int height, int hasAlpha, int hasAnimation, int format) {}
 
     /**
      * The properties of a WebP animation's control chunk, as reported by
      * {@link #imagify_webp_read_animation} and {@link #imagify_webp_decode_animation}.
+     *
+     * @param frameCount how many frames the animation holds
+     * @param loopCount how many times it repeats, or zero for an animation that repeats forever
+     * @param width the canvas width in pixels
+     * @param height the canvas height in pixels
      */
     public record WebpAnimationInfo(int frameCount, int loopCount, int width, int height) {}
 
@@ -491,7 +503,7 @@ public final class WebpLibrary {
         if (handle == null) {
             throw new IllegalStateException("the loaded WebP library has no " + name
                     + "(); it was built before that entry point was added to"
-                    + " src/main/native/webp/imagify_webp.h");
+                    + " native/webp/imagify_webp.h");
         }
     }
 

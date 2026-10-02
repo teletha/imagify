@@ -25,6 +25,7 @@ import javax.imageio.stream.ImageInputStream;
  */
 public class IcoImageReaderSpi extends ImageReaderSpi {
 
+    /** Version of this service provider implementation. */
     public static final String VERSION = "0.1";
 
     private static final String[] NAMES = { "ICO", "ico" };
@@ -34,6 +35,11 @@ public class IcoImageReaderSpi extends ImageReaderSpi {
     private static final String VENDOR_NAME = "https://github.com/teletha/imagify";
     private static final Class<?>[] INPUT_TYPES = { ImageInputStream.class };
 
+    /**
+     * {@code ImageIO} builds the provider reflectively, so it needs a public no-argument
+     * constructor; the accepted input types are copied in here rather than assigned directly, so
+     * that a caller editing the inherited field cannot reach the shared constant through it.
+     */
     public IcoImageReaderSpi() {
         inputTypes = INPUT_TYPES.clone();
     }
@@ -113,6 +119,12 @@ public class IcoImageReaderSpi extends ImageReaderSpi {
     @Override public String[] getMIMETypes() { return MIME_TYPES.clone(); }
     @Override public String getPluginClassName() { return CLASS_NAME; }
 
+    /**
+     * The reader class behind this provider, so that a caller holding the provider can reach the
+     * class itself without going through {@code ImageIO} a second time.
+     *
+     * @return the reader this provider creates
+     */
     public Class<IcoImageReader> getReaderClass() { return IcoImageReader.class; }
 
     @Override public boolean isStandardStreamMetadataFormatSupported() { return false; }

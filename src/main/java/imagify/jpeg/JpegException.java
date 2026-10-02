@@ -17,7 +17,7 @@ import java.io.Serial;
  * <p>The most common causes are a missing or incompatible jpegli native library and malformed
  * input.
  *
- * <p>Every message this carries comes either from the C shim in {@code src/main/native} or from
+ * <p>Every message this carries comes either from the C shim in {@code native/jpegli} or from
  * {@link #JpegException(String, Throwable)} wrapping whatever the loader reported while loading the
  * shared library, so the text is a description rather than a stable identifier. Nothing should parse
  * it.
@@ -28,6 +28,9 @@ public class JpegException extends Exception {
     private static final long serialVersionUID = 1L;
 
     /**
+     * Creates an exception carrying only the detail message, for a failure the C shim reported in
+     * text and nothing else.
+     *
      * @param message the detail message
      */
     public JpegException(String message) {
@@ -35,6 +38,9 @@ public class JpegException extends Exception {
     }
 
     /**
+     * Creates an exception wrapping the failure it was given, for an error raised while loading the
+     * shared library rather than reported by it.
+     *
      * @param message the detail message
      * @param cause the underlying failure
      */

@@ -362,6 +362,10 @@ public final class Imagify {
 
     /**
      * Resizes all frames to exact dimensions.
+     *
+     * @param targetW the width in pixels, stretching the image to it whatever its own ratio is
+     * @param targetH the height in pixels, on the same terms as {@code targetW}
+     * @return this pipeline, so the calls chain
      */
     public Imagify resize(int targetW, int targetH) {
         return resize(targetW, targetH, ResizeAlgorithm.DEFAULT);
@@ -369,6 +373,11 @@ public final class Imagify {
 
     /**
      * Resizes all frames to exact dimensions using the specified algorithm.
+     *
+     * @param targetW the width in pixels, stretching the image to it whatever its own ratio is
+     * @param targetH the height in pixels, on the same terms as {@code targetW}
+     * @param algorithm how the pixels are resampled on the way
+     * @return this pipeline, so the calls chain
      */
     public Imagify resize(int targetW, int targetH, ResizeAlgorithm algorithm) {
         return map(BufferedImageResize.resize(targetW, targetH, algorithm));
@@ -376,6 +385,15 @@ public final class Imagify {
 
     /**
      * Resizes by scale factor.
+     *
+     * <p>
+     * The factor applies to both edges, so the aspect ratio survives it. A value above 1 enlarges
+     * and a value below 1 shrinks; the target is rounded to the nearest whole pixel, which is the
+     * step that decides how far the result is from the exact multiple.
+     * </p>
+     *
+     * @param scale the factor to multiply both edges by
+     * @return this pipeline, so the calls chain
      */
     public Imagify resize(double scale) {
         return resize(scale, ResizeAlgorithm.DEFAULT);
@@ -383,6 +401,10 @@ public final class Imagify {
 
     /**
      * Resizes by scale factor using the specified algorithm.
+     *
+     * @param scale the factor to multiply both edges by
+     * @param algorithm how the pixels are resampled on the way
+     * @return this pipeline, so the calls chain
      */
     public Imagify resize(double scale, ResizeAlgorithm algorithm) {
         BufferedImage first = frameSequence.toBufferedImage();
@@ -398,6 +420,10 @@ public final class Imagify {
      * {@link ImageResizer#resizeToFit(BufferedImage, int)} does as well; use {@link #resize} when
      * only shrinking is wanted.
      * </p>
+     *
+     * @param maxDimension the length in pixels the longer edge is brought to
+     * @throws IllegalArgumentException if {@code maxDimension} is not positive
+     * @return this pipeline, so the calls chain
      */
     public Imagify resizeToFit(int maxDimension) {
         return resizeToFit(maxDimension, ResizeAlgorithm.DEFAULT);
@@ -406,6 +432,10 @@ public final class Imagify {
     /**
      * Resizes so that the longest edge becomes {@code maxDimension}, keeping the aspect ratio.
      *
+     * @param maxDimension the length in pixels the longer edge is brought to
+     * @param algorithm how the pixels are resampled on the way
+     * @throws IllegalArgumentException if {@code maxDimension} is not positive
+     * @return this pipeline, so the calls chain
      * @see #resizeToFit(int)
      */
     public Imagify resizeToFit(int maxDimension, ResizeAlgorithm algorithm) {
@@ -426,6 +456,11 @@ public final class Imagify {
      * shape of the box. A source already smaller than the box is left at its own size rather than
      * scaled up.
      * </p>
+     *
+     * @param targetW the width of the box to fit inside
+     * @param targetH the height of the box to fit inside
+     * @throws IllegalArgumentException if either edge is not positive
+     * @return this pipeline, so the calls chain
      */
     public Imagify resizeInside(int targetW, int targetH) {
         return resizeInside(targetW, targetH, ResizeAlgorithm.DEFAULT);
@@ -434,6 +469,11 @@ public final class Imagify {
     /**
      * Scales down to the largest size that fits inside the given box, keeping the aspect ratio.
      *
+     * @param targetW the width of the box to fit inside
+     * @param targetH the height of the box to fit inside
+     * @param algorithm how the pixels are resampled on the way
+     * @throws IllegalArgumentException if either edge is not positive
+     * @return this pipeline, so the calls chain
      * @see #resizeInside(int, int)
      */
     public Imagify resizeInside(int targetW, int targetH, ResizeAlgorithm algorithm) {
@@ -454,6 +494,11 @@ public final class Imagify {
      * most callers mean by "make it 800 by 600" and is the counterpart of {@link #padTo(int, int)},
      * which keeps the aspect ratio and adds the missing area instead.
      * </p>
+     *
+     * @param targetW the width of the result, which is exactly this many pixels
+     * @param targetH the height of the result, which is exactly this many pixels
+     * @throws IllegalArgumentException if either edge is not positive
+     * @return this pipeline, so the calls chain
      */
     public Imagify resizeToFill(int targetW, int targetH) {
         return resizeToFill(targetW, targetH, ResizeAlgorithm.DEFAULT);
@@ -462,6 +507,11 @@ public final class Imagify {
     /**
      * Scales and centre crops so the result is exactly the given size, filling the box completely.
      *
+     * @param targetW the width of the result, which is exactly this many pixels
+     * @param targetH the height of the result, which is exactly this many pixels
+     * @param algorithm how the pixels are resampled on the way
+     * @throws IllegalArgumentException if either edge is not positive
+     * @return this pipeline, so the calls chain
      * @see #resizeToFill(int, int)
      */
     public Imagify resizeToFill(int targetW, int targetH, ResizeAlgorithm algorithm) {
@@ -485,6 +535,11 @@ public final class Imagify {
      * {@link BufferedImage#TYPE_INT_ARGB}. Pass a colour to {@link #padTo(int, int, Color)} to fill
      * it instead.
      * </p>
+     *
+     * @param targetW the width of the canvas, which is exactly this many pixels
+     * @param targetH the height of the canvas, which is exactly this many pixels
+     * @throws IllegalArgumentException if either edge is not positive
+     * @return this pipeline, so the calls chain
      */
     public Imagify padTo(int targetW, int targetH) {
         return padTo(targetW, targetH, null);
@@ -493,7 +548,11 @@ public final class Imagify {
     /**
      * Scales to fit inside the given box and centres the result on a canvas of exactly that size.
      *
+     * @param targetW the width of the canvas, which is exactly this many pixels
+     * @param targetH the height of the canvas, which is exactly this many pixels
      * @param background what to fill the uncovered area with, {@code null} meaning transparent
+     * @throws IllegalArgumentException if either edge is not positive
+     * @return this pipeline, so the calls chain
      * @see #padTo(int, int)
      */
     public Imagify padTo(int targetW, int targetH, Color background) {
@@ -526,6 +585,12 @@ public final class Imagify {
      * Each frame is cropped into an image of its own rather than being viewed, so a sequence
      * survives the cut without every frame pinning a copy of the whole original.
      * </p>
+     *
+     * @param x the left edge of the rectangle, counted from the left of the frame
+     * @param y the top edge of the rectangle, counted from the top of the frame
+     * @param width the width of the rectangle
+     * @param height the height of the rectangle
+     * @return this pipeline, so the calls chain
      */
     public Imagify crop(int x, int y, int width, int height) {
         return map(BufferedImageTransform.crop(x, y, width, height));
@@ -534,6 +599,8 @@ public final class Imagify {
     /**
      * Rotates every frame clockwise, resampling bilinearly unless the angle is a multiple of 90.
      *
+     * @param degrees how far to turn, clockwise, which may be any value rather than only 90 steps
+     * @return this pipeline, so the calls chain
      * @see BufferedImageTransform#rotate(double)
      */
     public Imagify rotate(double degrees) {
@@ -543,6 +610,9 @@ public final class Imagify {
     /**
      * Rotates every frame clockwise.
      *
+     * @param degrees how far to turn, clockwise
+     * @param algorithm how the pixels are resampled when the angle is not a multiple of 90
+     * @return this pipeline, so the calls chain
      * @see BufferedImageTransform#rotate(double, ResizeAlgorithm)
      */
     public Imagify rotate(double degrees, ResizeAlgorithm algorithm) {
@@ -551,6 +621,8 @@ public final class Imagify {
 
     /**
      * Mirrors every frame left to right.
+     *
+     * @return this pipeline, so the calls chain
      */
     public Imagify flipHorizontal() {
         return map(BufferedImageTransform.flipHorizontal());
@@ -558,6 +630,8 @@ public final class Imagify {
 
     /**
      * Mirrors every frame top to bottom.
+     *
+     * @return this pipeline, so the calls chain
      */
     public Imagify flipVertical() {
         return map(BufferedImageTransform.flipVertical());
@@ -565,6 +639,14 @@ public final class Imagify {
 
     /**
      * Applies an operation to every frame, keeping the timing of the sequence untouched.
+     *
+     * <p>
+     * Every frame is handed over separately rather than as a sequence, so an operation that needs
+     * to see the frames together has to go through {@link #asSpriteSheet(int)} first.
+     * </p>
+     *
+     * @param operation what to do to each frame
+     * @return this pipeline, so the calls chain
      */
     public Imagify map(Function<BufferedImage, BufferedImage> operation) {
         var frames = new ArrayList<BufferedImage>(frameSequence.frameCount());
@@ -620,6 +702,9 @@ public final class Imagify {
      * Lays out all frames in a grid with the given number of columns, turning the sequence into a
      * single image.
      *
+     * @param columns the number of columns the frames are laid out in
+     * @throws IllegalArgumentException if {@code columns} is not positive
+     * @return this pipeline, so the calls chain
      * @see #asSpriteSheet(Consumer)
      */
     public Imagify asSpriteSheet(int columns) {
@@ -666,7 +751,12 @@ public final class Imagify {
      * Cuts the image into an even grid and makes the first {@code frameCount} pieces, row by row,
      * the frames of an animation. Use it when the last row of the sheet is not full.
      *
+     * @param columns the number of columns in the sheet
+     * @param rows the number of rows in the sheet
      * @param frameCount how many pieces to take, at most {@code columns * rows}
+     * @param delayMs how long each frame is shown, in milliseconds
+     * @throws IllegalArgumentException if the grid is not positive or cannot hold {@code frameCount}
+     * @return this pipeline, so the calls chain
      * @see #asAnimation(int, int, int)
      */
     public Imagify asAnimation(int columns, int rows, int frameCount, int delayMs) {
@@ -761,6 +851,10 @@ public final class Imagify {
      * format supports animation, it is written as an animated image;
      * otherwise the first frame is written as a still image.
      * </p>
+     *
+     * @param path where to write, the format coming from the extension
+     * @throws IOError if the file cannot be written
+     * @return this pipeline, so the calls chain
      */
     public Imagify writeTo(Path path) {
         try {
@@ -781,7 +875,10 @@ public final class Imagify {
      * otherwise the first frame is written as a still image.
      * </p>
      *
+     * @param path where to write, the format coming from the extension
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @throws IOError if the file cannot be written
+     * @return this pipeline, so the calls chain
      */
     public Imagify writeTo(Path path, double quality) {
         try {
@@ -801,6 +898,11 @@ public final class Imagify {
      * supports animation, it is written as an animated image;
      * otherwise the first frame is written as a still image.
      * </p>
+     *
+     * @param path where to write
+     * @param format the format to write, which overrides the extension
+     * @throws IOError if the file cannot be written
+     * @return this pipeline, so the calls chain
      */
     public Imagify writeTo(Path path, ImageFormat format) {
         try {
@@ -820,7 +922,11 @@ public final class Imagify {
      * otherwise the first frame is written as a still image.
      * </p>
      *
+     * @param path where to write
+     * @param format the format to write, which overrides the extension
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @throws IOError if the file cannot be written
+     * @return this pipeline, so the calls chain
      */
     public Imagify writeTo(Path path, ImageFormat format, double quality) {
         try {
@@ -836,6 +942,7 @@ public final class Imagify {
      * extension.
      *
      * @param path the file path
+     * @return this pipeline, so the calls chain
      * @see #writeTo(Path)
      */
     public Imagify writeTo(String path) {
@@ -848,6 +955,7 @@ public final class Imagify {
      *
      * @param path the file path
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @return this pipeline, so the calls chain
      * @see #writeTo(Path, double)
      */
     public Imagify writeTo(String path, double quality) {
@@ -859,6 +967,7 @@ public final class Imagify {
      *
      * @param path the file path
      * @param format the format to write
+     * @return this pipeline, so the calls chain
      * @see #writeTo(Path, ImageFormat)
      */
     public Imagify writeTo(String path, ImageFormat format) {
@@ -871,6 +980,7 @@ public final class Imagify {
      * @param path the file path
      * @param format the format to write
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @return this pipeline, so the calls chain
      * @see #writeTo(Path, ImageFormat, double)
      */
     public Imagify writeTo(String path, ImageFormat format, double quality) {
@@ -884,6 +994,11 @@ public final class Imagify {
      * If the data has multiple frames and the format supports animation,
      * the animation is encoded; otherwise the first frame is written as a still image.
      * </p>
+     *
+     * @param out where to write the encoded bytes, which is left open
+     * @param format the format to write
+     * @throws IOError if the stream refuses the bytes
+     * @return this pipeline, so the calls chain
      */
     public Imagify writeTo(OutputStream out, ImageFormat format) {
         try {
@@ -903,6 +1018,9 @@ public final class Imagify {
      * supports animation, the animation bytes are returned; otherwise the
      * first frame is returned as a still image.
      * </p>
+     *
+     * @param format the format to encode
+     * @return the encoded image
      */
     public byte[] writeToBytes(ImageFormat format) {
         try {
@@ -921,7 +1039,9 @@ public final class Imagify {
      * first frame is returned as a still image.
      * </p>
      *
+     * @param format the format to encode
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @return the encoded image
      */
     public byte[] writeToBytes(ImageFormat format, double quality) {
         try {
@@ -952,6 +1072,9 @@ public final class Imagify {
     }
 
     /**
+     * How many frames the result holds, which is one for a still image and the length of the
+     * animation otherwise.
+     *
      * @return the number of frames
      */
     public int frameCount() {

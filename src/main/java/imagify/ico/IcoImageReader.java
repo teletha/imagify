@@ -51,6 +51,11 @@ public class IcoImageReader extends ImageReader {
     private ImageInputStream stream;
     private int[][] directory;
 
+    /**
+     * Creates a reader for the {@code ImageIO} plug-in registry to hand the frames to.
+     *
+     * @param originatingProvider the provider that created this reader
+     */
     public IcoImageReader(ImageReaderSpi originatingProvider) {
         super(originatingProvider);
     }

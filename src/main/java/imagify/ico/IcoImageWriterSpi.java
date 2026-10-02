@@ -21,6 +21,7 @@ import javax.imageio.spi.ImageWriterSpi;
  */
 public class IcoImageWriterSpi extends ImageWriterSpi {
 
+    /** Version of this service provider implementation. */
     public static final String VERSION = "0.1";
 
     private static final String[] NAMES = { "ICO", "ico" };
@@ -29,6 +30,11 @@ public class IcoImageWriterSpi extends ImageWriterSpi {
     private static final String CLASS_NAME = "imagify.ico.IcoImageWriter";
     private static final String VENDOR_NAME = "https://github.com/teletha/imagify";
 
+    /**
+     * {@code ImageIO} builds the provider reflectively, so it needs a public no-argument
+     * constructor; the accepted output types are copied in here rather than assigned directly, so
+     * that a caller editing the inherited field cannot reach the shared constant through it.
+     */
     public IcoImageWriterSpi() {
         outputTypes = STANDARD_OUTPUT_TYPE.clone();
     }
@@ -53,6 +59,12 @@ public class IcoImageWriterSpi extends ImageWriterSpi {
     @Override public String[] getMIMETypes() { return MIME_TYPES.clone(); }
     @Override public String getPluginClassName() { return CLASS_NAME; }
 
+    /**
+     * The writer class behind this provider, so that a caller holding the provider can reach the
+     * class itself without going through {@code ImageIO} a second time.
+     *
+     * @return the writer this provider creates
+     */
     public Class<IcoImageWriter> getWriterClass() { return IcoImageWriter.class; }
 
     @Override public boolean isStandardStreamMetadataFormatSupported() { return false; }

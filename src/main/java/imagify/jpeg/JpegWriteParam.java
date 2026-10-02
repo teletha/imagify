@@ -37,6 +37,10 @@ public class JpegWriteParam extends javax.imageio.ImageWriteParam {
     private boolean optimizeHuffmanTables = ImageFormat.Jpeg.DEFAULT_OPTIMIZE_HUFFMAN_TABLES;
 
     /**
+     * Builds the parameters for one encode, with this library's own defaults rather than the
+     * {@code ImageIO} ones, so that a caller driving {@code ImageIO} directly gets the same file as
+     * a caller of {@link imagify.ImageWriter}.
+     *
      * @param locale the locale for message formatting
      */
     public JpegWriteParam(Locale locale) {
@@ -53,6 +57,9 @@ public class JpegWriteParam extends javax.imageio.ImageWriteParam {
     }
 
     /**
+     * Chooses how finely the two colour-difference channels are stored, which is the setting that
+     * decides how far a JPEG looks blurred next to the original.
+     *
      * @param subsampling how finely the two colour-difference channels are to be stored
      * @throws IllegalArgumentException if {@code subsampling} is {@code null}
      */
@@ -64,6 +71,9 @@ public class JpegWriteParam extends javax.imageio.ImageWriteParam {
     }
 
     /**
+     * Reports the colour-difference resolution in force, which is the one this library defaults to
+     * rather than the one {@code ImageIO} would pick.
+     *
      * @return how finely the two colour-difference channels are stored, 4:2:0 unless asked otherwise
      */
     public Subsampling getSubsampling() {
@@ -71,6 +81,9 @@ public class JpegWriteParam extends javax.imageio.ImageWriteParam {
     }
 
     /**
+     * Chooses between the standard entropy coder tables and ones computed from this image, which is
+     * what {@code ImageIO} has no room to express on its own.
+     *
      * @param optimizeHuffmanTables whether the entropy coder tables are to be computed from the
      *            image rather than taken from the standard set
      */
@@ -79,6 +92,9 @@ public class JpegWriteParam extends javax.imageio.ImageWriteParam {
     }
 
     /**
+     * Reports whether the encoder will compute entropy coder tables for this image, which it will not
+     * unless a caller has asked for the extra work.
+     *
      * @return whether the entropy coder tables are computed from the image, which they are not
      *         unless a caller asks for the extra work
      */

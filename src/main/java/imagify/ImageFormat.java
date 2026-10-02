@@ -55,7 +55,6 @@ import imagify.webp.ffm.WebpCodec;
  * <li>{@link #fromHeader(byte[])} - by magic byte header</li>
  * <li>{@link #fromPath(Path)} - by file extension + header fallback</li>
  * </ul>
- * </p>
  */
 public abstract class ImageFormat {
 
@@ -122,6 +121,9 @@ public abstract class ImageFormat {
         }
 
         /**
+         * Asks for a different colour-difference resolution, which is the setting that decides how
+         * far the result looks blurred next to the original.
+         *
          * @param subsampling how finely the colour-difference channels are stored
          * @return this format asking for that much colour detail
          * @throws IllegalArgumentException if {@code subsampling} is {@code null}
@@ -134,6 +136,9 @@ public abstract class ImageFormat {
         }
 
         /**
+         * Leaves the entropy coder tables to the encoder, or forbids it from computing them for the
+         * image it is writing.
+         *
          * @param optimizeHuffmanTables whether the encoder may compute entropy coder tables from
          *            the image it is writing
          * @return this format leaving that choice to the encoder
@@ -271,6 +276,9 @@ public abstract class ImageFormat {
         }
 
         /**
+         * Asks the deflate stage for a different amount of effort, which trades encode time against
+         * file size rather than against image quality.
+         *
          * @param level how hard the deflate stage works, 0 (quickest) to 9 (most thorough)
          * @return this format asking the encoder for that much effort
          * @throws IllegalArgumentException if the effort is outside what deflate accepts
@@ -395,6 +403,9 @@ public abstract class ImageFormat {
         }
 
         /**
+         * The lossless flavour of this format, which keeps every pixel as it was given rather than
+         * trading fidelity for a smaller file.
+         *
          * @return the lossless flavour of this format, whose {@code VP8L} bitstream keeps every
          *         pixel as it was given
          */
@@ -403,6 +414,9 @@ public abstract class ImageFormat {
         }
 
         /**
+         * Asks {@code libwebp} for a different amount of effort, which trades encode time against
+         * file size rather than against image quality.
+         *
          * @param method how hard the encoder tries, 0 (quickest) to 6 (most thorough)
          * @return this format asking the encoder for that much effort
          * @throws IllegalArgumentException if the effort is outside what {@code libwebp} accepts
@@ -525,6 +539,9 @@ public abstract class ImageFormat {
         }
 
         /**
+         * Moves the encoder along its own speed scale, which is where the effort actually goes: the
+         * quality setting alone leaves the time untouched.
+         *
          * @param speed 0 (slowest, best quality) to 10 (fastest, worst quality)
          * @return this format asking the encoder for that much speed
          * @throws IllegalArgumentException if the speed is outside what {@code libavif} accepts
@@ -537,6 +554,9 @@ public abstract class ImageFormat {
         }
 
         /**
+         * Asks for a different alpha quality, which is worth spending on a logo and not worth
+         * spending on a photograph with a hard edge.
+         *
          * @param alphaQuality 0 (worst) to 100 (every alpha value kept as it was given)
          * @return this format asking for that much alpha quality
          * @throws IllegalArgumentException if the quality is outside what {@code libavif} accepts
@@ -549,6 +569,9 @@ public abstract class ImageFormat {
         }
 
         /**
+         * Asks for a different colour-difference resolution, or hands the choice back to the encoder
+         * with {@code null}.
+         *
          * @param subsampling how finely to store the colour-difference channels, or {@code null} to
          *            leave it to the encoder
          * @return this format asking for that much colour detail
@@ -558,6 +581,9 @@ public abstract class ImageFormat {
         }
 
         /**
+         * Names the filter the colour-difference channels are reduced with, which is what decides how
+         * the chroma edges come out, or hands the choice back with {@code null}.
+         *
          * @param chromaDownsampling the filter to reduce the colour-difference channels with, or
          *            {@code null} to leave it to the encoder
          * @return this format asking for that filter
@@ -683,19 +709,19 @@ public abstract class ImageFormat {
      */
     public static final Jpeg JPEG = new Jpeg(Jpeg.Subsampling.S420, false);
 
-    /** @see Png */
+    /** The PNG at its default deflate level; see {@link Png}. */
     public static final Png PNG = new Png(Png.DEFAULT_COMPRESSION_LEVEL);
 
-    /** @see Gif */
+    /** GIF, which this library carries no settings for; see {@link Gif}. */
     public static final Gif GIF = new Gif();
 
-    /** @see Webp */
+    /** The lossy WebP at its default effort; see {@link Webp}. */
     public static final Webp WEBP = new Webp(false, Webp.DEFAULT_COMPRESSION_METHOD);
 
-    /** @see Avif */
+    /** AVIF at every default this library sets; see {@link Avif}. */
     public static final Avif AVIF = new Avif();
 
-    /** @see Bmp */
+    /** BMP, which this library carries no settings for; see {@link Bmp}. */
     public static final Bmp BMP = new Bmp();
 
     private static final List<ImageFormat> ALL = List.of(JPEG, PNG, GIF, WEBP, AVIF, BMP);
@@ -927,7 +953,13 @@ public abstract class ImageFormat {
 
     /**
      * Attempts to detect the format by checking magic bytes.
-     * Returns null if detection fails (not an error, just unknown).
+     *
+     * <p>A prefix too short to carry any signature is answered with {@code null} rather than an
+     * exception, because a caller sniffing a stream does not yet have the whole header and asking it
+     * to be patient is not an option.
+     *
+     * @param header the first bytes of the file, which need not be the whole header
+     * @return the format, or {@code null} if the bytes say nothing recognisable
      */
     public static ImageFormat detect(byte[] header) {
         try {

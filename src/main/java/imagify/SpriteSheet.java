@@ -137,6 +137,8 @@ public final class SpriteSheet {
 
     /**
      * Creates a new builder instance.
+     *
+     * @return an empty builder, holding no frames and no geometry
      */
     public static SpriteSheet create() {
         return new SpriteSheet();
@@ -150,6 +152,9 @@ public final class SpriteSheet {
      * every
      * frame of an animation.
      * </p>
+     *
+     * @param paths the files to read, one frame taken from each
+     * @return this builder, so the calls chain
      */
     public SpriteSheet addFrames(List<Path> paths) {
         for (Path p : paths) {
@@ -161,6 +166,9 @@ public final class SpriteSheet {
     /**
      * Adds every frame of a sequence, e.g. the frames of an animated GIF. The timing of the
      * sequence is not part of a sheet and is dropped.
+     *
+     * @param sequence the frames to take, in display order
+     * @return this builder, so the calls chain
      */
     public SpriteSheet addFrames(FrameSequence sequence) {
         frames.addAll(sequence.frames());
@@ -169,6 +177,10 @@ public final class SpriteSheet {
 
     /**
      * Adds a single frame from a file path.
+     *
+     * @param path the file to read, whose first frame is taken
+     * @return this builder, so the calls chain
+     * @throws RuntimeException if the file cannot be read, with the {@link IOException} as its cause
      */
     public SpriteSheet addFrame(Path path) {
         try {
@@ -181,6 +193,9 @@ public final class SpriteSheet {
 
     /**
      * Adds frames from BufferedImages.
+     *
+     * @param images the frames to add, in the order they should appear in the sheet
+     * @return this builder, so the calls chain
      */
     public SpriteSheet addImages(List<BufferedImage> images) {
         frames.addAll(images);
@@ -189,6 +204,9 @@ public final class SpriteSheet {
 
     /**
      * Adds a single BufferedImage frame.
+     *
+     * @param image the frame to add
+     * @return this builder, so the calls chain
      */
     public SpriteSheet addFrame(BufferedImage image) {
         frames.add(image);
@@ -197,6 +215,11 @@ public final class SpriteSheet {
 
     /**
      * Adds frames from byte arrays (auto-detected format).
+     *
+     * @param datas the encoded images, whose format is detected from their own bytes
+     * @return this builder, so the calls chain
+     * @throws RuntimeException if one of them cannot be decoded, with the {@link IOException} as its
+     *             cause
      */
     public SpriteSheet addFrameBytes(byte[]... datas) {
         for (byte[] data : datas) {
@@ -216,6 +239,10 @@ public final class SpriteSheet {
     /**
      * Sets the number of columns in the sprite grid.
      * Rows are auto-calculated from frame count.
+     *
+     * @param cols how many columns the grid has
+     * @return this builder, so the calls chain
+     * @throws IllegalArgumentException if {@code cols} is not positive
      */
     public SpriteSheet columns(int cols) {
         this.columns = requirePositive("columns", cols);
@@ -225,6 +252,10 @@ public final class SpriteSheet {
     /**
      * Sets the number of rows in the sprite grid.
      * Columns are auto-calculated from frame count.
+     *
+     * @param rows how many rows the grid has
+     * @return this builder, so the calls chain
+     * @throws IllegalArgumentException if {@code rows} is not positive
      */
     public SpriteSheet rows(int rows) {
         this.rows = requirePositive("rows", rows);
@@ -234,6 +265,11 @@ public final class SpriteSheet {
     /**
      * Sets the grid dimensions directly. The grid must have room for every frame, which is checked
      * when the sheet is laid out.
+     *
+     * @param cols how many columns the grid has
+     * @param rows how many rows the grid has
+     * @return this builder, so the calls chain
+     * @throws IllegalArgumentException if either edge is not positive
      */
     public SpriteSheet grid(int cols, int rows) {
         this.columns = requirePositive("columns", cols);
@@ -243,6 +279,11 @@ public final class SpriteSheet {
 
     /**
      * Gives every cell the same size and makes each frame fit it with {@link Fit#INSIDE}.
+     *
+     * @param width the cell width in pixels
+     * @param height the cell height in pixels
+     * @return this builder, so the calls chain
+     * @throws IllegalArgumentException if either edge is not positive
      */
     public SpriteSheet cell(int width, int height) {
         return cell(width, height, Fit.INSIDE);
@@ -250,6 +291,13 @@ public final class SpriteSheet {
 
     /**
      * Gives every cell the same size and makes each frame fit it the given way.
+     *
+     * @param width the cell width in pixels
+     * @param height the cell height in pixels
+     * @param fit how a frame that is not the cell's size is fitted into it
+     * @return this builder, so the calls chain
+     * @throws IllegalArgumentException if either edge is not positive
+     * @throws NullPointerException if {@code fit} is {@code null}
      */
     public SpriteSheet cell(int width, int height, Fit fit) {
         this.cellWidth = requirePositive("cell width", width);
@@ -260,6 +308,10 @@ public final class SpriteSheet {
 
     /**
      * Sets the algorithm used when a frame has to be scaled.
+     *
+     * @param algorithm how the pixels are resampled on the way
+     * @return this builder, so the calls chain
+     * @throws NullPointerException if {@code algorithm} is {@code null}
      */
     public SpriteSheet algorithm(ResizeAlgorithm algorithm) {
         this.algorithm = java.util.Objects.requireNonNull(algorithm, "algorithm");
@@ -269,6 +321,9 @@ public final class SpriteSheet {
     /**
      * Sets what the whole sheet, gaps and padding included, is filled with before the frames are
      * drawn. {@code null}, the default, keeps it transparent.
+     *
+     * @param color the fill, or {@code null} for transparency
+     * @return this builder, so the calls chain
      */
     public SpriteSheet background(Color color) {
         this.background = color;
@@ -277,6 +332,10 @@ public final class SpriteSheet {
 
     /**
      * Sets padding around the entire sprite sheet.
+     *
+     * @param pixels how much room to leave on every side, in pixels
+     * @return this builder, so the calls chain
+     * @throws IllegalArgumentException if {@code pixels} is negative
      */
     public SpriteSheet padding(int pixels) {
         this.padding = requireNotNegative("padding", pixels);
@@ -285,6 +344,10 @@ public final class SpriteSheet {
 
     /**
      * Sets spacing between frames.
+     *
+     * @param pixels how much room to leave between two cells, in pixels
+     * @return this builder, so the calls chain
+     * @throws IllegalArgumentException if {@code pixels} is negative
      */
     public SpriteSheet spacing(int pixels) {
         this.spacing = requireNotNegative("spacing", pixels);
@@ -377,6 +440,8 @@ public final class SpriteSheet {
 
     /**
      * Builds the sheet and continues in an {@link Imagify} pipeline, e.g. to resize or write it.
+     *
+     * @return a pipeline holding the sheet as its single frame
      */
     public Imagify toImagify() {
         return Imagify.read(toImage());
@@ -384,6 +449,8 @@ public final class SpriteSheet {
 
     /**
      * Returns the number of frames in the sprite sheet.
+     *
+     * @return how many frames have been added, which is what the grid has to have room for
      */
     public int frameCount() {
         return frames.size();
@@ -396,6 +463,11 @@ public final class SpriteSheet {
     /**
      * Makes a frame fit a cell. The result is never larger than the cell; it is smaller only for
      * {@link Fit#INSIDE}, where the caller centres it.
+     *
+     * @param frame the frame to fit
+     * @param cw the cell width in pixels
+     * @param ch the cell height in pixels
+     * @return the frame at the size the fit asks for, which may be the frame itself
      */
     private BufferedImage fit(BufferedImage frame, int cw, int ch) {
         int w = frame.getWidth();

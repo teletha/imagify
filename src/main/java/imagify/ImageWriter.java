@@ -214,6 +214,10 @@ public final class ImageWriter {
 
     /**
      * Writes a single image to a file path. Format is inferred from extension.
+     *
+     * @param image the picture to encode
+     * @param path where to write it
+     * @throws IOException if the image cannot be encoded or written
      */
     public static void toFile(BufferedImage image, Path path) throws IOException {
         ImageFormat format = ImageFormat.fromPath(path);
@@ -223,7 +227,10 @@ public final class ImageWriter {
     /**
      * Writes a single image to a file path. Format is inferred from extension.
      *
+     * @param image the picture to encode
+     * @param path where to write it
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @throws IOException if the image cannot be encoded or written
      */
     public static void toFile(BufferedImage image, Path path, double quality) throws IOException {
         ImageFormat format = ImageFormat.fromPath(path);
@@ -232,6 +239,11 @@ public final class ImageWriter {
 
     /**
      * Writes a single image to a file path with explicit format.
+     *
+     * @param image the picture to encode
+     * @param format the format to write, which overrides the extension
+     * @param path where to write it
+     * @throws IOException if the image cannot be encoded or written
      */
     public static void toFile(BufferedImage image, ImageFormat format, Path path) throws IOException {
         toFile(image, format, format.getDefaultQuality(), path);
@@ -240,7 +252,11 @@ public final class ImageWriter {
     /**
      * Writes a single image to a file path with explicit format and quality.
      *
+     * @param image the picture to encode
+     * @param format the format to write, which overrides the extension
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @param path where to write it
+     * @throws IOException if the image cannot be encoded or written
      */
     public static void toFile(BufferedImage image, ImageFormat format, double quality, Path path) throws IOException {
         ImageOutputStream stream = ImageIO.createImageOutputStream(path.toFile());
@@ -256,6 +272,11 @@ public final class ImageWriter {
 
     /**
      * Encodes a single image to a byte array in the specified format.
+     *
+     * @param image the picture to encode
+     * @param format the format to encode
+     * @return the encoded image
+     * @throws IOException if the image cannot be encoded
      */
     public static byte[] toBytes(BufferedImage image, ImageFormat format) throws IOException {
         return toBytes(image, format, format.getDefaultQuality());
@@ -264,7 +285,11 @@ public final class ImageWriter {
     /**
      * Encodes a single image to a byte array with quality control.
      *
+     * @param image the picture to encode
+     * @param format the format to encode
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @return the encoded image
+     * @throws IOException if the image cannot be encoded
      */
     public static byte[] toBytes(BufferedImage image, ImageFormat format, double quality) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -423,6 +448,12 @@ public final class ImageWriter {
 
     /**
      * Writes a single image to an OutputStream with default quality.
+     *
+     * @param image the picture to encode
+     * @param format the format to encode
+     * @param out where to write the encoded bytes, which is closed here because the encoder writes
+     *            through its own stream rather than straight to this one
+     * @throws IOException if the image cannot be encoded or the stream refuses the bytes
      */
     public static void toStream(BufferedImage image, ImageFormat format, OutputStream out) throws IOException {
         toStream(image, format, format.getDefaultQuality(), out);
@@ -431,7 +462,12 @@ public final class ImageWriter {
     /**
      * Writes a single image to an OutputStream with quality control.
      *
+     * @param image the picture to encode
+     * @param format the format to encode
      * @param quality {@code 0.0} (smallest) to {@code 1.0} (largest)
+     * @param out where to write the encoded bytes, which is closed here because the encoder writes
+     *            through its own stream rather than straight to this one
+     * @throws IOException if the image cannot be encoded or the stream refuses the bytes
      */
     public static void toStream(BufferedImage image, ImageFormat format, double quality, OutputStream out) throws IOException {
         ImageOutputStream stream = ImageIO.createImageOutputStream(out);

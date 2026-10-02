@@ -23,6 +23,9 @@ public class AvifException extends Exception {
     private static final long serialVersionUID = 1L;
 
     /**
+     * Creates an exception carrying only the detail message, for a failure libavif reported in text
+     * and nothing else.
+     *
      * @param message the detail message
      */
     public AvifException(String message) {
@@ -30,6 +33,9 @@ public class AvifException extends Exception {
     }
 
     /**
+     * Creates an exception wrapping the failure it was given, for an error raised inside this
+     * library rather than reported by libavif.
+     *
      * @param message the detail message
      * @param cause the underlying failure
      */
