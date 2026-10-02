@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="S">
-		<header class="J" date="2026-10-02">
-			<h1 class="K"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="L"><a href="api/main.html" id="API"><svg class="package">
+	<body class="l">
+		<header class="L" date="2026-10-02">
+			<h1 class="M"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="N"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,7 +35,7 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="M"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="O"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
@@ -43,10 +43,10 @@
 				</a></div>
 		</header>
 		<nav class="V"></nav>
-		<article class="T" id="Article">
-			<section class="Y"><code class="BB">imagify</code>
-				<h2 class="Enum r"><code class="h">ResizeAlgorithm</code></h2>
-				<div class="FB">
+		<article class="m" id="Article">
+			<section class="j"><code class="e">imagify</code>
+				<h2 class="Enum JB"><code class="BB">ResizeAlgorithm</code></h2>
+				<div class="DB">
 					<ul class="E G">
 						<li><code><a aria-label="java.lang.Enum 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Enum.html">Enum</a><code class="parameters"><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></code></code></li>
 					</ul>
@@ -57,61 +57,61 @@
 					</ul>
 				</div><span class="A"><p>High-quality image resampling algorithms for resizing.
 Each algorithm provides a kernel function and a support radius.</p></span></section>
-			<section class="Y" id="NEAREST">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">NEAREST</code><i class="x"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Nearest neighbour - preserves exact pixel values, essential for pixel art.</p></span></section>
-			<section class="Y" id="AREA">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">AREA</code><i class="x"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Box / area averaging - ideal for downscaling, no ringing.</p></span></section>
-			<section class="Y" id="BILINEAR">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">BILINEAR</code><i class="x"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Linear interpolation between the two nearest neighbours - the cheapest smooth filter.</p></span></section>
-			<section class="Y" id="BSPLINE">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">BSPLINE</code><i class="x"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Bicubic B-spline (B=1, C=0) - smoother than Catmull-Rom.</p></span></section>
-			<section class="Y" id="CATROM">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">CATROM</code><i class="x"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Catmull-Rom bicubic (B=0, C=0.5) - sharper than Mitchell, at the price of some ringing.</p></span></section>
-			<section class="Y" id="MITCHELL">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">MITCHELL</code><i class="x"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Mitchell-Netravali bicubic (B=C=1/3) - the softest of the cubics, and free of ringing.</p></span></section>
-			<section class="Y" id="GAUSSIAN">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">GAUSSIAN</code><i class="x"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Gaussian blur kernel - smooth, no negative lobes.</p></span></section>
-			<section class="Y" id="LANCZOS2">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">LANCZOS2</code><i class="x"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Lanczos with a two-lobe window - a sinc truncated at two samples on each side.</p></span></section>
-			<section class="Y" id="LANCZOS3">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">LANCZOS3</code><i class="x"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Lanczos with a three-lobe window - the sharpest resampling filter here, and the ringiest.</p></span></section>
-			<section class="Y" id="HQX">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">HQX</code><i class="x"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>xBRZ, which is an edge-aware upscale rather than a convolution: it finds similar neighbours
+			<section class="j" id="NEAREST">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">NEAREST</code><i class="FB"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Nearest neighbour - preserves exact pixel values, essential for pixel art.</p></span></section>
+			<section class="j" id="AREA">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">AREA</code><i class="FB"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Box / area averaging - ideal for downscaling, no ringing.</p></span></section>
+			<section class="j" id="BILINEAR">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">BILINEAR</code><i class="FB"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Linear interpolation between the two nearest neighbours - the cheapest smooth filter.</p></span></section>
+			<section class="j" id="BSPLINE">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">BSPLINE</code><i class="FB"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Bicubic B-spline (B=1, C=0) - smoother than Catmull-Rom.</p></span></section>
+			<section class="j" id="CATROM">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">CATROM</code><i class="FB"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Catmull-Rom bicubic (B=0, C=0.5) - sharper than Mitchell, at the price of some ringing.</p></span></section>
+			<section class="j" id="MITCHELL">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">MITCHELL</code><i class="FB"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Mitchell-Netravali bicubic (B=C=1/3) - the softest of the cubics, and free of ringing.</p></span></section>
+			<section class="j" id="GAUSSIAN">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">GAUSSIAN</code><i class="FB"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Gaussian blur kernel - smooth, no negative lobes.</p></span></section>
+			<section class="j" id="LANCZOS2">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">LANCZOS2</code><i class="FB"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Lanczos with a two-lobe window - a sinc truncated at two samples on each side.</p></span></section>
+			<section class="j" id="LANCZOS3">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">LANCZOS3</code><i class="FB"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>Lanczos with a three-lobe window - the sharpest resampling filter here, and the ringiest.</p></span></section>
+			<section class="j" id="HQX">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">HQX</code><i class="FB"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>xBRZ, which is an edge-aware upscale rather than a convolution: it finds similar neighbours
 and blends them along their edge rather than averaging everything in reach. It is therefore
 the algorithm to pick for pixel art, where a blur is a defect rather than a smoothness. The
 kernel is unused, and the support is zero, because this one is not a convolution at all.</p></span></section>
-			<section class="Y" id="DEFAULT">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">DEFAULT</code><i class="x"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>The default algorithm.</p></span></section>
-			<section class="Y" id="values()">
-				<h2 class="w"><i class="STATIC PUBLIC"></i><code class="h">values</code><code class="p">()</code><i class="x"><code array="fix"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2>
-				<table class="IB">
-					<tr class="g">
+			<section class="j" id="DEFAULT">
+				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">DEFAULT</code><i class="FB"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2><span class="A"><p>The default algorithm.</p></span></section>
+			<section class="j" id="values()">
+				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="BB">values</code><code class="v">()</code><i class="FB"><code array="fix"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2>
+				<table class="d">
+					<tr class="u">
 						<td><code array="fix"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="valueOf(java.lang.String)">
-				<h2 class="w"><i class="STATIC PUBLIC"></i><code class="h">valueOf</code><code class="p">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="x"><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2>
-				<table class="IB">
-					<tr class="u">
+			<section class="j" id="valueOf(java.lang.String)">
+				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="BB">valueOf</code><code class="v">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="FB"><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></h2>
+				<table class="d">
+					<tr class="f">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code></td>
 						<td></td>
 					</tr>
-					<tr class="g">
+					<tr class="u">
 						<td><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Y" id="kernel(double)">
-				<h2 class="w"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="h">kernel</code><code class="p">(<code>double</code><code class="parameterName">x</code>)</code><i class="x"><code>double</code></i></h2>
-				<table class="IB">
-					<tr class="u">
+			<section class="j" id="kernel(double)">
+				<h2 class="U"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="BB">kernel</code><code class="v">(<code>double</code><code class="parameterName">x</code>)</code><i class="FB"><code>double</code></i></h2>
+				<table class="d">
+					<tr class="f">
 						<td><code>double</code><code class="parameterName">x</code></td>
 						<td><span><p>the distance from the sample point, in source pixels, absolute value</p></span></td>
 					</tr>
-					<tr class="g">
+					<tr class="u">
 						<td><code>double</code></td>
 						<td><span><p>the weight to give that sample</p></span></td>
 					</tr>
@@ -121,45 +121,45 @@ walk the window without testing the bound itself.</p><p>Override this to add a f
  nothing ever calls them.
 </p>
 				</span></section>
-			<section class="Y" id="getSupport()">
-				<h2 class="w"><i class="PUBLIC"></i><code class="h">getSupport</code><code class="p">()</code><i class="x"><code>int</code></i></h2>
-				<table class="IB">
-					<tr class="g">
+			<section class="j" id="getSupport()">
+				<h2 class="U"><i class="PUBLIC"></i><code class="BB">getSupport</code><code class="v">()</code><i class="FB"><code>int</code></i></h2>
+				<table class="d">
+					<tr class="u">
 						<td><code>int</code></td>
 						<td><span><p>the support radius in source pixels</p></span></td>
 					</tr>
 				</table><span class="A"><p>How many source pixels on each side of a sample the kernel reaches, which is what decides how
 wide the resampling window has to be.</p></span></section>
 		</article>
-		<aside class="W">
-			<div class="n">
-				<h5 class="EB">Static Fields</h5>
+		<aside class="i">
+			<div class="q">
+				<h5 class="T">Static Fields</h5>
 				<ul>
-					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#NEAREST">NEAREST</a></code><i class="N"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
-					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#AREA">AREA</a></code><i class="N"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
-					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#BILINEAR">BILINEAR</a></code><i class="N"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
-					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#BSPLINE">BSPLINE</a></code><i class="N"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
-					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#CATROM">CATROM</a></code><i class="N"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
-					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#MITCHELL">MITCHELL</a></code><i class="N"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
-					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#GAUSSIAN">GAUSSIAN</a></code><i class="N"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
-					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#LANCZOS2">LANCZOS2</a></code><i class="N"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
-					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#LANCZOS3">LANCZOS3</a></code><i class="N"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
-					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#HQX">HQX</a></code><i class="N"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
-					<li class="GB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#DEFAULT">DEFAULT</a></code><i class="N"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#NEAREST">NEAREST</a></code><i class="K"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#AREA">AREA</a></code><i class="K"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#BILINEAR">BILINEAR</a></code><i class="K"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#BSPLINE">BSPLINE</a></code><i class="K"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#CATROM">CATROM</a></code><i class="K"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#MITCHELL">MITCHELL</a></code><i class="K"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#GAUSSIAN">GAUSSIAN</a></code><i class="K"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#LANCZOS2">LANCZOS2</a></code><i class="K"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#LANCZOS3">LANCZOS3</a></code><i class="K"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#HQX">HQX</a></code><i class="K"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#DEFAULT">DEFAULT</a></code><i class="K"><code class="return"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
 				</ul>
-				<h5 class="EB">Static Methods</h5>
+				<h5 class="T">Static Methods</h5>
 				<ul>
-					<li class="GB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ResizeAlgorithm.html#values()">values</a></code><code class="p">()</code><i class="N"><code array="fix"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
-					<li class="GB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ResizeAlgorithm.html#valueOf(java.lang.String)">valueOf</a></code><code class="p">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="N"><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ResizeAlgorithm.html#values()">values</a></code><code class="v">()</code><i class="K"><code array="fix"><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
+					<li class="EB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ResizeAlgorithm.html#valueOf(java.lang.String)">valueOf</a></code><code class="v">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="K"><code><a aria-label="imagify.ResizeAlgorithm" href="api/imagify.ResizeAlgorithm.html">ResizeAlgorithm</a></code></i></li>
 				</ul>
-				<h5 class="EB">Methods</h5>
+				<h5 class="T">Methods</h5>
 				<ul>
-					<li class="GB"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#kernel(double)">kernel</a></code><code class="p">(<code>double</code><code class="parameterName">x</code>)</code><i class="N"><code>double</code></i></li>
-					<li class="GB"><i class="PUBLIC"></i><code><a href="api/imagify.ResizeAlgorithm.html#getSupport()">getSupport</a></code><code class="p">()</code><i class="N"><code>int</code></i></li>
+					<li class="EB"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/imagify.ResizeAlgorithm.html#kernel(double)">kernel</a></code><code class="v">(<code>double</code><code class="parameterName">x</code>)</code><i class="K"><code>double</code></i></li>
+					<li class="EB"><i class="PUBLIC"></i><code><a href="api/imagify.ResizeAlgorithm.html#getSupport()">getSupport</a></code><code class="v">()</code><i class="K"><code>int</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="U">
+		<footer class="a">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
