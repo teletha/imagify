@@ -18,7 +18,7 @@ permissions:
 env:
   # libwebp's releases are plain tags, and libwebp is pinned to a tag rather than to a commit
   # because that is what upstream publishes and what a bug report can name. The version beside the
-  # tag is the one written into src/main/native/webp/CMakeLists.txt, which is where the build reads
+  # tag is the one written into native/webp/CMakeLists.txt, which is where the build reads
   # it from; it is repeated here so that the check below can catch the two drifting apart when the
   # tag is bumped. The tag says which code was built and the version says how the library that came
   # out of it introduces itself.
@@ -103,7 +103,7 @@ jobs:
           ninja --version
 
       - name: Check the version the build will report
-        # The version is written in src/main/native/webp/CMakeLists.txt and nowhere on a command
+        # The version is written in native/webp/CMakeLists.txt and nowhere on a command
         # line, because a value on a command line is a value a shell can take apart. This step runs
         # first and is what stops the two copies from drifting: bumping WEBP_TAG above without
         # editing the CMakeLists leaves a library that says it is a libwebp it was not built from.
@@ -114,14 +114,14 @@ jobs:
         run: python .github/scripts/check-webp-version.py "${{ env.WEBP_VERSION }}"
 
       - name: Configure
-        # src/main/native/webp overlays libwebp's own build: everything libwebp builds besides the
+        # native/webp overlays libwebp's own build: everything libwebp builds besides the
         # codec is configured off, its four static libraries are linked into the one shared object,
         # and symbols are restricted to the imagify_webp_* interface. See the comments in that
         # CMakeLists.txt. WEBP_USE_THREAD stays on, which is what the webp4j this replaces used too
         # (multiThreaded(true) in that API); the shim links the threading library itself because
         # libwebp's libraries do not.
         run: >
-          cmake -S src/main/native/webp -B build -G Ninja
+          cmake -S native/webp -B build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DIMAGIFY_WEBP_SOURCE_DIR=${{ github.workspace }}/libwebp
 

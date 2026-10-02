@@ -25,14 +25,14 @@ import sys
 # what this script sees.
 CODECS = {
     "webp": {
-        "cmake": os.path.join("src", "main", "native", "webp", "CMakeLists.txt"),
+        "cmake": os.path.join("native", "webp", "CMakeLists.txt"),
         "workflow": os.path.join(".github", "workflows", "webp-natives.yml"),
         "variable": "IMAGIFY_WEBP_VERSION",
         "expected_in_workflow": "WEBP_VERSION",
         "reporter": "WebpCodec.getVersion()",
     },
     "jpegli": {
-        "cmake": os.path.join("src", "main", "native", "jpegli", "CMakeLists.txt"),
+        "cmake": os.path.join("native", "jpegli", "CMakeLists.txt"),
         "workflow": os.path.join(".github", "workflows", "jpegli-natives.yml"),
         "variable": "IMAGIFY_JPEGLI_VERSION",
         "expected_in_workflow": "JPEGLI_VERSION",

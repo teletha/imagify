@@ -35,7 +35,7 @@ gh workflow run webp-natives.yml      # ネイティブ再ビルド (同様に a
 - `pom.xml` と `README.md`（および `LICENSE.txt`）は `src/project/java/Project.java`
   から Bee（`maven:pom`, `ci:readme`, `ci:license`）が生成する。直接編集しても CI の
   auto-commit で戻されることがある。設定や説明を変えるときは `Project.java` を直す。
-- ネイティブを変更したら `src/main/native/<codec>/CMakeLists.txt` の
+- ネイティブを変更したら `native/<codec>/CMakeLists.txt` の
   シンボルエクスポート一覧（`IMAGIFY_*_SYMBOLS`）を更新する。Windows は `.def`、
   macOS は `_imagify_*` の glob、Linux は version script を使う。
 - ネイティブは jar に同梱しない。各フォーマットの release タグは
