@@ -14,13 +14,13 @@ import javax.lang.model.SourceVersion;
 
 public class Project extends bee.api.Project {
     {
-        product("com.github.teletha", "imagify", ref("version.txt"));
+        product("io.github.teletha", "imagify", ref("version.txt"));
         license(MIT);
         versionControlSystem("https://github.com/teletha/imagify");
         require(SourceVersion.latest(), SourceVersion.RELEASE_24);
 
         require("com.github.weisj", "jsvg");
-        require("com.github.teletha", "antibug").atTest();
+        require("io.github.teletha", "antibug").atTest();
 
         describe("""
                 Imagify reads, transforms and writes images through one small fluent API.

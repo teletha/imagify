@@ -1,7 +1,7 @@
 <p align="center">
     <a href="https://docs.oracle.com/en/java/javase/24/"><img src="https://img.shields.io/badge/Java-Release%2024-green"/></a>
     <span>&nbsp;</span>
-    <a href="https://jitpack.io/#teletha/imagify"><img src="https://img.shields.io/jitpack/v/github/teletha/imagify?label=Repository&color=green"></a>
+    <a href="https://jitpack.io/#io.github.teletha/imagify"><img src="https://img.shields.io/jitpack/version/io.github.teletha/imagify?label=Repository&color=green"></a>
     <span>&nbsp;</span>
     <a href="https://teletha.github.io/imagify"><img src="https://img.shields.io/website.svg?down_color=red&down_message=CLOSE&label=Official%20Site&up_color=green&up_message=OPEN&url=https%3A%2F%2Fteletha.github.io%2Fimagify"></a>
 </p>
@@ -259,7 +259,7 @@ Add JitPack repository at the end of repositories element in your build.xml:
 Add it into in the dependencies element like so:
 ```xml
 <dependency>
-    <groupId>com.github.teletha</groupId>
+    <groupId>io.github.teletha</groupId>
     <artifactId>imagify</artifactId>
     <version>1.1.0</version>
 </dependency>
@@ -274,7 +274,7 @@ repositories {
 Add it into the dependencies section like so:
 ```gradle
 dependencies {
-    implementation 'com.github.teletha:imagify:1.1.0'
+    implementation 'io.github.teletha:imagify:1.1.0'
 }
 ```
 #### [SBT](https://www.scala-sbt.org/)
@@ -284,7 +284,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add it into the libraryDependencies section like so:
 ```scala
-libraryDependencies += "com.github.teletha" % "imagify" % "1.1.0"
+libraryDependencies += "io.github.teletha" % "imagify" % "1.1.0"
 ```
 #### [Leiningen](https://leiningen.org/)
 Add JitPack repository at the end of repositories in your project().clj:
@@ -293,12 +293,12 @@ Add JitPack repository at the end of repositories in your project().clj:
 ```
 Add it into the dependencies section like so:
 ```clj
-:dependencies [[com.github.teletha/imagify "1.1.0"]]
+:dependencies [[io.github.teletha/imagify "1.1.0"]]
 ```
 #### [Bee](https://teletha.github.io/bee)
 Add it into your project definition class like so:
 ```java
-require("com.github.teletha", "imagify", "1.1.0");
+require("io.github.teletha", "imagify", "1.1.0");
 ```
 <p align="right"><a href="#top">back to top</a></p>
 
