@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="l">
-		<header class="L" date="2026-10-02">
-			<h1 class="M"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="N"><a href="api/main.html" id="API"><svg class="package">
+	<body class="FB">
+		<header class="Q" date="2026-10-10">
+			<h1 class="R"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="S"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="O"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="L"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="V"></nav>
-		<article class="m" id="Article">
-			<section class="j"><code class="e">imagify.jpeg</code>
-				<h2 class="Class JB"><code class="BB">JpegImageWriter</code></h2>
-				<div class="DB">
+		<nav class="Z"></nav>
+		<article class="CB" id="Article">
+			<section class="o"><code class="s">imagify.jpeg</code>
+				<h2 class="Class K"><code class="U">JpegImageWriter</code></h2>
+				<div class="t">
 					<ul class="E G">
 						<li><code><a aria-label="javax.imageio.ImageWriter 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriter.html">ImageWriter</a></code></li>
 					</ul>
@@ -54,224 +54,224 @@
 						<li><code><a aria-label="javax.imageio.ImageTranscoder 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTranscoder.html">ImageTranscoder</a></code></li>
 					</ul>
 				</div><span class="A"><code><a aria-label="javax.imageio.ImageWriter 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriter.html">ImageWriter</a></code> that encodes images as JPEG using
- <a href="https://github.com/google/jpegli">jpegli</a>.
+<a href="https://github.com/google/jpegli">jpegli</a>.
 
- <p>Any non empty <code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code> can be encoded. Images whose layout the encoder cannot
- consume directly are converted to non premultiplied
- <code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html#TYPE_4BYTE_ABGR">java.awt.image.BufferedImage#TYPE_4BYTE_ABGR</a></code> first, so colour and alpha are preserved
- rather than composited over an opaque background. The alpha byte is then discarded, because a JPEG
- cannot store one; an image with transparency is written against whatever colour sits behind it,
- and a caller that needs the picture has to flatten it first.
+<p>Any non empty <code><a aria-label="java.awt.image.RenderedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/RenderedImage.html">RenderedImage</a></code> can be encoded. Images whose layout the encoder cannot
+consume directly are converted to non premultiplied
+<code><a aria-label="java.awt.image.BufferedImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/java/awt/image/BufferedImage.html#TYPE_4BYTE_ABGR">java.awt.image.BufferedImage#TYPE_4BYTE_ABGR</a></code> first, so colour and alpha are preserved
+rather than composited over an opaque background. The alpha byte is then discarded, because a JPEG
+cannot store one; an image with transparency is written against whatever colour sits behind it,
+and a caller that needs the picture has to flatten it first.
 
- 
+
 						<p>The quality comes from the compression quality of the <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code>, which maps the
- <code>javax.imageio</code> range of <code><a aria-label="imagify.jpeg.JpegImageWriterSpi" href="api/imagify.jpeg.JpegImageWriterSpi.html#MINIMUM_QUALITY">JpegImageWriterSpi#MINIMUM_QUALITY</a></code> to
- <code><a aria-label="imagify.jpeg.JpegImageWriterSpi" href="api/imagify.jpeg.JpegImageWriterSpi.html#MAXIMUM_QUALITY">JpegImageWriterSpi#MAXIMUM_QUALITY</a></code> onto the encoder&apos;s range of 1 to 100. A quality of 0 is
- raised to 1 rather than refused, which is what the JDK&apos;s own JPEG writer does with it, so a caller
- asking for the smallest possible file is not answered with an exception.
+<code>javax.imageio</code> range of <code><a aria-label="imagify.jpeg.JpegImageWriterSpi" href="api/imagify.jpeg.JpegImageWriterSpi.html#MINIMUM_QUALITY">JpegImageWriterSpi#MINIMUM_QUALITY</a></code> to
+<code><a aria-label="imagify.jpeg.JpegImageWriterSpi" href="api/imagify.jpeg.JpegImageWriterSpi.html#MAXIMUM_QUALITY">JpegImageWriterSpi#MAXIMUM_QUALITY</a></code> onto the encoder&apos;s range of 1 to 100. A quality of 0 is
+raised to 1 rather than refused, which is what the JDK&apos;s own JPEG writer does with it, so a caller
+asking for the smallest possible file is not answered with an exception.
 
- 
+
 							<p>The two settings a JPEG has and an <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code> has nowhere for are on
- <code><a aria-label="imagify.jpeg.JpegWriteParam" href="api/imagify.jpeg.JpegWriteParam.html">JpegWriteParam</a></code>, and default to what <code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">imagify.ImageFormat.Jpeg</a></code> names: 4:2:0 with
- the standard entropy coder tables.
+<code><a aria-label="imagify.jpeg.JpegWriteParam" href="api/imagify.jpeg.JpegWriteParam.html">JpegWriteParam</a></code>, and default to what <code><a aria-label="imagify.ImageFormat.Jpeg" href="api/imagify.ImageFormat.Jpeg.html">imagify.ImageFormat.Jpeg</a></code> names: 4:2:0 with
+the standard entropy coder tables.
 
- 
+
 								<p>Instances are stateful and, as mandated by <code><a aria-label="javax.imageio.ImageWriter 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriter.html">ImageWriter</a></code>, not thread safe.</p>
 							</p>
 						</p>
 					</p>
 				</span></section>
-			<section class="j" id="JpegImageWriter(javax.imageio.spi.ImageWriterSpi)">
-				<h2 class="U"><i class="PUBLIC"></i><code class="BB">JpegImageWriter</code><code class="v">(<code><a aria-label="javax.imageio.spi.ImageWriterSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageWriterSpi.html">ImageWriterSpi</a></code><code class="parameterName">originatingProvider</code>)</code></h2>
-				<table class="d">
-					<tr class="f">
+			<section class="o" id="JpegImageWriter(javax.imageio.spi.ImageWriterSpi)">
+				<h2 class="e"><i class="PUBLIC"></i><code class="U">JpegImageWriter</code><code class="f">(<code><a aria-label="javax.imageio.spi.ImageWriterSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageWriterSpi.html">ImageWriterSpi</a></code><code class="parameterName">originatingProvider</code>)</code></h2>
+				<table class="P">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.spi.ImageWriterSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageWriterSpi.html">ImageWriterSpi</a></code><code class="parameterName">originatingProvider</code></td>
 						<td><span><p>the provider that created this writer</p></span></td>
 					</tr>
 				</table><span class="A"><p>Creates a writer for the <code>ImageIO</code> plug-in registry to hand the frames to.</p></span></section>
-			<section class="j" id="setOutput(java.lang.Object)">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">setOutput</code><code class="v">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">output</code>)</code><i class="FB"><code>void</code></i></h2>
-				<table class="d">
-					<tr class="f">
+			<section class="o" id="setOutput(java.lang.Object)">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">setOutput</code><code class="f">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">output</code>)</code><i class="b"><code>void</code></i></h2>
+				<table class="P">
+					<tr class="g">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">output</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="reset()">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">reset</code><code class="v">()</code><i class="FB"><code>void</code></i></h2>
+			<section class="o" id="reset()">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">reset</code><code class="f">()</code><i class="b"><code>void</code></i></h2>
 			</section>
-			<section class="j" id="getDefaultWriteParam()">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">getDefaultWriteParam</code><code class="v">()</code><i class="FB"><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code></i></h2>
-				<table class="d">
-					<tr class="u">
+			<section class="o" id="getDefaultWriteParam()">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">getDefaultWriteParam</code><code class="f">()</code><i class="b"><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code></i></h2>
+				<table class="P">
+					<tr class="h">
 						<td><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="getDefaultStreamMetadata(javax.imageio.ImageWriteParam)">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">getDefaultStreamMetadata</code><code class="v">(<code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="FB"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></h2>
-				<table class="d">
-					<tr class="f">
+			<section class="o" id="getDefaultStreamMetadata(javax.imageio.ImageWriteParam)">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">getDefaultStreamMetadata</code><code class="f">(<code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="b"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></h2>
+				<table class="P">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code></td>
 						<td></td>
 					</tr>
-					<tr class="u">
+					<tr class="h">
 						<td><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="getDefaultImageMetadata(javax.imageio.ImageTypeSpecifier,javax.imageio.ImageWriteParam)">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">getDefaultImageMetadata</code><code class="v">(<code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="FB"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></h2>
-				<table class="d">
-					<tr class="f">
+			<section class="o" id="getDefaultImageMetadata(javax.imageio.ImageTypeSpecifier,javax.imageio.ImageWriteParam)">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">getDefaultImageMetadata</code><code class="f">(<code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="b"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></h2>
+				<table class="P">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code></td>
 						<td></td>
 					</tr>
-					<tr class="f">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code></td>
 						<td></td>
 					</tr>
-					<tr class="u">
+					<tr class="h">
 						<td><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="convertStreamMetadata(javax.imageio.metadata.IIOMetadata,javax.imageio.ImageWriteParam)">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">convertStreamMetadata</code><code class="v">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="FB"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></h2>
-				<table class="d">
-					<tr class="f">
+			<section class="o" id="convertStreamMetadata(javax.imageio.metadata.IIOMetadata,javax.imageio.ImageWriteParam)">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">convertStreamMetadata</code><code class="f">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="b"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></h2>
+				<table class="P">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code></td>
 						<td></td>
 					</tr>
-					<tr class="f">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code></td>
 						<td></td>
 					</tr>
-					<tr class="u">
+					<tr class="h">
 						<td><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="convertImageMetadata(javax.imageio.metadata.IIOMetadata,javax.imageio.ImageTypeSpecifier,javax.imageio.ImageWriteParam)">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">convertImageMetadata</code><code class="v">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">imageMetadata</code>, <code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="FB"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></h2>
-				<table class="d">
-					<tr class="f">
+			<section class="o" id="convertImageMetadata(javax.imageio.metadata.IIOMetadata,javax.imageio.ImageTypeSpecifier,javax.imageio.ImageWriteParam)">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">convertImageMetadata</code><code class="f">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">imageMetadata</code>, <code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="b"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></h2>
+				<table class="P">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">imageMetadata</code></td>
 						<td></td>
 					</tr>
-					<tr class="f">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code></td>
 						<td></td>
 					</tr>
-					<tr class="f">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code></td>
 						<td></td>
 					</tr>
-					<tr class="u">
+					<tr class="h">
 						<td><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="canWriteSequence()">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">canWriteSequence</code><code class="v">()</code><i class="FB"><code>boolean</code></i></h2>
-				<table class="d">
-					<tr class="u">
+			<section class="o" id="canWriteSequence()">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">canWriteSequence</code><code class="f">()</code><i class="b"><code>boolean</code></i></h2>
+				<table class="P">
+					<tr class="h">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="prepareWriteSequence(javax.imageio.metadata.IIOMetadata)">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">prepareWriteSequence</code><code class="v">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>)</code><i class="FB"><code>void</code></i></h2>
-				<table class="d">
-					<tr class="f">
+			<section class="o" id="prepareWriteSequence(javax.imageio.metadata.IIOMetadata)">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">prepareWriteSequence</code><code class="f">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>)</code><i class="b"><code>void</code></i></h2>
+				<table class="P">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code></td>
 						<td></td>
 					</tr>
-					<tr class="w">
+					<tr class="GB">
 						<td><code><a aria-label="javax.imageio.IIOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOException.html">IIOException</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="writeToSequence(javax.imageio.IIOImage,javax.imageio.ImageWriteParam)">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">writeToSequence</code><code class="v">(<code><a aria-label="javax.imageio.IIOImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOImage.html">IIOImage</a></code><code class="parameterName">image</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="FB"><code>void</code></i></h2>
-				<table class="d">
-					<tr class="f">
+			<section class="o" id="writeToSequence(javax.imageio.IIOImage,javax.imageio.ImageWriteParam)">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">writeToSequence</code><code class="f">(<code><a aria-label="javax.imageio.IIOImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOImage.html">IIOImage</a></code><code class="parameterName">image</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="b"><code>void</code></i></h2>
+				<table class="P">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.IIOImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOImage.html">IIOImage</a></code><code class="parameterName">image</code></td>
 						<td></td>
 					</tr>
-					<tr class="f">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code></td>
 						<td></td>
 					</tr>
-					<tr class="w">
+					<tr class="GB">
 						<td><code><a aria-label="javax.imageio.IIOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOException.html">IIOException</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="endWriteSequence()">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">endWriteSequence</code><code class="v">()</code><i class="FB"><code>void</code></i></h2>
-				<table class="d">
-					<tr class="w">
+			<section class="o" id="endWriteSequence()">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">endWriteSequence</code><code class="f">()</code><i class="b"><code>void</code></i></h2>
+				<table class="P">
+					<tr class="GB">
 						<td><code><a aria-label="javax.imageio.IIOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOException.html">IIOException</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="write(javax.imageio.metadata.IIOMetadata,javax.imageio.IIOImage,javax.imageio.ImageWriteParam)">
-				<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="BB">write</code><code class="v">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>, <code><a aria-label="javax.imageio.IIOImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOImage.html">IIOImage</a></code><code class="parameterName">image</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="FB"><code>void</code></i></h2>
-				<table class="d">
-					<tr class="f">
+			<section class="o" id="write(javax.imageio.metadata.IIOMetadata,javax.imageio.IIOImage,javax.imageio.ImageWriteParam)">
+				<h2 class="e"><i class="OVERRIDE PUBLIC"></i><code class="U">write</code><code class="f">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>, <code><a aria-label="javax.imageio.IIOImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOImage.html">IIOImage</a></code><code class="parameterName">image</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="b"><code>void</code></i></h2>
+				<table class="P">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code></td>
 						<td></td>
 					</tr>
-					<tr class="f">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.IIOImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOImage.html">IIOImage</a></code><code class="parameterName">image</code></td>
 						<td></td>
 					</tr>
-					<tr class="f">
+					<tr class="g">
 						<td><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code></td>
 						<td></td>
 					</tr>
-					<tr class="w">
+					<tr class="GB">
 						<td><code><a aria-label="javax.imageio.IIOException 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOException.html">IIOException</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="i">
-			<div class="q">
-				<h5 class="T">Constructors</h5>
+		<aside class="DB">
+			<div class="KB">
+				<h5 class="i">Constructors</h5>
 				<ul>
-					<li class="EB"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#JpegImageWriter(javax.imageio.spi.ImageWriterSpi)">JpegImageWriter</a></code><code class="v">(<code><a aria-label="javax.imageio.spi.ImageWriterSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageWriterSpi.html">ImageWriterSpi</a></code><code class="parameterName">originatingProvider</code>)</code></li>
+					<li class="a"><i class="PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#JpegImageWriter(javax.imageio.spi.ImageWriterSpi)">JpegImageWriter</a></code><code class="f">(<code><a aria-label="javax.imageio.spi.ImageWriterSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageWriterSpi.html">ImageWriterSpi</a></code><code class="parameterName">originatingProvider</code>)</code></li>
 				</ul>
-				<h5 class="T">Methods</h5>
+				<h5 class="i">Methods</h5>
 				<ul>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#setOutput(java.lang.Object)">setOutput</a></code><code class="v">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">output</code>)</code><i class="K"><code>void</code></i></li>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#reset()">reset</a></code><code class="v">()</code><i class="K"><code>void</code></i></li>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#getDefaultWriteParam()">getDefaultWriteParam</a></code><code class="v">()</code><i class="K"><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code></i></li>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#getDefaultStreamMetadata(javax.imageio.ImageWriteParam)">getDefaultStreamMetadata</a></code><code class="v">(<code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="K"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#getDefaultImageMetadata(javax.imageio.ImageTypeSpecifier,javax.imageio.ImageWriteParam)">getDefaultImageMetadata</a></code><code class="v">(<code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="K"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#convertStreamMetadata(javax.imageio.metadata.IIOMetadata,javax.imageio.ImageWriteParam)">convertStreamMetadata</a></code><code class="v">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="K"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#convertImageMetadata(javax.imageio.metadata.IIOMetadata,javax.imageio.ImageTypeSpecifier,javax.imageio.ImageWriteParam)">convertImageMetadata</a></code><code class="v">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">imageMetadata</code>, <code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="K"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#canWriteSequence()">canWriteSequence</a></code><code class="v">()</code><i class="K"><code>boolean</code></i></li>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#prepareWriteSequence(javax.imageio.metadata.IIOMetadata)">prepareWriteSequence</a></code><code class="v">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>)</code><i class="K"><code>void</code></i></li>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#writeToSequence(javax.imageio.IIOImage,javax.imageio.ImageWriteParam)">writeToSequence</a></code><code class="v">(<code><a aria-label="javax.imageio.IIOImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOImage.html">IIOImage</a></code><code class="parameterName">image</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="K"><code>void</code></i></li>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#endWriteSequence()">endWriteSequence</a></code><code class="v">()</code><i class="K"><code>void</code></i></li>
-					<li class="EB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#write(javax.imageio.metadata.IIOMetadata,javax.imageio.IIOImage,javax.imageio.ImageWriteParam)">write</a></code><code class="v">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>, <code><a aria-label="javax.imageio.IIOImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOImage.html">IIOImage</a></code><code class="parameterName">image</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="K"><code>void</code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#setOutput(java.lang.Object)">setOutput</a></code><code class="f">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">output</code>)</code><i class="z"><code>void</code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#reset()">reset</a></code><code class="f">()</code><i class="z"><code>void</code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#getDefaultWriteParam()">getDefaultWriteParam</a></code><code class="f">()</code><i class="z"><code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#getDefaultStreamMetadata(javax.imageio.ImageWriteParam)">getDefaultStreamMetadata</a></code><code class="f">(<code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="z"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#getDefaultImageMetadata(javax.imageio.ImageTypeSpecifier,javax.imageio.ImageWriteParam)">getDefaultImageMetadata</a></code><code class="f">(<code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="z"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#convertStreamMetadata(javax.imageio.metadata.IIOMetadata,javax.imageio.ImageWriteParam)">convertStreamMetadata</a></code><code class="f">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="z"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#convertImageMetadata(javax.imageio.metadata.IIOMetadata,javax.imageio.ImageTypeSpecifier,javax.imageio.ImageWriteParam)">convertImageMetadata</a></code><code class="f">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">imageMetadata</code>, <code><a aria-label="javax.imageio.ImageTypeSpecifier 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageTypeSpecifier.html">ImageTypeSpecifier</a></code><code class="parameterName">imageType</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="z"><code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#canWriteSequence()">canWriteSequence</a></code><code class="f">()</code><i class="z"><code>boolean</code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#prepareWriteSequence(javax.imageio.metadata.IIOMetadata)">prepareWriteSequence</a></code><code class="f">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>)</code><i class="z"><code>void</code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#writeToSequence(javax.imageio.IIOImage,javax.imageio.ImageWriteParam)">writeToSequence</a></code><code class="f">(<code><a aria-label="javax.imageio.IIOImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOImage.html">IIOImage</a></code><code class="parameterName">image</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="z"><code>void</code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#endWriteSequence()">endWriteSequence</a></code><code class="f">()</code><i class="z"><code>void</code></i></li>
+					<li class="a"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.jpeg.JpegImageWriter.html#write(javax.imageio.metadata.IIOMetadata,javax.imageio.IIOImage,javax.imageio.ImageWriteParam)">write</a></code><code class="f">(<code><a aria-label="javax.imageio.metadata.IIOMetadata 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/metadata/IIOMetadata.html">IIOMetadata</a></code><code class="parameterName">streamMetadata</code>, <code><a aria-label="javax.imageio.IIOImage 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/IIOImage.html">IIOImage</a></code><code class="parameterName">image</code>, <code><a aria-label="javax.imageio.ImageWriteParam 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageWriteParam.html">ImageWriteParam</a></code><code class="parameterName">param</code>)</code><i class="z"><code>void</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="a">
+		<footer class="q">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

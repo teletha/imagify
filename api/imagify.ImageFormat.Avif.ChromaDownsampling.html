@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="l">
-		<header class="L" date="2026-10-02">
-			<h1 class="M"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="N"><a href="api/main.html" id="API"><svg class="package">
+	<body class="FB">
+		<header class="Q" date="2026-10-10">
+			<h1 class="R"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="S"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="O"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="L"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="V"></nav>
-		<article class="m" id="Article">
-			<section class="j"><code class="e">imagify</code>
-				<h2 class="Enum JB"><code class="BB">ImageFormat.Avif.ChromaDownsampling</code></h2>
-				<div class="DB">
+		<nav class="Z"></nav>
+		<article class="CB" id="Article">
+			<section class="o"><code class="s">imagify</code>
+				<h2 class="Enum K"><code class="U">ImageFormat.Avif.ChromaDownsampling</code></h2>
+				<div class="t">
 					<ul class="E G">
 						<li><code><a aria-label="java.lang.Enum 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Enum.html">Enum</a><code class="parameters"><code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></code></code></li>
 					</ul>
@@ -57,68 +57,68 @@
 					</ul>
 				</div><span class="A"><p>The filter the conversion from RGB reduces the colour-difference channels with, named the
 way the RGB image description enumeration writes it down.</p><p>
- This is a second, narrower thing than <code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code>: it decides how the reduction
- is
- done, not whether it happens. It therefore has nothing at all to do with a file stored as
- <code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html#YUV444">Subsampling#YUV444</a></code>, where no channel is ever reduced.
- </p></span></section>
-			<section class="j" id="AUTOMATIC">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">AUTOMATIC</code><i class="FB"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>The encoder chooses, which is the best balance of quality and speed.</p></span></section>
-			<section class="j" id="FASTEST">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">FASTEST</code><i class="FB"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>The quickest reduction, which may show visible colour bleeding on saturated edges.</p></span></section>
-			<section class="j" id="BEST_QUALITY">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">BEST_QUALITY</code><i class="FB"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>The best-looking reduction, which averages the chroma values.</p></span></section>
-			<section class="j" id="AVERAGE">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">AVERAGE</code><i class="FB"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>A simple box average of the chroma samples.</p></span></section>
-			<section class="j" id="SHARP_YUV">
-				<h2 class="U"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="BB">SHARP_YUV</code><i class="FB"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>A sharpness-preserving filter that tries to keep colour edges from smearing.</p></span></section>
-			<section class="j" id="value">
-				<h2 class="U"><i class="FINAL"><i class="PUBLIC"></i></i><code class="BB">value</code><i class="FB"><code class="return">int</code></i></h2><span class="A"><p>The underlying <code>AVIF_CHROMA_DOWNSAMPLING_*</code> value.</p></span></section>
-			<section class="j" id="values()">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="BB">values</code><code class="v">()</code><i class="FB"><code array="fix"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2>
-				<table class="d">
-					<tr class="u">
+This is a second, narrower thing than <code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html">Subsampling</a></code>: it decides how the reduction
+is
+done, not whether it happens. It therefore has nothing at all to do with a file stored as
+<code><a aria-label="imagify.ImageFormat.Jpeg.Subsampling" href="api/imagify.ImageFormat.Jpeg.Subsampling.html#YUV444">Subsampling#YUV444</a></code>, where no channel is ever reduced.
+</p></span></section>
+			<section class="o" id="AUTOMATIC">
+				<h2 class="e"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="U">AUTOMATIC</code><i class="b"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>The encoder chooses, which is the best balance of quality and speed.</p></span></section>
+			<section class="o" id="FASTEST">
+				<h2 class="e"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="U">FASTEST</code><i class="b"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>The quickest reduction, which may show visible colour bleeding on saturated edges.</p></span></section>
+			<section class="o" id="BEST_QUALITY">
+				<h2 class="e"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="U">BEST_QUALITY</code><i class="b"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>The best-looking reduction, which averages the chroma values.</p></span></section>
+			<section class="o" id="AVERAGE">
+				<h2 class="e"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="U">AVERAGE</code><i class="b"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>A simple box average of the chroma samples.</p></span></section>
+			<section class="o" id="SHARP_YUV">
+				<h2 class="e"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="U">SHARP_YUV</code><i class="b"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2><span class="A"><p>A sharpness-preserving filter that tries to keep colour edges from smearing.</p></span></section>
+			<section class="o" id="value">
+				<h2 class="e"><i class="FINAL"><i class="PUBLIC"></i></i><code class="U">value</code><i class="b"><code class="return">int</code></i></h2><span class="A"><p>The underlying <code>AVIF_CHROMA_DOWNSAMPLING_*</code> value.</p></span></section>
+			<section class="o" id="values()">
+				<h2 class="e"><i class="STATIC PUBLIC"></i><code class="U">values</code><code class="f">()</code><i class="b"><code array="fix"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2>
+				<table class="P">
+					<tr class="h">
 						<td><code array="fix"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="j" id="valueOf(java.lang.String)">
-				<h2 class="U"><i class="STATIC PUBLIC"></i><code class="BB">valueOf</code><code class="v">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="FB"><code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2>
-				<table class="d">
-					<tr class="f">
+			<section class="o" id="valueOf(java.lang.String)">
+				<h2 class="e"><i class="STATIC PUBLIC"></i><code class="U">valueOf</code><code class="f">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="b"><code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></h2>
+				<table class="P">
+					<tr class="g">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code></td>
 						<td></td>
 					</tr>
-					<tr class="u">
+					<tr class="h">
 						<td><code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="i">
-			<div class="q">
-				<h5 class="T">Static Fields</h5>
+		<aside class="DB">
+			<div class="KB">
+				<h5 class="i">Static Fields</h5>
 				<ul>
-					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#AUTOMATIC">AUTOMATIC</a></code><i class="K"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
-					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#FASTEST">FASTEST</a></code><i class="K"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
-					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#BEST_QUALITY">BEST_QUALITY</a></code><i class="K"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
-					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#AVERAGE">AVERAGE</a></code><i class="K"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
-					<li class="EB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#SHARP_YUV">SHARP_YUV</a></code><i class="K"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
+					<li class="a"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#AUTOMATIC">AUTOMATIC</a></code><i class="z"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
+					<li class="a"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#FASTEST">FASTEST</a></code><i class="z"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
+					<li class="a"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#BEST_QUALITY">BEST_QUALITY</a></code><i class="z"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
+					<li class="a"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#AVERAGE">AVERAGE</a></code><i class="z"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
+					<li class="a"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#SHARP_YUV">SHARP_YUV</a></code><i class="z"><code class="return"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
 				</ul>
-				<h5 class="T">Fields</h5>
+				<h5 class="i">Fields</h5>
 				<ul>
-					<li class="EB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#value">value</a></code><i class="K"><code class="return">int</code></i></li>
+					<li class="a"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#value">value</a></code><i class="z"><code class="return">int</code></i></li>
 				</ul>
-				<h5 class="T">Static Methods</h5>
+				<h5 class="i">Static Methods</h5>
 				<ul>
-					<li class="EB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#values()">values</a></code><code class="v">()</code><i class="K"><code array="fix"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
-					<li class="EB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#valueOf(java.lang.String)">valueOf</a></code><code class="v">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="K"><code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
+					<li class="a"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#values()">values</a></code><code class="f">()</code><i class="z"><code array="fix"><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
+					<li class="a"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html#valueOf(java.lang.String)">valueOf</a></code><code class="f">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="z"><code><a aria-label="imagify.ImageFormat.Avif.ChromaDownsampling" href="api/imagify.ImageFormat.Avif.ChromaDownsampling.html">ChromaDownsampling</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="a">
+		<footer class="q">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
