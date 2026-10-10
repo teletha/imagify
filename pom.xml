@@ -1,6 +1,6 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.teletha</groupId>
+	<groupId>io.github.teletha</groupId>
 	<artifactId>imagify</artifactId>
 	<version>1.1.0</version>
 	<packaging>jar</packaging>
@@ -240,7 +240,7 @@ libwebp&apos;s, and refuse a library built against another revision of it.</desc
 	</licenses>
 	<dependencies>
 		<dependency>
-			<groupId>com.github.teletha</groupId>
+			<groupId>io.github.teletha</groupId>
 			<artifactId>antibug</artifactId>
 			<version>1.16.1</version>
 			<scope>test</scope>
@@ -289,7 +289,7 @@ libwebp&apos;s, and refuse a library built against another revision of it.</desc
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.14.0</version>
 				<configuration>
-					<release>24</release>
+					<release>25</release>
 					<encoding>UTF-8</encoding>
 					<compilerId>javac</compilerId>
 					<compilerArgs>
@@ -302,7 +302,7 @@ libwebp&apos;s, and refuse a library built against another revision of it.</desc
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.5.2</version>
 				<configuration>
-					<argLine>-ea   -Dfile.encoding=UTF-8</argLine>
+					<argLine>-ea --enable-native-access=ALL-UNNAMED -Dfile.encoding=UTF-8</argLine>
 					<reportFormat>plain</reportFormat>
 					<consoleOutputReporter>
 						<disable>true</disable>
