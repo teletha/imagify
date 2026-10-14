@@ -77,6 +77,7 @@ whose shape is not the target&apos;s:
     .resizeToFit(1920)                // longest edge 1920, ratio kept
     .resizeInside(800, 600)           // fit inside, never enlarge
     .resizeToFill(800, 600)           // fill the box, crop the overflow
+    .resizeToCover(800, 600)          // cover the box, never enlarge
     .padTo(800, 600)                  // fill the box, add transparent area
     .padTo(800, 600, Color.WHITE);    // ... or add a colour
 
