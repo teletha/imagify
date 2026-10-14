@@ -77,9 +77,9 @@ import java.util.function.Function;
  * Every transform applies to all frames of a sequence and leaves its timing alone. The resizing
  * methods come in pairs that differ in what they do with a shape that does not match the target:
  * {@link #resize} stretches to fit exactly, {@link #resizeToFit} and {@link #resizeInside} keep the
- * aspect ratio and leave the result smaller than the target, {@link #resizeToFill} keeps it exact
- * by
- * cropping the overflow, and {@link #padTo} keeps it exact by adding the missing area.
+ * aspect ratio and leave the result smaller than the target, {@link #resizeToCover} keeps the
+ * aspect ratio and leaves it larger, {@link #resizeToFill} keeps it exact by cropping the overflow,
+ * and {@link #padTo} keeps it exact by adding the missing area.
  * </p>
  */
 public final class Imagify {
@@ -483,6 +483,46 @@ public final class Imagify {
             return this;
         }
         double scale = Math.min((double) targetW / first.getWidth(), (double) targetH / first.getHeight());
+        return resize(scale, algorithm);
+    }
+
+    /**
+     * Scales down to the smallest size that covers the given box, keeping the aspect ratio.
+     *
+     * <p>Unlike {@link #resizeToFill(int, int)} nothing is cropped and nothing is padded, so the
+     * result is larger than the box on one edge whenever the source is not exactly the shape of the
+     * box. It is the counterpart of {@link #resizeInside(int, int)}, which scales down until the
+     * image fits inside the box; this one scales down until it covers the box. A source that does
+     * not exceed the box on both edges is already covered and is left at its own size rather than
+     * scaled up.
+     * </p>
+     *
+     * @param targetW the width of the box to cover
+     * @param targetH the height of the box to cover
+     * @throws IllegalArgumentException if either edge is not positive
+     * @return this pipeline, so the calls chain
+     */
+    public Imagify resizeToCover(int targetW, int targetH) {
+        return resizeToCover(targetW, targetH, ResizeAlgorithm.DEFAULT);
+    }
+
+    /**
+     * Scales down to the smallest size that covers the given box, keeping the aspect ratio.
+     *
+     * @param targetW the width of the box to cover
+     * @param targetH the height of the box to cover
+     * @param algorithm how the pixels are resampled on the way
+     * @throws IllegalArgumentException if either edge is not positive
+     * @return this pipeline, so the calls chain
+     * @see #resizeToCover(int, int)
+     */
+    public Imagify resizeToCover(int targetW, int targetH, ResizeAlgorithm algorithm) {
+        checkSize(targetW, targetH);
+        BufferedImage first = frameSequence.toBufferedImage();
+        if (first.getWidth() <= targetW || first.getHeight() <= targetH) {
+            return this;
+        }
+        double scale = Math.max((double) targetW / first.getWidth(), (double) targetH / first.getHeight());
         return resize(scale, algorithm);
     }
 

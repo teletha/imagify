@@ -199,6 +199,51 @@ class ImagifyTransformTest {
     }
 
     @Nested
+    @DisplayName("resizeToCover")
+    class ResizeToCover {
+
+        @Test
+        @DisplayName("shrinks the shorter edge to the box and lets the longer one overflow")
+        void shrinksToCover() {
+            BufferedImage covered = single(400, 200).resizeToCover(100, 100).toBufferedImage();
+            assertEquals(200, covered.getWidth());
+            assertEquals(100, covered.getHeight());
+            assertTrue(covered.getWidth() >= 100 && covered.getHeight() >= 100, "the box should be covered");
+        }
+
+        @Test
+        @DisplayName("is bound by the box in whichever direction is tighter")
+        void boundByTheTighterSide() {
+            BufferedImage covered = single(200, 400).resizeToCover(100, 100).toBufferedImage();
+            assertEquals(100, covered.getWidth());
+            assertEquals(200, covered.getHeight());
+        }
+
+        @Test
+        @DisplayName("leaves an image that already covers the box alone, without cropping it")
+        void leavesCoveringImagesAlone() {
+            BufferedImage unchanged = single(400, 100).resizeToCover(100, 100).toBufferedImage();
+            assertEquals(400, unchanged.getWidth());
+            assertEquals(100, unchanged.getHeight());
+        }
+
+        @Test
+        @DisplayName("leaves an image that already fits alone instead of scaling it up")
+        void leavesSmallImagesAlone() {
+            BufferedImage unchanged = single(30, 20).resizeToCover(100, 100).toBufferedImage();
+            assertEquals(30, unchanged.getWidth());
+            assertEquals(20, unchanged.getHeight());
+        }
+
+        @Test
+        @DisplayName("refuses a box that is not positive")
+        void refusesNonPositive() {
+            assertThrows(IllegalArgumentException.class, () -> single(10, 10).resizeToCover(0, 5));
+            assertThrows(IllegalArgumentException.class, () -> single(10, 10).resizeToCover(5, -1));
+        }
+    }
+
+    @Nested
     @DisplayName("resizeToFill")
     class ResizeToFill {
 
