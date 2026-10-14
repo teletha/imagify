@@ -560,7 +560,13 @@ public final class ImageWriter {
         Iterator<javax.imageio.ImageWriter> writers = ImageIO
                 .getImageWriters(ImageTypeSpecifier.createFromRenderedImage(image), formatName);
         if (!writers.hasNext()) {
-            ImageIO.write(image, formatName, stream);
+            // Falling back to ImageIO.write is the last resort for a format this library has no
+            // writer for, but it answers false when nothing can encode the image, and a caller
+            // handed an empty array for a request that silently did nothing is worse than an
+            // exception: that is how an empty file reaches a store. So the answer is checked.
+            if (!ImageIO.write(image, formatName, stream)) {
+                throw new IOException("no ImageWriter is available to encode the image as " + formatName);
+            }
             return;
         }
 
