@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="LB">
-		<header class="DB" date="2026-11-22">
-			<h1 class="T"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="g"><a href="api/main.html" id="API"><svg class="package">
+	<body class="N">
+		<header class="O" date="2026-11-22">
+			<h1 class="v"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="m"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="EB"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="b"></nav>
-		<article class="IB" id="Article">
-			<section class="M"><code class="KB">imagify</code>
-				<h2 class="Class h"><code class="AB">ImageFormat.Png</code></h2>
-				<div class="U">
+		<nav class="R"></nav>
+		<article class="P" id="Article">
+			<section class="CB"><code class="z">imagify</code>
+				<h2 class="Class DB"><code class="LB">ImageFormat.Png</code></h2>
+				<div class="j">
 					<ul class="E G">
 						<li><code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html">ImageFormat</a></code></li>
 					</ul>
@@ -60,45 +60,45 @@ write, because unlike every other format&apos;s quality it does not say what the
 hold: a caller who wants a small PNG says so with the format, and the <code>quality</code> of
 <code><a aria-label="imagify.ImageWriter" href="api/imagify.ImageWriter.html">ImageWriter</a></code> is left with nothing to do here, as it already had for GIF and BMP.
 </p></span></section>
-			<section class="M" id="DEFAULT_COMPRESSION_LEVEL">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="AB">DEFAULT_COMPRESSION_LEVEL</code><i class="FB"><code class="return">int</code></i></h2><span class="A"><p>The deflate effort a PNG is written at when the format does not name one, which is the
+			<section class="CB" id="DEFAULT_COMPRESSION_LEVEL">
+				<h2 class="i"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="LB">DEFAULT_COMPRESSION_LEVEL</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>The deflate effort a PNG is written at when the format does not name one, which is the
 effort the ImageIO plug-in picks when it is not told either.</p><p>
 Note that this is not the level <code>java.util.zip.Deflater</code> calls its default, which
 is
 <code>6</code>: the PNG writer settles on <code>4</code>, and this is that one, so a plain PNG
 written here is the file <code>ImageIO.write</code> would have written.
 </p></span></section>
-			<section class="M" id="MAX_COMPRESSION_LEVEL">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="AB">MAX_COMPRESSION_LEVEL</code><i class="FB"><code class="return">int</code></i></h2><span class="A"><p>The most effort a deflate stage can be asked for, and the smallest file it will produce.</p></span></section>
-			<section class="M" id="compressionLevel">
-				<h2 class="w"><i class="FINAL"><i class="PUBLIC"></i></i><code class="AB">compressionLevel</code><i class="FB"><code class="return">int</code></i></h2><span class="A"><p>How hard the deflate stage works, <code>0</code> being the quickest and
+			<section class="CB" id="MAX_COMPRESSION_LEVEL">
+				<h2 class="i"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="LB">MAX_COMPRESSION_LEVEL</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>The most effort a deflate stage can be asked for, and the smallest file it will produce.</p></span></section>
+			<section class="CB" id="compressionLevel">
+				<h2 class="i"><i class="FINAL"><i class="PUBLIC"></i></i><code class="LB">compressionLevel</code><i class="T"><code class="return">int</code></i></h2><span class="A"><p>How hard the deflate stage works, <code>0</code> being the quickest and
 <code><a aria-label="imagify.ImageFormat" href="api/imagify.ImageFormat.html#MAX_COMPRESSION_LEVEL">#MAX_COMPRESSION_LEVEL</a></code> the most thorough.</p><p>
 Two levels apart are worth a great deal: on a flat 400x400 image the difference between
 level <code>0</code> and level <code>9</code> is 207 times in file size, for the same pixels. The
 levels near each other are worth much less and may be worth nothing at all, so this is
 a size and a time trade rather than a curve to tune.
 </p></span></section>
-			<section class="M" id="compressionLevel(int)">
-				<h2 class="w"><i class="PUBLIC"></i><code class="AB">compressionLevel</code><code class="R">(<code>int</code><code class="parameterName">level</code>)</code><i class="FB"><code><a aria-label="imagify.ImageFormat.Png" href="api/imagify.ImageFormat.Png.html">Png</a></code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="compressionLevel(int)">
+				<h2 class="i"><i class="PUBLIC"></i><code class="LB">compressionLevel</code><code class="x">(<code>int</code><code class="parameterName">level</code>)</code><i class="T"><code><a aria-label="imagify.ImageFormat.Png" href="api/imagify.ImageFormat.Png.html">Png</a></code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code>int</code><code class="parameterName">level</code></td>
 						<td><span><p>how hard the deflate stage works, 0 (quickest) to 9 (most thorough)</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code><a aria-label="imagify.ImageFormat.Png" href="api/imagify.ImageFormat.Png.html">Png</a></code></td>
 						<td><span><p>this format asking the encoder for that much effort</p></span></td>
 					</tr>
 				</table><span class="A"><p>Asks the deflate stage for a different amount of effort, which trades encode time against
 file size rather than against image quality.</p></span></section>
-			<section class="M" id="equals(java.lang.Object)">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">equals</code><code class="R">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="FB"><code>boolean</code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="equals(java.lang.Object)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">equals</code><code class="x">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="T"><code>boolean</code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
@@ -106,36 +106,36 @@ file size rather than against image quality.</p></span></section>
 The effort is part of what a PNG format is, so the same picture asked for at two levels
 is not the same value.
 </p></span></section>
-			<section class="M" id="hashCode()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">hashCode</code><code class="R">()</code><i class="FB"><code>int</code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="hashCode()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">hashCode</code><code class="x">()</code><i class="T"><code>int</code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="Y">
-			<div class="v">
-				<h5 class="x">Static Fields</h5>
+		<aside class="S">
+			<div class="e">
+				<h5 class="W">Static Fields</h5>
 				<ul>
-					<li class="JB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Png.html#DEFAULT_COMPRESSION_LEVEL">DEFAULT_COMPRESSION_LEVEL</a></code><i class="L"><code class="return">int</code></i></li>
-					<li class="JB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Png.html#MAX_COMPRESSION_LEVEL">MAX_COMPRESSION_LEVEL</a></code><i class="L"><code class="return">int</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.Png.html#DEFAULT_COMPRESSION_LEVEL">DEFAULT_COMPRESSION_LEVEL</a></code><i class="JB"><code class="return">int</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ImageFormat.Png.html#MAX_COMPRESSION_LEVEL">MAX_COMPRESSION_LEVEL</a></code><i class="JB"><code class="return">int</code></i></li>
 				</ul>
-				<h5 class="x">Fields</h5>
+				<h5 class="W">Fields</h5>
 				<ul>
-					<li class="JB"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Png.html#compressionLevel">compressionLevel</a></code><i class="L"><code class="return">int</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/imagify.ImageFormat.Png.html#compressionLevel">compressionLevel</a></code><i class="JB"><code class="return">int</code></i></li>
 				</ul>
-				<h5 class="x">Methods</h5>
+				<h5 class="W">Methods</h5>
 				<ul>
-					<li class="JB"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Png.html#compressionLevel(int)">compressionLevel</a></code><code class="R">(<code>int</code><code class="parameterName">level</code>)</code><i class="L"><code><a aria-label="imagify.ImageFormat.Png" href="api/imagify.ImageFormat.Png.html">Png</a></code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Png.html#equals(java.lang.Object)">equals</a></code><code class="R">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="L"><code>boolean</code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Png.html#hashCode()">hashCode</a></code><code class="R">()</code><i class="L"><code>int</code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/imagify.ImageFormat.Png.html#compressionLevel(int)">compressionLevel</a></code><code class="x">(<code>int</code><code class="parameterName">level</code>)</code><i class="JB"><code><a aria-label="imagify.ImageFormat.Png" href="api/imagify.ImageFormat.Png.html">Png</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Png.html#equals(java.lang.Object)">equals</a></code><code class="x">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">object</code>)</code><i class="JB"><code>boolean</code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ImageFormat.Png.html#hashCode()">hashCode</a></code><code class="x">()</code><i class="JB"><code>int</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="CB">
+		<footer class="Q">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

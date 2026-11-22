@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="LB">
-		<header class="DB" date="2026-11-22">
-			<h1 class="T"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="g"><a href="api/main.html" id="API"><svg class="package">
+	<body class="N">
+		<header class="O" date="2026-11-22">
+			<h1 class="v"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="m"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="EB"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="b"></nav>
-		<article class="IB" id="Article">
-			<section class="M"><code class="KB">imagify.ico</code>
-				<h2 class="Class h"><code class="AB">IcoImageReaderSpi</code></h2>
-				<div class="U">
+		<nav class="R"></nav>
+		<article class="P" id="Article">
+			<section class="CB"><code class="z">imagify.ico</code>
+				<h2 class="Class DB"><code class="LB">IcoImageReaderSpi</code></h2>
+				<div class="j">
 					<ul class="E G">
 						<li><code><a aria-label="javax.imageio.spi.ImageReaderSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageReaderSpi.html">ImageReaderSpi</a></code></li>
 						<li><code><a aria-label="javax.imageio.spi.ImageReaderWriterSpi 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/ImageReaderWriterSpi.html">ImageReaderWriterSpi</a></code></li>
@@ -56,191 +56,191 @@
 						<li><code><a aria-label="javax.imageio.spi.RegisterableService 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/spi/RegisterableService.html">RegisterableService</a></code></li>
 					</ul>
 				</div><span class="A"><p>Registers <code><a aria-label="imagify.ico.IcoImageReader" href="api/imagify.ico.IcoImageReader.html">IcoImageReader</a></code> with <code>ImageIO</code>.</p></span></section>
-			<section class="M" id="VERSION">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="AB">VERSION</code><i class="FB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Version of this service provider implementation.</p></span></section>
-			<section class="M" id="IcoImageReaderSpi()">
-				<h2 class="w"><i class="PUBLIC"></i><code class="AB">IcoImageReaderSpi</code><code class="R">()</code></h2><span class="A"><code>ImageIO</code> builds the provider reflectively, so it needs a public no-argument
+			<section class="CB" id="VERSION">
+				<h2 class="i"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="LB">VERSION</code><i class="T"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Version of this service provider implementation.</p></span></section>
+			<section class="CB" id="IcoImageReaderSpi()">
+				<h2 class="i"><i class="PUBLIC"></i><code class="LB">IcoImageReaderSpi</code><code class="x">()</code></h2><span class="A"><code>ImageIO</code> builds the provider reflectively, so it needs a public no-argument
 constructor; the accepted input types are copied in here rather than assigned directly, so
 that a caller editing the inherited field cannot reach the shared constant through it.</span></section>
-			<section class="M" id="canDecodeInput(java.lang.Object)">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">canDecodeInput</code><code class="R">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code>)</code><i class="FB"><code>boolean</code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="canDecodeInput(java.lang.Object)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">canDecodeInput</code><code class="x">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code>)</code><i class="T"><code>boolean</code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="createReaderInstance(java.lang.Object)">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">createReaderInstance</code><code class="R">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="FB"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="createReaderInstance(java.lang.Object)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">createReaderInstance</code><code class="x">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="T"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="getFormatNames()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">getFormatNames</code><code class="R">()</code><i class="FB"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="getFormatNames()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">getFormatNames</code><code class="x">()</code><i class="T"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="getFileSuffixes()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">getFileSuffixes</code><code class="R">()</code><i class="FB"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="getFileSuffixes()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">getFileSuffixes</code><code class="x">()</code><i class="T"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="getMIMETypes()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">getMIMETypes</code><code class="R">()</code><i class="FB"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="getMIMETypes()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">getMIMETypes</code><code class="x">()</code><i class="T"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="getPluginClassName()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">getPluginClassName</code><code class="R">()</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="getPluginClassName()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">getPluginClassName</code><code class="x">()</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="getReaderClass()">
-				<h2 class="w"><i class="PUBLIC"></i><code class="AB">getReaderClass</code><code class="R">()</code><i class="FB"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.ico.IcoImageReader" href="api/imagify.ico.IcoImageReader.html">IcoImageReader</a></code></code></code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="getReaderClass()">
+				<h2 class="i"><i class="PUBLIC"></i><code class="LB">getReaderClass</code><code class="x">()</code><i class="T"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.ico.IcoImageReader" href="api/imagify.ico.IcoImageReader.html">IcoImageReader</a></code></code></code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.ico.IcoImageReader" href="api/imagify.ico.IcoImageReader.html">IcoImageReader</a></code></code></code></td>
 						<td><span><p>the reader this provider creates</p></span></td>
 					</tr>
 				</table><span class="A"><p>The reader class behind this provider, so that a caller holding the provider can reach the
 class itself without going through <code>ImageIO</code> a second time.</p></span></section>
-			<section class="M" id="isStandardStreamMetadataFormatSupported()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">isStandardStreamMetadataFormatSupported</code><code class="R">()</code><i class="FB"><code>boolean</code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="isStandardStreamMetadataFormatSupported()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">isStandardStreamMetadataFormatSupported</code><code class="x">()</code><i class="T"><code>boolean</code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="getNativeStreamMetadataFormatName()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">getNativeStreamMetadataFormatName</code><code class="R">()</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="getNativeStreamMetadataFormatName()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">getNativeStreamMetadataFormatName</code><code class="x">()</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="isStandardImageMetadataFormatSupported()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">isStandardImageMetadataFormatSupported</code><code class="R">()</code><i class="FB"><code>boolean</code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="isStandardImageMetadataFormatSupported()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">isStandardImageMetadataFormatSupported</code><code class="x">()</code><i class="T"><code>boolean</code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="getNativeImageMetadataFormatName()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">getNativeImageMetadataFormatName</code><code class="R">()</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="getNativeImageMetadataFormatName()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">getNativeImageMetadataFormatName</code><code class="x">()</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="getVendorName()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">getVendorName</code><code class="R">()</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="getVendorName()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">getVendorName</code><code class="x">()</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="getVersion()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">getVersion</code><code class="R">()</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="getVersion()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">getVersion</code><code class="x">()</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="getDescription(java.util.Locale)">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">getDescription</code><code class="R">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="getDescription(java.util.Locale)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">getDescription</code><code class="x">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code></td>
 						<td></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="toString()">
-				<h2 class="w"><i class="OVERRIDE PUBLIC"></i><code class="AB">toString</code><code class="R">()</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="toString()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="LB">toString</code><code class="x">()</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="Y">
-			<div class="v">
-				<h5 class="x">Constructors</h5>
+		<aside class="S">
+			<div class="e">
+				<h5 class="W">Constructors</h5>
 				<ul>
-					<li class="JB"><i class="PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#IcoImageReaderSpi()">IcoImageReaderSpi</a></code><code class="R">()</code></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#IcoImageReaderSpi()">IcoImageReaderSpi</a></code><code class="x">()</code></li>
 				</ul>
-				<h5 class="x">Static Fields</h5>
+				<h5 class="W">Static Fields</h5>
 				<ul>
-					<li class="JB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#VERSION">VERSION</a></code><i class="L"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#VERSION">VERSION</a></code><i class="JB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
-				<h5 class="x">Methods</h5>
+				<h5 class="W">Methods</h5>
 				<ul>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#canDecodeInput(java.lang.Object)">canDecodeInput</a></code><code class="R">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code>)</code><i class="L"><code>boolean</code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#createReaderInstance(java.lang.Object)">createReaderInstance</a></code><code class="R">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="L"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getFormatNames()">getFormatNames</a></code><code class="R">()</code><i class="L"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getFileSuffixes()">getFileSuffixes</a></code><code class="R">()</code><i class="L"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getMIMETypes()">getMIMETypes</a></code><code class="R">()</code><i class="L"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getPluginClassName()">getPluginClassName</a></code><code class="R">()</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getReaderClass()">getReaderClass</a></code><code class="R">()</code><i class="L"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.ico.IcoImageReader" href="api/imagify.ico.IcoImageReader.html">IcoImageReader</a></code></code></code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#isStandardStreamMetadataFormatSupported()">isStandardStreamMetadataFormatSupported</a></code><code class="R">()</code><i class="L"><code>boolean</code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getNativeStreamMetadataFormatName()">getNativeStreamMetadataFormatName</a></code><code class="R">()</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#isStandardImageMetadataFormatSupported()">isStandardImageMetadataFormatSupported</a></code><code class="R">()</code><i class="L"><code>boolean</code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getNativeImageMetadataFormatName()">getNativeImageMetadataFormatName</a></code><code class="R">()</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getVendorName()">getVendorName</a></code><code class="R">()</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getVersion()">getVersion</a></code><code class="R">()</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getDescription(java.util.Locale)">getDescription</a></code><code class="R">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#toString()">toString</a></code><code class="R">()</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#canDecodeInput(java.lang.Object)">canDecodeInput</a></code><code class="x">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">source</code>)</code><i class="JB"><code>boolean</code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#createReaderInstance(java.lang.Object)">createReaderInstance</a></code><code class="x">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">extension</code>)</code><i class="JB"><code><a aria-label="javax.imageio.ImageReader 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/imageio/ImageReader.html">ImageReader</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getFormatNames()">getFormatNames</a></code><code class="x">()</code><i class="JB"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getFileSuffixes()">getFileSuffixes</a></code><code class="x">()</code><i class="JB"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getMIMETypes()">getMIMETypes</a></code><code class="x">()</code><i class="JB"><code array="fix"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getPluginClassName()">getPluginClassName</a></code><code class="x">()</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getReaderClass()">getReaderClass</a></code><code class="x">()</code><i class="JB"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code><a aria-label="imagify.ico.IcoImageReader" href="api/imagify.ico.IcoImageReader.html">IcoImageReader</a></code></code></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#isStandardStreamMetadataFormatSupported()">isStandardStreamMetadataFormatSupported</a></code><code class="x">()</code><i class="JB"><code>boolean</code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getNativeStreamMetadataFormatName()">getNativeStreamMetadataFormatName</a></code><code class="x">()</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#isStandardImageMetadataFormatSupported()">isStandardImageMetadataFormatSupported</a></code><code class="x">()</code><i class="JB"><code>boolean</code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getNativeImageMetadataFormatName()">getNativeImageMetadataFormatName</a></code><code class="x">()</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getVendorName()">getVendorName</a></code><code class="x">()</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getVersion()">getVersion</a></code><code class="x">()</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#getDescription(java.util.Locale)">getDescription</a></code><code class="x">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/imagify.ico.IcoImageReaderSpi.html#toString()">toString</a></code><code class="x">()</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="CB">
+		<footer class="Q">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

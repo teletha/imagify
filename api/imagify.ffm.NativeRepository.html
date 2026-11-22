@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="LB">
-		<header class="DB" date="2026-11-22">
-			<h1 class="T"><a href="index.html"><code>Imagify</code></a></h1>
-			<nav class="g"><a href="api/main.html" id="API"><svg class="package">
+	<body class="N">
+		<header class="O" date="2026-11-22">
+			<h1 class="v"><a href="index.html"><code>Imagify</code></a></h1>
+			<nav class="m"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="EB"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="b"></nav>
-		<article class="IB" id="Article">
-			<section class="M"><code class="KB">imagify.ffm</code>
-				<h2 class="Class h"><code class="AB">NativeRepository</code></h2>
-				<div class="U"></div><span class="A"><p>Resolves the shared library that backs an AVIF, WebP or JPEG codec, fetching it from a GitHub
+		<nav class="R"></nav>
+		<article class="P" id="Article">
+			<section class="CB"><code class="z">imagify.ffm</code>
+				<h2 class="Class DB"><code class="LB">NativeRepository</code></h2>
+				<div class="j"></div><span class="A"><p>Resolves the shared library that backs an AVIF, WebP or JPEG codec, fetching it from a GitHub
 release the first time it is needed.</p><p>The libraries do not ship inside the jar. Each of the three formats is published as its own
 release, one release per native version, with the six files of the six supported platforms
 attached. The runtime only ever wants one of the six, so fetching on first use is the whole point
@@ -70,22 +70,22 @@ be exactly what was published. Delete the cache directory to drop it and fetch a
 						</p>
 					</p>
 				</span></section>
-			<section class="M" id="PROPERTY_CACHE">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="AB">PROPERTY_CACHE</code><i class="FB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Names the system property that points at the download cache.</p></span></section>
-			<section class="M" id="PROPERTY_DOWNLOAD">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="AB">PROPERTY_DOWNLOAD</code><i class="FB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Names the system property that turns downloads off (<code>false</code> disables them).</p></span></section>
-			<section class="M" id="PROPERTY_URL">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="AB">PROPERTY_URL</code><i class="FB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Names the system property that overrides where the releases are served from.</p></span></section>
-			<section class="M" id="DEFAULT_URL">
-				<h2 class="w"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="AB">DEFAULT_URL</code><i class="FB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>The releases of this repository, which is where a default resolution fetches from.</p></span></section>
-			<section class="M" id="resolve(imagify.ffm.NativeRepository.NativeCodec)">
-				<h2 class="w"><i class="STATIC PUBLIC"></i><code class="AB">resolve</code><code class="R">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="FB"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="PROPERTY_CACHE">
+				<h2 class="i"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="LB">PROPERTY_CACHE</code><i class="T"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Names the system property that points at the download cache.</p></span></section>
+			<section class="CB" id="PROPERTY_DOWNLOAD">
+				<h2 class="i"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="LB">PROPERTY_DOWNLOAD</code><i class="T"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Names the system property that turns downloads off (<code>false</code> disables them).</p></span></section>
+			<section class="CB" id="PROPERTY_URL">
+				<h2 class="i"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="LB">PROPERTY_URL</code><i class="T"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>Names the system property that overrides where the releases are served from.</p></span></section>
+			<section class="CB" id="DEFAULT_URL">
+				<h2 class="i"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="LB">DEFAULT_URL</code><i class="T"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="A"><p>The releases of this repository, which is where a default resolution fetches from.</p></span></section>
+			<section class="CB" id="resolve(imagify.ffm.NativeRepository.NativeCodec)">
+				<h2 class="i"><i class="PUBLIC STATIC"></i><code class="LB">resolve</code><code class="x">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="T"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code></td>
 						<td><span><p>the format whose library is wanted</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></td>
 						<td><span><p>the absolute path of the library, or <code>null</code> when it could not be resolved, in
 which case <code><a aria-label="imagify.ffm.NativeRepository" href="api/imagify.ffm.NativeRepository.html#lastReason(imagify.ffm.NativeRepository.NativeCodec)">#lastReason(NativeCodec)</a></code> says why</p></span></td>
@@ -96,28 +96,28 @@ keyed by (codec, tag, file name); then a download from
 reports, and the caller is free to fall back to a library the system provides.
 </p>
 				</span></section>
-			<section class="M" id="lastReason(imagify.ffm.NativeRepository.NativeCodec)">
-				<h2 class="w"><i class="STATIC PUBLIC"></i><code class="AB">lastReason</code><code class="R">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="lastReason(imagify.ffm.NativeRepository.NativeCodec)">
+				<h2 class="i"><i class="PUBLIC STATIC"></i><code class="LB">lastReason</code><code class="x">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code></td>
 						<td><span><p>the format whose last resolution failed, or succeeded</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>why the last <code><a aria-label="imagify.ffm.NativeRepository" href="api/imagify.ffm.NativeRepository.html#resolve(imagify.ffm.NativeRepository.NativeCodec)">#resolve(NativeCodec)</a></code> of the codec gave up, or <code>null</code> when
 it found a library</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="tag(imagify.ffm.NativeRepository.NativeCodec)">
-				<h2 class="w"><i class="STATIC PUBLIC"></i><code class="AB">tag</code><code class="R">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="tag(imagify.ffm.NativeRepository.NativeCodec)">
+				<h2 class="i"><i class="PUBLIC STATIC"></i><code class="LB">tag</code><code class="x">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code></td>
 						<td><span><p>the format whose release is wanted</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the tag, or <code>null</code> when the properties are missing or hold no tag</p></span></td>
 					</tr>
@@ -126,10 +126,10 @@ the natives workflow reads the same file when it publishes, so the tag the runti
 exactly the tag the workflow published.
 </p>
 				</span></section>
-			<section class="M" id="cacheDirectory()">
-				<h2 class="w"><i class="STATIC PUBLIC"></i><code class="AB">cacheDirectory</code><code class="R">()</code><i class="FB"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></h2>
-				<table class="W">
-					<tr class="N">
+			<section class="CB" id="cacheDirectory()">
+				<h2 class="i"><i class="PUBLIC STATIC"></i><code class="LB">cacheDirectory</code><code class="x">()</code><i class="T"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></h2>
+				<table class="y">
+					<tr class="n">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></td>
 						<td><span><p>the absolute cache directory</p></span></td>
 					</tr>
@@ -139,110 +139,110 @@ exactly the tag the workflow published.
 name, and deleting the directory is the way to fetch everything again.
 </p>
 				</span></section>
-			<section class="M" id="cacheFile(imagify.ffm.NativeRepository.NativeCodec,java.lang.String,java.lang.String)">
-				<h2 class="w"><i class="STATIC PUBLIC"></i><code class="AB">cacheFile</code><code class="R">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">tag</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">asset</code>)</code><i class="FB"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="cacheFile(imagify.ffm.NativeRepository.NativeCodec,java.lang.String,java.lang.String)">
+				<h2 class="i"><i class="PUBLIC STATIC"></i><code class="LB">cacheFile</code><code class="x">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">tag</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">asset</code>)</code><i class="T"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code></td>
 						<td><span><p>the format the asset belongs to</p></span></td>
 					</tr>
-					<tr class="V">
+					<tr class="f">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">tag</code></td>
 						<td><span><p>the release tag, as <code><a aria-label="imagify.ffm.NativeRepository" href="api/imagify.ffm.NativeRepository.html#tag(imagify.ffm.NativeRepository.NativeCodec)">#tag(NativeCodec)</a></code> reads it</p></span></td>
 					</tr>
-					<tr class="V">
+					<tr class="f">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">asset</code></td>
 						<td><span><p>the file name of the asset</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></td>
 						<td><span><code><a aria-label="imagify.ffm.NativeRepository" href="api/imagify.ffm.NativeRepository.html#cacheDirectory()">#cacheDirectory()</a></code><code>/&lt;format&gt;/&lt;tag&gt;/&lt;asset&gt;</code></span></td>
 					</tr>
 				</table><span class="A"><p>The cache file a release asset is kept in.</p></span></section>
-			<section class="M" id="assetName(imagify.ffm.NativeRepository.NativeCodec,java.lang.String,java.lang.String)">
-				<h2 class="w"><i class="STATIC PUBLIC"></i><code class="AB">assetName</code><code class="R">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">osName</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">arch</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="assetName(imagify.ffm.NativeRepository.NativeCodec,java.lang.String,java.lang.String)">
+				<h2 class="i"><i class="PUBLIC STATIC"></i><code class="LB">assetName</code><code class="x">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">osName</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">arch</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code></td>
 						<td><span><p>the format the asset belongs to</p></span></td>
 					</tr>
-					<tr class="V">
+					<tr class="f">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">osName</code></td>
 						<td><span><p>the value of the <code>os.name</code> system property</p></span></td>
 					</tr>
-					<tr class="V">
+					<tr class="f">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">arch</code></td>
 						<td><span><p>the value of the <code>os.arch</code> system property</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the asset name, or <code>null</code> when the platform is not one of the six</p></span></td>
 					</tr>
 				</table><span class="A"><p>The file a release asset is published under, resolved from a running JVM&apos;s own names.</p></span></section>
-			<section class="M" id="platform(java.lang.String)">
-				<h2 class="w"><i class="STATIC PUBLIC"></i><code class="AB">platform</code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">osName</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="platform(java.lang.String)">
+				<h2 class="i"><i class="PUBLIC STATIC"></i><code class="LB">platform</code><code class="x">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">osName</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">osName</code></td>
 						<td><span><p>the value of the <code>os.name</code> system property</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><code>windows</code>, <code>macos</code> or <code>linux</code>, or <code>null</code> when unrecognised</span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="cpu(java.lang.String)">
-				<h2 class="w"><i class="STATIC PUBLIC"></i><code class="AB">cpu</code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">arch</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="cpu(java.lang.String)">
+				<h2 class="i"><i class="PUBLIC STATIC"></i><code class="LB">cpu</code><code class="x">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">arch</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">arch</code></td>
 						<td><span><p>the value of the <code>os.arch</code> system property</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><code>x64</code> or <code>arm64</code>, or <code>null</code> when unrecognised</span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="M" id="extension(java.lang.String)">
-				<h2 class="w"><i class="STATIC PUBLIC"></i><code class="AB">extension</code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">platform</code>)</code><i class="FB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="W">
-					<tr class="V">
+			<section class="CB" id="extension(java.lang.String)">
+				<h2 class="i"><i class="PUBLIC STATIC"></i><code class="LB">extension</code><code class="x">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">platform</code>)</code><i class="T"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="y">
+					<tr class="f">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">platform</code></td>
 						<td><span><p>one of the values <code><a aria-label="imagify.ffm.NativeRepository" href="api/imagify.ffm.NativeRepository.html#platform(java.lang.String)">#platform(String)</a></code> returns</p></span></td>
 					</tr>
-					<tr class="N">
+					<tr class="n">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td><span><p>the extension a shared library has on that platform</p></span></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="Y">
-			<div class="v">
-				<h5 class="x">Static Fields</h5>
+		<aside class="S">
+			<div class="e">
+				<h5 class="W">Static Fields</h5>
 				<ul>
-					<li class="JB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ffm.NativeRepository.html#PROPERTY_CACHE">PROPERTY_CACHE</a></code><i class="L"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ffm.NativeRepository.html#PROPERTY_DOWNLOAD">PROPERTY_DOWNLOAD</a></code><i class="L"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ffm.NativeRepository.html#PROPERTY_URL">PROPERTY_URL</a></code><i class="L"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/imagify.ffm.NativeRepository.html#DEFAULT_URL">DEFAULT_URL</a></code><i class="L"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ffm.NativeRepository.html#PROPERTY_CACHE">PROPERTY_CACHE</a></code><i class="JB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ffm.NativeRepository.html#PROPERTY_DOWNLOAD">PROPERTY_DOWNLOAD</a></code><i class="JB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ffm.NativeRepository.html#PROPERTY_URL">PROPERTY_URL</a></code><i class="JB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/imagify.ffm.NativeRepository.html#DEFAULT_URL">DEFAULT_URL</a></code><i class="JB"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
-				<h5 class="x">Static Methods</h5>
+				<h5 class="W">Static Methods</h5>
 				<ul>
-					<li class="JB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#resolve(imagify.ffm.NativeRepository.NativeCodec)">resolve</a></code><code class="R">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="L"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></li>
-					<li class="JB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#lastReason(imagify.ffm.NativeRepository.NativeCodec)">lastReason</a></code><code class="R">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#tag(imagify.ffm.NativeRepository.NativeCodec)">tag</a></code><code class="R">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#cacheDirectory()">cacheDirectory</a></code><code class="R">()</code><i class="L"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></li>
-					<li class="JB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#cacheFile(imagify.ffm.NativeRepository.NativeCodec,java.lang.String,java.lang.String)">cacheFile</a></code><code class="R">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">tag</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">asset</code>)</code><i class="L"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></li>
-					<li class="JB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#assetName(imagify.ffm.NativeRepository.NativeCodec,java.lang.String,java.lang.String)">assetName</a></code><code class="R">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">osName</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">arch</code>)</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#platform(java.lang.String)">platform</a></code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">osName</code>)</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#cpu(java.lang.String)">cpu</a></code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">arch</code>)</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="JB"><i class="STATIC PUBLIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#extension(java.lang.String)">extension</a></code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">platform</code>)</code><i class="L"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#resolve(imagify.ffm.NativeRepository.NativeCodec)">resolve</a></code><code class="x">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="JB"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></li>
+					<li class="J"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#lastReason(imagify.ffm.NativeRepository.NativeCodec)">lastReason</a></code><code class="x">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#tag(imagify.ffm.NativeRepository.NativeCodec)">tag</a></code><code class="x">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>)</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#cacheDirectory()">cacheDirectory</a></code><code class="x">()</code><i class="JB"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></li>
+					<li class="J"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#cacheFile(imagify.ffm.NativeRepository.NativeCodec,java.lang.String,java.lang.String)">cacheFile</a></code><code class="x">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">tag</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">asset</code>)</code><i class="JB"><code><a aria-label="java.nio.file.Path 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/nio/file/Path.html">Path</a></code></i></li>
+					<li class="J"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#assetName(imagify.ffm.NativeRepository.NativeCodec,java.lang.String,java.lang.String)">assetName</a></code><code class="x">(<code><a aria-label="imagify.ffm.NativeRepository.NativeCodec" href="api/imagify.ffm.NativeRepository.NativeCodec.html">NativeCodec</a></code><code class="parameterName">codec</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">osName</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">arch</code>)</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#platform(java.lang.String)">platform</a></code><code class="x">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">osName</code>)</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#cpu(java.lang.String)">cpu</a></code><code class="x">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">arch</code>)</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="J"><i class="PUBLIC STATIC"></i><code><a href="api/imagify.ffm.NativeRepository.html#extension(java.lang.String)">extension</a></code><code class="x">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">platform</code>)</code><i class="JB"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="CB">
+		<footer class="Q">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
