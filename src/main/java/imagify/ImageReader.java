@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,7 @@ import javax.imageio.stream.ImageInputStream;
 
 import org.w3c.dom.Node;
 
+import imagify.jpeg.JpegException;
 import imagify.jpeg.JpegImageReader;
 import imagify.jpeg.JpegImageReaderSpi;
 import imagify.jpeg.ffm.JpegliCodec;
@@ -87,6 +89,59 @@ public final class ImageReader {
      */
     public static FrameSequence read(byte[] data, ImageFormat format) throws IOException {
         return readArray(data, format);
+    }
+
+    /**
+     * Reads a file, reducing a JPEG while it is decoded when the native library can do so.
+     *
+     * <p>The format is taken from the file extension. Other formats, and JPEGs when the loaded
+     * native library predates DCT scaling, are read in full and returned unchanged.
+     *
+     * @param path the file path
+     * @param scaleNum the numerator of the scale, which must be 1
+     * @param scaleDenom one of 1, 2, 4 or 8
+     * @return the decoded frames
+     * @throws IOException if the file cannot be read or decoded
+     */
+    public static FrameSequence read(Path path, int scaleNum, int scaleDenom) throws IOException {
+        return read(Files.readAllBytes(path), scaleNum, scaleDenom);
+    }
+
+    /**
+     * Reads encoded data, reducing a JPEG while it is decoded when the native library can do so.
+     * The format is detected from the magic bytes.
+     *
+     * @param data the encoded image data
+     * @param scaleNum the numerator of the scale, which must be 1
+     * @param scaleDenom one of 1, 2, 4 or 8
+     * @return the decoded frames
+     * @throws IOException if the data cannot be decoded
+     */
+    public static FrameSequence read(byte[] data, int scaleNum, int scaleDenom) throws IOException {
+        return read(data, detectFormat(data), scaleNum, scaleDenom);
+    }
+
+    /**
+     * Reads encoded data of a known format, reducing a JPEG while it is decoded when possible.
+     *
+     * @param data the encoded image data
+     * @param format the format to decode as
+     * @param scaleNum the numerator of the scale, which must be 1
+     * @param scaleDenom one of 1, 2, 4 or 8
+     * @return the decoded frames
+     * @throws IOException if the data cannot be decoded
+     */
+    public static FrameSequence read(byte[] data, ImageFormat format, int scaleNum, int scaleDenom) throws IOException {
+        if (format instanceof ImageFormat.Jpeg && (scaleNum != 1 || scaleDenom != 1)
+                && JpegliCodec.supportsScaledDecode()) {
+            try {
+                BufferedImage image = JpegliCodec.decode(data, scaleNum, scaleDenom);
+                return new FrameSequence(List.of(image), new int[] {1000}, 0);
+            } catch (JpegException e) {
+                throw new IOException("cannot decode the JPEG at scale " + scaleNum + "/" + scaleDenom, e);
+            }
+        }
+        return read(data, format);
     }
 
     /**

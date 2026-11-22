@@ -116,6 +116,28 @@ public final class Imagify {
     }
 
     /**
+     * Starts a pipeline by reading a file, asking a JPEG decoder to scale while decoding.
+     *
+     * <p>The supported ratios are 1/1, 1/2, 1/4 and 1/8. A native library without DCT scaling, and
+     * every format other than JPEG, is decoded normally, so callers that cannot afford a full
+     * resolution image should check the resulting {@link #width()} and {@link #height()}.
+     *
+     * @param path the file to read
+     * @param scaleNum the numerator of the scale, which must be 1
+     * @param scaleDenom one of 1, 2, 4 or 8
+     * @return this pipeline for chaining
+     */
+    public static Imagify readScaled(Path path, int scaleNum, int scaleDenom) {
+        Imagify pipe = new Imagify();
+        try {
+            pipe.addFrameSequence(ImageReader.read(path, scaleNum, scaleDenom));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read: " + path, e);
+        }
+        return pipe;
+    }
+
+    /**
      * Starts a pipeline by reading from one or more file paths given as strings.
      * Each string is a path, and each path provides one frame.
      *

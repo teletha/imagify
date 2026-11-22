@@ -149,6 +149,20 @@ public final class JpegliCodec {
         return lib;
     }
 
+    /**
+     * Reports whether the loaded native library can reduce a JPEG while decoding it.
+     *
+     * <p>A false answer means {@link #decode(byte[], int, int)} still works and returns the full
+     * image; the caller can then reduce it itself instead. The answer is stable for the life of the
+     * process, because the library is loaded once.
+     *
+     * @return true when DCT scaling is available
+     */
+    public static boolean supportsScaledDecode() {
+        JpegliLibrary lib = library();
+        return lib != null && lib.supportsScaledDecode();
+    }
+
     private static JpegliLibrary load() {
         Path managed = JpegliNativeLibrary.extract();
         String managedReason = JpegliNativeLibrary.reason();
@@ -261,10 +275,33 @@ public final class JpegliCodec {
      * @throws JpegException when the library is unavailable or the file cannot be decoded
      */
     public static BufferedImage decode(byte[] encoded) throws JpegException {
+        return decode(encoded, 1, 1);
+    }
+
+    /**
+     * Decodes a JPEG at a fraction of its size, using the decoder's DCT scaling.
+     *
+     * <p>The supported ratios are 1/1, 1/2, 1/4 and 1/8. They are applied while the JPEG is being
+     * decoded, so a small thumbnail does not pay for the full resolution image first. A native
+     * library built before this entry point existed falls back to a full decode, which produces the
+     * right picture at the original size; {@link #supportsScaledDecode()} tells the two apart.
+     *
+     * @param encoded the complete JPEG file
+     * @param scaleNum the numerator of the scale, which must be 1
+     * @param scaleDenom one of 1, 2, 4 or 8
+     * @return the decoded image, already reduced when the native library supports it
+     * @throws JpegException when the library is unavailable, the ratio is invalid, or the file
+     *         cannot be decoded
+     */
+    public static BufferedImage decode(byte[] encoded, int scaleNum, int scaleDenom) throws JpegException {
         JpegliLibrary lib = requireLibrary();
         if (encoded == null) {
             throw new JpegException("no input");
         }
+        if (scaleNum != 1 || (scaleDenom != 1 && scaleDenom != 2 && scaleDenom != 4 && scaleDenom != 8)) {
+            throw new JpegException("the scale must be 1/1, 1/2, 1/4 or 1/8");
+        }
+        boolean scaled = (scaleNum != 1 || scaleDenom != 1) && lib.supportsScaledDecode();
         try (Arena arena = Arena.ofConfined()) {
             MemorySegment data = input(encoded, arena);
             MemorySegment message = arena.allocate(JpegliLibrary.MESSAGE_LENGTH);
@@ -274,8 +311,11 @@ public final class JpegliCodec {
             MemorySegment height = arena.allocate(ValueLayout.JAVA_INT);
             int status;
             try {
-                status = lib.imagify_jpegli_decode(data, encoded.length, out, outLength, width, height,
-                        message, JpegliLibrary.MESSAGE_LENGTH);
+                status = scaled
+                        ? lib.imagify_jpegli_decode_scaled(data, encoded.length, scaleNum, scaleDenom,
+                                out, outLength, width, height, message, JpegliLibrary.MESSAGE_LENGTH)
+                        : lib.imagify_jpegli_decode(data, encoded.length, out, outLength, width, height,
+                                message, JpegliLibrary.MESSAGE_LENGTH);
             } catch (RuntimeException e) {
                 // Whatever the call was doing when it failed, the buffer may already be allocated.
                 lib.imagify_jpegli_free(pointer(out));

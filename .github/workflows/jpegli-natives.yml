@@ -195,7 +195,12 @@ jobs:
           TAG: ${{ steps.tag.outputs.tag }}
         run: |
           expected="jpegli-natives-${{ env.JPEGLI_VERSION }}"
-          [ "$TAG" = "$expected" ] || { echo "::error::native.properties says '$TAG' but the build pins jpegli ${{ env.JPEGLI_VERSION }} at ${{ env.JPEGLI_COMMIT }}, so it must be '$expected'"; exit 1; }
+          # A rebuild of the same pinned codec is published under the same tag with a dash
+          # suffix, because the original tag is immutable and cannot be overwritten.
+          case "$TAG" in
+            "$expected"|"$expected"-*) ;;
+            *) echo "::error::native.properties says '$TAG' but the build pins jpegli ${{ env.JPEGLI_VERSION }} at ${{ env.JPEGLI_COMMIT }}, so it must be '$expected' or '$expected' with a dash suffix"; exit 1 ;;
+          esac
 
       - name: Refuse to republish an immutable tag
         # A release a client has already cached must never change under it, so a tag that exists is

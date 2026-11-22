@@ -275,6 +275,53 @@ class JpegliCodecTest {
                 "an image with no pixels in it is not an image");
     }
 
+    @Test
+    @DisplayName("scaled decoding is only advertised when the native library can do it")
+    void scaledDecodeCapability() {
+        if (!JpegliCodec.isAvailable()) {
+            assertFalse(JpegliCodec.supportsScaledDecode());
+            return;
+        }
+        assertEquals(JpegliCodec.library().supportsScaledDecode(), JpegliCodec.supportsScaledDecode());
+    }
+
+    @Test
+    @DisplayName("a JPEG can be decoded at a fraction of its size")
+    void scaledDecodeReducesTheImage() throws JpegException, java.io.IOException {
+        assumeTrue(JpegliCodec.isAvailable(), "skipped: no jpegli to decode with");
+        assumeTrue(JpegliCodec.supportsScaledDecode(), "skipped: the native library predates DCT scaling");
+        byte[] encoded = JpegliCodec.encode(gradient(64, 48), 95);
+
+        assertEquals(32, JpegliCodec.decode(encoded, 1, 2).getWidth());
+        assertEquals(24, JpegliCodec.decode(encoded, 1, 2).getHeight());
+        assertEquals(16, JpegliCodec.decode(encoded, 1, 4).getWidth());
+        assertEquals(12, JpegliCodec.decode(encoded, 1, 4).getHeight());
+        assertEquals(8, JpegliCodec.decode(encoded, 1, 8).getWidth());
+        assertEquals(6, JpegliCodec.decode(encoded, 1, 8).getHeight());
+
+        // The high level reader has to pass the ratio down rather than decoding in full first.
+        assertEquals(16, imagify.ImageReader.read(encoded, 1, 4).toBufferedImage().getWidth());
+
+        BufferedImage scaled = JpegliCodec.decode(encoded, 1, 4);
+        int[] argb = scaled.getRGB(0, 0, 16, 12, null, 0, 16);
+        assertTrue(Arrays.stream(argb).anyMatch(pixel -> (pixel & 0x00FFFFFF) != 0),
+                "a reduced decode still has to carry the picture");
+        for (int pixel : argb) {
+            assertEquals(255, pixel >>> 24, "a JPEG has no alpha, even when scaled");
+        }
+    }
+
+    @Test
+    @DisplayName("scaled decoding refuses a ratio it cannot produce")
+    void scaledDecodeRefusesUnsupportedRatios() throws JpegException {
+        assumeTrue(JpegliCodec.isAvailable(), "skipped: no jpegli to decode with");
+        byte[] encoded = JpegliCodec.encode(gradient(32, 32), 85);
+        for (int[] ratio : new int[][] {{1, 3}, {2, 4}, {0, 2}, {1, 16}}) {
+            assertThrows(JpegException.class, () -> JpegliCodec.decode(encoded, ratio[0], ratio[1]),
+                    "ratio " + ratio[0] + "/" + ratio[1] + " is not a DCT scale");
+        }
+    }
+
     /**
      * A {@link RenderedImage} that reports no pixels at all.
      *

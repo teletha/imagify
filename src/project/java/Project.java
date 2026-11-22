@@ -184,6 +184,20 @@ public class Project extends bee.api.Project {
                 decode comes back fully opaque, so flatten the image first if that
                 matters.
 
+                A JPEG can also be reduced while it is decoded, which is much cheaper
+                than decoding the full image to make a thumbnail. The supported ratios
+                are 1/1, 1/2, 1/4 and 1/8:
+
+                    Imagify.readScaled(Path.of("photo.jpg"), 1, 8)
+                           .resizeToFit(320)
+                           .writeTo(Path.of("thumb.webp"));
+
+                    FrameSequence small = ImageReader.read(Path.of("photo.jpg"), 1, 8);
+
+                `JpegliCodec.supportsScaledDecode()` says whether the loaded native
+                library can do this. Without that entry point, or for every other
+                format, the picture is decoded in full and returned unchanged.
+
                 A caller driving `ImageIO` directly reaches the same two settings
                 through the write parameter:
 

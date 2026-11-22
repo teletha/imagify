@@ -124,6 +124,10 @@ public final class JpegliLibrary {
     private static final FunctionDescriptor DECODE_DESC = FunctionDescriptor
             .of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG);
 
+    /** The decode descriptor with the two scale ratios inserted after the input length. */
+    private static final FunctionDescriptor DECODE_SCALED_DESC = FunctionDescriptor
+            .of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG);
+
     private static final FunctionDescriptor ENCODE_DESC = FunctionDescriptor
             .of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_LONG);
 
@@ -138,6 +142,9 @@ public final class JpegliLibrary {
     private final MethodHandle readHeader;
 
     private final MethodHandle decode;
+
+    /** Null when the native library predates DCT scaling; callers then use {@link #decode}. */
+    private final MethodHandle decodeScaled;
 
     private final MethodHandle encode;
 
@@ -159,6 +166,10 @@ public final class JpegliLibrary {
         this.jpegliVersion = resolveSymbol(lookup, "imagify_jpegli_jpegli_version", JPEGLI_VERSION_DESC);
         this.readHeader = resolveSymbol(lookup, "imagify_jpegli_read_header", READ_HEADER_DESC);
         this.decode = resolveSymbol(lookup, "imagify_jpegli_decode", DECODE_DESC);
+        // Added to the flat C ABI after ABI version 1 was fixed. A library built before that still
+        // answers every older call, so a missing symbol is a capability difference, not a reason to
+        // refuse the library as a whole.
+        this.decodeScaled = resolveOptionalSymbol(lookup, "imagify_jpegli_decode_scaled", DECODE_SCALED_DESC);
         // The one call in this binding that reads a Java array where it lies rather than a copy of
         // it. critical(true) is what lets it: a heap segment, which is what a Java array becomes,
         // is refused as a pointer argument otherwise. The array is pinned for the length of the
@@ -222,6 +233,32 @@ public final class JpegliLibrary {
         }
     }
 
+    /**
+     * Reports whether the loaded library can decode at a fraction of the original size.
+     *
+     * @return true when {@link #imagify_jpegli_decode_scaled} may be called
+     */
+    public boolean supportsScaledDecode() {
+        return decodeScaled != null;
+    }
+
+    /**
+     * Calls {@code imagify_jpegli_decode_scaled}. Only call this when
+     * {@link #supportsScaledDecode()} answered true; older libraries do not export the symbol.
+     *
+     * @return {@link #IMAGIFY_JPEG_OK}, or a status saying what went wrong
+     */
+    public int imagify_jpegli_decode_scaled(MemorySegment data, long length, int scaleNum, int scaleDenom, MemorySegment out, MemorySegment outLength, MemorySegment width, MemorySegment height, MemorySegment message, long messageCapacity) {
+        if (decodeScaled == null) {
+            throw new IllegalStateException("the jpegli library does not support scaled decoding");
+        }
+        try {
+            return (int) decodeScaled.invokeExact(data, length, scaleNum, scaleDenom, out, outLength, width, height, message, messageCapacity);
+        } catch (Throwable t) {
+            throw new IllegalStateException("imagify_jpegli_decode_scaled() failed", t);
+        }
+    }
+
     // --------------------------------------------------------------------------- encode
 
     /**
@@ -271,6 +308,18 @@ public final class JpegliLibrary {
             return pointer.reinterpret(256).getString(0, StandardCharsets.UTF_8);
         } catch (Throwable t) {
             throw new IllegalStateException(name + " failed", t);
+        }
+    }
+
+    private static MethodHandle resolveOptionalSymbol(SymbolLookup lookup, String name, FunctionDescriptor descriptor) {
+        MemorySegment symbol = lookup.find(name).orElse(null);
+        if (symbol == null) {
+            return null;
+        }
+        try {
+            return LINKER.downcallHandle(symbol, descriptor);
+        } catch (Throwable t) {
+            throw new IllegalStateException("cannot create downcall handle for " + name, t);
         }
     }
 

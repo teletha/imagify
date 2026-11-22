@@ -113,6 +113,46 @@ int imagify_jpegli_decode(const uint8_t* data, size_t length, uint8_t** out, siz
     int* width, int* height, char* message, size_t message_capacity);
 
 /*
+ * The scale denominators jpegli can produce straight from the DCT, without first decoding the
+ * full image. These are the ratios libjpeg's scale_num / scale_denom fast path understands.
+ */
+#define IMAGIFY_JPEG_SCALE_1 1
+#define IMAGIFY_JPEG_SCALE_2 2
+#define IMAGIFY_JPEG_SCALE_4 4
+#define IMAGIFY_JPEG_SCALE_8 8
+
+/*
+ * Decodes a JPEG at a fraction of its size, using the decoder's DCT scaling.
+ *
+ * This is an addition to ABI version 1 rather than a new ABI: callers written against the original
+ * header keep calling imagify_jpegli_decode, and a library built before this function existed can
+ * still answer every one of those calls. The FFM side therefore treats this symbol as optional and
+ * falls back to a full decode when it is missing.
+ *
+ * The supported ratios are 1/1, 1/2, 1/4 and 1/8, the ones jpegli can scale in the DCT domain.
+ * A larger picture is not decoded and then thrown away: only the needed blocks are transformed, so
+ * a 1/8 decode does a small fraction of the work of a full one. *width and *height receive the
+ * reduced dimensions, which are what the output buffer holds. Everything else about the buffer,
+ * including the opaque alpha byte and the ownership passed to imagify_jpegli_free, is the same as
+ * for imagify_jpegli_decode.
+ *
+ * @param data the encoded JPEG, at least two bytes
+ * @param length the number of bytes at data
+ * @param scale_num the numerator of the scale, which must be 1
+ * @param scale_denom one of IMAGIFY_JPEG_SCALE_*, giving the denominator of the scale
+ * @param out receives the buffer to free with imagify_jpegli_free, or NULL on failure
+ * @param out_length receives the number of bytes at *out
+ * @param width receives the reduced image width
+ * @param height receives the reduced image height
+ * @param message receives a description of a failure, and is left untouched on success
+ * @param message_capacity the size of message in bytes
+ * @return IMAGIFY_JPEG_OK, or a status that says what went wrong
+ */
+int imagify_jpegli_decode_scaled(const uint8_t* data, size_t length, int scale_num, int scale_denom,
+    uint8_t** out, size_t* out_length, int* width, int* height, char* message,
+    size_t message_capacity);
+
+/*
  * Encodes tightly packed A, B, G, R bytes as a baseline JPEG.
  *
  * The alpha byte is discarded, because a JPEG cannot store one. Note that this means an image with

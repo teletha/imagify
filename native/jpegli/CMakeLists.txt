@@ -237,6 +237,7 @@ set(IMAGIFY_JPEGLI_SYMBOLS
   imagify_jpegli_jpegli_version
   imagify_jpegli_read_header
   imagify_jpegli_decode
+  imagify_jpegli_decode_scaled
   imagify_jpegli_encode
   imagify_jpegli_free)
 

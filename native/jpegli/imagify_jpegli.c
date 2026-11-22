@@ -239,8 +239,9 @@ int imagify_jpegli_read_header(const uint8_t* data, size_t length, int* width, i
   return (int)result;
 }
 
-int imagify_jpegli_decode(const uint8_t* data, size_t length, uint8_t** out, size_t* out_length,
-    int* width, int* height, char* message, size_t message_capacity) {
+static int imagify_decode(const uint8_t* data, size_t length, int scale_num, int scale_denom,
+    uint8_t** out, size_t* out_length, int* width, int* height, char* message,
+    size_t message_capacity) {
   if (out == NULL || out_length == NULL || width == NULL || height == NULL) {
     return imagify_argument_error(message, message_capacity, "no room for the result");
   }
@@ -248,6 +249,14 @@ int imagify_jpegli_decode(const uint8_t* data, size_t length, uint8_t** out, siz
   *out_length = 0;
   if (data == NULL || length < 2) {
     return imagify_argument_error(message, message_capacity, "expected at least two bytes of JPEG");
+  }
+  /* Only the ratios jpegli can scale in the DCT domain, so no full-resolution decode is ever
+     needed. Anything else is refused rather than quietly falling back to a slower path. */
+  if (scale_num != 1 || (scale_denom != IMAGIFY_JPEG_SCALE_1
+      && scale_denom != IMAGIFY_JPEG_SCALE_2 && scale_denom != IMAGIFY_JPEG_SCALE_4
+      && scale_denom != IMAGIFY_JPEG_SCALE_8)) {
+    return imagify_argument_error(message, message_capacity,
+        "the scale must be 1/1, 1/2, 1/4 or 1/8");
   }
 
   struct jpeg_decompress_struct cinfo;
@@ -267,6 +276,10 @@ int imagify_jpegli_decode(const uint8_t* data, size_t length, uint8_t** out, siz
     jpeg_create_decompress(&cinfo);
     jpeg_mem_src(&cinfo, data, (unsigned long)length);
     jpeg_read_header(&cinfo, TRUE);
+    /* jpegli applies these in the DCT domain, so output_width and output_height below are already
+       reduced and the scanline loop only ever visits the pixels the caller asked for. */
+    cinfo.scale_num = (JDIMENSION)scale_num;
+    cinfo.scale_denom = (JDIMENSION)scale_denom;
     /* Asking for RGB makes libjpeg run the greyscale to RGB and the chroma upsampling itself, so
        there is one layout on this side of the loop below whatever the file was written as. */
     cinfo.out_color_space = JCS_RGB;
@@ -323,6 +336,19 @@ int imagify_jpegli_decode(const uint8_t* data, size_t length, uint8_t** out, siz
   free(row);
   free(pixels);
   return (int)result;
+}
+
+int imagify_jpegli_decode(const uint8_t* data, size_t length, uint8_t** out, size_t* out_length,
+    int* width, int* height, char* message, size_t message_capacity) {
+  return imagify_decode(data, length, 1, IMAGIFY_JPEG_SCALE_1, out, out_length, width, height,
+      message, message_capacity);
+}
+
+int imagify_jpegli_decode_scaled(const uint8_t* data, size_t length, int scale_num, int scale_denom,
+    uint8_t** out, size_t* out_length, int* width, int* height, char* message,
+    size_t message_capacity) {
+  return imagify_decode(data, length, scale_num, scale_denom, out, out_length, width, height,
+      message, message_capacity);
 }
 
 int imagify_jpegli_encode(const uint8_t* pixels, int width, int height, int quality, int subsampling,
