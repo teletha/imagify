@@ -224,9 +224,11 @@ class NativeRepositoryTest {
     @Test
     @DisplayName("each format is published under its own tag")
     void tagNamesAReleasePerFormat() {
-        assertTrue(NativeRepository.tag(WEBP).matches("webp-natives-\\d+(\\.\\d+)+"), NativeRepository.tag(WEBP));
-        assertTrue(NativeRepository.tag(JPEGLI).matches("jpegli-natives-\\d+(\\.\\d+)+"), NativeRepository.tag(JPEGLI));
-        assertTrue(NativeRepository.tag(AVIF).matches("avif-natives-\\d+(\\.\\d+)+"), NativeRepository.tag(AVIF));
+        // A rebuild of the same codec is republished with a dash suffix, because the original tag
+        // is immutable and cannot be overwritten.
+        assertTrue(NativeRepository.tag(WEBP).matches("webp-natives-\\d+(\\.\\d+)+(-[0-9]+)?"), NativeRepository.tag(WEBP));
+        assertTrue(NativeRepository.tag(JPEGLI).matches("jpegli-natives-\\d+(\\.\\d+)+(-[0-9]+)?"), NativeRepository.tag(JPEGLI));
+        assertTrue(NativeRepository.tag(AVIF).matches("avif-natives-\\d+(\\.\\d+)+(-[0-9]+)?"), NativeRepository.tag(AVIF));
     }
 
     @Test

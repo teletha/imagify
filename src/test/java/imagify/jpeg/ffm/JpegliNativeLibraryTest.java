@@ -98,6 +98,6 @@ class JpegliNativeLibraryTest {
                 "native.properties is not where the loader looks for it");
         String tag = NativeRepository.tag(JPEGLI);
         assertNotNull(tag, "native.properties names no release, so the runtime can never fetch a library");
-        assertEquals("jpegli-natives-0.12.0", tag);
+        assertTrue(tag.matches("jpegli-natives-\\d+(\\.\\d+)+(-[0-9]+)?"), tag);
     }
 }
