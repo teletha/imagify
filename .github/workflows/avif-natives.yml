@@ -38,7 +38,7 @@ jobs:
           - { target: linux-x64,    os: ubuntu-24.04,     ext: so,                 cpu: x86_64 }
           - { target: linux-arm64,  os: ubuntu-24.04-arm, ext: so,                 cpu: arm64 }
           - { target: macos-x64,    os: macos-15-intel,   ext: dylib,              cpu: x86_64 }
-          - { target: macos-arm64,  os: macos-14,         ext: dylib,              cpu: arm64 }
+          - { target: macos-arm64,  os: macos-15,         ext: dylib,              cpu: arm64 }
     steps:
       - uses: actions/checkout@v4
 
